@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { KeyRound, Save } from "lucide-react";
 import type { CompanySecret, RoutineEnvConfig } from "@paperclipai/shared";
 import { Button } from "@/components/ui/button";
@@ -93,9 +94,9 @@ export function StageSecretsPanel({
       <div className="flex items-center gap-3">
         <Button type="button" onClick={onSave} disabled={!dirty || saving}>
           <Save className="h-4 w-4 mr-1.5" />
-          {saving ? "Saving…" : "Save secrets"}
+          {saving ? zh("Saving…") : "Save secrets"}
         </Button>
-        {dirty && !saving ? <span className="text-xs text-muted-foreground">Unsaved changes</span> : null}
+        {dirty && !saving ? <span className="text-xs text-muted-foreground">{zh("Unsaved changes")}</span> : null}
       </div>
     </div>
   );

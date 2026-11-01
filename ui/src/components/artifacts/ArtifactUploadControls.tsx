@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useRef, type ReactNode } from "react";
 import { FileUp, Loader2, Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -46,11 +47,11 @@ export function ArtifactUploadContent({ children, empty = false, entries = [], o
         <div className="flex min-w-0 flex-1 flex-col gap-1">
           <span className="break-words text-sm font-medium">{entry.filename}</span>
           <span role={entry.status === "error" ? "alert" : "status"} className={cn("text-xs", entry.status === "error" ? "text-destructive" : "text-muted-foreground")}>
-            {entry.status === "uploading" ? "Uploading…" : entry.error ?? "Upload failed. Try again."}
+            {entry.status === "uploading" ? zh("Uploading…") : entry.error ?? "Upload failed. Try again."}
           </span>
         </div>
         {entry.status === "error" ? <div className="flex shrink-0 items-center gap-1">
-          {onRetry ? <Button variant="ghost" size="sm" onClick={() => onRetry(entry.id)}>Retry</Button> : null}
+          {onRetry ? <Button variant="ghost" size="sm" onClick={() => onRetry(entry.id)}>{zh("Retry")}</Button> : null}
           {onDismiss ? <Button variant="ghost" size="icon-sm" aria-label={`Dismiss upload: ${entry.filename}`} onClick={() => onDismiss(entry.id)}><X aria-hidden="true" /></Button> : null}
         </div> : null}
       </li>)}

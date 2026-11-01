@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
   Check,
@@ -652,7 +653,7 @@ function QuestionFormForRequest({
             <div className="space-y-1.5">
               <SelectOption
                 id={`${id}-${question.id}-custom`}
-                label={question.customAnswer?.label ?? "Other"}
+                label={question.customAnswer?.label ?? zh("Other")}
                 selected={isCustomActive}
                 multiple={multiple}
                 disabled={disabled || working != null}
@@ -708,7 +709,7 @@ function QuestionFormForRequest({
               {working === "cancel" ? (
                 <Loader2 aria-hidden className="h-4 w-4 animate-spin" />
               ) : null}{" "}
-              Cancel
+              {zh("Cancel")}
             </Button>
           ) : null}
           {!question.required ? (
@@ -719,7 +720,7 @@ function QuestionFormForRequest({
               disabled={busy}
               onClick={skipQuestion}
             >
-              Skip
+              {zh("Skip")}
             </Button>
           ) : null}
           <Button
@@ -731,7 +732,7 @@ function QuestionFormForRequest({
             {working === "submit" ? (
               <Loader2 aria-hidden className="h-4 w-4 animate-spin" />
             ) : null}
-            {isLastPage ? (questionSet.submitLabel ?? "Submit answers") : "Next"}
+            {isLastPage ? (questionSet.submitLabel ?? "Submit answers") : zh("Next")}
           </Button>
         </div>
       </DecisionCardFooter>

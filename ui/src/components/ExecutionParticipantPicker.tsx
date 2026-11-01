@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import { useMemo, useState } from "react";
 import type { Agent, Issue } from "@paperclipai/shared";
@@ -96,7 +97,7 @@ export function ExecutionParticipantPicker({
   const Icon = stageType === "review" ? Eye : ShieldCheck;
 
   if (!policyAvailable) {
-    return <span role="status" className="text-xs text-muted-foreground">Execution policy unavailable. Refresh to try again.</span>;
+    return <span role="status" className="text-xs text-muted-foreground">{zh("Execution policy unavailable. Refresh to try again.")}</span>;
   }
 
   return (
@@ -136,7 +137,7 @@ export function ExecutionParticipantPicker({
             )}
             onClick={() => updatePolicy([])}
           >
-            No {label.toLowerCase()}
+            {zh("No")} {label.toLowerCase()}
           </button>
           {currentUserId && (
             <button
@@ -147,7 +148,7 @@ export function ExecutionParticipantPicker({
               onClick={() => toggle(`user:${currentUserId}`)}
             >
               <User className="h-3 w-3 shrink-0 text-muted-foreground" />
-              Assign to me
+              {zh("Assign to me")}
             </button>
           )}
           {issue.createdByUserId && issue.createdByUserId !== currentUserId && (
@@ -159,7 +160,7 @@ export function ExecutionParticipantPicker({
               onClick={() => toggle(`user:${issue.createdByUserId}`)}
             >
               <User className="h-3 w-3 shrink-0 text-muted-foreground" />
-              {creatorUserLabel ?? "Requester"}
+              {creatorUserLabel ?? zh("Requester")}
             </button>
           )}
           {otherUserOptions

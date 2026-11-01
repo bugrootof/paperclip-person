@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, Loader2, ShieldQuestion, X } from "lucide-react";
@@ -177,7 +178,7 @@ function ReviewRow({
         <span className="font-bold text-foreground">{actionLabel(item)}</span>
         {item.applicationName && (
           <span className="text-muted-foreground">
-            in {humanizeConnectionDisplayName(item.applicationName)}
+            {zh("in")} {humanizeConnectionDisplayName(item.applicationName)}
           </span>
         )}
         <span className="text-xs text-muted-foreground">· asked {timeAgo(item.request.createdAt)}</span>
@@ -201,7 +202,7 @@ function ReviewRow({
         </Button>
         {item.requestedByAgentId && item.connectionId && !item.request.approvalId ? <Button size="sm" variant="outline" onClick={() => alwaysAllow.mutate()} disabled={busy}>
           {resolving === "always" ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : null}
-          Always allow
+          {zh("Always allow")}
         </Button> : null}
         <Button size="sm" variant="ghost" onClick={() => decline.mutate()} disabled={busy}>
           {resolving === "decline" ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : <X className="mr-1.5 h-3.5 w-3.5" />}

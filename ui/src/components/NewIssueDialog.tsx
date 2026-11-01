@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { usePrimaryAgentPresentation } from "./primary-agent/PrimaryAgentPresentation";
 import { useWorkspaceIsolationControls } from "@/hooks/useWorkspaceIsolationControls";
 import { useState, useEffect, useRef, useCallback, useMemo, type CSSProperties, type DragEvent } from "react";
@@ -1154,7 +1155,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
     if (request.recovering) {
       const original = request.payload;
       const rejectRecovery = (message: string): never => {
-        setResendError({ title: "Saved request needs attention", body: message, retryable: false });
+        setResendError({ title: zh("Saved request needs attention"), body: message, retryable: false });
         throw new Error(message);
       };
       if (!original) rejectRecovery("The saved request is unavailable. Cancel it before creating another task.");
@@ -1450,7 +1451,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
           }
         }}
       >
-        <DialogTitle className="sr-only">{isSubIssueMode ? "New sub-task" : "New task"}</DialogTitle>
+        <DialogTitle className="sr-only">{isSubIssueMode ? zh("New sub-task") : zh("New task")}</DialogTitle>
         <div
           ref={dialogBodyRef}
           className={cn("min-h-0 overflow-y-auto overscroll-contain", isFileDragOver && "bg-accent/20")}
@@ -1464,7 +1465,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
               workMode={workMode}
               onWorkModeChange={setWorkMode}
               disabled={createIssue.isPending || !effectiveCompanyId}
-              placeholder="Describe a task…"
+              placeholder={zh("Describe a task…")}
               mobile={isMobile}
               mentions={mentionOptions}
               onImageUpload={async (file) => {
@@ -1509,7 +1510,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                     }
                   },
                 },
-                submitLabel: isSubIssueMode ? "Create sub-task" : "Create task",
+                submitLabel: isSubIssueMode ? zh("Create sub-task") : zh("Create task"),
                 canSubmitWithoutBody: Boolean(title.trim()),
                 onSelectFiles: stageFiles,
                 runSettings: composerSettings,
@@ -1544,12 +1545,12 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                             if (awaitingFilesKey && key) clearPendingSend(awaitingFilesKey, key);
                             if (key) { stagedFilesByKey.current.delete(key); clearCreateUploadReceipts(key); }
                             createRequestRef.current = null; setRestoredLaunch(null); setResendError(null);
-                          }}>Cancel saved request</Button> : null}
+                          }}>{zh("Cancel saved request")}</Button> : null}
                         </div>
                       ) : null}
                       {hasTitle ? (
                         <input
-                          aria-label="Task title"
+                          aria-label={zh("Task title")}
                           value={title}
                           // The waiting request is what gets created; later edits would be lost.
                           disabled={createIssue.isPending || Boolean(durableCreate.pending)}
@@ -1566,7 +1567,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                           <div className="max-w-full rounded-md border border-border bg-muted/30 px-2.5 py-1.5 text-xs text-muted-foreground">
                             <div className="flex items-center gap-1.5">
                               <ListTree className="h-3.5 w-3.5 shrink-0" />
-                              <span className="shrink-0">Sub-task of</span>
+                              <span className="shrink-0">{zh("Sub-task of")}</span>
                               <span className="font-medium text-foreground">{parentIssueLabel}</span>
                             </div>
                             {newIssueDefaults.parentTitle ? (
@@ -1575,15 +1576,15 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                           </div>
                         </div>
                       ) : null}
-                      {coordinatorEnabled ? <p className="text-sm font-medium text-foreground">New Task</p> : null}
+                      {coordinatorEnabled ? <p className="text-sm font-medium text-foreground">{zh("New Task")}</p> : null}
                     </div>
                   ) : undefined,
                 details: (
                   <>
                     {parentPrivacyUnresolved ? (
                       <div role={parentPrivacyError ? "alert" : "status"} className="mb-2 flex items-center gap-2 text-xs text-muted-foreground">
-                        <span>{parentPrivacyError ? "Couldn't check parent access." : "Checking parent access…"}</span>
-                        {parentPrivacyError ? <Button variant="ghost" size="sm" onClick={() => void refetchParentPrivacy()}>Retry</Button> : null}
+                        <span>{parentPrivacyError ? zh("Couldn't check parent access.") : zh("Checking parent access…")}</span>
+                        {parentPrivacyError ? <Button variant="ghost" size="sm" onClick={() => void refetchParentPrivacy()}>{zh("Retry")}</Button> : null}
                       </div>
                     ) : null}
                     {worktreeSelectionIncomplete && !worktreesLoading ? (
@@ -1596,7 +1597,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                       <div className="mt-4 space-y-3 rounded-lg border border-border/70 p-3">
                         {stagedDocuments.length > 0 ? (
                           <div className="space-y-2">
-                            <div className="text-xs font-medium text-muted-foreground">Documents</div>
+                            <div className="text-xs font-medium text-muted-foreground">{zh("Documents")}</div>
                             <div className="space-y-2">
                               {stagedDocuments.map((file) => (
                                 <div
@@ -1626,7 +1627,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                                     className="shrink-0 text-muted-foreground"
                                     onClick={() => removeStagedFile(file.id)}
                                     disabled={createIssue.isPending}
-                                    title="Remove document"
+                                    title={zh("Remove document")}
                                   >
                                     <X className="h-3.5 w-3.5" />
                                   </Button>
@@ -1638,7 +1639,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
 
                         {stagedAttachments.length > 0 ? (
                           <div className="space-y-2">
-                            <div className="text-xs font-medium text-muted-foreground">Attachments</div>
+                            <div className="text-xs font-medium text-muted-foreground">{zh("Attachments")}</div>
                             <div className="space-y-2">
                               {stagedAttachments.map((file) => (
                                 <div
@@ -1660,7 +1661,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                                     className="shrink-0 text-muted-foreground"
                                     onClick={() => removeStagedFile(file.id)}
                                     disabled={createIssue.isPending}
-                                    title="Remove attachment"
+                                    title={zh("Remove attachment")}
                                   >
                                     <X className="h-3.5 w-3.5" />
                                   </Button>
@@ -1679,9 +1680,9 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                         <Flag className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-600 dark:text-amber-300" />
                         <span className="leading-snug">
                           Assigning implies executable intent - leave status as{" "}
-                          <span className="font-medium">Backlog</span> only to deliberately park this. The assignee will
-                          not be woken until status moves to <span className="font-medium">Todo</span> or{" "}
-                          <span className="font-medium">In Progress</span>.
+                          <span className="font-medium">{zh("Backlog")}</span> only to deliberately park this. The assignee will
+                          not be woken until status moves to <span className="font-medium">{zh("Todo")}</span> or{" "}
+                          <span className="font-medium">{zh("In Progress")}</span>.
                         </span>
                       </div>
                     ) : null}
@@ -1733,30 +1734,30 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                       value={projectId}
                       options={projectOptions}
                       recentOptionIds={recentProjectIds}
-                      placeholder="Project"
+                      placeholder={zh("Project")}
                       mobileTitle="Select project"
                       modal
                       className="h-8 min-w-0 flex-1 gap-1.5 border-0 bg-transparent px-2 text-xs shadow-none hover:bg-accent focus-visible:bg-accent focus-visible:ring-0 sm:max-w-64 sm:flex-none"
                       disabled={createIssue.isPending}
                       triggerDataSlot="new-issue-compact-control"
                       contentStyle={entityPickerViewportStyle}
-                      noneLabel="No project"
+                      noneLabel={zh("No project")}
                       noneAtTop
-                      searchPlaceholder="Search projects..."
-                      emptyMessage="No projects found."
+                      searchPlaceholder={zh("Search projects...")}
+                      emptyMessage={zh("No projects found.")}
                       onChange={handleProjectChange}
                       renderTriggerValue={(option) =>
                         option && currentProject ? (
                           <>
                             <Folder className="size-3.5 shrink-0" style={{ color: currentProject.color ?? "var(--project-seed)" }} aria-hidden />
                             <span className="truncate">{option.label}</span>
-                            {currentProject.visibility === "private" ? <Lock className="size-3 shrink-0 text-muted-foreground" aria-label="Private project" /> : null}
+                            {currentProject.visibility === "private" ? <Lock className="size-3 shrink-0 text-muted-foreground" aria-label={zh("Private project")} /> : null}
                             <ChevronDown className="size-3 shrink-0 text-muted-foreground" aria-hidden />
                           </>
                         ) : (
                           <>
                             <Folder className="size-3.5 shrink-0 text-muted-foreground" aria-hidden />
-                            <span className="truncate text-muted-foreground">Project</span>
+                            <span className="truncate text-muted-foreground">{zh("Project")}</span>
                             <ChevronDown className="size-3 shrink-0 text-muted-foreground" aria-hidden />
                           </>
                         )
@@ -1768,7 +1769,7 @@ function AccountNewIssueDialog({ ignoreDefaults }: { ignoreDefaults: boolean }) 
                           <>
                             <Folder className="size-4 shrink-0" style={{ color: project?.color ?? "var(--project-seed)" }} aria-hidden />
                             <span className="min-w-0 flex-1 truncate">{option.label}</span>
-                            {project?.visibility === "private" ? <Lock className="size-3.5 shrink-0 text-muted-foreground" aria-label="Private project" /> : null}
+                            {project?.visibility === "private" ? <Lock className="size-3.5 shrink-0 text-muted-foreground" aria-label={zh("Private project")} /> : null}
                           </>
                         );
                       }}

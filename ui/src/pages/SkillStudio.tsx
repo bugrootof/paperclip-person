@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { SkillsPageNavigation } from "@/components/skill-studio/SkillsNavigationTabs";
 import { interactionReadinessRefetchInterval } from "@/lib/issue-thread-interactions";
 import { SkillBinaryFile } from "../components/SkillBinaryFile";
@@ -311,19 +312,19 @@ export function SkillStudio() {
     setBreadcrumbs(
       isCreateMode
         ? [
-            { label: "Skills", href: "/skills" },
-            { label: "Studio", href: "/skills/studio" },
+            { label: zh("Skills"), href: "/skills" },
+            { label: zh("Studio"), href: "/skills/studio" },
             { label: "New skill" },
           ]
         : skill
         ? [
-            { label: "Skills", href: "/skills" },
-            { label: "Studio", href: "/skills/studio" },
+            { label: zh("Skills"), href: "/skills" },
+            { label: zh("Studio"), href: "/skills/studio" },
             { label: skill.name },
           ]
         : [
-            { label: "Skills", href: "/skills" },
-            { label: "Studio" },
+            { label: zh("Skills"), href: "/skills" },
+            { label: zh("Studio") },
           ],
     );
   }, [isCreateMode, setBreadcrumbs, skill]);
@@ -379,7 +380,7 @@ export function SkillStudio() {
     );
   }
   if (detailView.kind === "error" || !detailQuery.data) {
-    return <StudioMessage message="Skill not found." />;
+    return <StudioMessage message={zh("Skill not found.")} />;
   }
 
   return (
@@ -545,7 +546,7 @@ function StudioNewSkillPanel({
       {draft.forkedFromName ? (
         <div className="flex items-center gap-2 rounded-md border border-border bg-muted/30 px-3 py-2 text-sm text-muted-foreground">
           <GitFork className="h-4 w-4" />
-          Forking {draft.forkedFromName}
+          {zh("Forking")} {draft.forkedFromName}
         </div>
       ) : forkError ? (
         <div className="flex items-center gap-2 rounded-md border border-destructive/40 bg-destructive/10 px-3 py-2 text-sm text-destructive">
@@ -561,7 +562,7 @@ function StudioNewSkillPanel({
         </div>
         <div className="grid gap-3 md:grid-cols-2">
           <div className="space-y-1.5">
-            <Label htmlFor="skill-name">Name</Label>
+            <Label htmlFor="skill-name">{zh("Name")}</Label>
             <Input
               id="skill-name"
               value={draft.name}
@@ -579,7 +580,7 @@ function StudioNewSkillPanel({
             />
           </div>
           <div className="space-y-1.5">
-            <Label htmlFor="skill-slug">Slug</Label>
+            <Label htmlFor="skill-slug">{zh("Slug")}</Label>
             <Input
               id="skill-slug"
               value={draft.slug}
@@ -616,18 +617,18 @@ function StudioNewSkillPanel({
 
       <section className="space-y-3">
         <div>
-          <h2 className="text-sm font-medium text-foreground">Appearance</h2>
+          <h2 className="text-sm font-medium text-foreground">{zh("Appearance")}</h2>
           <p className="text-xs text-muted-foreground">Tune how the skill appears in the store and Studio switcher.</p>
         </div>
         <div className="flex items-center gap-3">
           <SkillCardIcon card={previewCard} size={48} />
           <div className="min-w-0">
             <div className="truncate text-sm font-medium">{previewCard.name}</div>
-            <div className="truncate text-xs text-muted-foreground">{draft.tagline || "No tagline yet."}</div>
+            <div className="truncate text-xs text-muted-foreground">{draft.tagline || zh("No tagline yet.")}</div>
           </div>
         </div>
         <div className="space-y-2">
-          <Label>Color</Label>
+          <Label>{zh("Color")}</Label>
           <div className="flex flex-wrap items-center gap-2">
             {SKILL_CREATE_ACCENTS.map((color) => (
               <button
@@ -651,7 +652,7 @@ function StudioNewSkillPanel({
           </div>
         </div>
         <div className="space-y-1.5">
-          <Label htmlFor="skill-categories">Categories</Label>
+          <Label htmlFor="skill-categories">{zh("Categories")}</Label>
           <Input
             id="skill-categories"
             value={categoryDraft}
@@ -663,7 +664,7 @@ function StudioNewSkillPanel({
 
       <section className="space-y-3">
         <div>
-          <h2 className="text-sm font-medium text-foreground">Sharing</h2>
+          <h2 className="text-sm font-medium text-foreground">{zh("Sharing")}</h2>
           <p className="text-xs text-muted-foreground">Choose who can discover this skill inside Paperclip.</p>
         </div>
         <div className="grid gap-2 sm:grid-cols-3">
@@ -677,9 +678,9 @@ function StudioNewSkillPanel({
                 draft.sharingScope === scope ? "border-foreground bg-accent/50" : "border-border",
               )}
             >
-              <span className="block font-medium">{scope === "company" ? "Organization" : "Private"}</span>
+              <span className="block font-medium">{scope === "company" ? zh("Organization") : zh("Private")}</span>
               <span className="mt-1 block text-xs text-muted-foreground">
-                {scope === "company" ? "Visible inside this organization." : "Only visible in your library."}
+                {scope === "company" ? zh("Visible inside this organization.") : zh("Only visible in your library.")}
               </span>
             </button>
           ))}
@@ -689,7 +690,7 @@ function StudioNewSkillPanel({
             className="rounded-md border border-dashed border-border px-3 py-2 text-left text-sm text-muted-foreground"
           >
             <span className="block font-medium">Public</span>
-            <span className="mt-1 block text-xs">Coming later.</span>
+            <span className="mt-1 block text-xs">{zh("Coming later.")}</span>
           </button>
         </div>
       </section>
@@ -705,11 +706,11 @@ function StudioNewSkillPanel({
 
       <div className="flex items-center justify-end gap-2 border-t border-border pt-4">
         <Button variant="ghost" onClick={() => navigate("/skills/studio")} disabled={createSkill.isPending}>
-          Cancel
+          {zh("Cancel")}
         </Button>
         <Button onClick={() => createSkill.mutate()} disabled={createSkill.isPending || !nameValid}>
           <FilePlus className="h-4 w-4" />
-          {createSkill.isPending ? "Creating..." : draft.forkedFromSkillId ? "Create fork" : "Create skill"}
+          {createSkill.isPending ? zh("Creating...") : draft.forkedFromSkillId ? zh("Create fork") : zh("Create skill")}
         </Button>
       </div>
     </div>
@@ -836,7 +837,7 @@ function StudioLanding({
               />
             ) : null}
             <StudioLandingSection
-              title="Recently updated"
+              title={zh("Recently updated")}
               skills={updated}
               onSelectSkill={onSelectSkill}
             />
@@ -897,7 +898,7 @@ function StudioLandingRow({
         ) : null}
       </span>
       <span className="shrink-0 text-xs text-muted-foreground">
-        updated {relativeTime(skill.updatedAt)}
+        {zh("updated")} {relativeTime(skill.updatedAt)}
       </span>
       {editor ? (
         <Tooltip>
@@ -1512,7 +1513,7 @@ function SkillPane({
                 onClick={onEditACopy}
               >
                 <GitFork className="mr-1.5 h-3.5 w-3.5" />
-                Make a copy
+                {zh("Make a copy")}
               </Button>
             </div>
           </div>
@@ -1533,7 +1534,7 @@ function SkillPane({
                   disabled={!dirty || saveMutation.isPending}
                   onClick={() => saveMutation.mutate()}
                 >
-                  {saveMutation.isPending ? "Saving…" : "Save"}
+                  {saveMutation.isPending ? zh("Saving…") : zh("Save")}
                 </Button>
               </>
             )}
@@ -1812,10 +1813,10 @@ function SkillPathDialog({
         </div>
         <DialogFooter>
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            Cancel
+            {zh("Cancel")}
           </Button>
           <Button disabled={pending} onClick={submit}>
-            Create
+            {zh("Create")}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -1889,10 +1890,10 @@ function DeleteFolderDialog({
         </div>
         <DialogFooter>
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            Cancel
+            {zh("Cancel")}
           </Button>
           <Button variant="destructive" disabled={pending} onClick={submit}>
-            Delete
+            {zh("Delete")}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -2050,7 +2051,7 @@ function InputPane({
             </TooltipTrigger>
             <TooltipContent>{collapsed ? "Expand input" : "Collapse input"}</TooltipContent>
           </Tooltip>
-          <span>Input</span>
+          <span>{zh("Input")}</span>
         </span>
       }
       action={
@@ -2133,7 +2134,7 @@ function InputPane({
                               variant="destructive"
                               onClick={() => deleteMutation.mutate(id)}
                             >
-                              <Trash2 className="mr-2 h-4 w-4" /> Delete
+                              <Trash2 className="mr-2 h-4 w-4" /> {zh("Delete")}
                             </DropdownMenuItem>
                           </DropdownMenuContent>
                         </DropdownMenu>
@@ -2181,7 +2182,7 @@ function InputPane({
                   disabled={!canSaveSelectedInput || updateMutation.isPending}
                   onClick={() => updateMutation.mutate({ content: draft })}
                 >
-                  {updateMutation.isPending ? "Saving..." : "Save changes"}
+                  {updateMutation.isPending ? zh("Saving...") : zh("Save changes")}
                 </Button>
               </>
             ) : null}
@@ -2266,7 +2267,7 @@ function SaveInputDialog({
         </DialogHeader>
         <div className="space-y-3">
           <div className="space-y-1">
-            <Label htmlFor="input-name">Name</Label>
+            <Label htmlFor="input-name">{zh("Name")}</Label>
             <Input
               id="input-name"
               value={name}
@@ -2287,13 +2288,13 @@ function SaveInputDialog({
         </div>
         <DialogFooter>
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            Cancel
+            {zh("Cancel")}
           </Button>
           <Button
             disabled={!name.trim() || !content.trim() || createMutation.isPending}
             onClick={() => createMutation.mutate()}
           >
-            Save
+            {zh("Save")}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -2542,7 +2543,7 @@ function RunsPane({
                   disabled={gate.disabled || Boolean(templateGateReason) || createRunMutation.isPending}
                   onClick={() => createRunMutation.mutate()}
                 >
-                  <Play className="mr-1.5 h-3.5 w-3.5" /> Run
+                  <Play className="mr-1.5 h-3.5 w-3.5" /> {zh("Run")}
                 </Button>
               </span>
             </TooltipTrigger>
@@ -2584,7 +2585,7 @@ function RunsPane({
         {filterInput && (
           <div className="px-3 pt-2">
             <FilterBar
-              filters={[{ key: "input", label: "Input", value: filterInput.name }]}
+              filters={[{ key: "input", label: zh("Input"), value: filterInput.name }]}
               onRemove={onClearFilter}
               onClear={onClearFilter}
             />
@@ -2695,7 +2696,7 @@ function RunTemplateAdvancedPanel({
     const builtIn = templates.filter((template) => template.builtIn).map(toOption);
     const custom = templates.filter((template) => !template.builtIn).map(toOption);
     return [
-      { id: "built-in", label: "Built in", options: [noTemplateOption, ...builtIn] },
+      { id: "built-in", label: zh("Built in"), options: [noTemplateOption, ...builtIn] },
       ...(custom.length > 0 ? [{ id: "custom", label: "Custom", options: custom }] : []),
     ];
   }, [templates]);
@@ -2718,7 +2719,7 @@ function RunTemplateAdvancedPanel({
         ) : (
           <ChevronRight className="h-3.5 w-3.5" />
         )}
-        <span className="font-semibold uppercase tracking-wide">Advanced</span>
+        <span className="font-semibold uppercase tracking-wide">{zh("Advanced")}</span>
         <span className="ml-auto truncate">{selectedTemplateName}</span>
       </button>
       {open ? (
@@ -2884,7 +2885,7 @@ function RunTemplateDialog({
         </DialogHeader>
         <div className="space-y-3">
           <div className="space-y-1">
-            <Label htmlFor="run-template-name">Name</Label>
+            <Label htmlFor="run-template-name">{zh("Name")}</Label>
             <Input
               id="run-template-name"
               value={name}
@@ -2893,7 +2894,7 @@ function RunTemplateDialog({
             />
           </div>
           <div className="space-y-1">
-            <Label htmlFor="run-template-description">Description</Label>
+            <Label htmlFor="run-template-description">{zh("Description")}</Label>
             <Input
               id="run-template-description"
               value={description}
@@ -2916,7 +2917,7 @@ function RunTemplateDialog({
         </div>
         <DialogFooter>
           <Button variant="ghost" onClick={() => onOpenChange(false)}>
-            Cancel
+            {zh("Cancel")}
           </Button>
           <Button
             disabled={!name.trim() || !body.trim() || pending}
@@ -2928,7 +2929,7 @@ function RunTemplateDialog({
               })
             }
           >
-            {pending ? "Saving..." : "Save template"}
+            {pending ? zh("Saving...") : "Save template"}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -2989,7 +2990,7 @@ function AgentPicker({
       </PopoverTrigger>
       <PopoverContent align="end" className="w-64 p-0">
         <Command>
-          <CommandInput placeholder="Search agents…" />
+          <CommandInput placeholder={zh("Search agents…")} />
           <CommandList>
             <CommandEmpty>No agents.</CommandEmpty>
             <CommandGroup>
@@ -3017,7 +3018,7 @@ function AgentPicker({
                     <AgentIdentity agent={agent} size="xs" />
                     {!selectable && (
                       <Badge variant="secondary" className="ml-auto">
-                        Paused
+                        {zh("Paused")}
                       </Badge>
                     )}
                   </CommandItem>
@@ -3115,14 +3116,14 @@ function RunDetailView({
 
   if (detailQuery.isLoading) {
     return (
-      <PaneScaffold title="Run" action={<BackButton onBack={onBack} />}>
-        <div className="p-3 text-xs text-muted-foreground">Loading run…</div>
+      <PaneScaffold title={zh("Run")} action={<BackButton onBack={onBack} />}>
+        <div className="p-3 text-xs text-muted-foreground">{zh("Loading run…")}</div>
       </PaneScaffold>
     );
   }
   if (!detail) {
     return (
-      <PaneScaffold title="Run" action={<BackButton onBack={onBack} />}>
+      <PaneScaffold title={zh("Run")} action={<BackButton onBack={onBack} />}>
         <div className="p-3 text-xs text-muted-foreground">Run not found.</div>
       </PaneScaffold>
     );
@@ -3137,7 +3138,7 @@ function RunDetailView({
   const taskLink = testTaskLinkState(detail);
 
   return (
-    <PaneScaffold title="Run" action={<BackButton onBack={onBack} />}>
+    <PaneScaffold title={zh("Run")} action={<BackButton onBack={onBack} />}>
       <div className="min-h-0 flex-1 space-y-3 overflow-auto p-3">
         <div className="flex flex-wrap items-center gap-2">
           <StatusBadge status={runBadgeStatus(detail.status)} />
@@ -3153,10 +3154,10 @@ function RunDetailView({
 
         {/* snapshot property block */}
         <div className="rounded-md border border-border text-xs">
-          <PropRow label="Input" value={detail.inputId ? "saved input" : "ad-hoc paste"} />
+          <PropRow label={zh("Input")} value={detail.inputId ? "saved input" : "ad-hoc paste"} />
           <PropRow label="Template" value={detail.templateName ?? "No template"} />
           <PropRow label="Skill version" value={`v${detail.skillVersion.revisionNumber}`} />
-          <PropRow label="Created" value={relativeTime(detail.createdAt)} />
+          <PropRow label={zh("Created")} value={relativeTime(detail.createdAt)} />
         </div>
 
         {showRunErrorCard(detail.status) && (
@@ -3252,7 +3253,7 @@ function RunDetailView({
               disabled={cancelMutation.isPending}
               onClick={() => cancelMutation.mutate()}
             >
-              Cancel
+              {zh("Cancel")}
             </Button>
           ) : (
             <Button
@@ -3262,7 +3263,7 @@ function RunDetailView({
               disabled={deleteMutation.isPending}
               onClick={() => deleteMutation.mutate()}
             >
-              <Trash2 className="mr-1.5 h-3.5 w-3.5" /> Delete
+              <Trash2 className="mr-1.5 h-3.5 w-3.5" /> {zh("Delete")}
             </Button>
           )}
           {taskLink.enabled && detail.harnessIssue ? (
@@ -3313,7 +3314,7 @@ function RunDocumentsSection({ documents }: { documents: IssueDocument[] }) {
     <section className="space-y-2">
       <div className="flex items-center gap-2">
         <FileText className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
-        <h3 className="text-sm font-medium text-muted-foreground">Documents</h3>
+        <h3 className="text-sm font-medium text-muted-foreground">{zh("Documents")}</h3>
         <span className="text-xs text-muted-foreground">{documents.length}</span>
       </div>
       <div className="space-y-2">
@@ -3548,7 +3549,7 @@ function VersionHistorySheet({
             </p>
           )}
           {leftId && rightId && (leftQuery.isLoading || rightQuery.isLoading) && (
-            <p className="text-sm text-muted-foreground">Loading selected versions…</p>
+            <p className="text-sm text-muted-foreground">{zh("Loading selected versions…")}</p>
           )}
           {diff && (
             <div className="rounded-md border border-border">
@@ -3616,7 +3617,7 @@ function PropRow({ label, value }: { label: string; value: string }) {
 function BackButton({ onBack }: { onBack: () => void }) {
   return (
     <Button variant="ghost" size="sm" onClick={onBack}>
-      <ArrowLeft className="mr-1.5 h-3.5 w-3.5" /> Back
+      <ArrowLeft className="mr-1.5 h-3.5 w-3.5" /> {zh("Back")}
     </Button>
   );
 }
@@ -3634,8 +3635,8 @@ function MobileTabs({
     <Tabs defaultValue="skill" className="flex flex-1 flex-col">
       <TabsList variant="line" className="px-3">
         <TabsTrigger value="skill">Skill</TabsTrigger>
-        <TabsTrigger value="input">Input</TabsTrigger>
-        <TabsTrigger value="runs">Runs</TabsTrigger>
+        <TabsTrigger value="input">{zh("Input")}</TabsTrigger>
+        <TabsTrigger value="runs">{zh("Runs")}</TabsTrigger>
       </TabsList>
       <TabsContent value="skill" className="min-h-0 flex-1">
         {skill}

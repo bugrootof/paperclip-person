@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import type { ReactNode } from "react";
 
 import { Link } from "@/lib/router";
@@ -126,7 +127,7 @@ function ResourceActionButton({
           <AlertDialogDescription>{copy.body}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>{zh("Cancel")}</AlertDialogCancel>
           <AlertDialogAction onClick={onConfirm}>{copy.confirmLabel}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -162,7 +163,7 @@ function ConfirmActionButton({
           <AlertDialogDescription>{body}</AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>{zh("Cancel")}</AlertDialogCancel>
           <AlertDialogAction onClick={onConfirm}>{confirmLabel}</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -302,7 +303,7 @@ export function BuiltInBundlePanel({
         actions={
           <>
             <Button asChild variant="link" size="sm">
-              <Link to={viewHref}>View</Link>
+              <Link to={viewHref}>{zh("View")}</Link>
             </Button>
             <ResourceActionButton
               resource={resource}
@@ -323,12 +324,12 @@ export function BuiltInBundlePanel({
       <div className="divide-y rounded-lg border px-4">
         {/* Adapter — no resource entry; readiness is the agent lifecycle. */}
         <BundleRow
-          label="Adapter"
+          label={zh("Adapter")}
           chips={<ResourceStatusChip variant={adapterChip} />}
           detail={adapterDetail}
           actions={
             <Button variant="outline" size="sm" onClick={onConfigure}>
-              Configure
+              {zh("Configure")}
             </Button>
           }
         />
@@ -353,7 +354,7 @@ export function BuiltInBundlePanel({
 
         {/* Routine — zero-token-by-default; the weekly schedule ships off. */}
         <BundleRow
-          label="Routine"
+          label={zh("Routine")}
           secondary={bundle.routine.title}
           chips={
             <>
@@ -408,7 +409,7 @@ export function BuiltInBundlePanel({
                 {driftVariant(routine) && (
                   <ResourceActionButton
                     resource={routine}
-                    label="routine"
+                    label={zh("routine")}
                     onConfirm={() => onResetResource("routine")}
                     pending={resettingResource === "routine"}
                   />

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { CoordinatorConversationTasksPanel } from "@/components/coordinator/CoordinatorConversationTasksPanel";
 import { useCoordinatorWorkspaceEnabled } from "@/hooks/useCoordinatorWorkspaceEnabled";
 import { TextAttachmentContext } from "@/context/TextAttachmentContext";
@@ -629,7 +630,7 @@ function TaskSidePanelForScope({
     return {
       id: tab.id,
       type: tab.type,
-      label: browserLabel ?? (tab.payload.kind === "subtasks" && tasksTab ? "Tasks" : document ? documentDisplayTitle(document) : tab.label),
+      label: tab.id === "properties" ? zh("Properties") : browserLabel ?? (tab.payload.kind === "subtasks" && tasksTab ? "Tasks" : document ? documentDisplayTitle(document) : tab.label),
       ariaLabel: tab.payload.kind === "subtasks" ? taskLabel : tab.ariaLabel,
       closable: true,
       contentMode: tab.contentMode,
@@ -639,20 +640,20 @@ function TaskSidePanelForScope({
 
   const launcherSections = useMemo<SidePanelLauncherSection[]>(() => {
     const primary: SidePanelLauncherItem[] = conversationAgentId ? [
-      { id: "agent-tasks", label: "Tasks", description: "Tasks this agent worked on", icon: <ListChecks />, alreadyOpen: controller.tabs.some((tab) => tab.id === "agent-tasks") },
-      { id: "artifacts", label: "Artifacts", description: "Files this agent produced", icon: <Box />, alreadyOpen: controller.tabs.some((tab) => tab.id === "artifacts") },
-      { id: "properties", label: "Properties", icon: <SlidersHorizontal />, alreadyOpen: controller.tabs.some((tab) => tab.id === "properties") },
+      { id: "agent-tasks", label: zh("Tasks"), description: "Tasks this agent worked on", icon: <ListChecks />, alreadyOpen: controller.tabs.some((tab) => tab.id === "agent-tasks") },
+      { id: "artifacts", label: zh("Artifacts"), description: "Files this agent produced", icon: <Box />, alreadyOpen: controller.tabs.some((tab) => tab.id === "artifacts") },
+      { id: "properties", label: zh("Properties"), icon: <SlidersHorizontal />, alreadyOpen: controller.tabs.some((tab) => tab.id === "properties") },
     ] : [
-      { id: "properties", label: "Properties", icon: <SlidersHorizontal />, alreadyOpen: controller.tabs.some((tab) => tab.id === "properties") },
+      { id: "properties", label: zh("Properties"), icon: <SlidersHorizontal />, alreadyOpen: controller.tabs.some((tab) => tab.id === "properties") },
       ...(subtasksAvailable ? [{ id: "subtasks", label: taskLabel, description: tasksTab?.hasError ? "Could not load all tasks" : `${taskCount} total`, icon: <ListTree />, alreadyOpen: controller.tabs.some((tab) => tab.id === "subtasks") }] : []),
-      { id: "artifacts", label: "Artifacts", icon: <Box />, alreadyOpen: controller.tabs.some((tab) => tab.id === "artifacts") },
+      { id: "artifacts", label: zh("Artifacts"), icon: <Box />, alreadyOpen: controller.tabs.some((tab) => tab.id === "artifacts") },
     ];
     for (const [index, browser] of (browsersQuery.data ?? []).entries()) {
       primary.push({ id: `browser:${browser.id}`, label: (browsersQuery.data?.length ?? 0) > 1 ? `Browser ${index + 1}` : "Browser", description: browser.status, icon: <Globe />, alreadyOpen: controller.tabs.some(tab => tab.id === `browser:${browser.id}`) });
     }
     for (const panel of pluginPanels) primary.push({ id: taskPluginPanelId(panel), label: panel.slot.displayName, icon: <AppWindow />, alreadyOpen: controller.tabs.some(tab => tab.id === taskPluginPanelId(panel)) });
     if (fileTabsEnabled) {
-      primary.push({ id: "files", label: "Files", icon: <FolderOpen />, shortcut: "G F", alreadyOpen: controller.tabs.some((tab) => tab.id === "files") });
+      primary.push({ id: "files", label: zh("Files"), icon: <FolderOpen />, shortcut: "G F", alreadyOpen: controller.tabs.some((tab) => tab.id === "files") });
     }
     const documentItems: SidePanelLauncherItem[] = [
       ...(planDocument ? [{
@@ -674,7 +675,7 @@ function TaskSidePanelForScope({
         })),
     ];
     const sections: SidePanelLauncherSection[] = [
-      { id: "open", label: "Open", items: primary },
+      { id: "open", label: zh("Open"), items: primary },
     ];
     if (documentItems.length > 0) {
       sections.push({ id: "documents", label: "Task documents", items: documentItems });

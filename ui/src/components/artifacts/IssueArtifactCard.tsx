@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useContext, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -64,7 +65,7 @@ export function IssueArtifactFile(props: IssueArtifactFileProps) {
       aria-label={`Open in tab: ${props.title}`}
       onClick={() => openTextAttachment(attachmentId, props.filename)}
     >
-      Open in tab
+      {zh("Open in tab")}
     </Button>
   ) : null;
   const [galleryOpen, setGalleryOpen] = useState(false);

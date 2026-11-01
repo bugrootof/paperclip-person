@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AgentIdentity } from "@/components/AgentIdentity";
 import { useCombinedInboxTasksEnabled } from "@/hooks/useCombinedInboxTasksEnabled";
 import { useState, useEffect, useMemo } from "react";
@@ -220,12 +221,12 @@ export function CommandPalette() {
     showSearchAll && visibleIssues.length === 0 && matchedProjects.length === 0;
 
   return (
-    <CommandDialog open={open} onOpenChange={(v) => {
+    <CommandDialog title={zh("Command Palette")} description={zh("Search for a command to run...")} open={open} onOpenChange={(v) => {
         setOpen(v);
         if (v && isMobile) setSidebarOpen(false);
       }}>
       <CommandInput
-        placeholder="Search tasks, agents, projects..."
+        placeholder={zh("Search tasks, agents, projects...")}
         value={query}
         onValueChange={setQuery}
         onKeyDown={(event) => {
@@ -244,17 +245,17 @@ export function CommandPalette() {
         <CommandEmpty>
           {showSearchAll ? (
             <span>
-              No quick task matches. Press{" "}
+              {zh("No quick task matches. Press")}{" "}
               <kbd className="rounded border border-border bg-muted px-1 py-0.5 text-(length:--text-nano)">↵</kbd>{" "}
-              to <span className="font-medium">search all</span> or keep typing to refine.
+              to <span className="font-medium">{zh("search all")}</span> {zh("or keep typing to refine.")}
             </span>
           ) : (
-            "No results found."
+            zh("No results found.")
           )}
         </CommandEmpty>
 
         {showSearchAll ? (
-          <CommandGroup heading="Search">
+          <CommandGroup heading={zh("Search")}>
             <CommandItem
               value={`${SEARCH_ALL_VALUE} ${searchQuery}`}
               onSelect={goFullSearch}
@@ -263,10 +264,10 @@ export function CommandPalette() {
             >
               <Search className="mr-2 h-4 w-4" />
               <span className="flex-1 truncate">
-                Search all for <span className="font-semibold">&ldquo;{searchQuery}&rdquo;</span>
+                {zh("Search all for")} <span className="font-semibold">&ldquo;{searchQuery}&rdquo;</span>
               </span>
               <span className="ml-auto inline-flex items-center gap-1 text-xs text-muted-foreground">
-                <span>open full search</span>
+                <span>{zh("open full search")}</span>
                 <kbd className="rounded border border-border bg-background px-1 py-0.5 text-(length:--text-nano)">↵</kbd>
               </span>
             </CommandItem>
@@ -275,7 +276,7 @@ export function CommandPalette() {
 
         {showSearchAll ? <CommandSeparator /> : null}
 
-        <CommandGroup heading="Quick filters">
+        <CommandGroup heading={zh("Quick filters")}>
           {SEARCH_OPERATOR_QUICK_FILTERS.map((chip) => (
             <CommandItem
               key={chip}
@@ -293,7 +294,7 @@ export function CommandPalette() {
 
         {showPromotedProjects && (
           <>
-            <CommandGroup heading="Projects">
+            <CommandGroup heading={zh("Projects")}>
               {matchedProjects.map((project) => (
                 <CommandItem
                   key={project.id}
@@ -315,7 +316,7 @@ export function CommandPalette() {
           </>
         )}
 
-        <CommandGroup heading="Actions">
+        <CommandGroup heading={zh("Actions")}>
           <CommandItem
             onSelect={() => {
               setOpen(false);
@@ -323,7 +324,7 @@ export function CommandPalette() {
             }}
           >
             <SquarePen className="mr-2 h-4 w-4" />
-            Create new task
+            {zh("Create new task")}
             <span className="ml-auto text-xs text-muted-foreground">C</span>
           </CommandItem>
           {onIssueDetail && fileViewerEnabled && (
@@ -334,7 +335,7 @@ export function CommandPalette() {
               }}
             >
               <FileCode2 className="mr-2 h-4 w-4" />
-              Open file in this issue...
+              {zh("Open file in this issue...")}
               <span className="ml-auto text-xs text-muted-foreground">g f</span>
             </CommandItem>
           )}
@@ -345,55 +346,55 @@ export function CommandPalette() {
             }}
           >
             <Plus className="mr-2 h-4 w-4" />
-            Create new agent
+            {zh("Create new agent")}
           </CommandItem>
           <CommandItem onSelect={() => go("/projects")}>
             <Plus className="mr-2 h-4 w-4" />
-            Create new project
+            {zh("Create new project")}
           </CommandItem>
         </CommandGroup>
 
         <CommandSeparator />
 
-        <CommandGroup heading="Pages">
+        <CommandGroup heading={zh("Pages")}>
           <CommandItem onSelect={() => go("/dashboard")}>
             <LayoutDashboard className="mr-2 h-4 w-4" />
-            Dashboard
+            {zh("Dashboard")}
           </CommandItem>
           <CommandItem onSelect={() => go(combinedInboxTasksEnabled ? "/issues?view=mine" : "/inbox")}>
             <Inbox className="mr-2 h-4 w-4" />
-            {combinedInboxTasksEnabled ? "My work" : "Inbox"}
+            {combinedInboxTasksEnabled ? zh("My work") : zh("Inbox")}
           </CommandItem>
           <CommandItem onSelect={() => go("/issues")}>
             <CircleDot className="mr-2 h-4 w-4" />
-            Tasks
+            {zh("Tasks")}
           </CommandItem>
           <CommandItem onSelect={() => go("/projects")}>
             <Hexagon className="mr-2 h-4 w-4" />
-            Projects
+            {zh("Projects")}
           </CommandItem>
           <CommandItem onSelect={() => go("/goals")}>
             <Target className="mr-2 h-4 w-4" />
-            Goals
+            {zh("Goals")}
           </CommandItem>
           <CommandItem onSelect={() => go("/agents")}>
             <Bot className="mr-2 h-4 w-4" />
-            Agents
+            {zh("Agents")}
           </CommandItem>
           <CommandItem onSelect={() => go("/costs")}>
             <DollarSign className="mr-2 h-4 w-4" />
-            Costs
+            {zh("Costs")}
           </CommandItem>
           <CommandItem onSelect={() => go("/activity")}>
             <History className="mr-2 h-4 w-4" />
-            Activity
+            {zh("Activity")}
           </CommandItem>
         </CommandGroup>
 
         {visibleIssues.length > 0 && (
           <>
             <CommandSeparator />
-            <CommandGroup heading="Tasks">
+            <CommandGroup heading={zh("Tasks")}>
               {visibleIssues.slice(0, taskLimit).map((issue) => (
                 <CommandItem
                   key={issue.id}
@@ -422,7 +423,7 @@ export function CommandPalette() {
         {agents.length > 0 && (
           <>
             <CommandSeparator />
-            <CommandGroup heading="Agents">
+            <CommandGroup heading={zh("Agents")}>
               {agents.slice(0, 10).map((agent) => (
                 <CommandItem key={agent.id} onSelect={() => go(agentUrl(agent))}>
                   <Bot className="mr-2 h-4 w-4" />
@@ -437,7 +438,7 @@ export function CommandPalette() {
         {projects.length > 0 && !showSearchAll && (
           <>
             <CommandSeparator />
-            <CommandGroup heading="Projects">
+            <CommandGroup heading={zh("Projects")}>
               {projects.slice(0, 10).map((project) => (
                 <CommandItem key={project.id} onSelect={() => go(projectUrl(project))}>
                   <Hexagon className="mr-2 h-4 w-4" />

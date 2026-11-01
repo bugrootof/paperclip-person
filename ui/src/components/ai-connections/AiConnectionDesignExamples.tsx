@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState } from "react";
 import { AiConnectionPicker } from "./AiConnectionPicker";
 import { LocalProviderLoginInstructions, ProviderApiKeyCard } from "@/components/AdapterLoginChrome";
@@ -57,7 +58,7 @@ export function AiConnectionDesignExamples() {
         disabled
         onChange={() => {}}
         onSubmit={() => {}}
-        placeholder="Enter API key here"
+        placeholder={zh("Enter API key here")}
       />
       <LocalProviderLoginInstructions
         adapterType="claude_local"

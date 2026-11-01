@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation, useNavigate, useParams } from "@/lib/router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -53,7 +54,7 @@ type OrderedProjectWorkspaceTabItem = {
 
 const DEFAULT_PLUGIN_DETAIL_TAB_ORDER = 100;
 const PROJECT_WORKSPACE_BASE_TAB_ITEMS: OrderedProjectWorkspaceTabItem[] = [
-  { value: "configuration", label: "Configuration", order: 30 },
+  { value: "configuration", label: zh("Configuration"), order: 30 },
 ];
 
 function isProjectWorkspacePluginTab(value: string | null): value is ProjectWorkspacePluginTab {
@@ -81,8 +82,8 @@ const SOURCE_TYPE_OPTIONS: Array<{ value: ProjectWorkspaceSourceType; label: str
 ];
 
 const VISIBILITY_OPTIONS: Array<{ value: ProjectWorkspaceVisibility; label: string }> = [
-  { value: "default", label: "Default" },
-  { value: "advanced", label: "Advanced" },
+  { value: "default", label: zh("Default") },
+  { value: "advanced", label: zh("Advanced") },
 ];
 
 function isSafeExternalUrl(value: string | null | undefined) {
@@ -326,9 +327,9 @@ export function ProjectWorkspaceDetail() {
   useEffect(() => {
     if (!project) return;
     setBreadcrumbs([
-      { label: "Projects", href: "/projects" },
+      { label: zh("Projects"), href: "/projects" },
       { label: project.name, href: `/projects/${canonicalProjectRef}` },
-      { label: "Workspaces", href: `/projects/${canonicalProjectRef}/workspaces` },
+      { label: zh("Workspaces"), href: `/projects/${canonicalProjectRef}/workspaces` },
       { label: workspace?.name ?? routeWorkspaceId },
     ]);
   }, [setBreadcrumbs, project, canonicalProjectRef, workspace?.name, routeWorkspaceId]);
@@ -457,7 +458,7 @@ export function ProjectWorkspaceDetail() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between">
         <div className="min-w-0 space-y-2">
           <div className="text-xs font-medium uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-            Project workspace
+            {zh("Project workspace")}
           </div>
           <h1 className="truncate text-xl font-semibold sm:text-2xl">{workspace.name}</h1>
         </div>
@@ -512,7 +513,7 @@ export function ProjectWorkspaceDetail() {
                 />
               </Field>
 
-              <Field label="Visibility">
+              <Field label={zh("Visibility")}>
                 <select
                   className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm outline-none"
                   value={form.visibility}
@@ -550,7 +551,7 @@ export function ProjectWorkspaceDetail() {
               */}
               {!hideHostPaths && (
                 <div className="grid gap-4 md:grid-cols-(--gtc-13)">
-                  <Field label="Local path">
+                  <Field label={zh("Local path")}>
                     <input
                       className="w-full rounded-lg border border-border bg-background px-3 py-2 font-mono text-sm outline-none"
                       value={form.cwd}
@@ -661,7 +662,7 @@ export function ProjectWorkspaceDetail() {
             <div className="mt-5 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center">
               <Button className="w-full sm:w-auto" disabled={!isDirty || updateWorkspace.isPending} onClick={saveChanges}>
                 {updateWorkspace.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                Save changes
+                {zh("Save changes")}
               </Button>
               <Button
                 variant="outline"
@@ -672,7 +673,7 @@ export function ProjectWorkspaceDetail() {
                   setErrorMessage(null);
                 }}
               >
-                Reset
+                {zh("Reset")}
               </Button>
               {errorMessage ? <p className="text-sm text-destructive">{errorMessage}</p> : null}
               {!errorMessage && runtimeActionMessage ? <p className="text-sm text-muted-foreground">{runtimeActionMessage}</p> : null}
@@ -688,15 +689,15 @@ export function ProjectWorkspaceDetail() {
               <h2 className="text-lg font-semibold">Current state</h2>
             </div>
             <Separator className="my-4" />
-            <DetailRow label="Project">
+            <DetailRow label={zh("Project")}>
               <Link to={`/projects/${canonicalProjectRef}`} className="hover:underline">{project.name}</Link>
             </DetailRow>
             <DetailRow label="Workspace ID">
               <span className="break-all font-mono text-xs">{workspace.id}</span>
             </DetailRow>
             {hideHostPaths ? null : (
-              <DetailRow label="Local path">
-                <span className="break-all font-mono text-xs">{workspace.cwd ?? "None"}</span>
+              <DetailRow label={zh("Local path")}>
+                <span className="break-all font-mono text-xs">{workspace.cwd ?? zh("None")}</span>
               </DetailRow>
             )}
             <DetailRow label="Repo">
@@ -707,10 +708,10 @@ export function ProjectWorkspaceDetail() {
                 </a>
               ) : workspace.repoUrl ? (
                 <span className="break-all font-mono text-xs">{workspace.repoUrl}</span>
-              ) : "None"}
+              ) : zh("None")}
             </DetailRow>
-            <DetailRow label="Default ref">{workspace.defaultRef ?? "None"}</DetailRow>
-            <DetailRow label="Updated">{new Date(workspace.updatedAt).toLocaleString()}</DetailRow>
+            <DetailRow label="Default ref">{workspace.defaultRef ?? zh("None")}</DetailRow>
+            <DetailRow label={zh("Updated")}>{new Date(workspace.updatedAt).toLocaleString()}</DetailRow>
           </Card>
 
           <Card className="block p-5">

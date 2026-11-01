@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import type { IssueRelatedWorkItem, IssueRelatedWorkSummary } from "@paperclipai/shared";
 import { IssueReferencePill } from "./IssueReferencePill";
 import { ExternalObjectPill } from "./ExternalObjectPill";
@@ -126,7 +127,7 @@ function ExternalObjectsSection({
               onClick={onRetry}
               className="text-primary underline-offset-2 hover:underline"
             >
-              Retry
+              {zh("Retry")}
             </button>
           ) : null}
         </p>
@@ -191,7 +192,7 @@ export function IssueRelatedWorkPanel({
   return (
     <div className="space-y-3">
       <Section
-        title="References"
+        title={zh("References")}
         description="Other tasks this task currently points at in its title, description, comments, or documents."
         items={outbound}
         emptyLabel="This task does not reference any other tasks yet."

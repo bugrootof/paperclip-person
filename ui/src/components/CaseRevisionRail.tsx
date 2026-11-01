@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@/lib/router";
@@ -24,7 +25,7 @@ function RevisionByline({ revision }: { revision: CaseDocumentRevision }) {
       {revision.issue && (
         <>
           <span aria-hidden>·</span>
-          <span>via</span>
+          <span>{zh("via")}</span>
           <Link
             to={`/issues/${revision.issue.identifier}`}
             className="font-mono text-foreground/80 hover:underline"
@@ -91,7 +92,7 @@ function CaseDocumentDiffModal({
           </DialogHeader>
           <div className="grid min-w-0 gap-3 sm:grid-cols-2 lg:gap-4">
             <div className="flex min-w-0 items-center gap-2">
-              <span className="shrink-0 rounded-full border border-red-500/30 bg-red-500/10 px-2 py-0.5 text-(length:--text-nano) font-medium uppercase tracking-(--tracking-caps) text-red-400">Old</span>
+              <span className="shrink-0 rounded-full border border-red-500/30 bg-red-500/10 px-2 py-0.5 text-(length:--text-nano) font-medium uppercase tracking-(--tracking-caps) text-red-400">{zh("Old")}</span>
               <Select value={effectiveLeftId ?? ""} onValueChange={setLeftRevisionId}>
                 <SelectTrigger aria-label="Old revision" className="min-w-0 w-full border-border/60 data-[size=default]:h-11 md:w-60 md:text-xs md:data-[size=default]:h-9">
                   <SelectValue className="min-w-0 truncate" placeholder="Select revision" />
@@ -106,7 +107,7 @@ function CaseDocumentDiffModal({
               </Select>
             </div>
             <div className="flex min-w-0 items-center gap-2">
-              <span className="shrink-0 rounded-full border border-green-500/30 bg-green-500/10 px-2 py-0.5 text-(length:--text-nano) font-medium uppercase tracking-(--tracking-caps) text-green-400">New</span>
+              <span className="shrink-0 rounded-full border border-green-500/30 bg-green-500/10 px-2 py-0.5 text-(length:--text-nano) font-medium uppercase tracking-(--tracking-caps) text-green-400">{zh("New")}</span>
               <Select value={effectiveRightId ?? ""} onValueChange={setRightRevisionId}>
                 <SelectTrigger aria-label="New revision" className="min-w-0 w-full border-border/60 data-[size=default]:h-11 md:w-60 md:text-xs md:data-[size=default]:h-9">
                   <SelectValue className="min-w-0 truncate" placeholder="Select revision" />
@@ -131,8 +132,8 @@ function CaseDocumentDiffModal({
           ) : (
             <div className="font-mono text-xs leading-6">
               <div className="grid grid-cols-(--gtc-1) border-b border-border/60 bg-muted/30 px-3 py-2 text-(length:--text-micro) uppercase tracking-(--tracking-caps) text-muted-foreground">
-                <span>Old</span>
-                <span>New</span>
+                <span>{zh("Old")}</span>
+                <span>{zh("New")}</span>
                 <span />
                 <span>Content</span>
               </div>
@@ -227,7 +228,7 @@ export function CaseRevisionRail({
       <aside className="min-w-0 space-y-1">
         <div className="flex items-center justify-between gap-2 px-1">
           <h3 className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            Revisions
+            {zh("Revisions")}
           </h3>
           {revisions.length > 1 ? (
             <Button
@@ -261,7 +262,7 @@ export function CaseRevisionRail({
                     rev {rev.revisionNumber}
                     {index === 0 && (
                       <span className="ml-1.5 rounded bg-muted px-1 py-0.5 text-(length:--text-nano) text-muted-foreground">
-                        latest
+                        {zh("latest")}
                       </span>
                     )}
                   </span>

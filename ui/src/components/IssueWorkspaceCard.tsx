@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useWorkspaceIsolationControls } from "@/hooks/useWorkspaceIsolationControls";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "@/lib/router";
@@ -28,8 +29,8 @@ import { Badge } from "@/components/ui/badge";
 /* -------------------------------------------------------------------------- */
 
 const EXECUTION_WORKSPACE_OPTIONS = [
-  { value: "shared_workspace", label: "Project default" },
-  { value: "isolated_workspace", label: "New isolated workspace" },
+  { value: "shared_workspace", label: zh("Project default") },
+  { value: "isolated_workspace", label: zh("New isolated workspace") },
   { value: "reuse_existing", label: "Reuse existing workspace" },
 ] as const;
 
@@ -72,7 +73,7 @@ function CopyableInline({ value, label, mono }: { value: string; label?: string;
         type="button"
         className="shrink-0 p-0.5 rounded hover:bg-accent/50 transition-colors text-muted-foreground hover:text-foreground opacity-0 group-hover/copy:opacity-100 focus:opacity-100"
         onClick={handleCopy}
-        title={copied ? "Copied!" : "Copy"}
+        title={copied ? zh("Copied!") : zh("Copy")}
         aria-label={copied ? "Copied to clipboard" : `Copy ${label ?? "value"}`}
       >
         {copied ? <Check className="h-3 w-3 text-green-500" /> : <Copy className="h-3 w-3" />}
@@ -359,7 +360,7 @@ export function IssueWorkspaceCard({
                   className="h-6 px-2 text-xs text-muted-foreground"
                   onClick={handleCancel}
                 >
-                  <X className="h-3 w-3 mr-1" />Cancel
+                  <X className="h-3 w-3 mr-1" />{zh("Cancel")}
                 </Button>
                 <Button
                   size="sm"
@@ -367,7 +368,7 @@ export function IssueWorkspaceCard({
                   onClick={handleSave}
                   disabled={!canSaveWorkspaceConfig}
                 >
-                  Save
+                  {zh("Save")}
                 </Button>
               </>
             ) : (
@@ -377,7 +378,7 @@ export function IssueWorkspaceCard({
                 className="h-6 px-2 text-xs text-muted-foreground"
                 onClick={() => setEditing(true)}
               >
-                <Pencil className="h-3 w-3 mr-1" />Edit
+                <Pencil className="h-3 w-3 mr-1" />{zh("Edit")}
               </Button>
             )}
           </div>

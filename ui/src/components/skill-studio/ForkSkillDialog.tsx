@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { GitFork, Loader2, Users } from "lucide-react";
@@ -233,7 +234,7 @@ export function ForkSkillDialog({
             onClick={() => onOpenChange(false)}
             disabled={busy}
           >
-            Cancel
+            {zh("Cancel")}
           </Button>
           <Button
             type="button"

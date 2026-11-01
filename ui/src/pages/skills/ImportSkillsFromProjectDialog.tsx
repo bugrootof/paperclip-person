@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -269,7 +270,7 @@ function CandidateStatusBadge({
           variant="outline"
           className="gap-1 px-1.5 py-0 font-normal text-emerald-600 border-emerald-500/40 dark:text-emerald-400"
         >
-          <CheckCircle2 className="h-3 w-3" /> New
+          <CheckCircle2 className="h-3 w-3" /> {zh("New")}
         </Badge>
       );
   }
@@ -513,7 +514,7 @@ export function ImportSkillsFromProjectDialog({
         <header className="flex shrink-0 items-start justify-between gap-3 border-b border-border/60 px-5 py-4">
           <div className="flex flex-col gap-1">
             <DialogTitle className="text-base font-semibold">
-              Import skills from project
+              {zh("Import skills from project")}
             </DialogTitle>
             <DialogDescription className="text-xs text-muted-foreground">
               Pick a project, scan its workspaces for skills, and import them as references.
@@ -602,7 +603,7 @@ export function ImportSkillsFromProjectDialog({
                   </div>
                 )}
                 <Button variant="outline" size="sm" onClick={backToPick}>
-                  <ArrowLeft className="mr-1 h-3.5 w-3.5" /> Back
+                  <ArrowLeft className="mr-1 h-3.5 w-3.5" /> {zh("Back")}
                 </Button>
                 {!scanError && candidates.length > 0 && (
                   <Button
@@ -624,12 +625,12 @@ export function ImportSkillsFromProjectDialog({
             )}
             {step === "pick" && (
               <Button variant="ghost" size="sm" onClick={handleClose}>
-                Cancel
+                {zh("Cancel")}
               </Button>
             )}
             {step === "result" && (
               <Button size="sm" onClick={handleClose}>
-                Done
+                {zh("Done")}
               </Button>
             )}
           </div>
@@ -769,7 +770,7 @@ function ScanningStep({ projectName }: { projectName: string }) {
           variant="outline"
           className="px-1.5 py-0 text-(length:--text-micro) font-normal text-muted-foreground"
         >
-          +{APPROX_TOTAL_SCAN_FOLDERS - HIGHLIGHTED_SCAN_FOLDERS.length} more
+          +{APPROX_TOTAL_SCAN_FOLDERS - HIGHLIGHTED_SCAN_FOLDERS.length} {zh("more")}
         </Badge>
       </div>
     </div>
@@ -823,7 +824,7 @@ function ProjectSkillBrowser({
           </Button>
         </div>
         {workspaces.length > 1 && (
-          <div className="mt-3 flex flex-wrap gap-1.5" aria-label="Project workspace">
+          <div className="mt-3 flex flex-wrap gap-1.5" aria-label={zh("Project workspace")}>
             {workspaces.map((workspace) => (
               <Button
                 key={workspace.id}
@@ -891,7 +892,7 @@ function ProjectSkillBrowser({
             })}
           </ul>
         ) : (
-          <div className="p-8 text-center text-sm text-muted-foreground">This folder is empty.</div>
+          <div className="p-8 text-center text-sm text-muted-foreground">{zh("This folder is empty.")}</div>
         )}
         {result?.truncated && (
           <p className="border-t border-border/60 px-5 py-2 text-xs text-muted-foreground">Showing the first 250 entries.</p>
@@ -960,7 +961,7 @@ function SelectStep({
           </p>
           {!grant && (
             <Button variant="outline" size="sm" className="mt-4" onClick={onRetry}>
-              Try again
+              {zh("Try again")}
             </Button>
           )}
         </div>
@@ -994,7 +995,7 @@ function SelectStep({
           <p className="mt-1.5 text-sm text-muted-foreground">
             None of the well-known skill folders in this project's workspaces contain a{" "}
             <code className="rounded bg-muted px-1 py-0.5 text-xs">SKILL.md</code>. We searched{" "}
-            {HIGHLIGHTED_SCAN_FOLDERS.join(", ")} and {APPROX_TOTAL_SCAN_FOLDERS -
+            {HIGHLIGHTED_SCAN_FOLDERS.join(", ")} {zh("and")} {APPROX_TOTAL_SCAN_FOLDERS -
               HIGHLIGHTED_SCAN_FOLDERS.length}{" "}
             other agent-harness folders.
           </p>
@@ -1015,7 +1016,7 @@ function SelectStep({
                 className="font-medium text-foreground underline underline-offset-2"
                 onClick={onImportFromPath}
               >
-                Import from path or URL
+                {zh("Import from path or URL")}
               </button>
               .
             </p>
@@ -1192,7 +1193,7 @@ function ResultStep({ result }: ResultStepProps) {
           <span className="text-emerald-600 dark:text-emerald-400">
             ✓ {result.imported.length} imported
           </span>
-          {result.updated.length > 0 && <span>↻ {result.updated.length} updated</span>}
+          {result.updated.length > 0 && <span>↻ {result.updated.length} {zh("updated")}</span>}
           {result.skipped.length > 0 && <span>⊘ {result.skipped.length} skipped</span>}
         </div>
       </div>
@@ -1220,7 +1221,7 @@ function ResultStep({ result }: ResultStepProps) {
                     to={skillStudioRoute(skill.id)}
                     className="inline-flex shrink-0 items-center gap-1 text-xs font-medium text-foreground no-underline hover:underline"
                   >
-                    Open <ExternalLink className="h-3 w-3" />
+                    {zh("Open")} <ExternalLink className="h-3 w-3" />
                   </Link>
                 </li>
               ))}

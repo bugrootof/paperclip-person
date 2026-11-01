@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useRef, useState } from "react";
 import type { ProjectRepository } from "@paperclipai/shared";
 import { GitBranch, LockKeyhole, Plus, X } from "lucide-react";
@@ -54,7 +55,7 @@ export function RepositoryEditor({ selected, onChange, state = "ready", availabl
             <div className="flex flex-col gap-3">
               <GithubIcon className="size-5" />
               <div className="flex flex-col gap-1"><p className="text-sm font-medium">Connect GitHub to pick a repo</p><p className="text-xs text-muted-foreground">Choose from repos you can access through your GitHub connections.</p></div>
-              <Button type="button" onClick={onConnect}><GithubIcon className="size-4" />Connect GitHub</Button>
+              <Button type="button" onClick={onConnect}><GithubIcon className="size-4" />{zh("Connect GitHub")}</Button>
             </div>
           </PopoverContent>
         </Popover>
@@ -70,12 +71,12 @@ export function RepositoryEditor({ selected, onChange, state = "ready", availabl
             renderOption={({ repo }) => <><GitBranch className="size-4 shrink-0 text-muted-foreground" /><span className="flex min-w-0 flex-1 flex-col gap-1"><span className="truncate">{repo.fullName}</span><span className="truncate text-xs text-muted-foreground">{repo.connections.join(" · ")}</span></span>{repo.private && <LockKeyhole className="size-3 shrink-0 text-muted-foreground" />}</>}
             onValueChange={(_, option) => { onChange([...selected, option.repo]); setShowPicker(false); }}
             createItem={state === "error"
-              ? { render: () => <>Try again</>, onSelect: () => { onRetry(); } }
+              ? { render: () => <>{zh("Try again")}</>, onSelect: () => { onRetry(); } }
               : { render: () => <><Plus className="size-4" />Connect another GitHub account</>, onSelect: onConnect }}
           />
           <div className="flex items-center justify-between gap-2">
             <p className="text-xs text-muted-foreground">{"All GitHub connections you can use."}</p>
-            <Button type="button" variant="ghost" size="sm" onClick={() => setShowPicker(false)}>Cancel</Button>
+            <Button type="button" variant="ghost" size="sm" onClick={() => setShowPicker(false)}>{zh("Cancel")}</Button>
           </div>
         </div>
       ) : <Button type="button" variant="outline" className={addClassName} onClick={() => setShowPicker(true)}><GithubIcon className="size-4" />{addLabel}</Button>}

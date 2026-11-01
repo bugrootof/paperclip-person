@@ -1,3 +1,4 @@
+import { boardT as zh, i18n } from "@/i18n";
 import { useEffect, useState } from "react";
 import { PROVIDER_QUOTA_MONITOR_SERVICE_NAME } from "@paperclipai/shared";
 
@@ -130,6 +131,7 @@ export function formatMonitorAbsolute(
   options: MonitorDateTimeFormatOptions = {},
   now: MonitorDate = new Date(),
 ): string {
+  options = { ...options, locale: options.locale ?? (i18n.language === "en" ? "en-US" : i18n.language) };
   const target = new Date(toTimestamp(nextCheckAt));
   const reference = new Date(toTimestamp(now));
   const targetYmd = zonedYmd(target, options.locale, options.timeZone);
@@ -145,7 +147,7 @@ export function formatMonitorAbsolute(
     targetYmd.year === referenceYmd.year &&
     targetYmd.month === referenceYmd.month &&
     targetYmd.day === referenceYmd.day;
-  if (isToday) return `Today, ${time}`;
+  if (isToday) return zh("Today, {{time}}", { time });
 
   const weekday = new Intl.DateTimeFormat(options.locale, {
     weekday: "short",
@@ -165,6 +167,7 @@ export function formatMonitorAbsoluteFull(
   nextCheckAt: MonitorDate,
   options: MonitorDateTimeFormatOptions = {},
 ): string {
+  options = { ...options, locale: options.locale ?? (i18n.language === "en" ? "en-US" : i18n.language) };
   const date = new Date(toTimestamp(nextCheckAt));
   const datePart = new Intl.DateTimeFormat(options.locale, {
     weekday: "long",

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { ProjectSkillRepositoryRow } from "@/components/skill-studio/ProjectSkillRepositoryRow";
 import { SkillSourceConnectionRepair } from "@/components/skill-studio/SkillSourceConnectionRepair";
 import { SkillSourceBranchRepair } from "@/components/skill-studio/SkillSourceBranchRepair";
@@ -43,7 +44,7 @@ export function SkillSources() {
   const [branchSourceId, setBranchSourceId] = useState<string | null>(null);
   const [disconnectSource, setDisconnectSource] = useState<SkillSource | null>(null);
   const companyId = selectedCompanyId ?? '';
-  useEffect(() => { setBreadcrumbs([{ label: 'Skills', href: '/skills' }, { label: 'Sources' }]); }, [setBreadcrumbs]);
+  useEffect(() => { setBreadcrumbs([{ label: zh("Skills"), href: '/skills' }, { label: zh("Sources") }]); }, [setBreadcrumbs]);
   const query = useQuery({ queryKey: sourceKey(companyId), queryFn: () => skillSourcesApi.list(companyId), enabled: Boolean(companyId), refetchInterval: 5000 });
   const repairSource = query.data?.find(source => source.id === repairSourceId);
   const branchSource = query.data?.find(source => source.id === branchSourceId);
@@ -87,7 +88,7 @@ export function SkillSources() {
     <header className="flex flex-wrap items-start justify-between gap-4">
       <div><h1 className="text-xl font-semibold">Skill sources</h1><p className="mt-1 text-sm text-muted-foreground">Skills from your repositories stay up to date automatically.</p></div>
       <div className="flex items-center gap-2">
-        <Button onClick={() => navigate('/skills/sources/new')}><Plus className="size-4" />Import from GitHub</Button>
+        <Button onClick={() => navigate('/skills/sources/new')}><Plus className="size-4" />{zh("Import from GitHub")}</Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="icon" aria-label="More source actions"><MoreVertical className="size-4" /></Button>
@@ -100,9 +101,9 @@ export function SkillSources() {
     </header>
     <SkillsPageNavigation activeView="sources" />
     {query.isPending && <p role="status" className="text-sm text-muted-foreground">Loading sources…</p>}
-    {query.error && <p role="alert" className="text-sm text-destructive">{query.error.message} <Button variant="ghost" size="sm" onClick={() => void query.refetch()}>Try again</Button></p>}
-    {query.data?.length === 0 && availableProjects.length === 0 && <div className="flex flex-col items-start gap-3 py-8"><p className="text-sm text-muted-foreground">No repositories added yet. Import your skills to make them available in {selectedCompany?.name ?? 'this company'}.</p><Button variant="outline" onClick={() => navigate('/skills/sources/new')}>Import from GitHub</Button></div>}
-    {projectRepositories.error && <p role="alert" className="text-sm text-destructive">{projectRepositories.error.message} <Button variant="ghost" size="sm" onClick={() => void projectRepositories.refetch()}>Try again</Button></p>}
+    {query.error && <p role="alert" className="text-sm text-destructive">{query.error.message} <Button variant="ghost" size="sm" onClick={() => void query.refetch()}>{zh("Try again")}</Button></p>}
+    {query.data?.length === 0 && availableProjects.length === 0 && <div className="flex flex-col items-start gap-3 py-8"><p className="text-sm text-muted-foreground">No repositories added yet. Import your skills to make them available in {selectedCompany?.name ?? 'this company'}.</p><Button variant="outline" onClick={() => navigate('/skills/sources/new')}>{zh("Import from GitHub")}</Button></div>}
+    {projectRepositories.error && <p role="alert" className="text-sm text-destructive">{projectRepositories.error.message} <Button variant="ghost" size="sm" onClick={() => void projectRepositories.refetch()}>{zh("Try again")}</Button></p>}
     {adopt.error && <p role="alert" className="text-sm text-destructive">{adopt.error.message}</p>}
     {uninstalledProjects.length > 0 && <div className="divide-y divide-border" aria-label="Project repositories">
       {uninstalledProjects.map(group => <ProjectSkillRepositoryRow key={group.key} repository={group.repository} backgroundPending={group.hasPending} disabled={adopt.isPending}
@@ -126,7 +127,7 @@ export function SkillSources() {
               {source.enabled && source.automaticUpdates === false && <p className="text-xs text-muted-foreground">Automatic updates paused</p>}
               {source.trackingActive === false && <p className="text-xs text-muted-foreground">Repository tracking stopped · installed skills kept</p>}
               {!source.enabled && <p className="text-xs text-muted-foreground">Disconnected</p>}
-              {refresh.isPending && refresh.variables === source.id && <p role="status" className="text-xs text-muted-foreground">Refreshing…</p>}
+              {refresh.isPending && refresh.variables === source.id && <p role="status" className="text-xs text-muted-foreground">{zh("Refreshing…")}</p>}
               {newCount > 0 && <Link to={`/skills/sources/${source.id}`} className="text-xs underline">{newCount} new {newCount === 1 ? 'skill' : 'skills'} available</Link>}
             </div></div>
             <SkillSourceSyncControls showPreference={false} automaticUpdates={source.automaticUpdates ?? true}
@@ -171,7 +172,7 @@ export function SkillSources() {
             action={<Link to={`/skills/sources/${source.id}`} className="font-medium text-destructive underline underline-offset-2">Review source</Link>} />}
           {source.lastError && (source.repairAction === 'connection' || (!source.repairAction && !source.connectionId)) && <Button variant="outline" size="sm" className="self-start" onClick={() => setRepairSourceId(source.id)}>Choose connection</Button>}
           {source.lastError && source.repairAction === 'branch' && (source.accessScope === 'projects' || source.projects?.some(project => project.active)
-            ? <div className="flex flex-wrap gap-3">{source.projects?.filter(project => project.active).map(project => <Link key={project.id} to={`/projects/${project.id}`} className="text-sm underline">Update {project.name} repository</Link>)}</div>
+            ? <div className="flex flex-wrap gap-3">{source.projects?.filter(project => project.active).map(project => <Link key={project.id} to={`/projects/${project.id}`} className="text-sm underline">{zh("Update")} {project.name} repository</Link>)}</div>
             : <Button variant="outline" size="sm" className="self-start" onClick={() => setBranchSourceId(source.id)}>Choose a new branch</Button>)}
         </section>;
       })}
@@ -216,7 +217,7 @@ function DisconnectSourceDialog({ source, pending, error, stale, onReload, onClo
   return <Dialog open onOpenChange={open => { if (!open && !pending) onClose(); }}>
     <DialogContent>
       <DialogHeader>
-        <DialogTitle>{source.enabled ? 'Disconnect' : 'Remove'} {source.fullName}?</DialogTitle>
+        <DialogTitle>{source.enabled ? zh("Disconnect") : zh("Remove")} {source.fullName}?</DialogTitle>
         <DialogDescription>{count ? `Remove this repository from Sources. What should happen to its ${count} imported ${count === 1 ? 'skill' : 'skills'}?` : 'Remove this repository from Sources.'}</DialogDescription>
       </DialogHeader>
       {count > 0 && <RadioCardGroup ariaLabel="Imported skills" value={choice}
@@ -230,9 +231,9 @@ function DisconnectSourceDialog({ source, pending, error, stale, onReload, onClo
         {stale && <Button variant="ghost" size="sm" disabled={pending} onClick={onReload}>Reload source</Button>}
       </div>}
       <div className="flex items-center justify-between gap-3">
-        <Button variant="outline" disabled={pending} onClick={onClose}>Cancel</Button>
+        <Button variant="outline" disabled={pending} onClick={onClose}>{zh("Cancel")}</Button>
         <Button variant={choice === 'delete' ? 'destructive' : 'default'} disabled={pending || stale || Boolean(count && !choice)} onClick={() => onConfirm(choice || 'copy')}>
-          {pending ? 'Removing…' : action}
+          {pending ? zh("Removing…") : action}
         </Button>
       </div>
     </DialogContent>
@@ -313,7 +314,7 @@ function SourceDialog({ companyId, source, onClose, onSaved }: {
   function dismiss() { stopScan(); sessionStorage.removeItem(draftKey); onClose(); }
   return <Dialog open onOpenChange={open => { if (!open && !save.isPending) dismiss(); }}><DialogContent className="flex max-h-(--sz-calc-18) flex-col overflow-hidden p-4 sm:max-w-2xl sm:p-6" aria-describedby={source ? 'source-description' : undefined}>
     <DialogHeader className="shrink-0 flex-row items-start justify-between gap-3 pr-6">
-      <div className="min-w-0"><DialogTitle>{source ? source.fullName : 'Import from GitHub'}</DialogTitle>{source && <DialogDescription id="source-description">Unchecked skills stay installed.</DialogDescription>}</div>
+      <div className="min-w-0"><DialogTitle>{source ? source.fullName : zh("Import from GitHub")}</DialogTitle>{source && <DialogDescription id="source-description">Unchecked skills stay installed.</DialogDescription>}</div>
     </DialogHeader>
     <div className="min-h-0 space-y-4 overflow-y-auto">
       {!ready && !scan.isPending && <div className="flex flex-col gap-4">
@@ -326,7 +327,7 @@ function SourceDialog({ companyId, source, onClose, onSaved }: {
             <Button asChild variant="outline" size="sm"><Link onClick={rememberReturn} to={connectHref}><Plus className="size-4" />Add repos</Link></Button>
           </div>}
           {repositories.isPending && <p role="status" className="text-sm text-muted-foreground">Loading your GitHub repositories…</p>}
-          {availableRepositories.length > 0 && <Command className="h-auto border border-border" label="Source repositories">
+          {availableRepositories.length > 0 && <Command className="h-auto border border-border" label={zh("Source repositories")}>
               <CommandInput placeholder="Search repositories…" aria-label="Search repositories" disabled={busy} />
               <CommandList className="max-h-48">
                 <CommandEmpty>No matching repositories.</CommandEmpty>
@@ -345,7 +346,7 @@ function SourceDialog({ companyId, source, onClose, onSaved }: {
           </Command>}
           {(repositories.error || Boolean(repositories.data?.failedConnectionCount)) && <p role="alert" className="text-xs text-destructive">
             {availableRepositories.length ? 'Some GitHub connections could not load repositories.' : 'Could not load GitHub repositories.'}{' '}
-            <Button variant="ghost" size="sm" disabled={repositories.isFetching} onClick={() => void repositories.refetch()}>Try again</Button>
+            <Button variant="ghost" size="sm" disabled={repositories.isFetching} onClick={() => void repositories.refetch()}>{zh("Try again")}</Button>
             <Link to="/apps" className="underline">Manage connections</Link>
           </p>}
           {!repositories.isPending && availableRepositories.length === 0 && <Button asChild variant="outline" className="h-28 w-full flex-col gap-3 whitespace-normal text-center">
@@ -363,7 +364,7 @@ function SourceDialog({ companyId, source, onClose, onSaved }: {
       {source?.lastError && <p role="alert" className="text-sm text-destructive">{source.lastError}{' '}<Link onClick={rememberReturn} to={source.connectionId ? `/apps/${source.connectionId}/permissions` : connectHref} className="underline">Manage GitHub connection</Link></p>}
       {ready && !save.isPending && !scan.isPending && <div className="space-y-3">
         {packageMode === 'repository' ? <>
-          {candidates[0] && <Button variant="outline" size="sm" onClick={() => setPreview({ skill: candidates[0]!, repository: true })}><FileText className="size-4" />View {repositoryPackage?.files.length ?? 0} {repositoryPackage?.files.length === 1 ? 'file' : 'files'}</Button>}
+          {candidates[0] && <Button variant="outline" size="sm" onClick={() => setPreview({ skill: candidates[0]!, repository: true })}><FileText className="size-4" />{zh("View")} {repositoryPackage?.files.length ?? 0} {repositoryPackage?.files.length === 1 ? 'file' : 'files'}</Button>}
         </> : null}
         {selectionTree}
         <SkillImportWarnings warnings={warnings} />
@@ -374,8 +375,8 @@ function SourceDialog({ companyId, source, onClose, onSaved }: {
         found={candidates.filter(candidate => selected.has(candidate.path) && !candidate.error).map(candidate => ({ ...candidate, fileCount: candidate.inspection?.files.length ?? 1 }))} />}
     </div>
       <footer className="flex shrink-0 items-center justify-between gap-3 border-t border-border pt-4">
-        <Button variant="ghost" disabled={save.isPending} onClick={() => { if (scan.isPending) stopScan(); else if (discovery && !source) clearScan(); else dismiss(); }}>{scan.isPending ? 'Cancel scan' : discovery && !source ? 'Back' : 'Cancel'}</Button>
-        {ready ? <Button disabled={busy || (!source && packageMode === 'skills' && selectedCount === 0)} onClick={() => save.mutate()}>{save.isPending ? 'Saving…' : source ? 'Save selection' : packageMode === 'repository' ? 'Import repository' : `Import ${selectedCount} ${selectedCount === 1 ? "skill" : "skills"}`}</Button>
+        <Button variant="ghost" disabled={save.isPending} onClick={() => { if (scan.isPending) stopScan(); else if (discovery && !source) clearScan(); else dismiss(); }}>{scan.isPending ? 'Cancel scan' : discovery && !source ? zh("Back") : zh("Cancel")}</Button>
+        {ready ? <Button disabled={busy || (!source && packageMode === 'skills' && selectedCount === 0)} onClick={() => save.mutate()}>{save.isPending ? zh("Saving…") : source ? 'Save selection' : packageMode === 'repository' ? 'Import repository' : `Import ${selectedCount} ${selectedCount === 1 ? "skill" : "skills"}`}</Button>
           : <Button disabled={busy || repositories.isPending || !repositoryUrl.trim()} onClick={() => scan.mutate(packageMode)}>{scan.isPending ? 'Scanning…' : 'Find skills'}</Button>}
       </footer>
     {preview && <SkillPackagePreview key={`${packageMode}:${preview.repository}:${preview.skill.path}:${preview.filePath ?? ''}`} companyId={companyId}

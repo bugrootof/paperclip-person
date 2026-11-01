@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useRef, useState } from "react";
 import {
   Check,
@@ -71,11 +72,11 @@ function statusMeta(entry: WorkspaceServiceControlEntry): { label: string; unhea
     case "starting":
       return { label: "Starting…", unhealthy: false };
     case "stopping":
-      return { label: "Stopping…", unhealthy: false };
+      return { label: zh("Stopping…"), unhealthy: false };
     case "restarting":
       return { label: "Restarting…", unhealthy: false };
     case "failed":
-      return { label: "Failed", unhealthy: false };
+      return { label: zh("Failed"), unhealthy: false };
     case "running":
       return entry.healthStatus === "unhealthy"
         ? { label: "Unhealthy", unhealthy: true }
@@ -258,8 +259,8 @@ function ActionSlots({
         size="icon-xs"
         disabled={transitional}
         onClick={() => onAction("stop")}
-        aria-label="Stop"
-        title="Stop"
+        aria-label={zh("Stop")}
+        title={zh("Stop")}
         className="border border-border text-foreground"
       >
         <Square className="size-3" />
@@ -457,7 +458,7 @@ function MultiServiceBar({
                 aria-label={`${runningCount} of ${services.length} services running — show services`}
               >
                 <StatusIndicator entry={aggregateEntry} />
-                <span className="whitespace-nowrap">{runningCount}/{services.length} running</span>
+                <span className="whitespace-nowrap">{runningCount}/{services.length} {zh("running")}</span>
                 <ChevronDown className="size-3 text-muted-foreground" />
               </button>
             </PopoverTrigger>

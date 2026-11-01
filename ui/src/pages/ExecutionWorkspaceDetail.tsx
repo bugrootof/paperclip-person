@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useWorkspaceIsolationControls } from "@/hooks/useWorkspaceIsolationControls";
 import { useEffect, useMemo, useState } from "react";
 import { Link, Navigate, useLocation, useNavigate, useParams } from "@/lib/router";
@@ -85,11 +86,11 @@ type OrderedExecutionWorkspaceTabItem = {
 
 const DEFAULT_PLUGIN_DETAIL_TAB_ORDER = 100;
 const EXECUTION_WORKSPACE_BASE_TAB_ITEMS: OrderedExecutionWorkspaceTabItem[] = [
-  { value: "issues", label: "Tasks", order: 10 },
+  { value: "issues", label: zh("Tasks"), order: 10 },
   { value: "services", label: "Services", order: 20 },
-  { value: "configuration", label: "Configuration", order: 30 },
+  { value: "configuration", label: zh("Configuration"), order: 30 },
   { value: "runtime_logs", label: "Runtime logs", order: 40 },
-  { value: "routines", label: "Routines", order: 60 },
+  { value: "routines", label: zh("Routines"), order: 60 },
 ];
 
 function isExecutionWorkspacePluginTab(value: string | null): value is ExecutionWorkspacePluginTab {
@@ -618,7 +619,7 @@ function WorkspaceRoutineRow({
         </div>
         <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
           <span>{routine.assigneeAgentId ? "Default agent set" : "Choose agent when running"}</span>
-          <span>Last run {formatOptionalDateTime(routine.lastRun?.triggeredAt ?? routine.lastTriggeredAt)}</span>
+          <span>{zh("Last run")} {formatOptionalDateTime(routine.lastRun?.triggeredAt ?? routine.lastTriggeredAt)}</span>
           <span className="flex flex-wrap gap-1">
             {variableNames.map((name) => (
               <span key={name} className="rounded-sm bg-muted px-1.5 py-0.5 font-mono text-(length:--text-micro) text-muted-foreground">
@@ -908,9 +909,9 @@ export function ExecutionWorkspaceDetail() {
   useEffect(() => {
     if (!workspace) return;
     const crumbs = [
-      { label: "Projects", href: "/projects" },
+      { label: zh("Projects"), href: "/projects" },
       ...(project ? [{ label: project.name, href: `/projects/${projectRef}` }] : []),
-      ...(project ? [{ label: "Workspaces", href: `/projects/${projectRef}/workspaces` }] : []),
+      ...(project ? [{ label: zh("Workspaces"), href: `/projects/${projectRef}/workspaces` }] : []),
       { label: workspace.name },
     ];
     setBreadcrumbs(crumbs);
@@ -1145,7 +1146,7 @@ export function ExecutionWorkspaceDetail() {
 
               <div className="space-y-6">
                 <div className="space-y-4">
-                  <div className="text-xs font-medium uppercase tracking-widest text-muted-foreground">General</div>
+                  <div className="text-xs font-medium uppercase tracking-widest text-muted-foreground">{zh("General")}</div>
                   <Field label="Workspace name">
                     <Input
                       value={form.name}
@@ -1169,7 +1170,7 @@ export function ExecutionWorkspaceDetail() {
                       />
                     </Field>
 
-                    <Field label="Base ref">
+                    <Field label={zh("Base ref")}>
                       <Input
                         className="font-mono"
                         value={form.baseRef}
@@ -1235,7 +1236,7 @@ export function ExecutionWorkspaceDetail() {
                   <>
                     <div className="space-y-4">
                       <div className="text-xs font-medium uppercase tracking-widest text-muted-foreground">Lifecycle commands</div>
-                      <Field label="Provision command" hint="Runs when Paperclip prepares this execution workspace">
+                      <Field label={zh("Provision command")} hint="Runs when Paperclip prepares this execution workspace">
                         <Textarea
                           className="min-h-20 font-mono"
                           value={form.provisionCommand}
@@ -1245,7 +1246,7 @@ export function ExecutionWorkspaceDetail() {
                       </Field>
 
                       <Field
-                        label="Runtime provision command"
+                        label={zh("Runtime provision command")}
                         hint="Runs once before the first runtime-service start. Leave empty to keep eager provisioning."
                       >
                         <Textarea
@@ -1256,7 +1257,7 @@ export function ExecutionWorkspaceDetail() {
                         />
                       </Field>
 
-                      <Field label="Teardown command" hint="Runs when the execution workspace is archived or cleaned up">
+                      <Field label={zh("Teardown command")} hint="Runs when the execution workspace is archived or cleaned up">
                         <Textarea
                           className="min-h-20 font-mono"
                           value={form.teardownCommand}
@@ -1405,7 +1406,7 @@ export function ExecutionWorkspaceDetail() {
               <div className="mt-6 flex flex-col items-stretch gap-3 sm:flex-row sm:flex-wrap sm:items-center">
                 <Button className="w-full sm:w-auto" disabled={!isDirty || updateWorkspace.isPending} onClick={saveChanges}>
                   {updateWorkspace.isPending ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
-                  Save changes
+                  {zh("Save changes")}
                 </Button>
                 <Button
                   variant="outline"
@@ -1418,7 +1419,7 @@ export function ExecutionWorkspaceDetail() {
                     setRuntimeActionMessage(null);
                   }}
                 >
-                  Reset
+                  {zh("Reset")}
                 </Button>
                 {errorMessage ? <p className="text-sm text-destructive">{errorMessage}</p> : null}
                 {!errorMessage && !isDirty ? <p className="text-sm text-muted-foreground">No unsaved changes.</p> : null}
@@ -1432,16 +1433,16 @@ export function ExecutionWorkspaceDetail() {
                 <CardDescription>Linked objects and relationships</CardDescription>
               </CardHeader>
               <CardContent>
-              <DetailRow label="Project">
+              <DetailRow label={zh("Project")}>
                 {project ? <Link to={`/projects/${projectRef}`} className="hover:underline">{project.name}</Link> : <MonoValue value={workspace.projectId ?? "No project"} />}
               </DetailRow>
-              <DetailRow label="Project workspace">
+              <DetailRow label={zh("Project workspace")}>
                 {project && linkedProjectWorkspace ? (
                   <WorkspaceLink project={project} workspace={linkedProjectWorkspace} />
                 ) : workspace.projectWorkspaceId ? (
                   <MonoValue value={workspace.projectWorkspaceId} />
                 ) : (
-                  "None"
+                  zh("None")
                 )}
               </DetailRow>
               <DetailRow label="Source task">
@@ -1452,7 +1453,7 @@ export function ExecutionWorkspaceDetail() {
                 ) : workspace.sourceIssueId ? (
                   <MonoValue value={workspace.sourceIssueId} />
                 ) : (
-                  "None"
+                  zh("None")
                 )}
               </DetailRow>
               <DetailRow label="Derived from">
@@ -1463,7 +1464,7 @@ export function ExecutionWorkspaceDetail() {
                 ) : workspace.derivedFromExecutionWorkspaceId ? (
                   <MonoValue value={workspace.derivedFromExecutionWorkspaceId} />
                 ) : (
-                  "None"
+                  zh("None")
                 )}
               </DetailRow>
               <DetailRow label="Runtime provisioning">
@@ -1485,10 +1486,10 @@ export function ExecutionWorkspaceDetail() {
               </CardHeader>
               <CardContent>
               <DetailRow label="Working dir">
-                {workspace.cwd ? <MonoValue value={workspace.cwd} copy /> : "None"}
+                {workspace.cwd ? <MonoValue value={workspace.cwd} copy /> : zh("None")}
               </DetailRow>
               <DetailRow label="Provider ref">
-                {workspace.providerRef ? <MonoValue value={workspace.providerRef} copy /> : "None"}
+                {workspace.providerRef ? <MonoValue value={workspace.providerRef} copy /> : zh("None")}
               </DetailRow>
               <DetailRow label="Repo URL">
                 {workspace.repoUrl && isSafeExternalUrl(workspace.repoUrl) ? (
@@ -1504,14 +1505,14 @@ export function ExecutionWorkspaceDetail() {
                 ) : workspace.repoUrl ? (
                   <MonoValue value={workspace.repoUrl} copy />
                 ) : (
-                  "None"
+                  zh("None")
                 )}
               </DetailRow>
-              <DetailRow label="Base ref">
-                {workspace.baseRef ? <MonoValue value={workspace.baseRef} copy /> : "None"}
+              <DetailRow label={zh("Base ref")}>
+                {workspace.baseRef ? <MonoValue value={workspace.baseRef} copy /> : zh("None")}
               </DetailRow>
-              <DetailRow label="Branch">
-                {workspace.branchName ? <MonoValue value={workspace.branchName} copy /> : "None"}
+              <DetailRow label={zh("Branch")}>
+                {workspace.branchName ? <MonoValue value={workspace.branchName} copy /> : zh("None")}
               </DetailRow>
               <DetailRow label="Opened">{formatDateTime(workspace.openedAt)}</DetailRow>
               <DetailRow label="Last used">{formatDateTime(workspace.lastUsedAt)}</DetailRow>

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { boardT as zh } from "@/i18n";
 import { ArrowUp, ArrowDown, Minus, AlertTriangle } from "lucide-react";
 import { cn } from "../lib/utils";
 import { priorityColor, priorityColorDefault } from "../lib/status-colors";
@@ -6,10 +7,10 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 import { Button } from "@/components/ui/button";
 
 const priorityConfig: Record<string, { icon: typeof ArrowUp; color: string; label: string }> = {
-  critical: { icon: AlertTriangle, color: priorityColor.critical ?? priorityColorDefault, label: "Critical" },
-  high: { icon: ArrowUp, color: priorityColor.high ?? priorityColorDefault, label: "High" },
-  medium: { icon: Minus, color: priorityColor.medium ?? priorityColorDefault, label: "Medium" },
-  low: { icon: ArrowDown, color: priorityColor.low ?? priorityColorDefault, label: "Low" },
+  critical: { icon: AlertTriangle, color: priorityColor.critical ?? priorityColorDefault, label: zh("Critical") },
+  high: { icon: ArrowUp, color: priorityColor.high ?? priorityColorDefault, label: zh("High") },
+  medium: { icon: Minus, color: priorityColor.medium ?? priorityColorDefault, label: zh("Medium") },
+  low: { icon: ArrowDown, color: priorityColor.low ?? priorityColorDefault, label: zh("Low") },
 };
 
 const allPriorities = ["critical", "high", "medium", "low"];
@@ -39,22 +40,22 @@ export function PriorityIcon({ priority, onChange, className, showLabel }: Prior
     </span>
   );
 
-  if (!onChange) return showLabel ? <span className="inline-flex items-center gap-1.5">{icon}<span className="text-sm">{config.label}</span></span> : icon;
+  if (!onChange) return showLabel ? <span className="inline-flex items-center gap-1.5">{icon}<span className="text-sm">{zh(config.label)}</span></span> : icon;
 
   const trigger = showLabel ? (
     <button
       type="button"
-      aria-label={`Change priority (current: ${config.label})`}
+      aria-label={zh("Change priority (current: {{priority}})", { priority: zh(config.label) })}
       className="inline-flex min-h-5 items-center gap-1.5 cursor-pointer hover:bg-accent/50 rounded px-1 -mx-1 py-0.5 transition-colors"
     >
       {icon}
-      <span className="text-sm">{config.label}</span>
+      <span className="text-sm">{zh(config.label)}</span>
     </button>
   ) : (
     <button
       type="button"
       data-slot="icon-button"
-      aria-label={`Change priority (current: ${config.label})`}
+      aria-label={zh("Change priority (current: {{priority}})", { priority: zh(config.label) })}
       className="inline-flex cursor-pointer items-center justify-center rounded-sm focus-visible:outline-none focus-visible:ring-(length:--rad-3) focus-visible:ring-ring"
     >
       {icon}
@@ -80,7 +81,7 @@ export function PriorityIcon({ priority, onChange, className, showLabel }: Prior
               }}
             >
               <PIcon className={cn("h-3.5 w-3.5", c.color)} />
-              {c.label}
+              {zh(c.label)}
             </Button>
           );
         })}

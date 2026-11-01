@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -236,7 +237,7 @@ export function StatusCardDetailDrawer({
                 disabled={refreshMutation.isPending || lifecycle === "updating"}
               >
                 <RefreshCw className={cn("h-3.5 w-3.5", refreshMutation.isPending && "animate-spin")} />
-                {refreshMutation.isPending ? "Refreshing…" : "Refresh"}
+                {refreshMutation.isPending ? zh("Refreshing…") : zh("Refresh")}
               </Button>
             )}
           </div>
@@ -249,9 +250,9 @@ export function StatusCardDetailDrawer({
         <Tabs value={tab} onValueChange={setTab} className="flex min-h-0 flex-1 flex-col gap-0">
           <TabsList variant="line" className="w-full justify-start gap-4 border-b border-border px-4">
             <TabsTrigger value="summary">Summary</TabsTrigger>
-            <TabsTrigger value="settings">Settings</TabsTrigger>
+            <TabsTrigger value="settings">{zh("Settings")}</TabsTrigger>
             <TabsTrigger value="watched">Watched issues</TabsTrigger>
-            <TabsTrigger value="history">History</TabsTrigger>
+            <TabsTrigger value="history">{zh("History")}</TabsTrigger>
           </TabsList>
 
           {actionError ? (
@@ -465,7 +466,7 @@ export function StatusCardDetailDrawer({
               </section>
 
               <section className="space-y-2">
-                <h3 className="text-sm font-semibold">Agent</h3>
+                <h3 className="text-sm font-semibold">{zh("Agent")}</h3>
                 <SummarizerAgentSelect
                   companyId={card.companyId}
                   value={summarizerAgentId}
@@ -481,7 +482,7 @@ export function StatusCardDetailDrawer({
               <div className="flex justify-end border-t border-border pt-4">
                 <Button onClick={() => saveSettingsMutation.mutate()} disabled={saveSettingsMutation.isPending}>
                   {saveSettingsMutation.isPending ? <Loader2 className="animate-spin" /> : null}
-                  Save
+                  {zh("Save")}
                 </Button>
               </div>
             </TabsContent>

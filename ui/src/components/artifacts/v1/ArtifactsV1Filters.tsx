@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import type { ArtifactGroupBy, ArtifactKindFilter } from "@/api/artifacts";
 import { TabFilters, type TabBarItem } from "@/components/TabBar";
 
@@ -9,13 +10,13 @@ import { TabFilters, type TabBarItem } from "@/components/TabBar";
 export type ArtifactsV1View = "tasks" | Exclude<ArtifactKindFilter, never>;
 
 export const ARTIFACTS_V1_VIEWS: TabBarItem<ArtifactsV1View>[] = [
-  { value: "tasks", label: "Tasks" },
+  { value: "tasks", label: zh("Tasks") },
   { value: "all", label: "All files" },
   { value: "image", label: "Images" },
   { value: "video", label: "Videos" },
-  { value: "document", label: "Documents" },
+  { value: "document", label: zh("Documents") },
   { value: "text", label: "Text" },
-  { value: "file", label: "Files" },
+  { value: "file", label: zh("Files") },
 ];
 
 /** Any grouping reads as the Tasks view; flat views are named by their kind. */

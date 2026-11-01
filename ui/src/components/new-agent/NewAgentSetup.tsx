@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { ACCOUNT_BOUND_MODEL_DISCOVERY_QUERY_OPTIONS } from "@/lib/native-model-catalog";
 import { PAPERCLIP_RUNNER_ACPX_PROFILES } from "@paperclipai/adapter-utils";
 import { ExternalAgentInviteDialog } from "./ExternalAgentInviteDialog";
@@ -881,8 +882,8 @@ function Setup({
       />
     );
   if (!created && connectionSettingsReady && !pendingAntigravity) return <div className="space-y-4">
-    <p role={error ? "alert" : "status"}>{error ?? "Creating your agent…"}</p>
-    {error && <Button onClick={() => setCreationAttempt(value => value + 1)}>Retry</Button>}
+    <p role={error ? "alert" : "status"}>{error ?? zh("Creating your agent…")}</p>
+    {error && <Button onClick={() => setCreationAttempt(value => value + 1)}>{zh("Retry")}</Button>}
   </div>;
   const steps = [
     ...(connectionAdapter ? ["connect" as const] : []),
@@ -1035,7 +1036,7 @@ function Setup({
                   <OnboardingCard className="mx-auto">
                     <div className="mb-8">
                       <OnboardingHeading
-                        title="Connect a model"
+                        title={zh("Connect a model")}
                         center
                       />
                     </div>
@@ -1102,7 +1103,7 @@ function Setup({
                       }}
                     /></fieldset> : <p role="status" className="text-sm text-muted-foreground">Loading connection settings…</p>}
                     {["codex_local", "claude_local", "opencode_local", "pi_local"].includes(adapterType) && <details className="mt-5 space-y-3">
-                      <summary className="cursor-pointer text-sm text-muted-foreground">Advanced</summary>
+                      <summary className="cursor-pointer text-sm text-muted-foreground">{zh("Advanced")}</summary>
                       <AgentRunnerSelect value={runner} disabled={busy}
                         pending={adapters.isFetching} error={adapters.error?.message} onRetry={() => { void adapters.refetch(); }}
                         defaultRunner={adapters.data?.find(item => item.type === adapterType)?.defaultRunner}
@@ -1121,17 +1122,17 @@ function Setup({
                             : finishingSetup ? "Finishing agent setup" : runtimeReady ? "Your agent is ready" : "Your agent is paused"}
                       </h2>
                       <dl className="grid grid-cols-2 gap-4 text-sm">
-                        <dt className="text-muted-foreground">Adapter</dt>
+                        <dt className="text-muted-foreground">{zh("Adapter")}</dt>
                         <dd>{getAdapterDisplay(isDot ? "openai_dot" : adapterType).label}</dd>
                         {showModel && (
                           <>
-                            <dt className="text-muted-foreground">Model</dt>
+                            <dt className="text-muted-foreground">{zh("Model")}</dt>
                             <dd className="break-all">
                               {String(confirmationModel)}
                             </dd>
                           </>
                         )}
-                        <dt className="text-muted-foreground">Environment</dt>
+                        <dt className="text-muted-foreground">{zh("Environment")}</dt>
                         <dd>{environmentLabel}</dd>
                       </dl>
                       <p className="text-sm text-muted-foreground">
@@ -1178,7 +1179,7 @@ function Setup({
                         {isDot && <>
                           <p className="text-sm text-muted-foreground">Create this agent, then copy its pairing prompt to your Dot.</p>
                           {experimental.data?.enablePublicMcp !== true && <p className="text-sm text-muted-foreground">Enable Assistant connections (MCP) in Experimental settings before pairing.</p>}
-                          <ToggleField label="Allow externally billed provider" hint="Dot does not report token usage or cost. Paperclip cannot enforce a provider spend ceiling; known company and agent budget limits still apply."
+                          <ToggleField label={zh("Allow externally billed provider")} hint={zh("Dot does not report token usage or cost. Paperclip cannot enforce a provider spend ceiling; known company and agent budget limits still apply.")}
                             checked={allowUnmeteredProvider} onChange={value => { setAllowUnmeteredProvider(value); resetTest(); }} />
                         </>}
                         {!connectionAdapter && aiProviderForAdapter(brandType) && (
@@ -1230,18 +1231,18 @@ function Setup({
                               />
                             )}
                             {efforts.length > 0 && (
-                              <Field label="Thinking effort">
-                                {brandType === "codex_local" ? <SelectPopover aria-label="Thinking effort" value={effort}
+                              <Field label={zh("Thinking effort")}>
+                                {brandType === "codex_local" ? <SelectPopover aria-label={zh("Thinking effort")} value={effort}
                                   onValueChange={value => { setEffort(value); resetTest(); }}
-                                  options={[{ value: "", label: "Auto" }, ...efforts.map(value => ({ value, label: value }))]} /> : <NativeSelect
-                                  aria-label="Thinking effort"
+                                  options={[{ value: "", label: zh("Auto") }, ...efforts.map(value => ({ value, label: value }))]} /> : <NativeSelect
+                                  aria-label={zh("Thinking effort")}
                                   value={effort}
                                   onChange={(event) => {
                                     setEffort(event.target.value);
                                     resetTest();
                                   }}
                                 >
-                                  <option value="">Auto</option>
+                                  <option value="">{zh("Auto")}</option>
                                   {efforts.map((value) => (
                                     <option key={value} value={value}>
                                       {value}
@@ -1444,9 +1445,9 @@ function Setup({
                                 placeholder="https://github.com/your-org/repo"
                               />
                             </Field>
-                            <Field label="Branch">
+                            <Field label={zh("Branch")}>
                               <Input
-                                aria-label="Branch"
+                                aria-label={zh("Branch")}
                                 placeholder="Repository default"
                                 value={branch}
                                 onChange={(event) => {
@@ -1458,7 +1459,7 @@ function Setup({
                           </div>
                         )}
                         {["codex_local", "claude_local", "opencode_local", "pi_local"].includes(adapterType) && <details className="space-y-3">
-                          <summary className="cursor-pointer text-sm text-muted-foreground">Advanced</summary>
+                          <summary className="cursor-pointer text-sm text-muted-foreground">{zh("Advanced")}</summary>
                           <AgentRunnerSelect value={runner} disabled={busy}
                             pending={adapters.isFetching} error={adapters.error?.message} onRetry={() => { void adapters.refetch(); }}
                             defaultRunner={adapters.data?.find(item => item.type === adapterType)?.defaultRunner}
@@ -1470,9 +1471,9 @@ function Setup({
                         adapterType,
                       ) && (
                         <section className="space-y-5">
-                          <h3 className="text-sm font-semibold">Environment</h3>
+                          <h3 className="text-sm font-semibold">{zh("Environment")}</h3>
                           <select
-                            aria-label="Environment"
+                            aria-label={zh("Environment")}
                             className={controlClass}
                             value={environmentOverride}
                             disabled={forced.forced}
@@ -1481,7 +1482,7 @@ function Setup({
                             }}
                           >
                             <option value="">
-                              Default: {environmentLabel}
+                              {zh("Default:")} {environmentLabel}
                             </option>
                             {(envs.data ?? [])
                               .filter((env) => env.status === "active" && (!managedOnly || env.driver !== "local"))
@@ -1512,7 +1513,7 @@ function Setup({
                     {environmentSaveError && !environmentSelectionSaved && <Button disabled={busy} onClick={() => void changeEnvironment()}>Retry saving environment</Button>}
                     <div className="flex justify-between border-t border-border py-5">
                       <div className="flex items-center gap-3">
-                        <Button type="button" variant="ghost" disabled={busy} onClick={() => void saveAndExit()}>{pendingAntigravity ? "Back to agents" : "Save & exit"}</Button>
+                        <Button type="button" variant="ghost" disabled={busy} onClick={() => void saveAndExit()}>{pendingAntigravity ? "Back to agents" : zh("Save & exit")}</Button>
                       {connectionAdapter ? (
                         <Button
                           type="button"
@@ -1521,7 +1522,7 @@ function Setup({
                           onClick={editConnection}
                         >
                           <ArrowLeft className="size-4" />
-                          Connection
+                          {zh("Connection")}
                         </Button>
                       ) : (
                         null
@@ -1544,7 +1545,7 @@ function Setup({
                           Boolean(connectionAdapter && !connection)
                         }
                       >
-                        {saving ? "Saving…" : "Finish setup"}
+                        {saving ? zh("Saving…") : zh("Finish setup")}
                         <Check className="size-4" />
                       </Button>}
                     </div>

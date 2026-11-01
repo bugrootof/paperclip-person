@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AlertTriangle } from "lucide-react";
 import type { ToolProfileWithDetails } from "@paperclipai/shared";
 import { Button } from "@/components/ui/button";
@@ -69,7 +70,7 @@ export function ProfileActionDialog({
           </div>
         ) : null}
         <DialogFooter>
-          <Button variant="ghost" onClick={onClose}>Cancel</Button>
+          <Button variant="ghost" onClick={onClose}>{zh("Cancel")}</Button>
           <Button
             variant={kind === "delete" ? "destructive" : "default"}
             disabled={pending || defaultDeleteBlocked}

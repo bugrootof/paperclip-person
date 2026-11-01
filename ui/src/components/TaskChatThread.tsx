@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { TaskChatShimmerScope } from "@/components/task-chat/TaskChatShimmer";
 import { useRunnerSubmission } from "@/hooks/useRunnerSubmission";
 import {
@@ -3132,7 +3133,7 @@ export function TaskChatThread(props: TaskChatThreadProps) {
                   {historyError ? "Some task history could not be loaded." : "Some task history is still loading."}
                   {historyError ? (
                     <Button variant="ghost" size="sm" onClick={retryHistory}>
-                      Retry
+                      {zh("Retry")}
                     </Button>
                   ) : null}
                 </div>
@@ -3289,7 +3290,7 @@ export function TaskChatThread(props: TaskChatThreadProps) {
                                                 ? linkedRunMetaById.get(tailRunId ?? "")?.errorCode?.startsWith("workspace_git_scan_")
                                                   ? "Workspace setup failed before the agent started."
                                                   : "This run stopped before a response was available. Review the task’s connection or recovery action below."
-                                                : "Waiting for transcript...")
+                                                : zh("Waiting for transcript..."))
                                         }
                                       />
                                     </TaskChatShimmerScope>

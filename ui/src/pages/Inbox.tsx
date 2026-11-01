@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { describeError } from "../api/errors";
 import { useIssueRowDetails } from "../hooks/useIssueRowDetails";
 import { IssueRowDetailsNotice } from "../components/IssueRowDetailsNotice";
@@ -419,7 +420,7 @@ export function FailedRunInboxRow({
                   "inline-flex h-4 w-4 items-center justify-center rounded-full transition-colors",
                   "hover:bg-blue-500/20",
                 )}
-                aria-label="Mark as read"
+                aria-label={zh("Mark as read")}
               >
                 <span className={cn(
                   "block h-2 w-2 rounded-full transition-opacity duration-300",
@@ -454,7 +455,7 @@ export function FailedRunInboxRow({
                   {issue.title}
                 </>
               ) : (
-                <>Failed run{linkedAgentName ? ` — ${linkedAgentName}` : ""}</>
+                <>{zh("Failed run")}{linkedAgentName ? ` — ${linkedAgentName}` : ""}</>
               )}
             </span>
             <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
@@ -478,14 +479,14 @@ export function FailedRunInboxRow({
             disabled={isRetrying}
           >
             <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
-            {isRetrying ? "Thinking" : "Retry"}
+            {isRetrying ? zh("Thinking") : zh("Retry")}
           </Button>}
           {!showUnreadSlot && (
             <button
               type="button"
               onClick={onDismiss}
               className="rounded-md p-1 text-muted-foreground opacity-0 transition-opacity hover:bg-accent hover:text-foreground group-hover:opacity-100"
-              aria-label="Dismiss"
+              aria-label={zh("Dismiss")}
             >
               <X className="h-4 w-4" />
             </button>
@@ -502,14 +503,14 @@ export function FailedRunInboxRow({
           disabled={isRetrying}
         >
           <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
-          {isRetrying ? "Thinking" : "Retry"}
+          {isRetrying ? zh("Thinking") : zh("Retry")}
         </Button>}
         {!showUnreadSlot && (
           <button
             type="button"
             onClick={onDismiss}
             className="rounded-md p-1 text-muted-foreground hover:bg-accent hover:text-foreground"
-            aria-label="Dismiss"
+            aria-label={zh("Dismiss")}
           >
             <X className="h-4 w-4" />
           </button>
@@ -568,7 +569,7 @@ function ApprovalInboxRow({
                   "inline-flex h-4 w-4 items-center justify-center rounded-full transition-colors",
                   "hover:bg-blue-500/20",
                 )}
-                aria-label="Mark as read"
+                aria-label={zh("Mark as read")}
               >
                 <span className={cn(
                   "block h-2 w-2 rounded-full transition-opacity duration-300",
@@ -599,8 +600,8 @@ function ApprovalInboxRow({
             </span>
             <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
               <span className="capitalize">{approvalStatusLabel(approval.status)}</span>
-              {requesterName ? <span>requested by {requesterName}</span> : null}
-              <span>updated {timeAgo(approval.updatedAt)}</span>
+              {requesterName ? <span>{zh("requested by")} {requesterName}</span> : null}
+              <span>{zh("updated")} {timeAgo(approval.updatedAt)}</span>
             </span>
           </span>
         </Link>
@@ -617,7 +618,7 @@ function ApprovalInboxRow({
                   onClick={onApprove}
                   disabled={isPending}
                 >
-                  Approve
+                  {zh("Approve")}
                 </Button>
                 <Button
                   variant="destructive"
@@ -626,7 +627,7 @@ function ApprovalInboxRow({
                   onClick={onReject}
                   disabled={isPending}
                 >
-                  Reject
+                  {zh("Reject")}
                 </Button>
               </>
             ) : null}
@@ -641,7 +642,7 @@ function ApprovalInboxRow({
             onClick={onApprove}
             disabled={isPending}
           >
-            Approve
+            {zh("Approve")}
           </Button>
           <Button
             variant="destructive"
@@ -650,7 +651,7 @@ function ApprovalInboxRow({
             onClick={onReject}
             disabled={isPending}
           >
-            Reject
+            {zh("Reject")}
           </Button>
         </div>
       ) : null}
@@ -701,7 +702,7 @@ function JoinRequestInboxRow({
                   "inline-flex h-4 w-4 items-center justify-center rounded-full transition-colors",
                   "hover:bg-blue-500/20",
                 )}
-                aria-label="Mark as read"
+                aria-label={zh("Mark as read")}
               >
                 <span className={cn(
                   "block h-2 w-2 rounded-full transition-opacity duration-300",
@@ -725,8 +726,8 @@ function JoinRequestInboxRow({
               {label}
             </span>
             <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
-              <span>requested {timeAgo(joinRequest.createdAt)} from IP {joinRequest.requestIp}</span>
-              {joinRequest.adapterType && <span>adapter: {joinRequest.adapterType}</span>}
+              <span>{zh("requested")} {timeAgo(joinRequest.createdAt)} {zh("from IP")} {joinRequest.requestIp}</span>
+              {joinRequest.adapterType && <span>{zh("adapter:")} {joinRequest.adapterType}</span>}
             </span>
           </span>
         </div>
@@ -740,7 +741,7 @@ function JoinRequestInboxRow({
             onClick={onApprove}
             disabled={isPending}
           >
-            Approve
+            {zh("Approve")}
           </Button>
           <Button
             variant="destructive"
@@ -749,7 +750,7 @@ function JoinRequestInboxRow({
             onClick={onReject}
             disabled={isPending}
           >
-            Reject
+            {zh("Reject")}
           </Button>
         </div>
       </div>
@@ -760,7 +761,7 @@ function JoinRequestInboxRow({
           onClick={onApprove}
           disabled={isPending}
         >
-          Approve
+          {zh("Approve")}
         </Button>
         <Button
           variant="destructive"
@@ -769,7 +770,7 @@ function JoinRequestInboxRow({
           onClick={onReject}
           disabled={isPending}
         >
-          Reject
+          {zh("Reject")}
         </Button>
       </div>
     </div>
@@ -2521,7 +2522,7 @@ function StreamlinedInbox({
     <div className="space-y-6">
       <IssueRowDetailsNotice
         error={optionalSourceError ?? rowDetailsError}
-        message={optionalSourceError ? "Some inbox items couldn’t load. Showing available items." : undefined}
+        message={optionalSourceError ? zh("Some inbox items couldn’t load. Showing available items.") : undefined}
         retryLabel={optionalSourceError ? "Retry missing items" : undefined}
         onRetry={optionalSourceError ? retryFailedSources : () => void retryRowDetails()}
       />
@@ -2532,11 +2533,11 @@ function StreamlinedInbox({
           <Tabs value={tab} onValueChange={(value) => navigate(`/inbox/${value}`)}>
             <PageTabBar
               items={[
-                { value: "mine", label: "Mine" },
-                { value: "recent", label: "Recent" },
-                { value: "unread", label: "Unread" },
-                { value: "blocked", label: "Blocked" },
-                { value: "all", label: "All" },
+                { value: "mine", label: zh("Mine") },
+                { value: "recent", label: zh("Recent") },
+                { value: "unread", label: zh("Unread") },
+                { value: "blocked", label: zh("Blocked") },
+                { value: "all", label: zh("All") },
               ]}
             />
           </Tabs>
@@ -2597,7 +2598,7 @@ function StreamlinedInbox({
                     variant="outline"
                     size="icon"
                     className={cn("h-8 w-8 shrink-0", blockedGroupBy !== "none" && "bg-accent")}
-                    title="Group"
+                    title={zh("Group")}
                   >
                     <Layers className="h-3.5 w-3.5" />
                   </Button>
@@ -2633,7 +2634,7 @@ function StreamlinedInbox({
                   }));
                 }}
                 onResetColumns={() => setIssueColumns(DEFAULT_INBOX_ISSUE_COLUMNS)}
-                title="Choose which columns stay visible"
+                title={zh("Choose which columns stay visible")}
                 iconOnly
               />
               <Popover>
@@ -2643,7 +2644,7 @@ function StreamlinedInbox({
                     variant="outline"
                     size="icon"
                     className="h-8 w-8 shrink-0"
-                    title="Sort"
+                    title={zh("Sort")}
                   >
                     <ArrowUpDown className="h-3.5 w-3.5" />
                   </Button>
@@ -2676,7 +2677,7 @@ function StreamlinedInbox({
                 size="icon"
                 className={cn("hidden h-8 w-8 shrink-0 sm:inline-flex", nestingEnabled && "bg-accent")}
                 onClick={toggleNesting}
-                title={nestingEnabled ? "Disable parent-child nesting" : "Enable parent-child nesting"}
+                title={nestingEnabled ? zh("Disable parent-child nesting") : zh("Enable parent-child nesting")}
               >
                 <ListTree className="h-3.5 w-3.5" />
               </Button>
@@ -2716,7 +2717,7 @@ function StreamlinedInbox({
                     variant="outline"
                     size="icon"
                     className={cn("h-8 w-8 shrink-0", groupBy !== "none" && "bg-accent")}
-                    title="Group"
+                    title={zh("Group")}
                   >
                     <Layers className="h-3.5 w-3.5" />
                   </Button>
@@ -2758,7 +2759,7 @@ function StreamlinedInbox({
                   }));
                 }}
                 onResetColumns={() => setIssueColumns(DEFAULT_INBOX_ISSUE_COLUMNS)}
-                title="Choose which columns stay visible"
+                title={zh("Choose which columns stay visible")}
                 iconOnly
                 rowPresentation={streamlinedUiEnabled ? "task" : "legacy"}
               />
@@ -2777,14 +2778,14 @@ function StreamlinedInbox({
                   <Dialog open={showMarkAllReadConfirm} onOpenChange={setShowMarkAllReadConfirm}>
                     <DialogContent className="sm:max-w-md">
                       <DialogHeader>
-                        <DialogTitle>Mark all as read?</DialogTitle>
+                        <DialogTitle>{zh("Mark all as read?")}</DialogTitle>
                         <DialogDescription>
-                          This will mark {unreadIssueIds.length} unread {unreadIssueIds.length === 1 ? "item" : "items"} as read.
+                          This will mark {unreadIssueIds.length} {zh("unread")} {unreadIssueIds.length === 1 ? "item" : "items"} {zh("as read.")}
                         </DialogDescription>
                       </DialogHeader>
                       <DialogFooter>
                         <Button variant="outline" onClick={() => setShowMarkAllReadConfirm(false)}>
-                          Cancel
+                          {zh("Cancel")}
                         </Button>
                         <Button
                           onClick={() => {
@@ -2792,7 +2793,7 @@ function StreamlinedInbox({
                             markAllReadMutation.mutate(unreadIssueIds);
                           }}
                         >
-                          Mark all as read
+                          {zh("Mark all as read")}
                         </Button>
                       </DialogFooter>
                     </DialogContent>
@@ -2812,8 +2813,8 @@ function StreamlinedInbox({
 
       {listError && (
         <div role="alert" className="flex items-center gap-2 text-sm text-destructive">
-          <p>Unable to load the inbox: {listError.message}</p>
-          <Button variant="outline" size="sm" onClick={() => { retryFailedSources(); if (externalObjectSummariesError) retryExternalObjectSummaries(); }}>Retry</Button>
+          <p>{zh("Unable to load the inbox:")} {listError.message}</p>
+          <Button variant="outline" size="sm" onClick={() => { retryFailedSources(); if (externalObjectSummariesError) retryExternalObjectSummaries(); }}>{zh("Retry")}</Button>
         </div>
       )}
       {actionError && <p className="text-sm text-destructive">{actionError}</p>}
@@ -2850,14 +2851,14 @@ function StreamlinedInbox({
           icon={searchQuery.trim() ? Search : InboxIcon}
           message={
             searchQuery.trim()
-              ? "No inbox items match your search."
+              ? zh("No inbox items match your search.")
               : tab === "mine"
-              ? "Inbox zero."
+              ? zh("Inbox zero.")
               : tab === "unread"
-              ? "No new inbox items."
+              ? zh("No new inbox items.")
               : tab === "recent"
-                ? "No recent inbox items."
-                : "No inbox items match these filters."
+                ? zh("No recent inbox items.")
+                : zh("No inbox items match these filters.")
           }
         />
       )}
@@ -2940,7 +2941,7 @@ function StreamlinedInbox({
                           type="button"
                           data-slot="icon-button"
                           className="inline-flex h-4 w-4 shrink-0 items-center justify-center"
-                          aria-label={isExpanded ? "Collapse sub-tasks" : "Expand sub-tasks"}
+                          aria-label={isExpanded ? zh("Collapse sub-tasks") : zh("Expand sub-tasks")}
                           onClick={(event) => {
                             event.preventDefault();
                             event.stopPropagation();
@@ -2999,7 +3000,7 @@ function StreamlinedInbox({
                       ) : undefined}
                       titleSuffix={hasChildren && !isExpanded ? (
                         <span className="ml-1.5 text-xs text-muted-foreground">
-                          ({childCount} sub-task{childCount !== 1 ? "s" : ""})
+                          ({childCount} {zh("sub-task")}{childCount !== 1 ? "s" : ""})
                         </span>
                       ) : undefined}
                       mobileTitleMeta={streamlinedUiEnabled ? issueActivityTimestamp(issue) : undefined}
@@ -3078,7 +3079,7 @@ function StreamlinedInbox({
                       >
                         <div className="h-px flex-1 bg-border/80" />
                         <span className="shrink-0 text-(length:--text-micro) font-semibold uppercase tracking-wide text-muted-foreground">
-                          {group.searchSection === "archived" ? "Archived" : "Other results"}
+                          {group.searchSection === "archived" ? zh("Archived") : zh("Other results")}
                         </span>
                         <div className="h-px flex-1 bg-border/80" />
                       </div>,
@@ -3186,7 +3187,7 @@ function StreamlinedInbox({
                             className="shrink-0 text-(length:--text-micro) font-medium uppercase tracking-wider text-muted-foreground/70"
                             data-date-group-label=""
                           >
-                            Earlier
+                            {zh("Earlier")}
                           </span>
                         </div>,
                       );
@@ -3401,7 +3402,7 @@ function StreamlinedInbox({
           {showSeparatorBefore("alerts") && <Separator />}
           <div>
             <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-              Alerts
+              {zh("Alerts")}
             </h3>
             <div className="divide-y divide-border border border-border">
               {showAggregateAgentError && (
@@ -3413,14 +3414,14 @@ function StreamlinedInbox({
                     <AlertTriangle className="h-4 w-4 shrink-0 text-red-600 dark:text-red-400" />
                     <span className="text-sm">
                       <span className="font-medium">{dashboard!.agents.error}</span>{" "}
-                      {dashboard!.agents.error === 1 ? "agent has" : "agents have"} errors
+                      {dashboard!.agents.error === 1 ? "agent has" : "agents have"} {zh("errors")}
                     </span>
                   </Link>
                   <button
                     type="button"
                     onClick={() => dismissAlert("alert:agent-errors")}
                     className="rounded-md p-1 text-muted-foreground opacity-0 transition-opacity hover:bg-accent hover:text-foreground group-hover/alert:opacity-100"
-                    aria-label="Dismiss"
+                    aria-label={zh("Dismiss")}
                   >
                     <X className="h-3.5 w-3.5" />
                   </button>
@@ -3434,16 +3435,16 @@ function StreamlinedInbox({
                   >
                     <AlertTriangle className="h-4 w-4 shrink-0 text-yellow-400" />
                     <span className="text-sm">
-                      Budget at{" "}
+                      {zh("Budget at")}{" "}
                       <span className="font-medium">{dashboard!.costs.monthUtilizationPercent}%</span>{" "}
-                      utilization this month
+                      {zh("utilization this month")}
                     </span>
                   </Link>
                   <button
                     type="button"
                     onClick={() => dismissAlert("alert:budget")}
                     className="rounded-md p-1 text-muted-foreground opacity-0 transition-opacity hover:bg-accent hover:text-foreground group-hover/alert:opacity-100"
-                    aria-label="Dismiss"
+                    aria-label={zh("Dismiss")}
                   >
                     <X className="h-3.5 w-3.5" />
                   </button>

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plus, Search } from "lucide-react";
@@ -39,7 +40,7 @@ export function GatewaysList() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Connectors", href: "/apps" },
+      { label: zh("Connectors"), href: "/apps" },
       { label: "Gateways" },
     ]);
     return () => setBreadcrumbs([]);
@@ -211,9 +212,9 @@ export function GatewaysList() {
                     <thead>
                       <tr className="border-b border-border bg-muted/40 text-left text-(length:--text-micro) font-semibold uppercase tracking-wide text-muted-foreground">
                         <th className="whitespace-nowrap px-4 py-2.5">Gateway</th>
-                        <th className="whitespace-nowrap px-4 py-2.5">Scope</th>
+                        <th className="whitespace-nowrap px-4 py-2.5">{zh("Scope")}</th>
                         <th className="whitespace-nowrap px-4 py-2.5">Apps</th>
-                        <th className="whitespace-nowrap px-4 py-2.5">Tokens</th>
+                        <th className="whitespace-nowrap px-4 py-2.5">{zh("Tokens")}</th>
                         <th className="whitespace-nowrap px-4 py-2.5">Last used</th>
                         <th className="whitespace-nowrap px-4 py-2.5 text-right">On</th>
                       </tr>
@@ -232,7 +233,7 @@ export function GatewaysList() {
                           <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">{scope}</td>
                           <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">{appsLabel}</td>
                           <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">
-                            {active} active{expiring > 0 ? ` · ${expiring} expiring` : ""}
+                            {active} {zh("active")}{expiring > 0 ? ` · ${expiring} expiring` : ""}
                           </td>
                           <td className="whitespace-nowrap px-4 py-3 text-muted-foreground">
                             {lastUsed ? <RelativeTime value={lastUsed} /> : "—"}
@@ -267,10 +268,10 @@ export function GatewaysList() {
                         <div className="shrink-0">{toggle(gateway)}</div>
                       </div>
                       <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-                        <MobileField label="Scope" value={scope} />
+                        <MobileField label={zh("Scope")} value={scope} />
                         <MobileField label="Apps" value={appsLabel} />
                         <MobileField
-                          label="Tokens"
+                          label={zh("Tokens")}
                           value={`${active} active${expiring > 0 ? ` · ${expiring} expiring` : ""}`}
                         />
                         <MobileField

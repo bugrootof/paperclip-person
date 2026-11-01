@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import {
   CircleCheck,
   CircleAlert,
@@ -112,9 +113,9 @@ export function RuntimeTestCard({
             aria-atomic="true"
             className="min-w-0 space-y-1"
           >
-            <h3 className="text-sm font-medium">{content.title}</h3>
+            <h3 className="text-sm font-medium">{zh(content.title)}</h3>
             <p className="text-xs leading-relaxed text-muted-foreground">
-              {state === "fail" && error ? error : description}
+              {state === "fail" && error ? error : zh(description)}
             </p>
           </div>
           <Button
@@ -125,7 +126,7 @@ export function RuntimeTestCard({
             disabled={disabled || state === "running"}
             onClick={onTest}
           >
-            {content.action}
+            {zh(content.action)}
           </Button>
         </div>
       </div>

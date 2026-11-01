@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useCurrentAccountGuard } from "../hooks/useAccountBoundMutation";
 import { resolveIssueChatHumanAuthor } from "@/lib/issue-chat-human-author";
 import { useCurrentWorkspaceRetry, useWorkspaceBaseRefRecovery, useWorkspaceRetry } from "./WorkspaceBaseRefRecovery";
@@ -840,7 +841,7 @@ export function IssueAssigneePausedNotice({
         compact
         title={
           <>
-            <span className="font-medium">{agent.name}</span> is paused.
+            <span className="font-medium">{agent.name}</span> {zh("is paused.")}
           </>
         }
         actions={
@@ -852,12 +853,12 @@ export function IssueAssigneePausedNotice({
               disabled={resuming}
               data-testid="issue-assignee-paused-resume"
             >
-              {resuming ? "Resuming…" : "Resume agent"}
+              {resuming ? zh("Resuming…") : zh("Resume agent")}
             </Button>
           ) : undefined
         }
       >
-        New runs will not start until the agent is resumed. {pauseDetail}
+        {zh("New runs will not start until the agent is resumed.")} {zh(pauseDetail)}
       </InlineBanner>
     </div>
   );
@@ -1569,8 +1570,8 @@ function CopyablePreBlock({
           "absolute right-1.5 top-1.5 inline-flex h-6 w-6 items-center justify-center rounded-md bg-background/80 text-muted-foreground opacity-0 backdrop-blur-sm transition-opacity hover:text-foreground group-hover/pre:opacity-100",
           copied && "opacity-100",
         )}
-        title="Copy"
-        aria-label="Copy"
+        title={zh("Copy")}
+        aria-label={zh("Copy")}
         onClick={() => {
           void copyTextToClipboard(children)
             .then(() => {
@@ -1689,7 +1690,7 @@ function IssueChatToolPart({
             {nonIntentDetails.length > 0 ? (
               <div>
                 <div className="mb-1 text-(length:--text-nano) font-semibold uppercase tracking-(--tracking-eyebrow) text-muted-foreground/60">
-                  Input
+                  {zh("Input")}
                 </div>
                 <dl className="space-y-1.5">
                   {nonIntentDetails.map((detail) => (
@@ -1713,7 +1714,7 @@ function IssueChatToolPart({
             ) : rawArgsText ? (
               <div>
                 <div className="mb-1 text-(length:--text-nano) font-semibold uppercase tracking-(--tracking-eyebrow) text-muted-foreground/60">
-                  Input
+                  {zh("Input")}
                 </div>
                 <CopyablePreBlock className="overflow-x-auto rounded-md bg-accent/30 p-2 text-(length:--text-micro) leading-4 text-foreground/70">
                   {rawArgsText}
@@ -1880,7 +1881,7 @@ function IssueChatProviderActivity({
             })}
             {effectiveModel ? (
               <div>
-                <span className="text-muted-foreground">Model</span>{" "}
+                <span className="text-muted-foreground">{zh("Model")}</span>{" "}
                 {requestedModel && requestedModel !== effectiveModel
                   ? `${requestedModel} → `
                   : ""}
@@ -2150,7 +2151,7 @@ function IssueChatUserMessage({
                 className="h-6 border-amber-300 px-2 text-(length:--text-micro) text-amber-900 hover:bg-amber-100/80 hover:text-amber-950 dark:border-amber-500/40 dark:text-amber-100 dark:hover:bg-amber-500/10"
                 onClick={() => onCancelQueued(commentId)}
               >
-                Cancel
+                {zh("Cancel")}
               </Button>
             ) : null}
           </div>
@@ -2292,7 +2293,7 @@ function IssueChatUserMessage({
               variant="outline"
               onClick={() => setDeleteDialogOpen(false)}
             >
-              Cancel
+              {zh("Cancel")}
             </Button>
             <Button variant="destructive" onClick={confirmDeleteComment}>
               Delete comment
@@ -2500,8 +2501,8 @@ function IssueChatAssistantMessage({
             variant="ghost"
             size="icon-xs"
             className="text-muted-foreground hover:text-foreground"
-            title="More actions"
-            aria-label="More actions"
+            title={zh("More actions")}
+            aria-label={zh("More actions")}
           >
             <MoreHorizontal className="h-3.5 w-3.5" />
           </Button>
@@ -2898,7 +2899,7 @@ function IssueChatFeedbackButtons({
                 setDownvoteReason("");
               }}
             >
-              Dismiss
+              {zh("Dismiss")}
             </Button>
             <Button
               type="button"
@@ -2906,7 +2907,7 @@ function IssueChatFeedbackButtons({
               disabled={isSaving || !downvoteReason.trim()}
               onClick={handleSubmitReason}
             >
-              {isSaving ? "Saving..." : "Save note"}
+              {isSaving ? zh("Saving...") : "Save note"}
             </Button>
           </div>
         </PopoverContent>
@@ -2934,9 +2935,9 @@ function IssueChatFeedbackButtons({
             <p>This vote is always saved locally.</p>
             <p>
               Choose{" "}
-              <span className="font-medium text-foreground">Always allow</span>{" "}
+              <span className="font-medium text-foreground">{zh("Always allow")}</span>{" "}
               to share this vote and future voted AI outputs. Choose{" "}
-              <span className="font-medium text-foreground">Don't allow</span>{" "}
+              <span className="font-medium text-foreground">{zh("Don't allow")}</span>{" "}
               to keep this vote and future votes local.
             </p>
             <p>You can change this later in Settings &gt; General.</p>
@@ -2947,7 +2948,7 @@ function IssueChatFeedbackButtons({
                 rel="noreferrer"
                 className="inline-flex text-sm text-foreground underline underline-offset-4"
               >
-                Read our terms of service
+                {zh("Read our terms of service")}
               </a>
             ) : null}
           </div>
@@ -2966,7 +2967,7 @@ function IssueChatFeedbackButtons({
                 ).then(() => setPendingSharingDialog(null));
               }}
             >
-              {isSaving ? "Saving..." : "Don't allow"}
+              {isSaving ? zh("Saving...") : zh("Don't allow")}
             </Button>
             <Button
               type="button"
@@ -2981,7 +2982,7 @@ function IssueChatFeedbackButtons({
                 }).then(() => setPendingSharingDialog(null));
               }}
             >
-              {isSaving ? "Saving..." : "Always allow"}
+              {isSaving ? zh("Saving...") : zh("Always allow")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -3675,7 +3676,7 @@ function SystemNoticeCommentContent({
             <button
               type="button"
               className="inline-flex h-6 w-6 items-center justify-center text-muted-foreground transition-colors hover:text-foreground"
-              title="Copy link"
+              title={zh("Copy link")}
               aria-label="Copy link to system notice"
               onClick={handleCopyLink}
             >
@@ -3853,7 +3854,7 @@ function IssueChatSystemMessage({ message }: { message: ThreadMessage }) {
         {statusChange ? (
           <div className="flex flex-wrap items-center gap-1.5 text-xs">
             <span className="text-(length:--text-nano) font-medium uppercase tracking-wider text-muted-foreground/70">
-              Status
+              {zh("Status")}
             </span>
             <span className="text-muted-foreground">
               {humanizeValue(statusChange.from)}
@@ -3874,7 +3875,7 @@ function IssueChatSystemMessage({ message }: { message: ThreadMessage }) {
               )}
             >
               <span className="text-(length:--text-nano) font-medium uppercase tracking-wider text-muted-foreground/70">
-                Assignee
+                {zh("Assignee")}
               </span>
               <AssigneeChip
                 assignee={assigneeChange.from}
@@ -3899,7 +3900,7 @@ function IssueChatSystemMessage({ message }: { message: ThreadMessage }) {
         {workspaceChange ? (
           <div className="flex flex-wrap items-center gap-1.5 text-xs">
             <span className="text-(length:--text-nano) font-medium uppercase tracking-wider text-muted-foreground/70">
-              Workspace
+              {zh("Workspace")}
             </span>
             <span className="text-muted-foreground">
               {formatTimelineWorkspaceLabel(workspaceChange.from)}
@@ -5695,16 +5696,16 @@ const IssueChatComposer = forwardRef<
             ref={reassignTriggerRef}
             value={reassignTarget}
             options={reassignOptions}
-            placeholder="Responsible"
-            noneLabel="No responsible"
-            searchPlaceholder="Search responsible..."
-            emptyMessage="No responsible found."
+            placeholder={zh("Responsible")}
+            noneLabel={zh("No responsible")}
+            searchPlaceholder={zh("Search responsible...")}
+            emptyMessage={zh("No responsible found.")}
             onChange={selectAssignee}
             className="h-8 text-xs"
             renderTriggerValue={(option) => {
               if (!option)
                 return (
-                  <span className="text-muted-foreground">Responsible</span>
+                  <span className="text-muted-foreground">{zh("Responsible")}</span>
                 );
               const agentId = option.id.startsWith("agent:")
                 ? option.id.slice("agent:".length)
@@ -5743,8 +5744,8 @@ const IssueChatComposer = forwardRef<
             size="icon-sm"
             disabled={stopControl.stopping}
             onClick={() => void stopControl.stop()}
-            aria-label={stopControl.stopping ? "Stopping…" : "Stop"}
-            title="Stop response"
+            aria-label={stopControl.stopping ? zh("Stopping…") : zh("Stop")}
+            title={zh("Stop response")}
           >
             {stopControl.stopping ? (
               <Loader2 className="h-4 w-4 animate-spin" aria-hidden />

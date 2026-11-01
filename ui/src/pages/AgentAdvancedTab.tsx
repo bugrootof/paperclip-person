@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { basicSetup } from "codemirror";
@@ -45,9 +46,9 @@ export function AgentAdvancedTab(props: AgentAdvancedTabProps) {
   if (!initial) {
     if (query.error) return <div role="alert" className="space-y-3 text-sm">
       <p>{query.error.message}</p>
-      <Button variant="outline" onClick={() => query.refetch()}>Retry</Button>
+      <Button variant="outline" onClick={() => query.refetch()}>{zh("Retry")}</Button>
     </div>;
-    return <p role="status" className="text-sm text-muted-foreground">Loading configuration…</p>;
+    return <p role="status" className="text-sm text-muted-foreground">{zh("Loading configuration…")}</p>;
   }
   return <ConfigurationEditor key={props.agent.id} {...props} initial={initial} />;
 }
@@ -145,8 +146,8 @@ function ConfigurationEditor({ agent, initial, onDirtyChange, onSaved, onSavingC
     <footer className="sticky bottom-0 z-10 flex items-center justify-between gap-3 border-t border-border bg-background py-4">
       <Button variant="ghost" disabled={busy} onClick={() => { if (!operationPending.current) { operationPending.current = true; reload.mutate(); } }}>Reload saved</Button>
       <div className="flex items-center gap-3">
-        <span role="status" className="text-xs text-muted-foreground">{save.isPending ? `Saving: ${progress || "configuration"}…` : reload.isPending ? "Loading configuration…" : dirty ? validation.document && !validation.changes.length ? "No configuration changes" : "Unsaved changes" : ""}</span>
-        <Button disabled={!dirty || busy || reloadRequired || !validation.document || !validation.changes.length} onClick={() => { if (!operationPending.current) { operationPending.current = true; save.mutate(); } }}>{save.isPending ? "Saving…" : "Save changes"}</Button>
+        <span role="status" className="text-xs text-muted-foreground">{save.isPending ? `Saving: ${progress || "configuration"}…` : reload.isPending ? zh("Loading configuration…") : dirty ? validation.document && !validation.changes.length ? "No configuration changes" : zh("Unsaved changes") : ""}</span>
+        <Button disabled={!dirty || busy || reloadRequired || !validation.document || !validation.changes.length} onClick={() => { if (!operationPending.current) { operationPending.current = true; save.mutate(); } }}>{save.isPending ? zh("Saving…") : zh("Save changes")}</Button>
       </div>
     </footer>
   </div>;

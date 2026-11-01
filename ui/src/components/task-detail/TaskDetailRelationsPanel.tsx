@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { isLockedIssueStub, LockedIssueChip } from "@/components/LockedIssueChip";
 import type { Issue, IssueStatus, IssueLockedStub } from "@paperclipai/shared";
 import { Plus } from "lucide-react";
@@ -130,7 +131,7 @@ export function TaskDetailSubtasksPanel({
   const allCompleted = items.length > 0 && completed === items.length;
 
   return (
-    <section className="flex flex-col gap-4" aria-label="Subtasks">
+    <section className="flex flex-col gap-4" aria-label={zh("Subtasks")}>
       <div className="flex flex-col gap-2">
         <div className="flex items-center justify-between gap-3 text-xs text-muted-foreground">
           <span>Progress</span>
@@ -181,13 +182,13 @@ export function TaskDetailSubtasksPanel({
           {allCompleted ? "All subtasks are complete." : "No remaining subtask actions."}
         </p>
       ) : (
-        <p className="py-6 text-center text-sm text-muted-foreground">No subtasks yet.</p>
+        <p className="py-6 text-center text-sm text-muted-foreground">{zh("No subtasks yet.")}</p>
       )}
 
       {remainingItems.length > 0 ? (
         <section className="flex flex-col gap-1.5" aria-labelledby="task-other-subtasks-heading">
           <h3 id="task-other-subtasks-heading" className="text-xs font-medium text-muted-foreground">
-            {nextAction ? "Other subtasks" : "Subtasks"}
+            {nextAction ? "Other subtasks" : zh("Subtasks")}
           </h3>
           <TaskDetailTaskList
             items={remainingItems}
@@ -200,7 +201,7 @@ export function TaskDetailSubtasksPanel({
       {onAddSubtask ? (
         <Button type="button" variant="outline" size="sm" className="self-start" onClick={onAddSubtask}>
           <Plus className="h-3.5 w-3.5" />
-          Add subtask
+          {zh("Add subtask")}
         </Button>
       ) : null}
     </section>
@@ -220,7 +221,7 @@ export function TaskDetailReferencesPanel({
     <div className="flex flex-col gap-6">
       <section className="flex flex-col gap-2" aria-labelledby="task-referenced-heading">
         <h3 id="task-referenced-heading" className="text-xs font-medium text-muted-foreground">
-          Referenced
+          {zh("Referenced")}
         </h3>
         <RelationNavigationList
           items={referenced}

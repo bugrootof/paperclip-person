@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useState, type ReactNode } from "react";
 import type {
   FeedbackDataSharingPreference,
@@ -145,8 +146,8 @@ export function AgentBubbleActionRow({
             variant="ghost"
             size="icon-xs"
             className="text-muted-foreground hover:text-foreground"
-            title="More actions"
-            aria-label="More actions"
+            title={zh("More actions")}
+            aria-label={zh("More actions")}
           >
             <MoreHorizontal className="h-3.5 w-3.5" />
           </Button>
@@ -306,7 +307,7 @@ export function IssueChatFeedbackButtons({
                 setDownvoteReason("");
               }}
             >
-              Dismiss
+              {zh("Dismiss")}
             </Button>
             <Button
               type="button"
@@ -314,7 +315,7 @@ export function IssueChatFeedbackButtons({
               disabled={isSaving || !downvoteReason.trim()}
               onClick={handleSubmitReason}
             >
-              {isSaving ? "Saving..." : "Save note"}
+              {isSaving ? zh("Saving...") : "Save note"}
             </Button>
           </div>
         </PopoverContent>
@@ -340,9 +341,9 @@ export function IssueChatFeedbackButtons({
           <div className="space-y-3 text-sm text-muted-foreground">
             <p>This vote is always saved locally.</p>
             <p>
-              Choose <span className="font-medium text-foreground">Always allow</span> to share
+              Choose <span className="font-medium text-foreground">{zh("Always allow")}</span> to share
               this vote and future voted AI outputs. Choose{" "}
-              <span className="font-medium text-foreground">Don't allow</span> to keep this vote
+              <span className="font-medium text-foreground">{zh("Don't allow")}</span> to keep this vote
               and future votes local.
             </p>
             <p>You can change this later in Settings &gt; General.</p>
@@ -353,7 +354,7 @@ export function IssueChatFeedbackButtons({
                 rel="noreferrer"
                 className="inline-flex text-sm text-foreground underline underline-offset-4"
               >
-                Read our terms of service
+                {zh("Read our terms of service")}
               </a>
             ) : null}
           </div>
@@ -370,7 +371,7 @@ export function IssueChatFeedbackButtons({
                 ).then(() => setPendingSharingDialog(null));
               }}
             >
-              {isSaving ? "Saving..." : "Don't allow"}
+              {isSaving ? zh("Saving...") : zh("Don't allow")}
             </Button>
             <Button
               type="button"
@@ -383,7 +384,7 @@ export function IssueChatFeedbackButtons({
                 }).then(() => setPendingSharingDialog(null));
               }}
             >
-              {isSaving ? "Saving..." : "Always allow"}
+              {isSaving ? zh("Saving...") : zh("Always allow")}
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Copy, Check, Loader2 } from "lucide-react";
@@ -305,7 +306,7 @@ export function OnboardingLoginCodeRow({
             animate={{ opacity: 1, y: 0, transition: COPIED_REVEAL }}
             exit={{ opacity: 0, transition: COPIED_REVEAL }}
           >
-            Copied!
+            {zh("Copied!")}
           </motion.span>
         )}
       </AnimatePresence>
@@ -463,7 +464,7 @@ export function ProviderApiKeyCard({
     <OnboardingLoginCard
       instruction={`Provide your ${providerName} API key to connect`}
     >
-      <OnboardingCardField {...field} label="API key" masked />
+      <OnboardingCardField {...field} label={zh("API key")} masked />
     </OnboardingLoginCard>
   );
 }

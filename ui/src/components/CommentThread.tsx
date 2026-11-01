@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AgentIdentity } from "./AgentIdentity";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import { memo, useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
@@ -498,7 +499,7 @@ function TimelineEventCard({
         {event.statusChange ? (
           <div className="flex flex-wrap items-center gap-2 text-sm">
             <span className="w-14 text-(length:--text-nano) font-medium uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-              Status
+              {zh("Status")}
             </span>
             <span className="text-muted-foreground">
               {humanizeValue(event.statusChange.from)}
@@ -513,7 +514,7 @@ function TimelineEventCard({
         {event.assigneeChange ? (
           <div className="flex flex-wrap items-center gap-2 text-sm">
             <span className="w-14 text-(length:--text-nano) font-medium uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-              Assignee
+              {zh("Assignee")}
             </span>
             <span className="text-muted-foreground">
               {formatTimelineAssigneeLabel(event.assigneeChange.from, agentMap, currentUserId)}
@@ -528,7 +529,7 @@ function TimelineEventCard({
         {event.workspaceChange ? (
           <div className="flex flex-wrap items-center gap-2 text-sm">
             <span className="w-14 text-(length:--text-nano) font-medium uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-              Workspace
+              {zh("Workspace")}
             </span>
             <span className="text-muted-foreground">
               {formatTimelineWorkspaceLabel(event.workspaceChange.from)}
@@ -654,7 +655,7 @@ const TimelineList = memo(function TimelineList({
                 <div className="mt-2 flex flex-wrap gap-x-3 gap-y-1 text-(length:--text-micro) text-muted-foreground">
                   {run.environment ? (
                     <span>
-                      Environment <span className="text-foreground">{run.environment.name}</span>
+                      {zh("Environment")} <span className="text-foreground">{run.environment.name}</span>
                       {/* The raw "sandbox" driver key stays off run details — the
                           environment's name and the Provider entry below already
                           identify it; other drivers (ssh, local) remain useful. */}
@@ -665,7 +666,7 @@ const TimelineList = memo(function TimelineList({
                   ) : null}
                   {run.environmentLease?.provider ? (
                     <span>
-                      Provider <span className="text-foreground">{run.environmentLease.provider}</span>
+                      {zh("Provider")} <span className="text-foreground">{run.environmentLease.provider}</span>
                     </span>
                   ) : null}
                   {run.environmentLease ? (
@@ -1058,14 +1059,14 @@ export function CommentThread({
               <InlineEntitySelector
                 value={reassignTarget}
                 options={reassignOptions}
-                placeholder="Responsible"
-                noneLabel="No responsible"
-                searchPlaceholder="Search responsible..."
-                emptyMessage="No responsible found."
+                placeholder={zh("Responsible")}
+                noneLabel={zh("No responsible")}
+                searchPlaceholder={zh("Search responsible...")}
+                emptyMessage={zh("No responsible found.")}
                 onChange={selectAssignee}
                 className="text-xs h-8"
                 renderTriggerValue={(option) => {
-                  if (!option) return <span className="text-muted-foreground">Responsible</span>;
+                  if (!option) return <span className="text-muted-foreground">{zh("Responsible")}</span>;
                   const agentId = option.id.startsWith("agent:") ? option.id.slice("agent:".length) : null;
                   const agent = agentId ? agentMap?.get(agentId) : null;
                   return (

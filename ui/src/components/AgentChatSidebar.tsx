@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { Star, SquarePen } from "lucide-react";
 import { SidebarNavItem } from "@/components/SidebarNavItem";
 import { AgentIcon } from "@/components/AgentIconPicker";
@@ -45,7 +46,7 @@ export function AgentChatSidebar({
             type="button"
             variant="ghost"
             size="icon-xs"
-            aria-label={`${pinned ? "Unstar" : "Star"} ${agent.name}`}
+            aria-label={`${pinned ? "Unstar" : zh("Star")} ${agent.name}`}
             aria-pressed={pinned}
             title={pinned ? "Unstar agent" : "Star agent to pin"}
             onClick={(event) => {

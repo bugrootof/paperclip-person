@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { ArrowLeft, Layers, Package } from "lucide-react";
@@ -217,11 +218,11 @@ export function Artifacts() {
   useEffect(() => {
     if (viewingSelectedStack && selectedGroup) {
       setBreadcrumbs([
-        { label: "Artifacts", href: "/artifacts" },
+        { label: zh("Artifacts"), href: "/artifacts" },
         { label: `${selectedGroup.issue.identifier} · ${selectedGroup.title}` },
       ]);
     } else {
-      setBreadcrumbs([{ label: "Artifacts" }]);
+      setBreadcrumbs([{ label: zh("Artifacts") }]);
     }
   }, [setBreadcrumbs, viewingSelectedStack, selectedGroup]);
 

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useWorkspaceIsolationControls } from "@/hooks/useWorkspaceIsolationControls";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import { useCallback, useEffect, useMemo, useState } from "react";
@@ -364,10 +365,10 @@ export function RoutineRunVariablesDialog({
                 value={selection.assigneeAgentId}
                 options={assigneeOptions}
                 recentOptionIds={recentAssigneeIds}
-                placeholder="Agent"
+                placeholder={zh("Agent")}
                 noneLabel="Select an agent"
-                searchPlaceholder="Search agents..."
-                emptyMessage="No agents found."
+                searchPlaceholder={zh("Search agents...")}
+                emptyMessage={zh("No agents found.")}
                 disablePortal
                 openOnFocus={false}
                 onChange={(assigneeAgentId) => {
@@ -401,15 +402,15 @@ export function RoutineRunVariablesDialog({
               />
             </div>
             <div className="space-y-1.5">
-              <Label className="text-xs">Project</Label>
+              <Label className="text-xs">{zh("Project")}</Label>
               <InlineEntitySelector
                 value={selection.projectId}
                 options={projectOptions}
                 recentOptionIds={recentProjectIds}
-                placeholder="Project"
-                noneLabel="No project"
-                searchPlaceholder="Search projects..."
-                emptyMessage="No projects found."
+                placeholder={zh("Project")}
+                noneLabel={zh("No project")}
+                searchPlaceholder={zh("Search projects...")}
+                emptyMessage={zh("No projects found.")}
                 disablePortal
                 openOnFocus={false}
                 onChange={(projectId) => {
@@ -434,7 +435,7 @@ export function RoutineRunVariablesDialog({
                       <span className="truncate">{option.label}</span>
                     </>
                   ) : (
-                    <span className="text-muted-foreground">No project</span>
+                    <span className="text-muted-foreground">{zh("No project")}</span>
                   )
                 }
                 renderOption={(option) => {
@@ -554,7 +555,7 @@ export function RoutineRunVariablesDialog({
             <span className="mr-auto" />
           )}
           <Button variant="ghost" onClick={() => onOpenChange(false)} disabled={isPending}>
-            Cancel
+            {zh("Cancel")}
           </Button>
           <Button
             onClick={() => {

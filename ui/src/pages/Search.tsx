@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Search as SearchIcon, AlertTriangle, FileQuestion, Plus, X } from "lucide-react";
@@ -156,7 +157,7 @@ export function Search() {
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Search" }]);
+    setBreadcrumbs([{ label: zh("Search") }]);
   }, [setBreadcrumbs]);
 
   useEffect(() => {
@@ -545,7 +546,7 @@ export function Search() {
   return (
     <div className="flex h-full min-h-0 flex-col" data-page="search">
       <div className="border-b border-border px-4 py-3 sm:px-6">
-        <h1 className="sr-only">Search</h1>
+        <h1 className="sr-only">{zh("Search")}</h1>
         <div className="relative">
           <SearchIcon className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
           <Input
@@ -819,7 +820,7 @@ function SearchTabContent({
         </p>
         <div className="flex flex-wrap items-center justify-center gap-2">
           <Button onClick={refetch} variant="default" size="sm">
-            Retry
+            {zh("Retry")}
           </Button>
           <Button onClick={navigateIssuesFallback} variant="outline" size="sm">
             Open Tasks filter view

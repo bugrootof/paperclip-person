@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { LegacyProjectRepository } from "./LegacyProjectRepository";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -36,10 +37,10 @@ export function ProjectRepositories({ project }: { project: Project }) {
       {save.isError && <p role="alert" className="mr-auto text-sm text-destructive">{save.error.message}</p>}
       {save.isSuccess && <span role="status" className="mr-auto text-sm text-muted-foreground">Changes saved</span>}
       {draft && <Button type="button" variant="ghost" disabled={save.isPending} onClick={() => { setDraft(null); save.reset(); }}>Discard changes</Button>}
-      <Button type="button" disabled={!draft || save.isPending} onClick={() => save.mutate()}>{save.isPending ? "Saving…" : "Save changes"}</Button>
+      <Button type="button" disabled={!draft || save.isPending} onClick={() => save.mutate()}>{save.isPending ? zh("Saving…") : zh("Save changes")}</Button>
     </div>
     <Dialog open={connecting} onOpenChange={setConnecting}><DialogContent showCloseButton={false} aria-describedby={undefined} className="max-h-(--sz-calc-18) overflow-y-auto sm:max-w-2xl">
-      <DialogTitle className="sr-only">Connect GitHub</DialogTitle>
+      <DialogTitle className="sr-only">{zh("Connect GitHub")}</DialogTitle>
       <ConnectionSetupFlow host="dialog" serviceSlug="github" forceNewConnection onCancel={() => setConnecting(false)} onComplete={() => {
         void client.invalidateQueries({ queryKey: repositoryOptionsKey(project.companyId) });
         setConnecting(false);

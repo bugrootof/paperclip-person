@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { configFieldsForSection } from "../config-sections";
 import { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
@@ -156,7 +157,7 @@ export function HermesGatewayConfigFields({
       </Field>
 
       <SecretField
-        label="API key"
+        label={zh("API key")}
         value={isCreate ? String(readCreateValue(values, "apiKey", "") ?? "") : editApiKeyValue}
         onCommit={(v) => writeValue("apiKey", v || undefined)}
         placeholder="Hermes API_SERVER_KEY, not PAPERCLIP_API_KEY"
@@ -188,7 +189,7 @@ export function HermesGatewayConfigFields({
           <option value="issue">Issue scoped</option>
           <option value="agent">Agent scoped</option>
           <option value="run">Run scoped</option>
-          <option value="none">None</option>
+          <option value="none">{zh("None")}</option>
         </select>
       </Field>
 
@@ -241,7 +242,7 @@ export function HermesGatewayConfigFields({
         />
       </Field>
 
-      <Field label="Instructions" hint="Optional stable Hermes instructions sent separately from the wake input.">
+      <Field label={zh("Instructions")} hint="Optional stable Hermes instructions sent separately from the wake input.">
         <DraftTextarea
           value={instructions}
           onCommit={(v) => writeValue("instructions", v || undefined)}

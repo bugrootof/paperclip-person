@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState, type CSSProperties } from "react";
 import { useQuery } from "@tanstack/react-query";
 import {
@@ -158,9 +159,9 @@ export function SidebarAccountMenu({
 
   const signOutMutation = useSignOut({ onSignedOut: closeNavigationChrome });
 
-  const displayName = session?.user.name?.trim() || "Board";
+  const displayName = session?.user.name?.trim() || zh("Board operator");
   const secondaryLabel =
-    session?.user.email?.trim() || (deploymentMode === "authenticated" ? "Signed in" : "Local workspace board");
+    session?.user.email?.trim() || (deploymentMode === "authenticated" ? zh("Signed in") : zh("Local workspace board"));
   const initials = deriveInitials(displayName);
   const profileHref = userProfilePath(session?.user);
 
@@ -184,7 +185,7 @@ export function SidebarAccountMenu({
                 "flex min-w-0 items-center gap-2.5 rounded-lg text-left text-(length:--text-compact) font-medium text-foreground/80 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                 rail ? "w-full px-3 py-2" : "flex-1 px-2 py-1.5",
               )}
-              aria-label="Open account menu"
+              aria-label={zh("Open account menu")}
             >
               <Avatar size="sm">
                 {session?.user.image ? <AvatarImage src={session.user.image} alt={displayName} /> : null}
@@ -195,7 +196,7 @@ export function SidebarAccountMenu({
           </PopoverTrigger>
           <FlyoutContent
             shadow={shadow}
-            aria-label="Account"
+            aria-label={zh("Account")}
             side="top"
             align="start"
             sideOffset={10}
@@ -205,7 +206,7 @@ export function SidebarAccountMenu({
             <FlyoutHeader data-flyout-profile data-marquee-surface className="relative flex h-(--profile-popover-header-height) shrink-0 items-center gap-2.5 px-3.5">
               <Link
                 to={profileHref}
-                aria-label="View profile"
+                aria-label={zh("View profile")}
                 onClick={closeNavigationChrome}
                 className="absolute inset-0 transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring"
               />
@@ -237,14 +238,14 @@ export function SidebarAccountMenu({
 
             <FlyoutOptions className="flex flex-col gap-0.5 border-t border-border p-2.5">
               <MenuAction
-                label="Settings"
+                label={zh("Settings")}
                 icon={Settings}
                 href="/company/settings"
                 onClick={closeNavigationChrome}
               />
               {showInvite && inviteHref ? (
                 <MenuAction
-                  label="Invite"
+                  label={zh("Invite")}
                   icon={UserPlus}
                   href={inviteHref}
                   topLevel={isCloud}
@@ -252,7 +253,7 @@ export function SidebarAccountMenu({
                 />
               ) : null}
               <MenuAction
-                label="Documentation"
+                label={zh("Documentation")}
                 icon={BookOpen}
                 href={DOCS_URL}
                 external
@@ -273,7 +274,7 @@ export function SidebarAccountMenu({
                     <LogOut className="size-4" />
                   </span>
                   <TruncatedText className="min-w-0 flex-1 truncate">
-                    {signOutMutation.isPending ? "Signing out..." : "Sign out"}
+                    {signOutMutation.isPending ? zh("Signing out...") : zh("Sign out")}
                   </TruncatedText>
                 </button>
               ) : null}
@@ -288,13 +289,13 @@ export function SidebarAccountMenu({
                 href={FEEDBACK_URL}
                 target="_blank"
                 rel="noreferrer"
-                aria-label="Share feedback"
+                aria-label={zh("Share feedback")}
                 className="flex size-8 shrink-0 items-center justify-center rounded-lg text-muted-foreground/50 transition-colors hover:bg-sidebar-accent hover:text-sidebar-accent-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
               >
                 <Flag className="h-4 w-4" aria-hidden="true" />
               </a>
             </TooltipTrigger>
-            <TooltipContent side="top">Share feedback</TooltipContent>
+            <TooltipContent side="top">{zh("Share feedback")}</TooltipContent>
           </Tooltip>
         ) : null}
       </div>

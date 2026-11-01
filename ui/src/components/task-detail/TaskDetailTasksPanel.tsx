@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import type { ReactNode } from "react";
 import type { Issue, Project } from "@paperclipai/shared";
 import { ArrowUpRight, ChevronRight } from "lucide-react";
@@ -65,7 +66,7 @@ export function TaskDetailTasksPanel({ ancestors = [], createdFrom = null, subta
     groups.set(key, group);
   }
   return (
-    <section className="flex flex-col gap-6" aria-label="Related tasks">
+    <section className="flex flex-col gap-6" aria-label={zh("Related tasks")}>
       {createdFrom && (
         <TaskGroup name="Created from">
           <IssueCreatedFromNote createdFrom={createdFrom} issueLinkState={issueLinkState} className="px-2 text-sm" />
@@ -95,11 +96,11 @@ export function TaskDetailTasksPanel({ ancestors = [], createdFrom = null, subta
       {hasError && (
         <div role="alert" className="flex items-center gap-2 text-sm text-destructive">
           <span>Could not load all tasks.</span>
-          {onRetry && <Button variant="ghost" size="sm" onClick={onRetry}>Retry</Button>}
+          {onRetry && <Button variant="ghost" size="sm" onClick={onRetry}>{zh("Retry")}</Button>}
         </div>
       )}
       {!isLoading && !hasError && !createdFrom && ancestors.length === 0 && subtasks.length === 0 && createdTasks.length === 0 && (
-        <p className="py-6 text-center text-sm text-muted-foreground">No tasks yet.</p>
+        <p className="py-6 text-center text-sm text-muted-foreground">{zh("No tasks yet.")}</p>
       )}
     </section>
   );

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import { useCallback, useMemo, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -419,7 +420,7 @@ function ApproveDialog({
               <div className="space-y-3">
                 <div className="grid grid-cols-2 gap-2">
                   <div className="space-y-1">
-                    <Label htmlFor="approve-folder">Folder</Label>
+                    <Label htmlFor="approve-folder">{zh("Folder")}</Label>
                     <Input
                       id="approve-folder"
                       value={draft.folder}
@@ -429,7 +430,7 @@ function ApproveDialog({
                     />
                   </div>
                   <div className="space-y-1">
-                    <Label htmlFor="approve-name">Name</Label>
+                    <Label htmlFor="approve-name">{zh("Name")}</Label>
                     <Input
                       id="approve-name"
                       value={draft.leaf}
@@ -451,18 +452,18 @@ function ApproveDialog({
                 </p>
 
                 <div className="space-y-1">
-                  <Label htmlFor="approve-description">Description</Label>
+                  <Label htmlFor="approve-description">{zh("Description")}</Label>
                   <Input
                     id="approve-description"
                     value={draft.description}
                     onChange={(event) => onChange({ ...draft, description: event.target.value })}
-                    placeholder="Optional"
+                    placeholder={zh("Optional")}
                   />
                 </div>
 
                 {localConfigs.length > 0 ? (
                   <div className="space-y-1">
-                    <Label htmlFor="approve-provider-config">Provider vault</Label>
+                    <Label htmlFor="approve-provider-config">{zh("Provider vault")}</Label>
                     <select
                       id="approve-provider-config"
                       value={draft.providerConfigId}
@@ -471,7 +472,7 @@ function ApproveDialog({
                       }
                       className="h-9 w-full rounded-md border border-input bg-transparent px-2 text-sm outline-none focus-visible:border-ring focus-visible:ring-3 focus-visible:ring-ring/50"
                     >
-                      <option value="">Deployment default</option>
+                      <option value="">{zh("Deployment default")}</option>
                       {localConfigs.map((config) => (
                         <option key={config.id} value={config.id}>
                           {config.displayName}
@@ -500,7 +501,7 @@ function ApproveDialog({
 
             <DialogFooter>
               <Button variant="ghost" onClick={onCancel} disabled={pending}>
-                Cancel
+                {zh("Cancel")}
               </Button>
               <Button onClick={onConfirm} disabled={pending || !canConfirm}>
                 {pending
@@ -548,7 +549,7 @@ function BindingApproveBody({
           </span>
         </div>
         <div className="flex items-center justify-between gap-2">
-          <span className="text-xs text-muted-foreground">Secret</span>
+          <span className="text-xs text-muted-foreground">{zh("Secret")}</span>
           <span className="flex items-center gap-1.5">
             <KeyRound className="size-3.5 text-muted-foreground" />
             <span className="font-medium">{secret.name}</span>
@@ -613,7 +614,7 @@ function RejectDialog({
               </DialogDescription>
             </DialogHeader>
             <div className="space-y-1">
-              <Label htmlFor="reject-reason">Reason</Label>
+              <Label htmlFor="reject-reason">{zh("Reason")}</Label>
               <Textarea
                 id="reject-reason"
                 value={reason}
@@ -630,10 +631,10 @@ function RejectDialog({
             ) : null}
             <DialogFooter>
               <Button variant="ghost" onClick={onCancel} disabled={pending}>
-                Cancel
+                {zh("Cancel")}
               </Button>
               <Button variant="destructive" onClick={onConfirm} disabled={pending || !canConfirm}>
-                {pending ? "Rejecting…" : "Reject"}
+                {pending ? "Rejecting…" : zh("Reject")}
               </Button>
             </DialogFooter>
           </>
@@ -669,7 +670,7 @@ export function ProposalActions({
       disabled={disabled || blocked}
       onClick={() => onApprove(proposal)}
     >
-      Approve
+      {zh("Approve")}
     </Button>
   );
   return (
@@ -695,7 +696,7 @@ export function ProposalActions({
         disabled={disabled}
         onClick={() => onReject(proposal)}
       >
-        Reject
+        {zh("Reject")}
       </Button>
     </div>
   );

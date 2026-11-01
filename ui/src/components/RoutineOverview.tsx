@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import type {
   Issue,
   IssuePriority,
@@ -180,7 +181,7 @@ export function RoutineOverview() {
         />
         <OverviewFact
           icon={Play}
-          label="Last run"
+          label={zh("Last run")}
           value={lastRun ? <StatusBadge status={lastRun.status} /> : "No runs yet"}
           detail={lastRun ? formatRoutineTimestamp(lastRun.triggeredAt) : "Run manually or wait for a trigger"}
         />
@@ -202,7 +203,7 @@ export function RoutineOverview() {
       </section>
 
       <section className="flex flex-col gap-2" aria-labelledby="routine-description-heading">
-        <h2 id="routine-description-heading" className="text-sm font-semibold">Description</h2>
+        <h2 id="routine-description-heading" className="text-sm font-semibold">{zh("Description")}</h2>
         {routine.description?.trim() ? (
           <MarkdownBody className="text-sm text-foreground" linkIssueReferences>
             {routine.description}
@@ -216,7 +217,7 @@ export function RoutineOverview() {
         <div className="flex items-center justify-between gap-3">
           <h2 id="routine-recent-runs-heading" className="text-sm font-semibold">Recent runs</h2>
           <Button variant="ghost" size="sm" asChild>
-            <Link to={routineDetailHref(routine.id, "runs")}>View all runs</Link>
+            <Link to={routineDetailHref(routine.id, "runs")}>{zh("View all runs")}</Link>
           </Button>
         </div>
         {recentRuns.length === 0 ? (

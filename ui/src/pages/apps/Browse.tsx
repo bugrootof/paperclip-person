@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AGGREGATOR_NAMES, aggregatorManagementUrl, isAppAggregator, type AggregatorAppSnapshot, type AggregatorAppsResponse } from "@paperclipai/shared/aggregator-apps";
 import type { CatalogSource } from "./CatalogSourceFilters";
 import { ConnectorsToolbar } from "./ConnectorsToolbar";
@@ -218,14 +219,14 @@ function connectionState(connection: ToolConnection): ConnectionState {
   if (connection.enabled === false || connection.status === "disabled") {
     return {
       kind: "paused",
-      label: "Paused",
+      label: zh("Paused"),
       message: "Agents can’t use this account right now.",
     };
   }
   if ((connection.connectionPurpose === "ai" && (connection.healthStatus !== "ok" || aiSubscriptionNeedsIsolatedLogin(connection.config))) || isToolConnectionAttentionHealth(connection.healthStatus)) {
     return {
       kind: "attention",
-      label: "Needs attention",
+      label: zh("Needs attention"),
       message:
         connection.healthMessage ??
         connection.lastError ??
@@ -283,7 +284,7 @@ function connectorAction(
   title?: string;
 } {
   if (row.entry?.aiConnectionRouter) return { label: "Add connection pool", href: row.entry.availability?.available === false ? null : connectHrefFor(row.entry), title: row.entry.availability?.reason };
-  if (row.aggregatorApp && isInstalled(row)) return { label: "Manage", href: null };
+  if (row.aggregatorApp && isInstalled(row)) return { label: zh("Manage"), href: null };
   const applicationId = row.applications[0]?.id ?? null;
   const chatHref = (row.slug === "agentmail" || chatConnectorsEnabled)
     ? chatConnectHref(
@@ -315,7 +316,7 @@ function connectorAction(
         "This connector is unavailable on this instance.",
     };
   }
-  if (chatHref) return { label: "Connect", href: chatHref };
+  if (chatHref) return { label: zh("Connect"), href: chatHref };
   // AI accounts share the Connect action across subscription and key methods.
   // Tool connectors retain their capability-specific setup verbs.
   if (row.entry) {
@@ -325,7 +326,7 @@ function connectorAction(
     };
   }
   return {
-    label: "Connect",
+    label: zh("Connect"),
     href: applicationId ? `/apps/app/${applicationId}/permissions` : null,
   };
 }
@@ -384,7 +385,7 @@ export function Browse({ renderAccountDetails = (connection) => connection.conne
     useState<ConnectionRemovalTarget | null>(null);
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Connectors" }]);
+    setBreadcrumbs([{ label: zh("Connectors") }]);
     return () => setBreadcrumbs([]);
   }, [setBreadcrumbs]);
 
@@ -925,7 +926,7 @@ export function Browse({ renderAccountDetails = (connection) => connection.conne
               void chatEndpointsQuery.refetch();
             }}
           >
-            Try again
+            {zh("Try again")}
           </Button>
         </div>
       ) : null}
@@ -985,7 +986,7 @@ export function Browse({ renderAccountDetails = (connection) => connection.conne
         <div className="flex items-center gap-2">
           <Button variant="outline" size="sm" disabled={currentPage === 1} onClick={() => { setPage(currentPage - 1); catalogTop.current?.scrollIntoView?.({ block: "start" }); }}>Previous</Button>
           <span className="text-xs text-muted-foreground">Page {currentPage} of {pageCount}</span>
-          <Button variant="outline" size="sm" disabled={currentPage === pageCount} onClick={() => { setPage(currentPage + 1); catalogTop.current?.scrollIntoView?.({ block: "start" }); }}>Next</Button>
+          <Button variant="outline" size="sm" disabled={currentPage === pageCount} onClick={() => { setPage(currentPage + 1); catalogTop.current?.scrollIntoView?.({ block: "start" }); }}>{zh("Next")}</Button>
         </div>
       </nav> : null}
 
@@ -1007,7 +1008,7 @@ export function Browse({ renderAccountDetails = (connection) => connection.conne
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Remove {connectionToRemove?.accountName ?? "this"} connection?
+              {zh("Remove")} {connectionToRemove?.accountName ?? "this"} connection?
             </AlertDialogTitle>
             <AlertDialogDescription>
               {connectionToRemove?.pool ? "The connections in this pool are kept." : connectionToRemove && Object.values(AGGREGATOR_NAMES).includes(connectionToRemove.providerName as "Composio")
@@ -1025,7 +1026,7 @@ export function Browse({ renderAccountDetails = (connection) => connection.conne
           </p> : null}
           <AlertDialogFooter className="sm:justify-between">
             <AlertDialogCancel disabled={removeConnection.isPending}>
-              Cancel
+              {zh("Cancel")}
             </AlertDialogCancel>
             <AlertDialogAction
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
@@ -1041,7 +1042,7 @@ export function Browse({ renderAccountDetails = (connection) => connection.conne
               ) : (
                 <Trash2 />
               )}
-              {removeConnection.isPending ? "Removing…" : "Remove connection"}
+              {removeConnection.isPending ? zh("Removing…") : "Remove connection"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -1152,7 +1153,7 @@ export function ConnectorCard({
               const providerName = AGGREGATOR_NAMES[route.provider];
               const managedSnapshot = row.upstreamApps?.find(app => (app.provider ?? "composio") === route.provider && app.accounts.length > 0);
               const managed = Boolean(managedSnapshot);
-              const label = `${managed ? "Manage" : "Connect"} ${row.name} through ${providerName}, a third-party service`;
+              const label = `${managed ? zh("Manage") : zh("Connect")} ${row.name} through ${providerName}, a third-party service`;
               return <Tooltip key={route.provider}><TooltipTrigger asChild>
                 <button type="button" aria-label={label} onClick={() => managed ? onManageAggregator?.(row.aggregatorApp!, managedSnapshot?.connectionId) : onConnectAggregator?.(row.aggregatorApp!)} className="rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                   <AppLogo name={providerName} brandKey={route.provider} size={16} compact />
@@ -1247,7 +1248,7 @@ export function ConnectorCard({
               const managementUrl = aggregatorManagementUrl(provider, account.managementUrl ?? (typeof connection.config?.managementUrl === "string" ? connection.config?.managementUrl : null));
               const manage = () => onManageAggregator?.(row.upstreamCatalogApp!, connection.id);
               return <ConnectionAccountRowLayout key={`${connection.id}:${snapshot.toolkit}:${account.id}`} state={state} accountName={name}
-                source={<><AppLogo name={providerName} brandKey={provider} size={16} compact /><span>Managed by {providerName} ·</span><button type="button" className="max-w-full truncate hover:underline" onClick={() => onNavigate(`/apps/${connection.id}/permissions`)}>“{connection.name}”</button></>}
+                source={<><AppLogo name={providerName} brandKey={provider} size={16} compact /><span>{zh("Managed by")} {providerName} ·</span><button type="button" className="max-w-full truncate hover:underline" onClick={() => onNavigate(`/apps/${connection.id}/permissions`)}>“{connection.name}”</button></>}
                 onOpen={manage} openLabel={`Manage ${name}`}>
                 <DropdownMenu><DropdownMenuTrigger asChild><Button type="button" variant="ghost" size="icon-sm" aria-label={`Manage ${name} connection`}><MoreHorizontal className="h-4 w-4" /></Button></DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
@@ -1276,7 +1277,7 @@ export function ConnectorCard({
                           onNavigate(`/apps/chat/${endpoint.id}/settings`)
                         }
                       >
-                        {endpoint.assignedAgentName} · {endpoint.provider === "agentmail" ? "Email" : endpoint.provider === "github" ? "Code review bot" : "Chat"}
+                        {endpoint.assignedAgentName} · {endpoint.provider === "agentmail" ? zh("Email") : endpoint.provider === "github" ? "Code review bot" : zh("Chat")}
                       </button>
                       <p className="truncate text-xs text-muted-foreground">
                         {endpoint.providerAccountLabel ??
@@ -1290,7 +1291,7 @@ export function ConnectorCard({
                       { createdByUserId: (endpoint.connectionId ? connectionById?.get(endpoint.connectionId)?.createdByUserId : null) ?? endpoint.sponsorUserId ?? null }, userProfileById,
                     )} />
                     {["paused", "attention", "revoked"].includes(endpoint.status) && <span className="text-xs text-muted-foreground">
-                      {endpoint.status === "attention" ? "Needs attention" : endpoint.status === "revoked" ? "Access revoked" : "Paused"}
+                      {endpoint.status === "attention" ? zh("Needs attention") : endpoint.status === "revoked" ? "Access revoked" : zh("Paused")}
                     </span>}
                     {chatEndpointNeedsSetup(endpoint) ? (
                       <Button
@@ -1298,7 +1299,7 @@ export function ConnectorCard({
                         variant="outline"
                         onClick={() => onNavigate(`/apps/chat/connect?provider=${endpoint.provider}&purpose=chat&resume=${endpoint.id}`)}
                       >
-                        Finish setup
+                        {zh("Finish setup")}
                       </Button>
                     ) : null}
                     <DropdownMenu>
@@ -1314,7 +1315,7 @@ export function ConnectorCard({
                       </DropdownMenuTrigger>
                       <DropdownMenuContent align="end">
                         <DropdownMenuItem onSelect={() => onNavigate(`/apps/chat/${endpoint.id}/settings`)}>
-                          Manage
+                          {zh("Manage")}
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
@@ -1392,8 +1393,8 @@ function ConnectionAccountRow({
             {state.kind === "attention"
               ? connection.requiresReauthorization === false
                 ? "Retry access"
-                : "Reconnect"
-              : "Finish setup"}
+                : zh("Reconnect")
+              : zh("Finish setup")}
           </Button>
         ) : null}
         <DropdownMenu>
@@ -1411,11 +1412,11 @@ function ConnectionAccountRow({
             <DropdownMenuItem
               onSelect={() => onNavigate(`/apps/${connection.id}/permissions`)}
             >
-              Permissions
+              {zh("Permissions")}
             </DropdownMenuItem>
             {onRefreshComposio ? <DropdownMenuItem disabled={refreshingComposio} onSelect={onRefreshComposio}>
               {refreshingComposio ? <Loader2 className="animate-spin" /> : null}
-              Refresh {isAppAggregator(row.slug) ? AGGREGATOR_NAMES[row.slug] : "Composio"}
+              {zh("Refresh")} {isAppAggregator(row.slug) ? AGGREGATOR_NAMES[row.slug] : "Composio"}
             </DropdownMenuItem> : null}
             {row.slug === "arcade" && onConfigureArcade ? <DropdownMenuItem onSelect={onConfigureArcade}>{discovery?.discovery.availability === "setup_required" ? "Set up account sync" : "Account sync settings"}</DropdownMenuItem> : null}
             {row.slug === "executor" && onConfigureExecutor ? <DropdownMenuItem onSelect={onConfigureExecutor}>Console URL</DropdownMenuItem> : null}
@@ -1545,7 +1546,7 @@ function CustomConnectorCard({
           aria-controls="custom-connector-options"
           onClick={() => setExpanded((open) => !open)}
         >
-          {expanded ? "Close" : "Connect"}
+          {expanded ? zh("Close") : zh("Connect")}
         </Button>
       </div>
 

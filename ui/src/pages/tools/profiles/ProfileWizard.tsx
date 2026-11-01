@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Check, ChevronDown, Loader2 } from "lucide-react";
@@ -38,7 +39,7 @@ function slugifyProfileKey(name: string): string {
 }
 
 const STEP_LABELS: Array<{ step: WizardStep; label: string }> = [
-  { step: 1, label: "Name" },
+  { step: 1, label: zh("Name") },
   { step: 2, label: "Choose tools" },
   { step: 3, label: "Assign" },
 ];
@@ -306,11 +307,11 @@ export function ProfileWizard({
           <div className="flex items-center gap-2">
             {step > 1 ? (
               <Button variant="outline" disabled={busy} onClick={() => setStep((s) => (s - 1) as WizardStep)}>
-                Back
+                {zh("Back")}
               </Button>
             ) : (
               <Button variant="ghost" disabled={busy} onClick={() => navigate("/apps/advanced/profiles")}>
-                Cancel
+                {zh("Cancel")}
               </Button>
             )}
 
@@ -322,7 +323,7 @@ export function ProfileWizard({
                 }
               >
                 {busy ? <Loader2 className="mr-1.5 h-4 w-4 animate-spin" /> : null}
-                Continue
+                {zh("Continue")}
               </Button>
             ) : null}
 
@@ -332,14 +333,14 @@ export function ProfileWizard({
                 onClick={() => saveDraft.mutate({ goToStep: 3, completedStep: 2 })}
               >
                 {busy ? <Loader2 className="mr-1.5 h-4 w-4 animate-spin" /> : null}
-                Continue
+                {zh("Continue")}
               </Button>
             ) : null}
 
             {step === 3 ? (
               <Button disabled={busy} onClick={() => finish.mutate()}>
                 {busy ? <Loader2 className="mr-1.5 h-4 w-4 animate-spin" /> : null}
-                Save profile
+                {zh("Save profile")}
               </Button>
             ) : null}
           </div>
@@ -506,7 +507,7 @@ export function StepName({
 
       <div className="space-y-3">
         <div className="space-y-1.5">
-          <Label htmlFor="profile-name">Name</Label>
+          <Label htmlFor="profile-name">{zh("Name")}</Label>
           <Input
             id="profile-name"
             value={name}
@@ -529,7 +530,7 @@ export function StepName({
       <Collapsible open={advancedOpen} onOpenChange={setAdvancedOpen}>
         <CollapsibleTrigger className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
           <ChevronDown className={cn("h-4 w-4 transition-transform", advancedOpen && "rotate-180")} />
-          Advanced
+          {zh("Advanced")}
         </CollapsibleTrigger>
         <CollapsibleContent className="pt-2">
           <div className="space-y-1.5">
@@ -652,13 +653,13 @@ export function StepAssign({
               individual agents.
             </p>
             <TargetChecklist
-              label="Projects"
+              label={zh("Projects")}
               options={projects}
               selected={selectedProjectIds ?? new Set()}
               onToggle={onToggleProject}
             />
             <TargetChecklist
-              label="Routines"
+              label={zh("Routines")}
               options={routines}
               selected={selectedRoutineIds ?? new Set()}
               onToggle={onToggleRoutine}

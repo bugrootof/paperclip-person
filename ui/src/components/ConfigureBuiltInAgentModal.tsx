@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useMemo, useState } from "react";
 import { agentHarnessType, agentRunner, type AgentRunnerChoice } from "@paperclipai/shared";
 import { adaptersApi } from "@/api/adapters";
@@ -173,11 +174,11 @@ export function ConfigureBuiltInAgentModal({
         <div className="space-y-4">
           <InlineBanner tone="info" compact>
             Creates <strong>{definition.displayName}</strong> in your roster, badged{" "}
-            <strong>Built-in</strong>. Organizations that require hire approval will queue this for the
+            <strong>{zh("Built-in")}</strong>. Organizations that require hire approval will queue this for the
             board.
           </InlineBanner>
 
-          <Field label="Harness">
+          <Field label={zh("Harness")}>
             <AdapterTypeDropdown
               value={adapterType}
               onChange={(next) => {
@@ -190,7 +191,7 @@ export function ConfigureBuiltInAgentModal({
           </Field>
 
           {["codex_local", "claude_local", "opencode_local", "pi_local"].includes(adapterType) && <details className="space-y-3">
-            <summary className="cursor-pointer text-sm text-muted-foreground">Advanced</summary>
+            <summary className="cursor-pointer text-sm text-muted-foreground">{zh("Advanced")}</summary>
             <AgentRunnerSelect value={runner ?? (state.agent ? agentRunner(state.agent.adapterType) : "auto")}
               pending={adapters.isFetching} error={adapters.error?.message} onRetry={() => { void adapters.refetch(); }}
               defaultRunner={runnerAvailability?.defaultRunner} supportedRunners={runnerAvailability?.supportedRunners}

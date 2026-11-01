@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "@/lib/router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -275,7 +276,7 @@ export function SummarySlotCard({
               variant="outline"
               onClick={() => setSelectedRevisionId(null)}
             >
-              Latest
+              {zh("Latest")}
             </Button>
           ) : null}
           {latestDocument && !generationFailed ? (
@@ -287,7 +288,7 @@ export function SummarySlotCard({
               disabled={!selector || generateMutation.isPending || Boolean(isGenerating)}
             >
               {generateMutation.isPending ? <Loader2 className="animate-spin" /> : <RefreshCw />}
-              Refresh
+              {zh("Refresh")}
             </Button>
           ) : null}
         </div>
@@ -363,7 +364,7 @@ export function SummarySlotCard({
           title="Summary could not be loaded"
           actions={
             <Button type="button" size="sm" variant="outline" onClick={() => void slotQuery.refetch()}>
-              Retry
+              {zh("Retry")}
             </Button>
           }
         >
@@ -460,7 +461,7 @@ export function SummarySlotCard({
 
           <div className="flex flex-col gap-3 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
             <span title={formatDateTime(historicalRevision?.createdAt ?? latestRevision?.createdAt ?? latestDocument.updatedAt)}>
-              Updated {relativeTime(historicalRevision?.createdAt ?? latestRevision?.createdAt ?? latestDocument.updatedAt)}
+              {zh("Updated")} {relativeTime(historicalRevision?.createdAt ?? latestRevision?.createdAt ?? latestDocument.updatedAt)}
             </span>
 
             {revisions.length > 1 ? (

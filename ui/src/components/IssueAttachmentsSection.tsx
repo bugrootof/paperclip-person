@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { TextAttachmentContext } from "@/context/TextAttachmentContext";
 import { isTextAttachment } from "@/lib/issue-attachments";
 import { useContext, useMemo, useState, type DragEvent, type ReactNode } from "react";
@@ -80,7 +81,7 @@ function AttachmentActions({
           <ExternalLink className="h-4 w-4" />
         </a>
       </Button>
-      <Button asChild variant="ghost" size="icon-sm" title="Download">
+      <Button asChild variant="ghost" size="icon-sm" title={zh("Download")}>
         <a href={attachmentDownloadPath(attachment)} aria-label={`Download ${filename}`}>
           <Download className="h-4 w-4" />
         </a>
@@ -280,7 +281,7 @@ export function IssueAttachmentsSection({
       <div className="flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <Paperclip className="h-3.5 w-3.5 text-muted-foreground" aria-hidden="true" />
-          <h3 className="text-sm font-medium text-muted-foreground">Attachments</h3>
+          <h3 className="text-sm font-medium text-muted-foreground">{zh("Attachments")}</h3>
           <span className="text-xs text-muted-foreground">{attachments.length}</span>
         </div>
         {uploadButton}
@@ -322,7 +323,7 @@ export function IssueAttachmentsSection({
                       }}
                       disabled={deletePending}
                     >
-                      Yes
+                      {zh("Yes")}
                     </button>
                     <button
                       type="button"
@@ -332,7 +333,7 @@ export function IssueAttachmentsSection({
                         setConfirmDeleteId(null);
                       }}
                     >
-                      No
+                      {zh("No")}
                     </button>
                   </div>
                 </div>
@@ -399,10 +400,10 @@ export function IssueAttachmentsSection({
           <p className="text-sm font-medium text-destructive">Delete this attachment? This cannot be undone.</p>
           <div className="flex shrink-0 items-center gap-2">
             <Button variant="ghost" size="sm" onClick={() => setConfirmDeleteId(null)} disabled={deletePending}>
-              Cancel
+              {zh("Cancel")}
             </Button>
             <Button variant="destructive" size="sm" onClick={() => confirmDelete(confirmDeleteId)} disabled={deletePending}>
-              {deletePending ? "Deleting..." : "Delete"}
+              {deletePending ? zh("Deleting...") : zh("Delete")}
             </Button>
           </div>
         </div>

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import {
   ChevronDown,
@@ -558,7 +559,7 @@ const EnumField = React.memo(({
         <SelectContent>
           {showUnsetOption && (
             <SelectItem value={ENUM_UNSET_VALUE} textValue="None">
-              <span className="text-muted-foreground">None</span>
+              <span className="text-muted-foreground">{zh("None")}</span>
             </SelectItem>
           )}
           {options.map((option) => (
@@ -975,7 +976,7 @@ const ArrayField = React.memo(({
           }}
         >
           <Plus className="mr-2 h-4 w-4" />
-          {isComplex ? "Add item" : "Add"}
+          {isComplex ? "Add item" : zh("Add")}
         </Button>
       </div>
 

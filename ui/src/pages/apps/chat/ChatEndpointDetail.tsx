@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { SpekoPhoneLine } from "@/components/voice/SpekoPhoneLine";
 import { SpekoIncomingCalls } from "@/components/voice/SpekoIncomingCalls";
 import { SpekoCallActivityItem, SpekoUnapprovedCallActivityItem, useSpekoCallHistory } from "@/components/voice/SpekoCallHistory";
@@ -281,12 +282,12 @@ export function ChatEndpointDetail() {
   useEffect(() => {
     if (!endpoint || !activeTab) return;
     setBreadcrumbs([
-      { label: "Connectors", href: "/apps" },
+      { label: zh("Connectors"), href: "/apps" },
       {
         label: `${endpoint.assignedAgentName} · ${providerNames[endpoint.provider]}`,
         href: `/apps/chat/${endpoint.id}/settings`,
       },
-      ...(reviewId ? [{ label: "Reviews", href: `/apps/chat/${endpoint.id}/reviews` }, { label: "Review" }] : [{
+      ...(reviewId ? [{ label: "Reviews", href: `/apps/chat/${endpoint.id}/reviews` }, { label: zh("Review") }] : [{
         label:
           tabItems.find((item) => item.value === activeTab)?.label ??
           "Settings",
@@ -311,7 +312,7 @@ export function ChatEndpointDetail() {
           This chat connection could not be loaded.
         </p>
         <Button variant="outline" onClick={() => endpointQuery.refetch()}>
-          Try again
+          {zh("Try again")}
         </Button>
       </div>
     );
@@ -446,14 +447,14 @@ function EmailAccess({ endpoint }: { endpoint: ChatEndpoint }) {
   if (!endpoint.connectionId || agents.isError || connection.isError) return (
     <div className="space-y-3">
       <p role="alert" className="text-sm text-destructive">Connection access could not be loaded.</p>
-      <Button variant="outline" onClick={() => { void agents.refetch(); void connection.refetch(); }}>Try again</Button>
+      <Button variant="outline" onClick={() => { void agents.refetch(); void connection.refetch(); }}>{zh("Try again")}</Button>
     </div>
   );
   if (agents.isPending || connection.isPending) return <p role="status" className="text-sm text-muted-foreground">Loading access…</p>;
   const sourceId = connection.data.config?.credentialConnectionId;
   const credentialId = typeof sourceId === "string" ? sourceId : endpoint.connectionId;
   return <section className="max-w-3xl space-y-4">
-    <h2 className="text-lg font-semibold">Access</h2>
+    <h2 className="text-lg font-semibold">{zh("Access")}</h2>
     {credentialId !== endpoint.connectionId && <p className="text-sm text-muted-foreground">These settings apply to the saved AgentMail account and all inboxes using it.</p>}
     <EmailConnectionAccess key={credentialId} companyId={endpoint.companyId} connectionId={credentialId} agents={agents.data} />
   </section>;
@@ -533,7 +534,7 @@ function Settings({
       )}
       <div className="space-y-2">
         <h3 className="text-sm font-semibold">{endpoint.provider === "slack" ? "Allowed Channels" : "Destinations"}</h3>
-        {resourcesQuery.isError ? <p role="alert" className="text-sm text-destructive">Couldn't load channels. <button className="underline" onClick={() => void resourcesQuery.refetch()}>Try again</button></p> : resourcesQuery.isLoading ? (
+        {resourcesQuery.isError ? <p role="alert" className="text-sm text-destructive">Couldn't load channels. <button className="underline" onClick={() => void resourcesQuery.refetch()}>{zh("Try again")}</button></p> : resourcesQuery.isLoading ? (
           <p className="text-sm text-muted-foreground">Loading destinations…</p>
         ) : destinationResources.length === 0 && endpoint.provider !== "slack" ? (
           <p className="rounded-lg border border-dashed border-border p-4 text-sm text-muted-foreground">
@@ -584,7 +585,7 @@ function Settings({
             ))}
             {endpoint.provider === "slack" && (
               <p className="py-3 text-sm text-muted-foreground">
-                Invite {endpoint.assignedAgentName} to a channel to add it
+                {zh("Invite")} {endpoint.assignedAgentName} to a channel to add it
               </p>
             )}
           </div>
@@ -730,7 +731,7 @@ function Access({
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h2 className="text-lg font-semibold">People</h2>
         {endpoint.provider === "slack" && <Dialog>
-          <DialogTrigger asChild><Button>Invite people</Button></DialogTrigger>
+          <DialogTrigger asChild><Button>{zh("Invite people")}</Button></DialogTrigger>
           <DialogContent>
             <DialogHeader>
               <DialogTitle>Invite people to talk to {endpoint.assignedAgentName}</DialogTitle>
@@ -746,7 +747,7 @@ function Access({
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <Button variant="ghost" onClick={() => {
                   void copyTextToClipboard(joinCommand).then(() => setJoinCommandCopied(true), () => pushToast({ title: "Couldn't copy the command", tone: "error" }));
-                }}>{joinCommandCopied ? <Check className="size-4" /> : <Copy className="size-4" />}{joinCommandCopied ? "Copied" : "Copy command"}</Button>
+                }}>{joinCommandCopied ? <Check className="size-4" /> : <Copy className="size-4" />}{joinCommandCopied ? zh("Copied") : "Copy command"}</Button>
                 <Button onClick={() => {
                   const workspace = endpoint.providerAccountId ? `https://app.slack.com/client/${encodeURIComponent(endpoint.providerAccountId)}` : "https://app.slack.com/";
                   void copyTextToClipboard(`Talk to ${endpoint.assignedAgentName} in Slack: ${workspace}\nSend ${joinCommand}, then open the bot’s private link and sign in to Paperclip to confirm your account. If you’re new to the organization, request access for an admin to approve.`).then(() => setInviteCopied(true), () => pushToast({ title: "Couldn't copy invitation", tone: "error" }));
@@ -759,7 +760,7 @@ function Access({
       <p className="text-sm text-muted-foreground">People with linked accounts use their own Paperclip permissions. <Link className="underline underline-offset-4" to="/company/settings/members">Manage members</Link></p>
       {confirmationUrl && (
         <div className="space-y-2 border-y border-border py-3">
-          <p className="text-sm font-medium">Confirm {confirmationFor ?? "this account"}</p>
+          <p className="text-sm font-medium">{zh("Confirm")} {confirmationFor ?? "this account"}</p>
           <p className="text-xs text-muted-foreground">Share only with this person. They must sign in and confirm their own account.</p>
           <p className="break-all text-xs text-muted-foreground">
             {confirmationUrl}
@@ -784,12 +785,12 @@ function Access({
             }}
           >
             <Copy />
-            Copy link
+            {zh("Copy link")}
           </Button>
         </div>
       )}
       <div className="space-y-2">
-        {linksQuery.isPending ? <p role="status" className="text-sm text-muted-foreground">Loading people…</p> : linksQuery.isError ? <p role="alert" className="text-sm text-destructive">Couldn't load people. <button className="underline" onClick={() => void linksQuery.refetch()}>Try again</button></p> : links.length === 0 ? (
+        {linksQuery.isPending ? <p role="status" className="text-sm text-muted-foreground">Loading people…</p> : linksQuery.isError ? <p role="alert" className="text-sm text-destructive">Couldn't load people. <button className="underline" onClick={() => void linksQuery.refetch()}>{zh("Try again")}</button></p> : links.length === 0 ? (
           <p className="rounded-lg border border-dashed border-border p-4 text-sm text-muted-foreground">
             No linked accounts yet. Invite someone to connect.
           </p>
@@ -823,7 +824,7 @@ function Access({
                     onClick={() => revoke.mutate(link.principalId)}
                   >
                     <Unlink />
-                    Disconnect
+                    {zh("Disconnect")}
                   </Button>
                 ) : (
                   <Button
@@ -867,7 +868,7 @@ function Conversations({
       {query.isPending ? <p role="status" className="text-sm text-muted-foreground">Loading conversations…</p> : query.isError ? (
         <div className="space-y-3">
           <p role="alert" className="text-sm text-destructive">Conversations could not be loaded.</p>
-          <Button variant="outline" onClick={() => void query.refetch()}>Try again</Button>
+          <Button variant="outline" onClick={() => void query.refetch()}>{zh("Try again")}</Button>
         </div>
       ) : <ChatConversationList rows={query.data ?? []} provider={provider} />}
     </section>
@@ -1081,7 +1082,7 @@ function Activity({
                 <p className="text-xs font-medium">{label}</p>
                 <p className="text-xs text-muted-foreground">
                   {surface.status === "current"
-                    ? "Current"
+                    ? zh("Current")
                     : surface.status === "stale"
                       ? "Stale URL"
                       : "Not observed"}
@@ -1133,7 +1134,7 @@ function Activity({
                 ) : (
                   <Play />
                 )}
-                Resume
+                {zh("Resume")}
               </Button>
             )}
             {[
@@ -1157,8 +1158,8 @@ function Activity({
               >
                 <RefreshCw />
                 {status === "draft" || status === "verifying"
-                  ? "Finish setup"
-                  : "Reconnect"}
+                  ? zh("Finish setup")
+                  : zh("Reconnect")}
               </Button>
             )}
             <Button
@@ -1183,7 +1184,7 @@ function Activity({
       <div className="space-y-2">
         <div className="flex items-center justify-between gap-3">
           <h3 className="text-sm font-semibold">Recent activity</h3>
-          {endpoint.provider === "speko" && !cursor && <Button size="sm" variant="ghost" onClick={() => { void query.refetch(); calls.onRetry(); }} disabled={query.isFetching || calls.loading}>Refresh</Button>}
+          {endpoint.provider === "speko" && !cursor && <Button size="sm" variant="ghost" onClick={() => { void query.refetch(); calls.onRetry(); }} disabled={query.isFetching || calls.loading}>{zh("Refresh")}</Button>}
         </div>
         {endpoint.provider === "agentmail" && rows.some((item) => item.kind === "publication" && item.status === "delivery_unknown") && (
           <p className="text-sm text-muted-foreground">
@@ -1208,7 +1209,7 @@ function Activity({
                 variant="outline"
                 onClick={() => query.refetch()}
               >
-                Try again
+                {zh("Try again")}
               </Button>
             </div>
           )}
@@ -1293,7 +1294,7 @@ function Activity({
         <span className="text-xs text-muted-foreground">Page {cursors.length}</span>
         <div className="flex items-center gap-2">
           <Button size="sm" variant="outline" disabled={cursors.length === 1 || query.isFetching} onClick={() => setCursors((pages) => pages.slice(0, -1))}>Previous</Button>
-          <Button size="sm" variant="outline" disabled={!query.data?.nextCursor || query.isFetching || query.isError} onClick={() => { if (query.data?.nextCursor) setCursors((pages) => [...pages, query.data.nextCursor!]); }}>Next</Button>
+          <Button size="sm" variant="outline" disabled={!query.data?.nextCursor || query.isFetching || query.isError} onClick={() => { if (query.data?.nextCursor) setCursors((pages) => [...pages, query.data.nextCursor!]); }}>{zh("Next")}</Button>
         </div>
       </nav>
       <AlertDialog
@@ -1407,7 +1408,7 @@ function Activity({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{zh("Cancel")}</AlertDialogCancel>
             <AlertDialogAction
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               disabled={lifecycle.isPending}

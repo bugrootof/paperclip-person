@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { Agent, AcceptedPlanDecompositionSummary } from "@paperclipai/shared";
@@ -18,7 +19,7 @@ function StatusBadge({ status }: { status: AcceptedPlanDecompositionSummary["sta
     return (
       <span className="inline-flex items-center gap-1 rounded-sm border border-emerald-500/50 bg-emerald-500/10 px-2 py-0.5 text-(length:--text-micro) font-medium text-emerald-900 dark:text-emerald-100">
         <CheckCircle2 className="h-3 w-3" />
-        Completed
+        {zh("Completed")}
       </span>
     );
   }
@@ -91,7 +92,7 @@ export function IssuePlanDecompositionsSection({
               <div className="flex flex-wrap items-center gap-2">
                 <StatusBadge status={record.status} />
                 <span className="text-xs text-muted-foreground">
-                  Plan {revisionLabel}
+                  {zh("Plan")} {revisionLabel}
                 </span>
                 <span className="text-xs text-muted-foreground/70">·</span>
                 <span className="inline-flex items-center gap-1 text-xs text-foreground">
@@ -112,12 +113,12 @@ export function IssuePlanDecompositionsSection({
               <div className="mt-1 flex flex-wrap gap-x-3 gap-y-0.5 text-(length:--text-micro) text-muted-foreground">
                 {ownerName ? <span>Owner: {ownerName}</span> : null}
                 {startedAt ? (
-                  <span title={formatDateTime(startedAt)}>Started {relativeTime(startedAt)}</span>
+                  <span title={formatDateTime(startedAt)}>{zh("Started")} {relativeTime(startedAt)}</span>
                 ) : null}
                 {completedAt ? (
-                  <span title={formatDateTime(completedAt)}>Completed {relativeTime(completedAt)}</span>
+                  <span title={formatDateTime(completedAt)}>{zh("Completed")} {relativeTime(completedAt)}</span>
                 ) : updatedAt ? (
-                  <span title={formatDateTime(updatedAt)}>Updated {relativeTime(updatedAt)}</span>
+                  <span title={formatDateTime(updatedAt)}>{zh("Updated")} {relativeTime(updatedAt)}</span>
                 ) : null}
                 {issueIdentifier ? (
                   <Link

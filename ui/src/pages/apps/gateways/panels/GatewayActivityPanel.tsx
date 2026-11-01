@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useMemo, useState } from "react";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { ChevronDown, ChevronRight } from "lucide-react";
@@ -13,10 +14,10 @@ const PAGE_SIZE = 25;
 
 const OUTCOME_META: Record<ToolAuditOutcome, { label: string; status: string }> = {
   allowed: { label: "Allowed", status: "allowed" },
-  blocked: { label: "Blocked", status: "denied" },
+  blocked: { label: zh("Blocked"), status: "denied" },
   asked_first: { label: "Asked first", status: "require-approval" },
   waiting: { label: "Waiting", status: "deferred" },
-  failed: { label: "Failed", status: "failed" },
+  failed: { label: zh("Failed"), status: "failed" },
   unknown: { label: "Recorded", status: "unchecked" },
 };
 
@@ -93,7 +94,7 @@ function ActivityRow({ event }: { event: ToolGatewayActivityEvent }) {
         )}
         <span className="min-w-0 flex-1">
           <span className="block text-foreground">
-            <span className="font-medium">{actor}</span> used <span className="font-medium">{tool}</span> in {app}
+            <span className="font-medium">{actor}</span> used <span className="font-medium">{tool}</span> {zh("in")} {app}
           </span>
         </span>
         <span className="flex shrink-0 items-center gap-2 whitespace-nowrap">
@@ -110,7 +111,7 @@ function ActivityRow({ event }: { event: ToolGatewayActivityEvent }) {
             {rawTool ? <Fact label="Tool" value={rawTool} mono /> : null}
             {event.invocation?.status ? <Fact label="Call status" value={event.invocation.status} /> : null}
             {event.invocation?.policyDecision ? <Fact label="Decision" value={event.invocation.policyDecision} /> : null}
-            {reason ? <Fact label="Reason" value={reason} mono /> : null}
+            {reason ? <Fact label={zh("Reason")} value={reason} mono /> : null}
             {duration ? <Fact label="Duration" value={duration} /> : null}
             {event.invocation?.id ? <Fact label="Invocation ID" value={event.invocation.id} mono /> : null}
             {event.invocation?.errorCode ? <Fact label="Error code" value={event.invocation.errorCode} mono /> : null}
@@ -198,7 +199,7 @@ export function GatewayActivityPanel({
             onClick={() => activityQuery.fetchNextPage()}
             disabled={activityQuery.isFetchingNextPage}
           >
-            {activityQuery.isFetchingNextPage ? "Loading…" : "Load more"}
+            {activityQuery.isFetchingNextPage ? zh("Loading…") : "Load more"}
           </Button>
         </div>
       ) : null}

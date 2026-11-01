@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import {
   Check,
@@ -224,8 +225,8 @@ export function FolderRail({
   return (
     <nav aria-label={`${itemLabelPlural} folders`} className="hidden w-(--sz-folder-rail) shrink-0 border-r border-border pr-3 md:block">
       <div className="mb-2 flex items-center justify-between gap-2">
-        <div className="text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">Folders</div>
-        <Button variant="ghost" size="icon-sm" title="New folder" onClick={onCreate}>
+        <div className="text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">{zh("Folders")}</div>
+        <Button variant="ghost" size="icon-sm" title={zh("New folder")} onClick={onCreate}>
           <Plus className="h-3.5 w-3.5" />
         </Button>
       </div>
@@ -255,7 +256,7 @@ export function FolderRail({
             />
           ))}
           <div className="px-2 pb-1 pt-3 text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">
-            System
+            {zh("System")}
           </div>
           {renderVirtualRow("unfiled", "Unfiled", result?.unfiledCount ?? 0, <FolderSwatch color={null} className="mt-0.5" />)}
         </div>
@@ -340,12 +341,12 @@ export function FolderRailItem({
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuItem onSelect={onStartRename}>Rename</DropdownMenuItem>
+          <DropdownMenuItem onSelect={onStartRename}>{zh("Rename")}</DropdownMenuItem>
           <DropdownMenuItem onSelect={onEdit}>Edit color</DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuItem variant="destructive" onSelect={onDelete}>
             <Trash2 className="h-3.5 w-3.5" />
-            Delete
+            {zh("Delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -466,7 +467,7 @@ export function MobileFolderSheet({
             <>
               {model.my ? renderBranch(model.my, "My Skills") : null}
               <div className="px-2 pb-0.5 pt-2 text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">
-                Organization
+                {zh("Organization")}
               </div>
               {model.company.map((node) => renderBranch(node))}
               {model.projects ? renderBranch(model.projects, "Projects") : null}
@@ -477,7 +478,7 @@ export function MobileFolderSheet({
           )}
           <MobileFolderRow
             id="unfiled"
-            label="Unfiled"
+            label={zh("Unfiled")}
             count={result?.unfiledCount ?? 0}
             selected={selection === "unfiled"}
             onSelect={select}
@@ -486,7 +487,7 @@ export function MobileFolderSheet({
         <div className="border-t border-border px-4 pt-3">
           <Button size="sm" variant="outline" className="w-full" onClick={onCreate}>
             <Plus className="mr-2 h-3.5 w-3.5" />
-            New folder
+            {zh("New folder")}
           </Button>
         </div>
       </SheetContent>
@@ -584,7 +585,7 @@ function MoveToMenuItems({
         <DropdownMenuSeparator />
         <DropdownMenuItem onSelect={() => onMove(null)}>
           <FolderSwatch color={null} />
-          Unfiled
+          {zh("Unfiled")}
           {currentFolderId == null ? <Check className="ml-auto h-3.5 w-3.5" /> : null}
         </DropdownMenuItem>
         {visibleFolders.map((folder) => (
@@ -635,14 +636,14 @@ export function FolderFormDialog({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>{isEdit ? "Edit folder" : "Create folder"}</DialogTitle>
+          <DialogTitle>{isEdit ? "Edit folder" : zh("Create folder")}</DialogTitle>
           <DialogDescription>
             {kind === "routine" ? "Organize routines in this organization." : "Organize installed organization skills."}
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-4">
           <div className="space-y-2">
-            <label className="text-sm font-medium" htmlFor="folder-name">Name</label>
+            <label className="text-sm font-medium" htmlFor="folder-name">{zh("Name")}</label>
             <Input
               id="folder-name"
               value={name}
@@ -654,7 +655,7 @@ export function FolderFormDialog({
             />
           </div>
           <div className="space-y-2">
-            <div className="text-sm font-medium">Color</div>
+            <div className="text-sm font-medium">{zh("Color")}</div>
             <div className="flex flex-wrap gap-2">
               {FOLDER_COLORS.map((swatch) => (
                 <button
@@ -677,17 +678,17 @@ export function FolderFormDialog({
                 )}
                 onClick={() => setColor(null)}
               >
-                None
+                {zh("None")}
               </button>
             </div>
           </div>
         </div>
         <DialogFooter>
           <Button variant="ghost" onClick={() => onOpenChange(false)} disabled={pending}>
-            Cancel
+            {zh("Cancel")}
           </Button>
           <Button onClick={() => onSubmit({ name: name.trim(), color })} disabled={pending || !name.trim()}>
-            {pending ? "Saving..." : isEdit ? "Save" : "Create folder"}
+            {pending ? zh("Saving...") : isEdit ? zh("Save") : zh("Create folder")}
           </Button>
         </DialogFooter>
       </DialogContent>
@@ -720,7 +721,7 @@ export function DeleteFolderDialog({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel disabled={pending}>Cancel</AlertDialogCancel>
+          <AlertDialogCancel disabled={pending}>{zh("Cancel")}</AlertDialogCancel>
           <AlertDialogAction
             className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
             disabled={pending || !folder}
@@ -729,7 +730,7 @@ export function DeleteFolderDialog({
               onConfirm();
             }}
           >
-            {pending ? "Deleting..." : "Delete folder"}
+            {pending ? zh("Deleting...") : "Delete folder"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
@@ -770,7 +771,7 @@ export function BulkBar({
         </DropdownMenuContent>
       </DropdownMenu>
       <Button size="sm" variant="ghost" onClick={onClear}>Deselect all</Button>
-      <Button size="sm" onClick={onDone}>Done</Button>
+      <Button size="sm" onClick={onDone}>{zh("Done")}</Button>
     </div>
   );
 }

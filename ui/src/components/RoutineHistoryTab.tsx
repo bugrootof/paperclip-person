@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { History as HistoryIcon, RotateCcw, Search } from "lucide-react";
@@ -208,7 +209,7 @@ export function RoutineHistoryTab({
           </p>
         </div>
         <Button size="sm" variant="outline" onClick={() => revisionsQuery.refetch()}>
-          Retry
+          {zh("Retry")}
         </Button>
       </div>
     );
@@ -429,9 +430,9 @@ function RevisionList({
     <aside className="space-y-1">
       <header className="flex items-center justify-between pb-2">
         <p className="text-xs font-medium uppercase tracking-(--tracking-caps) text-muted-foreground">
-          Revisions
+          {zh("Revisions")}
         </p>
-        <span className="text-(length:--text-micro) text-muted-foreground">{totalRevisions} total</span>
+        <span className="text-(length:--text-micro) text-muted-foreground">{totalRevisions} {zh("total")}</span>
       </header>
       {revisions.map((revision) => {
         const isSelected = revision.id === selectedRevisionId;
@@ -462,7 +463,7 @@ function RevisionList({
               <span>rev {revision.revisionNumber}</span>
               {isCurrent && (
                 <Badge variant="outline" className="border-border px-1.5 text-(length:--text-nano) uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-                  Current
+                  {zh("Current")}
                 </Badge>
               )}
               {revision.restoredFromRevisionId && (
@@ -480,7 +481,7 @@ function RevisionList({
       })}
       {totalRevisions > revisions.length && !showOlder && (
         <Button variant="ghost" size="sm" className="w-full" onClick={onShowOlder}>
-          Show {totalRevisions - revisions.length} older…
+          {zh("Show")} {totalRevisions - revisions.length} older…
         </Button>
       )}
     </aside>
@@ -523,19 +524,19 @@ function RevisionPreview({
   const fieldRows: Array<{ key: string; label: string; value: string; differs: boolean }> = [
     {
       key: "title",
-      label: "Title",
+      label: zh("Title"),
       value: snapshot.title,
       differs: !!currentSnapshot && currentSnapshot.title !== snapshot.title,
     },
     {
       key: "priority",
-      label: "Priority",
+      label: zh("Priority"),
       value: snapshot.priority,
       differs: !!currentSnapshot && currentSnapshot.priority !== snapshot.priority,
     },
     {
       key: "status",
-      label: "Status",
+      label: zh("Status"),
       value: snapshot.status,
       differs: !!currentSnapshot && currentSnapshot.status !== snapshot.status,
     },
@@ -547,25 +548,25 @@ function RevisionPreview({
     },
     {
       key: "projectId",
-      label: "Project",
+      label: zh("Project"),
       value: resolveProjectName(snapshot.projectId, projects),
       differs: !!currentSnapshot && currentSnapshot.projectId !== snapshot.projectId,
     },
     {
       key: "concurrencyPolicy",
-      label: "Concurrency",
+      label: zh("Concurrency"),
       value: snapshot.concurrencyPolicy.replaceAll("_", " "),
       differs: !!currentSnapshot && currentSnapshot.concurrencyPolicy !== snapshot.concurrencyPolicy,
     },
     {
       key: "catchUpPolicy",
-      label: "Catch-up",
+      label: zh("Catch-up"),
       value: snapshot.catchUpPolicy.replaceAll("_", " "),
       differs: !!currentSnapshot && currentSnapshot.catchUpPolicy !== snapshot.catchUpPolicy,
     },
     {
       key: "env",
-      label: "Env",
+      label: zh("Env"),
       value: envSummary,
       differs: envDiffers,
     },
@@ -578,7 +579,7 @@ function RevisionPreview({
           <div className="space-y-1 min-w-0">
             <p className="text-sm font-medium">rev {revision.revisionNumber}</p>
             <p className="text-xs text-muted-foreground truncate">
-              Saved {relativeTime(revision.createdAt)} by {getActorLabel(revision)}
+              {zh("Saved")} {relativeTime(revision.createdAt)} {zh("by")} {getActorLabel(revision)}
               {revision.changeSummary ? ` · ${revision.changeSummary}` : ""}
             </p>
           </div>
@@ -624,13 +625,13 @@ function RevisionPreview({
 
       <div className={`${cardWrapper} p-3 space-y-2`}>
         <p className="text-xs font-medium uppercase tracking-(--tracking-caps) text-muted-foreground">
-          Description
+          {zh("Description")}
         </p>
         <div className="rounded-md bg-background/40 p-3 text-sm leading-7">
           {snapshot.description ? (
             <MarkdownBody>{snapshot.description}</MarkdownBody>
           ) : (
-            <span className="text-muted-foreground">No description</span>
+            <span className="text-muted-foreground">{zh("No description")}</span>
           )}
         </div>
       </div>
@@ -759,7 +760,7 @@ function RestoreConfirmDialog({
         </div>
         <DialogFooter>
           <Button variant="outline" onClick={() => onOpenChange(false)} disabled={pending}>
-            Cancel
+            {zh("Cancel")}
           </Button>
           <Button onClick={onConfirm} disabled={pending}>
             <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
@@ -825,14 +826,14 @@ function RoutineRevisionDiffModal({
         </DialogHeader>
         <div className="flex flex-wrap items-center gap-3">
           <RevisionPicker
-            label="Old"
+            label={zh("Old")}
             value={leftId}
             onChange={setLeftId}
             revisions={revisions}
             tone="red"
           />
           <RevisionPicker
-            label="New"
+            label={zh("New")}
             value={rightId}
             onChange={setRightId}
             revisions={revisions}
@@ -852,7 +853,7 @@ function RoutineRevisionDiffModal({
                   <tr className="text-xs uppercase tracking-wide bg-muted/30 text-muted-foreground">
                     <th className="px-3 py-2 text-left">Field</th>
                     <th className="px-3 py-2 text-left">Old value</th>
-                    <th className="px-3 py-2 text-left">New value</th>
+                    <th className="px-3 py-2 text-left">{zh("New value")}</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -880,7 +881,7 @@ function RoutineRevisionDiffModal({
         </div>
         <DialogFooter className="justify-between sm:justify-between">
           <Button variant="outline" onClick={() => onOpenChange(false)}>
-            Close
+            {zh("Close")}
           </Button>
           {leftIsHistorical && left && (
             <Button onClick={() => onRestore(left)}>
@@ -953,8 +954,8 @@ function DiffTable({ rows }: { rows: DiffRow[] }) {
   return (
     <div className="rounded-md border border-border text-xs font-mono leading-6 overflow-hidden">
       <div className="grid grid-cols-(--gtc-1) border-b border-border/60 bg-muted/30 px-3 py-2 text-(length:--text-micro) uppercase tracking-wide text-muted-foreground">
-        <span>Old</span>
-        <span>New</span>
+        <span>{zh("Old")}</span>
+        <span>{zh("New")}</span>
         <span />
         <span>Content</span>
       </div>

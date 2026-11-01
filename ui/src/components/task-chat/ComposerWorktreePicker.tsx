@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useMemo, type CSSProperties } from "react";
 import { Folder, GitBranch, GitBranchPlus, Monitor } from "lucide-react";
 import type { ExecutionWorkspaceSummary } from "@paperclipai/shared";
@@ -25,11 +26,11 @@ interface ComposerWorktreePickerProps {
 }
 
 const MODE_OPTIONS: WorktreeOption[] = [
-  { key: "isolated_workspace", value: "isolated_workspace", mode: "isolated_workspace", label: "New worktree", description: "Start in an isolated checkout." },
-  { key: "shared_workspace", value: "shared_workspace", mode: "shared_workspace", label: "Project workspace", description: "Use the project's shared checkout." },
-  { key: "operator_branch", value: "operator_branch", mode: "operator_branch", label: "New branch", description: "Create a branch in the project workspace." },
-  { key: "agent_default", value: "agent_default", mode: "agent_default", label: "Agent default", description: "Let the agent choose its workspace." },
-  { key: "inherit", value: "inherit", mode: "inherit", label: "Project default", description: "Use the project's worktree settings." },
+  { key: "isolated_workspace", value: "isolated_workspace", mode: "isolated_workspace", label: zh("New worktree"), description: zh("Start in an isolated checkout.") },
+  { key: "shared_workspace", value: "shared_workspace", mode: "shared_workspace", label: zh("Project workspace"), description: zh("Use the project's shared checkout.") },
+  { key: "operator_branch", value: "operator_branch", mode: "operator_branch", label: zh("New branch"), description: zh("Create a branch in the project workspace.") },
+  { key: "agent_default", value: "agent_default", mode: "agent_default", label: zh("Agent default"), description: zh("Let the agent choose its workspace.") },
+  { key: "inherit", value: "inherit", mode: "inherit", label: zh("Project default"), description: zh("Use the project's worktree settings.") },
 ];
 
 /** Reuses the searchable selector and the existing workspace recency ordering. */
@@ -40,7 +41,7 @@ export function ComposerWorktreePicker({
   const groups = useMemo(() => [
     { id: "new", options: [MODE_OPTIONS[0]!] },
     {
-      id: "reuse", label: "Reuse a worktree",
+      id: "reuse", label: zh("Reuse a worktree"),
       options: orderReusableExecutionWorkspaces(workspaces).map((workspace): WorktreeOption => ({
         key: `reuse:${workspace.id}`, value: `reuse:${workspace.id}`,
         workspaceId: workspace.id, mode: "reuse_existing", label: workspace.name,
@@ -49,7 +50,7 @@ export function ComposerWorktreePicker({
       })),
     },
     {
-      id: "other", label: "Other options",
+      id: "other", label: zh("Other options"),
       options: MODE_OPTIONS.filter((option) => option.mode === "shared_workspace"
         || (option.mode !== "isolated_workspace" && option.mode === mode)),
     },
@@ -61,11 +62,11 @@ export function ComposerWorktreePicker({
       value={value}
       groups={groups}
       onValueChange={(_, option) => onChange(option.mode, option.workspaceId ?? "")}
-      placeholder="Worktrees"
+      placeholder={zh("Worktrees")}
       triggerAriaLabel="Worktrees"
       mobileTitle="Worktrees"
-      searchPlaceholder="Search worktrees..."
-      emptyMessage="No matching worktrees."
+      searchPlaceholder={zh("Search worktrees...")}
+      emptyMessage={zh("No matching worktrees.")}
       disabled={disabled}
       modal={mobile}
       contentStyle={contentStyle}
@@ -96,12 +97,12 @@ export function ComposerWorktreePicker({
       }}
       listFooter={loading || error || workspaces.length === 0 ? (
         <div className="border-t border-border px-3 py-2 text-xs text-muted-foreground" role="status">
-          {loading ? "Loading existing worktrees…" : error ? (
+          {loading ? zh("Loading existing worktrees…") : error ? (
             <span className="flex items-center justify-between gap-2">
-              Couldn't load worktrees.
-              <button type="button" className="rounded px-2 py-1 text-foreground hover:bg-accent" onClick={onRetry}>Retry</button>
+              {zh("Couldn't load worktrees.")}
+              <button type="button" className="rounded px-2 py-1 text-foreground hover:bg-accent" onClick={onRetry}>{zh("Retry")}</button>
             </span>
-          ) : "No existing worktrees yet. Choose New worktree to start one."}
+          ) : zh("No existing worktrees yet. Choose New worktree to start one.")}
         </div>
       ) : undefined}
     />

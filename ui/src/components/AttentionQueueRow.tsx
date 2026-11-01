@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { memo, useState, type KeyboardEvent, type ReactNode } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -215,7 +216,7 @@ export const AttentionQueueRow = memo(function AttentionQueueRow({
           {showOpen && (
             <Button asChild variant="default" size="xs" className={ACTION_BTN}>
               <Link to={href!}>
-                Open
+                {zh("Open")}
                 <ExternalLink className="h-3 w-3" />
               </Link>
             </Button>
@@ -224,7 +225,7 @@ export const AttentionQueueRow = memo(function AttentionQueueRow({
           {showRestore && (
             <Button type="button" variant="outline" size="xs" className={ACTION_BTN} onClick={() => onRestore(item)}>
               <RotateCcw className="h-3 w-3" />
-              Restore
+              {zh("Restore")}
             </Button>
           )}
         </div>
@@ -316,7 +317,7 @@ export const AttentionQueueRow = memo(function AttentionQueueRow({
                 {onSnooze && <SnoozeSubmenu onSnooze={(iso) => onSnooze(item, iso)} />}
                 <DropdownMenuItem onClick={() => onDismiss(item)}>
                   <X className="h-4 w-4" />
-                  Dismiss
+                  {zh("Dismiss")}
                 </DropdownMenuItem>
                 {href && (
                   <>
@@ -656,7 +657,7 @@ function ExpandedImages({ images, issueHref }: { images: AttentionDetailImage[];
           onClick={(e) => e.stopPropagation()}
           className="flex h-32 w-24 flex-col items-center justify-center rounded-md border border-dashed border-border bg-muted/40 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted hover:text-foreground focus-visible:ring-ring focus-visible:ring-(length:--rad-3) focus-visible:outline-none"
         >
-          <span className="text-base font-semibold">{extra} more</span>
+          <span className="text-base font-semibold">{extra} {zh("more")}</span>
           <span className="mt-0.5 inline-flex items-center gap-1 text-(length:--text-nano)">
             View issue
             <ExternalLink className="h-3 w-3" />
@@ -664,7 +665,7 @@ function ExpandedImages({ images, issueHref }: { images: AttentionDetailImage[];
         </Link>
       ) : (
         <span className="flex h-32 w-24 items-center justify-center rounded-md border border-dashed border-border bg-muted/40 text-sm font-semibold text-muted-foreground">
-          {extra} more
+          {extra} {zh("more")}
         </span>
       ))}
     </div>
@@ -866,11 +867,11 @@ function ApprovalResolver({ item, companyId, toggle }: { item: AttentionItem; co
         </Button>
         <Button size="sm" variant="destructive" onClick={() => reject.mutate()} disabled={pending}>
           {reject.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-          Reject
+          {zh("Reject")}
         </Button>
         <Button size="sm" onClick={() => approve.mutate()} disabled={pending}>
           {approve.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-          Approve
+          {zh("Approve")}
         </Button>
       </ResolverFooter>
     </>
@@ -897,11 +898,11 @@ function JoinRequestResolver({ item, companyId, toggle }: { item: AttentionItem;
     <ResolverFooter toggle={toggle}>
       <Button size="sm" variant="destructive" onClick={() => reject.mutate()} disabled={pending}>
         {reject.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-        Reject
+        {zh("Reject")}
       </Button>
       <Button size="sm" onClick={() => approve.mutate()} disabled={pending}>
         {approve.isPending && <Loader2 className="h-3.5 w-3.5 animate-spin" />}
-        Approve
+        {zh("Approve")}
       </Button>
     </ResolverFooter>
   );

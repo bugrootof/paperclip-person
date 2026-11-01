@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import type { AgentAppearance } from "@paperclipai/shared";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import type { ReactNode } from "react";
@@ -148,7 +149,7 @@ export function RoutineListRow<TRoutine extends RoutineListRowItem>({
               className="h-2.5 w-2.5 shrink-0 rounded-sm"
               style={{ backgroundColor: project?.color ?? "var(--project-none)" }}
             />
-            <span>{routine.projectId ? (project?.name ?? "Unknown project") : "No project"}</span>
+            <span>{routine.projectId ? (project?.name ?? "Unknown project") : zh("No project")}</span>
           </span>
           <span className="flex items-center gap-2">
             {routine.assigneeAgentId ? <AgentAvatar agent={{ ...agent, id: routine.assigneeAgentId }} size={16} className="h-3.5 w-3.5 shrink-0"/> : null}
@@ -186,7 +187,7 @@ export function RoutineListRow<TRoutine extends RoutineListRowItem>({
             aria-label={enabled ? `Disable ${routine.title}` : `Enable ${routine.title}`}
           />
           <span className="w-12 text-xs text-muted-foreground">
-            {isArchived ? "Archived" : isDraft ? "Draft" : enabled ? "On" : "Off"}
+            {isArchived ? zh("Archived") : isDraft ? "Draft" : enabled ? "On" : zh("Off")}
           </span>
         </div>
 
@@ -217,14 +218,14 @@ export function RoutineListRow<TRoutine extends RoutineListRowItem>({
               onClick={() => onToggleEnabled(routine, enabled)}
               disabled={isStatusPending || isArchived || disableToggle}
             >
-              {enabled ? "Pause" : "Enable"}
+              {enabled ? "Pause" : zh("Enable")}
             </DropdownMenuItem>
             {!hideArchiveAction && onToggleArchived ? (
               <DropdownMenuItem
                 onClick={() => onToggleArchived(routine)}
                 disabled={isStatusPending}
               >
-                {routine.status === "archived" ? "Restore" : "Archive"}
+                {routine.status === "archived" ? zh("Restore") : zh("Archive")}
               </DropdownMenuItem>
             ) : null}
           </DropdownMenuContent>

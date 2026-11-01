@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { itemVerdictHref } from "@/lib/item-verdict-links";
 import { Link } from "@/lib/router";
 import {
@@ -95,7 +96,7 @@ export interface TaskChatCompactInteractionCardProps extends SharedInteractionPr
 const KIND_COPY = {
   suggest_tasks: {
     fallbackTitle: "Suggested tasks",
-    label: "Tasks",
+    label: zh("Tasks"),
     icon: GitBranch,
   },
   ask_user_questions: {
@@ -115,12 +116,12 @@ const KIND_COPY = {
   },
   request_item_verdicts: {
     fallbackTitle: "Review items",
-    label: "Review",
+    label: zh("Review"),
     icon: MessageSquareQuote,
   },
   connection_intent: {
     fallbackTitle: "Connect service",
-    label: "Connection",
+    label: zh("Connection"),
     icon: Plug,
   },
 } as const;
@@ -246,7 +247,7 @@ function Details({ children }: { children?: ReactNode }) {
   return (
     <details className="mt-2">
       <summary className="flex cursor-pointer list-none items-center gap-1 text-xs font-medium text-muted-foreground">
-        <ChevronDown aria-hidden className="h-3.5 w-3.5" /> Details
+        <ChevronDown aria-hidden className="h-3.5 w-3.5" /> {zh("Details")}
       </summary>
       <div className="mt-2 rounded-sm bg-muted/40 px-2.5 py-2 text-sm text-muted-foreground">
         {children}
@@ -566,7 +567,7 @@ function ReceiptDisclosure({
         {interaction.payload.secretProposal ? (
           <dl className="grid gap-1 rounded-sm bg-muted/45 px-3 py-2.5 text-sm">
             <div>
-              <dt className="text-xs text-muted-foreground">Secret</dt>
+              <dt className="text-xs text-muted-foreground">{zh("Secret")}</dt>
               <dd>{interaction.payload.secretProposal.sourceSecretLabel}</dd>
             </div>
             <div>
@@ -932,7 +933,7 @@ function ConfirmationCard({
       {interaction.payload.secretProposal ? (
         <dl className="mt-3 grid gap-2 rounded-sm bg-muted/45 px-3 py-2.5 text-sm">
           <div>
-            <dt className="text-xs text-muted-foreground">Secret</dt>
+            <dt className="text-xs text-muted-foreground">{zh("Secret")}</dt>
             <dd>{interaction.payload.secretProposal.sourceSecretLabel}</dd>
           </div>
           <div>
@@ -1014,7 +1015,7 @@ function ConfirmationCard({
                 setRejecting(false);
               }}
             >
-              Back
+              {zh("Back")}
             </Button>
             <Button
               type="button"
@@ -1032,7 +1033,7 @@ function ConfirmationCard({
               {working === "reject" ? (
                 <Loader2 aria-hidden className="h-4 w-4 animate-spin" />
               ) : null}
-              {interaction.payload.rejectLabel ?? "Reject"}
+              {interaction.payload.rejectLabel ?? zh("Reject")}
             </Button>
           </>
         ) : (
@@ -1048,7 +1049,7 @@ function ConfirmationCard({
                   : void resolve("reject")
               }
             >
-              {interaction.payload.rejectLabel ?? "Reject"}
+              {interaction.payload.rejectLabel ?? zh("Reject")}
             </Button>
             <Button
               type="button"
@@ -1059,7 +1060,7 @@ function ConfirmationCard({
               {working === "accept" ? (
                 <Loader2 aria-hidden className="h-4 w-4 animate-spin" />
               ) : null}
-              {interaction.payload.acceptLabel ?? "Approve"}
+              {interaction.payload.acceptLabel ?? zh("Approve")}
             </Button>
           </>
         )}
@@ -1253,7 +1254,7 @@ function CheckboxConfirmationCard({
               disabled={working !== null}
               onClick={() => setRejecting(false)}
             >
-              Back
+              {zh("Back")}
             </Button>
             <Button
               type="button"
@@ -1474,7 +1475,7 @@ function SuggestedTasksCard({
       ) : null}
       <ul
         className="mt-2 max-h-(--sz-28dvh) overflow-y-auto scrollbar-auto-hide"
-        aria-label="Suggested tasks"
+        aria-label={zh("Suggested tasks")}
       >
         {visibleRoots.map((node) => (
           <SuggestedTaskRow
@@ -1519,7 +1520,7 @@ function SuggestedTasksCard({
               disabled={working !== null}
               onClick={() => setRejecting(false)}
             >
-              {coordinator ? "Cancel" : "Back"}
+              {coordinator ? zh("Cancel") : zh("Back")}
             </Button>
             <Button
               type="button"
@@ -1537,7 +1538,7 @@ function SuggestedTasksCard({
         ) : (
           <>
             {coordinator ? <Button type="button" size="sm" variant="ghost" disabled={working !== null || !onRejectInteraction}
-              onClick={() => { setReason(""); void resolve("reject", ""); }}>Reject</Button> : null}
+              onClick={() => { setReason(""); void resolve("reject", ""); }}>{zh("Reject")}</Button> : null}
             <Button
               type="button"
               size="sm"
@@ -1558,7 +1559,7 @@ function SuggestedTasksCard({
               {working === "accept" ? (
                 <Loader2 aria-hidden className="h-4 w-4 animate-spin" />
               ) : null}
-              {coordinator ? "Create" : "Create selected"}
+              {coordinator ? zh("Create") : "Create selected"}
             </Button>
           </>
         )}
@@ -1777,7 +1778,7 @@ function ItemVerdictsCard({
           ) : null}
         </div>
         {itemHref && !itemHref.startsWith("/api/") && (itemHref.startsWith("/") || itemHref.startsWith("#")) ? (
-          <Link to={itemHref} disableIssueQuicklook className="text-xs font-medium text-primary hover:underline">Open</Link>
+          <Link to={itemHref} disableIssueQuicklook className="text-xs font-medium text-primary hover:underline">{zh("Open")}</Link>
         ) : itemHref ? (
           <a
             href={itemHref}
@@ -1785,7 +1786,7 @@ function ItemVerdictsCard({
             rel="noreferrer"
             className="text-xs font-medium text-primary hover:underline"
           >
-            Open
+            {zh("Open")}
           </a>
         ) : null}
       </div>
@@ -1844,7 +1845,7 @@ function ItemVerdictsCard({
             htmlFor={`${interaction.id}-${item.id}-reason`}
             className="text-xs font-medium text-foreground"
           >
-            {interaction.payload.reasonLabel ?? "Reason"}
+            {interaction.payload.reasonLabel ?? zh("Reason")}
           </label>
           <Textarea
             id={`${interaction.id}-${item.id}-reason`}

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useMemo, useState } from "react";
 import { Clock, X } from "lucide-react";
 import type { Issue, IssueWorkProduct } from "@paperclipai/shared";
@@ -209,7 +210,7 @@ function CheckNowButton({
       onClick={onCheckNow}
       disabled={checkingNow}
     >
-      {checkingNow ? "Checking…" : reviewRequested ? "Check status" : "Check now"}
+      {checkingNow ? zh("Checking…") : reviewRequested ? "Check status" : zh("Check now")}
     </Button>
   );
 }
@@ -245,7 +246,7 @@ function CancelMonitorButton({ onCancel }: { onCancel: () => Promise<unknown> })
         {error ? <p role="alert" className="text-sm text-destructive">{error}</p> : null}
         <AlertDialogFooter>
           <AlertDialogCancel disabled={pending}>Keep monitor</AlertDialogCancel>
-          <Button type="button" variant="destructive" disabled={pending} onClick={() => void cancel()}>{pending ? "Cancelling…" : "Cancel monitor"}</Button>
+          <Button type="button" variant="destructive" disabled={pending} onClick={() => void cancel()}>{pending ? zh("Cancelling…") : "Cancel monitor"}</Button>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

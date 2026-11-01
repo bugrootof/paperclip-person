@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { Fragment } from "react";
 import {
   ISSUE_THREAD_INTERACTION_KINDS,
@@ -160,7 +161,7 @@ function GovernanceSelect({
        * screen-reader pairing. WCAG 2.1 SC 1.4.10 (Reflow) — design review R2.
        */}
       <span className="mb-1 block text-xs font-medium text-muted-foreground uppercase tracking-wide sm:hidden">
-        {mobileLabel}
+        {zh(mobileLabel)}
       </span>
       <Select value={value} onValueChange={(v) => onChange(v as GovernanceSelectValue)} disabled={disabled}>
         <SelectTrigger
@@ -182,7 +183,7 @@ function GovernanceSelect({
            * sets `valueNodeHasChildren`, which suppresses that portal, so the
            * trigger shows exactly the label and nothing else.
            */}
-          <SelectValue>{governanceValueLabel(field, value)}</SelectValue>
+          <SelectValue>{zh(governanceValueLabel(field, value))}</SelectValue>
         </SelectTrigger>
         {/*
          * Cap the option list so the effect sentences wrap instead of stretching
@@ -195,7 +196,7 @@ function GovernanceSelect({
               value={option.value}
               // Keyboard typeahead matches on `textValue` when given; without it
               // Radix would match against the effect prose too.
-              textValue={option.label}
+              textValue={zh(option.label)}
               className="text-xs"
             >
               {/*
@@ -204,9 +205,9 @@ function GovernanceSelect({
                * after saving (PAP-17280).
                */}
               <span className="flex min-w-0 flex-col gap-0.5">
-                <span>{option.label}</span>
+                <span>{zh(option.label)}</span>
                 <span className="text-(length:--text-micro) text-muted-foreground">
-                  {option.effect}
+                  {zh(option.effect)}
                 </span>
               </span>
             </SelectItem>
@@ -239,19 +240,15 @@ export function InteractionGovernancePanel({
   return (
     <div className="space-y-4" data-testid="company-settings-interaction-governance-section">
       <div className="text-xs font-medium text-muted-foreground uppercase tracking-wide">
-        Interaction governance
+        {zh("Interaction governance")}
       </div>
       <div className="space-y-4">
         <p className="text-sm text-muted-foreground">
-          Thread interactions are open by default:{" "}
-          <span className="font-medium text-foreground">Anyone</span> in the organization — the
-          board or any agent, including the one that asked — can respond. Narrow a kind
-          only when you need to.{" "}
-          <span className="font-medium text-foreground">Default policy</span> is the
-          audience new cards get when the requester does not ask for one;{" "}
-          <span className="font-medium text-foreground">Cap</span> narrows every request of
-          that kind and can never widen one. Tool-approval confirmations always stay{" "}
-          <span className="font-medium text-foreground">Human only</span>.
+          {zh("Thread interactions are open by default:")}{" "}
+          <span className="font-medium text-foreground">{zh("Anyone")}</span> {zh("in the organization — the board or any agent, including the one that asked — can respond. Narrow a kind only when you need to.")}{" "}
+          <span className="font-medium text-foreground">{zh("Default policy")}</span> {zh("is the audience new cards get when the requester does not ask for one;")}{" "}
+          <span className="font-medium text-foreground">{zh("Cap")}</span> {zh("narrows every request of that kind and can never widen one. Tool-approval confirmations always stay")}{" "}
+          <span className="font-medium text-foreground">{zh("Human only")}</span>.
         </p>
         {/*
          * Responsive: below `sm` the row collapses to a single column so the
@@ -262,17 +259,17 @@ export function InteractionGovernancePanel({
          */}
         <div className="grid grid-cols-1 gap-y-4 sm:grid-cols-[1fr_auto_auto] sm:items-center sm:gap-x-4 sm:gap-y-2.5">
           <div className="hidden text-xs font-medium text-muted-foreground uppercase tracking-wide sm:block">
-            Kind
+            {zh("Kind")}
           </div>
           <div className="hidden text-xs font-medium text-muted-foreground uppercase tracking-wide sm:block">
-            Default policy
+            {zh("Default policy")}
           </div>
           <div className="hidden text-xs font-medium text-muted-foreground uppercase tracking-wide sm:block">
-            Cap
+            {zh("Cap")}
           </div>
           {ISSUE_THREAD_INTERACTION_KINDS.map((kind) => {
             const entry = governance[kind] ?? {};
-            const kindLabel = INTERACTION_KIND_LABELS[kind];
+            const kindLabel = zh(INTERACTION_KIND_LABELS[kind]);
             return (
               <Fragment key={kind}>
                 <div className="text-sm font-medium sm:font-normal">{kindLabel}</div>

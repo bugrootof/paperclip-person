@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { TranscriptSequence } from "../lib/transcript-sequence";
 import { readTranscriptRequest } from "../components/transcript/read-transcript-request";
 import { useTranscriptLiveStream } from "../context/LiveUpdatesProvider";
@@ -288,16 +289,16 @@ function scrollToContainerBottom(container: ScrollContainer, behavior: ScrollBeh
 type AgentDetailView = "dashboard" | "instructions" | "configuration" | "secrets" | "skills" | "tools" | "channels" | "runs" | "audit" | "budget";
 
 export const AGENT_DETAIL_TABS: ReadonlyArray<{ value: AgentDetailView; label: string }> = [
-  { value: "dashboard", label: "Dashboard" },
-  { value: "instructions", label: "Instructions" },
-  { value: "skills", label: "Skills" },
-  { value: "configuration", label: "Configuration" },
-  { value: "secrets", label: "Secrets" },
-  { value: "tools", label: "Tools" },
-  { value: "channels", label: "Channels" },
-  { value: "runs", label: "Runs" },
-  { value: "audit", label: "Audit" },
-  { value: "budget", label: "Budget" },
+  { value: "dashboard", label: zh("Dashboard") },
+  { value: "instructions", label: zh("Instructions") },
+  { value: "skills", label: zh("Skills") },
+  { value: "configuration", label: zh("Configuration") },
+  { value: "secrets", label: zh("Secrets") },
+  { value: "tools", label: zh("Tools") },
+  { value: "channels", label: zh("Channels") },
+  { value: "runs", label: zh("Runs") },
+  { value: "audit", label: zh("Audit") },
+  { value: "budget", label: zh("Budget") },
 ];
 
 export const DISCARD_AGENT_CONFIG_CHANGES_MESSAGE = "Discard unsaved agent configuration changes?";
@@ -460,29 +461,29 @@ export function RunInvocationCard({
 
   return (
     <div className="rounded-lg border border-border bg-background/60 p-3 space-y-2">
-      <div className="text-xs font-medium text-muted-foreground">Invocation</div>
+      <div className="text-xs font-medium text-muted-foreground">{zh("Invocation")}</div>
       {typeof payload.adapterType === "string" && (
-        <div className="text-xs"><span className="text-muted-foreground">Adapter: </span>{payload.adapterType}</div>
+        <div className="text-xs"><span className="text-muted-foreground">{zh("Adapter:")} </span>{payload.adapterType}</div>
       )}
       {typeof payload.cwd === "string" && (
-        <div className="text-xs break-all"><span className="text-muted-foreground">Working dir: </span><span className="font-mono">{payload.cwd}</span></div>
+        <div className="text-xs break-all"><span className="text-muted-foreground">{zh("Working dir:")} </span><span className="font-mono">{payload.cwd}</span></div>
       )}
       {hasAdvancedDetails && (
         <Collapsible>
           <CollapsibleTrigger className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors group">
             <ChevronRight className="h-3 w-3 transition-transform group-data-[state=open]:rotate-90" />
-            Details
+            {zh("Details")}
           </CollapsibleTrigger>
           <CollapsibleContent className="pt-2 space-y-2">
             {commandLine && (
               <div className="text-xs break-all">
-                <span className="text-muted-foreground">Command: </span>
+                <span className="text-muted-foreground">{zh("Command:")} </span>
                 <span className="font-mono">{commandLine}</span>
               </div>
             )}
             {Array.isArray(payload.commandNotes) && payload.commandNotes.length > 0 && (
               <div>
-                <div className="text-xs text-muted-foreground mb-1">Command notes</div>
+                <div className="text-xs text-muted-foreground mb-1">{zh("Command notes")}</div>
                 <ul className="list-disc pl-5 space-y-1">
                   {payload.commandNotes
                     .filter((value): value is string => typeof value === "string" && value.trim().length > 0)
@@ -496,7 +497,7 @@ export function RunInvocationCard({
             )}
             {payload.prompt !== undefined && (
               <div>
-                <div className="text-xs text-muted-foreground mb-1">Prompt</div>
+                <div className="text-xs text-muted-foreground mb-1">{zh("Prompt")}</div>
                 <pre className="bg-neutral-100 dark:bg-neutral-950 rounded-md p-2 text-xs overflow-x-auto whitespace-pre-wrap">
                   {typeof payload.prompt === "string"
                     ? redactPathText(payload.prompt, censorUsernameInLogs)
@@ -506,7 +507,7 @@ export function RunInvocationCard({
             )}
             {payload.context !== undefined && (
               <div>
-                <div className="text-xs text-muted-foreground mb-1">Context</div>
+                <div className="text-xs text-muted-foreground mb-1">{zh("Context")}</div>
                 <pre className="bg-neutral-100 dark:bg-neutral-950 rounded-md p-2 text-xs overflow-x-auto whitespace-pre-wrap">
                   {JSON.stringify(redactPathValue(payload.context, censorUsernameInLogs), null, 2)}
                 </pre>
@@ -514,7 +515,7 @@ export function RunInvocationCard({
             )}
             {payload.env !== undefined && (
               <div>
-                <div className="text-xs text-muted-foreground mb-1">Environment</div>
+                <div className="text-xs text-muted-foreground mb-1">{zh("Environment")}</div>
                 <pre className="bg-neutral-100 dark:bg-neutral-950 rounded-md p-2 text-xs overflow-x-auto whitespace-pre-wrap font-mono">
                   {formatEnvForDisplay(payload.env, censorUsernameInLogs)}
                 </pre>
@@ -619,18 +620,18 @@ function WorkspaceOperationLogViewer({
         className="text-(length:--text-micro) text-muted-foreground underline underline-offset-2 hover:text-foreground"
         onClick={() => setOpen((value) => !value)}
       >
-        {open ? "Hide full log" : "Show full log"}
+        {open ? zh("Hide full log") : zh("Show full log")}
       </button>
       {open && (
         <div className="rounded-md border border-border bg-background/70 p-2">
-          {isLoading && <div className="text-xs text-muted-foreground">Loading log...</div>}
+          {isLoading && <div className="text-xs text-muted-foreground">{zh("Loading log...")}</div>}
           {error && (
             <div className="text-xs text-destructive">
-              {error instanceof Error ? error.message : "Failed to load workspace operation log"}
+              {error instanceof Error ? error.message : zh("Failed to load workspace operation log")}
             </div>
           )}
           {!isLoading && !error && chunks.length === 0 && (
-            <div className="text-xs text-muted-foreground">No persisted log lines.</div>
+            <div className="text-xs text-muted-foreground">{zh("No persisted log lines.")}</div>
           )}
           {chunks.length > 0 && (
             <div className="max-h-64 overflow-y-auto rounded bg-neutral-100 p-2 font-mono text-xs dark:bg-neutral-950">
@@ -674,7 +675,7 @@ function WorkspaceOperationsSection({
   return (
     <div className="rounded-lg border border-border bg-background/60 p-3 space-y-3">
       <div className="text-xs font-medium text-muted-foreground">
-        Workspace ({operations.length})
+        {zh("Workspace (")}{operations.length})
       </div>
       <div className="space-y-3">
         {operations.map((operation) => {
@@ -691,13 +692,13 @@ function WorkspaceOperationsSection({
               </div>
               {operation.command && (
                 <div className="text-xs break-all">
-                  <span className="text-muted-foreground">Command: </span>
+                  <span className="text-muted-foreground">{zh("Command:")} </span>
                   <span className="font-mono">{operation.command}</span>
                 </div>
               )}
               {operation.cwd && (
                 <div className="text-xs break-all">
-                  <span className="text-muted-foreground">Working dir: </span>
+                  <span className="text-muted-foreground">{zh("Working dir:")} </span>
                   <span className="font-mono">{operation.cwd}</span>
                 </div>
               )}
@@ -708,30 +709,30 @@ function WorkspaceOperationsSection({
                 || asNonEmptyString(metadata?.cleanupAction)) && (
                 <div className="grid gap-1 text-xs sm:grid-cols-2">
                   {asNonEmptyString(metadata?.branchName) && (
-                    <div><span className="text-muted-foreground">Branch: </span><span className="font-mono">{metadata?.branchName as string}</span></div>
+                    <div><span className="text-muted-foreground">{zh("Branch:")} </span><span className="font-mono">{metadata?.branchName as string}</span></div>
                   )}
                   {asNonEmptyString(metadata?.baseRef) && (
-                    <div><span className="text-muted-foreground">Base ref: </span><span className="font-mono">{metadata?.baseRef as string}</span></div>
+                    <div><span className="text-muted-foreground">{zh("Base ref:")} </span><span className="font-mono">{metadata?.baseRef as string}</span></div>
                   )}
                   {asNonEmptyString(metadata?.worktreePath) && (
-                    <div className="break-all"><span className="text-muted-foreground">Worktree: </span><span className="font-mono">{metadata?.worktreePath as string}</span></div>
+                    <div className="break-all"><span className="text-muted-foreground">{zh("Worktree:")} </span><span className="font-mono">{metadata?.worktreePath as string}</span></div>
                   )}
                   {asNonEmptyString(metadata?.repoRoot) && (
-                    <div className="break-all"><span className="text-muted-foreground">Repo root: </span><span className="font-mono">{metadata?.repoRoot as string}</span></div>
+                    <div className="break-all"><span className="text-muted-foreground">{zh("Repo root:")} </span><span className="font-mono">{metadata?.repoRoot as string}</span></div>
                   )}
                   {asNonEmptyString(metadata?.cleanupAction) && (
-                    <div><span className="text-muted-foreground">Cleanup: </span><span className="font-mono">{metadata?.cleanupAction as string}</span></div>
+                    <div><span className="text-muted-foreground">{zh("Cleanup:")} </span><span className="font-mono">{metadata?.cleanupAction as string}</span></div>
                   )}
                 </div>
               )}
               {typeof metadata?.created === "boolean" && (
                 <div className="text-xs text-muted-foreground">
-                  {metadata.created ? "Created by this run" : "Reused existing workspace"}
+                  {metadata.created ? zh("Created by this run") : zh("Reused existing workspace")}
                 </div>
               )}
               {operation.stderrExcerpt && operation.stderrExcerpt.trim() && (
                 <div>
-                  <div className="mb-1 text-xs text-red-700 dark:text-red-300">stderr excerpt</div>
+                  <div className="mb-1 text-xs text-red-700 dark:text-red-300">{zh("stderr excerpt")}</div>
                   <pre className="rounded-md bg-red-50 p-2 text-xs whitespace-pre-wrap break-all text-red-800 dark:bg-neutral-950 dark:text-red-100">
                     {redactPathText(operation.stderrExcerpt, censorUsernameInLogs)}
                   </pre>
@@ -739,7 +740,7 @@ function WorkspaceOperationsSection({
               )}
               {operation.stdoutExcerpt && operation.stdoutExcerpt.trim() && (
                 <div>
-                  <div className="mb-1 text-xs text-muted-foreground">stdout excerpt</div>
+                  <div className="mb-1 text-xs text-muted-foreground">{zh("stdout excerpt")}</div>
                   <pre className="rounded-md bg-neutral-100 p-2 text-xs whitespace-pre-wrap break-all dark:bg-neutral-950">
                     {redactPathText(operation.stdoutExcerpt, censorUsernameInLogs)}
                   </pre>
@@ -1078,7 +1079,7 @@ export function AgentDetail() {
 
   useEffect(() => {
     const crumbs: { label: string; href?: string }[] = [
-      { label: "Agents", href: "/agents" },
+      { label: zh("Agents"), href: "/agents" },
     ];
     const agentName = agent?.name ?? routeAgentRef ?? "Agent";
     if (activeView === "dashboard" && !urlRunId) {
@@ -1086,24 +1087,24 @@ export function AgentDetail() {
     } else {
       crumbs.push({ label: agentName, href: `/agents/${canonicalAgentRef}/dashboard` });
       if (urlRunId) {
-        crumbs.push({ label: "Runs", href: `/agents/${canonicalAgentRef}/runs` });
+        crumbs.push({ label: zh("Runs"), href: `/agents/${canonicalAgentRef}/runs` });
         crumbs.push({ label: `Run ${urlRunId.slice(0, 8)}` });
       } else if (activeView === "instructions") {
-        crumbs.push({ label: "Instructions" });
+        crumbs.push({ label: zh("Instructions") });
       } else if (activeView === "configuration") {
-        crumbs.push({ label: "Configuration" });
+        crumbs.push({ label: zh("Configuration") });
       } else if (activeView === "secrets") {
-        crumbs.push({ label: "Secrets" });
+        crumbs.push({ label: zh("Secrets") });
       // } else if (activeView === "skills") { // TODO: bring back later
       //   crumbs.push({ label: "Skills" });
       } else if (activeView === "tools") {
-        crumbs.push({ label: "Tools" });
+        crumbs.push({ label: zh("Tools") });
       } else if (activeView === "runs") {
-        crumbs.push({ label: "Runs" });
+        crumbs.push({ label: zh("Runs") });
       } else if (activeView === "budget") {
-        crumbs.push({ label: "Budget" });
+        crumbs.push({ label: zh("Budget") });
       } else {
-        crumbs.push({ label: "Dashboard" });
+        crumbs.push({ label: zh("Dashboard") });
       }
     }
     setBreadcrumbs(crumbs);
@@ -1202,7 +1203,7 @@ export function AgentDetail() {
 
   if (isLoading || agentView.kind === "reconnecting") return <PageSkeleton variant="detail" />;
   if (agentView.kind === "error") {
-    return <QueryErrorState size="page" error={error} action="load this agent" onRetry={agentView.retry} retrying={agentView.isFetching} />;
+    return <QueryErrorState size="page" error={error} action={zh("load this agent")} onRetry={agentView.retry} retrying={agentView.isFetching} />;
   }
   if (!agent) return null;
   if (!urlRunId && !urlTab) {
@@ -1233,7 +1234,7 @@ export function AgentDetail() {
       {showLeftAgentNotice ? (
         <div className="flex items-center gap-3 border border-yellow-300/35 bg-yellow-300/10 px-3 py-2 text-sm text-yellow-900 dark:text-yellow-100">
           <p className="min-w-0 flex-1">
-            You left this agent. It no longer appears in your sidebar.
+            {zh("You left this agent. It no longer appears in your sidebar.")}
           </p>
           <MembershipAction
             compact
@@ -1257,7 +1258,7 @@ export function AgentDetail() {
           <button
             type="button"
             className="h-6 w-6 shrink-0 text-yellow-900/70 hover:text-yellow-900 dark:text-yellow-100/70 dark:hover:text-yellow-100"
-            aria-label="Dismiss agent membership notice"
+            aria-label={zh("Dismiss agent membership notice")}
             onClick={() => setDismissedLeftAgentIds((current) => new Set(current).add(agent.id))}
           >
             ×
@@ -1268,7 +1269,7 @@ export function AgentDetail() {
         <div className="flex items-start gap-3 border border-amber-300/35 bg-amber-300/10 px-3 py-2 text-sm text-amber-900 dark:text-amber-100">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
           <div className="min-w-0 space-y-1">
-            <p className="font-medium">Escalation path is paused</p>
+            <p className="font-medium">{zh("Escalation path is paused")}</p>
             <p className="text-amber-900/90 dark:text-amber-100/90">{pausedEscalationWarning}</p>
           </div>
         </div>
@@ -1277,9 +1278,9 @@ export function AgentDetail() {
         <div className="flex items-start gap-3 border border-amber-300/35 bg-amber-300/10 px-3 py-2 text-sm text-amber-900 dark:text-amber-100">
           <AlertTriangle className="mt-0.5 h-4 w-4 shrink-0" />
           <div className="min-w-0 space-y-1">
-            <p className="font-medium">Invalid reporting chain</p>
+            <p className="font-medium">{zh("Invalid reporting chain")}</p>
             <p className="text-amber-900/90 dark:text-amber-100/90">
-              {agent.name} cannot accept tasks or start runs until its reporting chain is repaired.
+              {agent.name} {zh("cannot accept tasks or start runs until its reporting chain is repaired.")}
             </p>
             <p className="break-words font-mono text-xs text-amber-900/80 dark:text-amber-100/80">
               {formatOrgChainHealthPath(agent)}
@@ -1288,7 +1289,7 @@ export function AgentDetail() {
               <p className="text-amber-900/85 dark:text-amber-100/85">{agent.orgChainHealth.repairGuidance}</p>
             ) : (
               <p className="text-amber-900/85 dark:text-amber-100/85">
-                Assign this agent to an active manager/root, or explicitly pause or terminate the affected agent/subtree.
+                {zh("Assign this agent to an active manager/root, or explicitly pause or terminate the affected agent/subtree.")}
               </p>
             )}
           </div>
@@ -1342,7 +1343,7 @@ export function AgentDetail() {
                       <>
                         {builtInFeatureLabel} depends on this agent. While paused,{" "}
                         {builtInFeatureLabel.toLowerCase()} generation is skipped and the{" "}
-                        {builtInFeatureLabel} page shows a warning.
+                        {builtInFeatureLabel} {zh("page shows a warning.")}
                       </>
                     ),
                   }
@@ -1358,7 +1359,7 @@ export function AgentDetail() {
                   <span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
                   <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
                 </span>
-                <span className="text-(length:--text-micro) font-medium text-blue-600 dark:text-blue-400">Live</span>
+                <span className="text-(length:--text-micro) font-medium text-blue-600 dark:text-blue-400">{zh("Live")}</span>
               </Link>
             )}
           </AgentActionButtons>
@@ -1368,7 +1369,7 @@ export function AgentDetail() {
       {builtInState && (
         <InlineBanner
           tone="info"
-          title="Built-in agent"
+          title={zh("Built-in agent")}
           actions={
             <Button
               variant="outline"
@@ -1429,7 +1430,7 @@ export function AgentDetail() {
       {actionError && <p className="text-sm text-destructive">{actionError}</p>}
       {isPendingApproval && (
         <div className="flex flex-wrap items-center gap-3 rounded-md border border-amber-300/60 bg-amber-50 px-3 py-2 text-sm text-amber-900 dark:border-amber-400/40 dark:bg-amber-950/30 dark:text-amber-200">
-          <span>This agent is pending board approval and cannot be invoked yet.</span>
+          <span>{zh("This agent is pending board approval and cannot be invoked yet.")}</span>
           <Button
             variant="outline"
             size="sm"
@@ -1437,7 +1438,7 @@ export function AgentDetail() {
             disabled={agentAction.isPending}
           >
             <CheckCircle2 className="h-3.5 w-3.5 sm:mr-1" />
-            <span>Approve agent</span>
+            <span>{zh("Approve agent")}</span>
           </Button>
         </div>
       )}
@@ -1452,14 +1453,14 @@ export function AgentDetail() {
               onClick={() => cancelConfigActionRef.current?.()}
               disabled={configSaving}
             >
-              Cancel
+              {zh("Cancel")}
             </Button>
             <Button
               size="sm"
               onClick={() => saveConfigActionRef.current?.()}
               disabled={configSaving}
             >
-              {configSaving ? "Saving…" : "Save"}
+              {configSaving ? zh("Saving…") : zh("Save")}
             </Button>
           </div>
         </div>
@@ -1478,14 +1479,14 @@ export function AgentDetail() {
               onClick={() => cancelConfigActionRef.current?.()}
               disabled={configSaving}
             >
-              Cancel
+              {zh("Cancel")}
             </Button>
             <Button
               size="sm"
               onClick={() => saveConfigActionRef.current?.()}
               disabled={configSaving}
             >
-              {configSaving ? "Saving…" : "Save"}
+              {configSaving ? zh("Saving…") : zh("Save")}
             </Button>
           </div>
         </div>
@@ -1724,7 +1725,7 @@ function LatestRunCard({
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
               </span>
             )}
-            <span>{isLive ? "Live Run" : "Latest Run"}</span>
+            <span>{isLive ? zh("Live Run") : zh("Latest Run")}</span>
             <span className="font-mono text-xs font-normal text-muted-foreground">
               &middot; {run.id.slice(0, 8)}
             </span>
@@ -1807,19 +1808,19 @@ function AgentOverview({
 
       {/* Charts */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <ChartCard title="Run Activity" subtitle="Last 14 days">
+        <ChartCard title={zh("Run Activity")} subtitle="Last 14 days">
           <RunActivityChart runs={runs} />
         </ChartCard>
         {/* PAP-411: "Tasks by Priority" chart hidden behind SHOW_TASK_PRIORITY_UI. */}
         {SHOW_TASK_PRIORITY_UI && (
-          <ChartCard title="Tasks by Priority" subtitle="Last 14 days">
+          <ChartCard title={zh("Tasks by Priority")} subtitle="Last 14 days">
             <PriorityChart issues={assignedIssues} />
           </ChartCard>
         )}
-        <ChartCard title="Tasks by Status" subtitle="Last 14 days">
+        <ChartCard title={zh("Tasks by Status")} subtitle="Last 14 days">
           <IssueStatusChart issues={assignedIssues} />
         </ChartCard>
-        <ChartCard title="Success Rate" subtitle="Last 14 days">
+        <ChartCard title={zh("Success Rate")} subtitle="Last 14 days">
           <SuccessRateChart runs={runs} />
         </ChartCard>
       </div>
@@ -1827,16 +1828,16 @@ function AgentOverview({
       {/* Recent Issues */}
       <div className="space-y-3">
         <div className="flex items-center justify-between">
-          <h3 className="text-sm font-medium">Recent Tasks</h3>
+          <h3 className="text-sm font-medium">{zh("Recent Tasks")}</h3>
           <Link
             to={`/issues?participantAgentId=${agentId}`}
             className="text-xs text-muted-foreground hover:text-foreground transition-colors"
           >
-            See All &rarr;
+            {zh("See All →")}
           </Link>
         </div>
         {assignedIssues.length === 0 ? (
-          <p className="text-sm text-muted-foreground">No recent tasks.</p>
+          <p className="text-sm text-muted-foreground">{zh("No recent tasks.")}</p>
         ) : (
           <div className="border border-border rounded-lg">
             {assignedIssues.slice(0, 10).map((issue) => (
@@ -1850,7 +1851,7 @@ function AgentOverview({
             ))}
             {assignedIssues.length > 10 && (
               <div className="px-3 py-2 text-xs text-muted-foreground text-center border-t border-border">
-                +{assignedIssues.length - 10} more tasks
+                +{assignedIssues.length - 10} {zh("more tasks")}
               </div>
             )}
           </div>
@@ -1859,7 +1860,7 @@ function AgentOverview({
 
       {/* Costs */}
       <div className="space-y-3">
-        <h3 className="text-sm font-medium">Costs</h3>
+        <h3 className="text-sm font-medium">{zh("Costs")}</h3>
         <CostsSection runtimeState={runtimeState} runs={runs} />
       </div>
     </div>
@@ -1888,19 +1889,19 @@ function CostsSection({
         <div className="border border-border rounded-lg p-4">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 tabular-nums">
             <div>
-              <span className="text-xs text-muted-foreground block">Input tokens</span>
+              <span className="text-xs text-muted-foreground block">{zh("Input tokens")}</span>
               <span className="text-lg font-semibold">{formatTokens(runtimeState.totalInputTokens)}</span>
             </div>
             <div>
-              <span className="text-xs text-muted-foreground block">Output tokens</span>
+              <span className="text-xs text-muted-foreground block">{zh("Output tokens")}</span>
               <span className="text-lg font-semibold">{formatTokens(runtimeState.totalOutputTokens)}</span>
             </div>
             <div>
-              <span className="text-xs text-muted-foreground block">Cached tokens</span>
+              <span className="text-xs text-muted-foreground block">{zh("Cached tokens")}</span>
               <span className="text-lg font-semibold">{formatTokens(runtimeState.totalCachedInputTokens)}</span>
             </div>
             <div>
-              <span className="text-xs text-muted-foreground block">Total cost</span>
+              <span className="text-xs text-muted-foreground block">{zh("Total cost")}</span>
               <span className="text-lg font-semibold">{formatCents(runtimeState.totalCostCents)}</span>
             </div>
           </div>
@@ -1911,11 +1912,11 @@ function CostsSection({
           <table className="w-full text-xs">
             <thead>
               <tr className="border-b border-border bg-accent/20">
-                <th scope="col" className="text-left px-3 py-2 font-medium text-muted-foreground">Date</th>
-                <th scope="col" className="text-left px-3 py-2 font-medium text-muted-foreground">Run</th>
-                <th scope="col" className="text-right px-3 py-2 font-medium text-muted-foreground">Input</th>
-                <th scope="col" className="text-right px-3 py-2 font-medium text-muted-foreground">Output</th>
-                <th scope="col" className="text-right px-3 py-2 font-medium text-muted-foreground">Cost</th>
+                <th scope="col" className="text-left px-3 py-2 font-medium text-muted-foreground">{zh("Date")}</th>
+                <th scope="col" className="text-left px-3 py-2 font-medium text-muted-foreground">{zh("Run")}</th>
+                <th scope="col" className="text-right px-3 py-2 font-medium text-muted-foreground">{zh("Input")}</th>
+                <th scope="col" className="text-right px-3 py-2 font-medium text-muted-foreground">{zh("Output")}</th>
+                <th scope="col" className="text-right px-3 py-2 font-medium text-muted-foreground">{zh("Cost")}</th>
               </tr>
             </thead>
             <tbody>
@@ -2023,7 +2024,7 @@ function AgentConfigurePage({
         hideInstructionsFile
       />
       <div>
-        <h3 className="text-sm font-medium mb-3">API Keys</h3>
+        <h3 className="text-sm font-medium mb-3">{zh("API Keys")}</h3>
         <KeysTab agentId={agentId} companyId={companyId} />
       </div>
 
@@ -2037,13 +2038,13 @@ function AgentConfigurePage({
             ? <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
             : <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />
           }
-          Configuration Revisions
+          {zh("Configuration Revisions")}
           <span className="text-xs font-normal text-muted-foreground">{configRevisions?.length ?? 0}</span>
         </button>
         {revisionsOpen && (
           <div className="mt-3">
             {(configRevisions ?? []).length === 0 ? (
-              <p className="text-sm text-muted-foreground">No configuration revisions yet.</p>
+              <p className="text-sm text-muted-foreground">{zh("No configuration revisions yet.")}</p>
             ) : (
               <div className="space-y-2">
                 {(configRevisions ?? []).slice(0, 10).map((revision) => (
@@ -2063,11 +2064,11 @@ function AgentConfigurePage({
                         onClick={() => rollbackConfig.mutate(revision.id)}
                         disabled={rollbackConfig.isPending}
                       >
-                        Restore
+                        {zh("Restore")}
                       </Button>
                     </div>
                     <p className="text-xs text-muted-foreground">
-                      Changed:{" "}
+                      {zh("Changed:")}{" "}
                       {revision.changedKeys.length > 0 ? revision.changedKeys.join(", ") : "no tracked changes"}
                     </p>
                   </div>
@@ -2213,7 +2214,7 @@ export function ConfigurationTab({
       />
       {content === "configuration" ? (
         <p className="text-xs text-muted-foreground">
-          Saved adapter config affects the next run. Active runs keep the config they started with, and config changes may start a fresh adapter session.
+          {zh("Saved adapter config affects the next run. Active runs keep the config they started with, and config changes may start a fresh adapter session.")}
         </p>
       ) : null}
 
@@ -2242,13 +2243,13 @@ export function ConfigurationTab({
       /> : null}
 
       {content === "configuration" ? <div>
-        <h3 className="text-sm font-medium mb-3">Permissions</h3>
+        <h3 className="text-sm font-medium mb-3">{zh("Permissions")}</h3>
         <div className="border border-border rounded-lg p-4 space-y-4">
           <div className="flex items-center justify-between gap-4 text-sm">
             <div className="space-y-1">
-              <div>Can create new agents</div>
+              <div>{zh("Can create new agents")}</div>
               <p className="text-xs text-muted-foreground">
-                Lets this agent create or hire agents. This also grants task assignment authority.
+                {zh("Lets this agent create or hire agents. This also grants task assignment authority.")}
               </p>
             </div>
             <ToggleSwitch
@@ -2265,9 +2266,9 @@ export function ConfigurationTab({
           </div>
           <div className="flex items-center justify-between gap-4 text-sm">
             <div className="space-y-1">
-              <div>Can create/import skills</div>
+              <div>{zh("Can create/import skills")}</div>
               <p className="text-xs text-muted-foreground">
-                Lets this agent install, import, create, and scan company skills without creating agents.
+                {zh("Lets this agent install, import, create, and scan company skills without creating agents.")}
               </p>
             </div>
             <ToggleSwitch
@@ -2284,7 +2285,7 @@ export function ConfigurationTab({
           </div>
           <div className="flex items-center justify-between gap-4 text-sm">
             <div className="space-y-1">
-              <div>Can assign tasks</div>
+              <div>{zh("Can assign tasks")}</div>
               <p className="text-xs text-muted-foreground">
                 {taskAssignHint}
               </p>
@@ -2645,7 +2646,7 @@ export function PromptsTab({
     return (
       <div className="max-w-3xl">
         <p className="text-sm text-muted-foreground">
-          Instructions bundles are only available for local adapters.
+          {zh("Instructions bundles are only available for local adapters.")}
         </p>
       </div>
     );
@@ -2667,26 +2668,26 @@ export function PromptsTab({
         </div>
       )}
       <p className="text-xs text-muted-foreground">
-        Saved instructions affect the next run. Active runs keep the instructions they started with, and instruction changes may start a fresh adapter session.
+        {zh("Saved instructions affect the next run. Active runs keep the instructions they started with, and instruction changes may start a fresh adapter session.")}
       </p>
 
       <Collapsible defaultOpen={currentMode === "external"}>
         <CollapsibleTrigger className="flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground transition-colors group">
           <ChevronRight className="h-3 w-3 transition-transform group-data-[state=open]:rotate-90" />
-          Advanced
+          {zh("Advanced")}
         </CollapsibleTrigger>
         <CollapsibleContent className="pt-4 pb-6">
           <TooltipProvider>
             <div className="grid gap-x-6 gap-y-4 md:grid-cols-(--gtc-18)">
               <label className="space-y-1.5 min-w-0">
                 <span className="text-xs font-medium text-muted-foreground flex items-center gap-1">
-                  Mode
+                  {zh("Mode")}
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help" />
                     </TooltipTrigger>
                     <TooltipContent side="right" sideOffset={4}>
-                      Managed: Paperclip stores and serves the instructions bundle. External: you provide a path on disk where the instructions live.
+                      {zh("Managed: Paperclip stores and serves the instructions bundle. External: you provide a path on disk where the instructions live.")}
                     </TooltipContent>
                   </Tooltip>
                 </span>
@@ -2712,7 +2713,7 @@ export function PromptsTab({
                       setSelectedFile(nextEntryFile);
                     }}
                   >
-                    Managed
+                    {zh("Managed")}
                   </Button>
                   <Button
                     type="button"
@@ -2729,19 +2730,19 @@ export function PromptsTab({
                       setSelectedFile(externalBundle?.selectedFile ?? nextEntryFile);
                     }}
                   >
-                    External
+                    {zh("External")}
                   </Button>
                 </div>
               </label>
               <label className="space-y-1.5 min-w-0">
                 <span className="text-xs font-medium text-muted-foreground flex items-center gap-1">
-                  Root path
+                  {zh("Root path")}
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help" />
                     </TooltipTrigger>
                     <TooltipContent side="right" sideOffset={4}>
-                      The absolute directory on disk where the instructions bundle lives. In managed mode this is set by Paperclip automatically.
+                      {zh("The absolute directory on disk where the instructions bundle lives. In managed mode this is set by Paperclip automatically.")}
                     </TooltipContent>
                   </Tooltip>
                 </span>
@@ -2784,13 +2785,13 @@ export function PromptsTab({
               </label>
               <label className="space-y-1.5">
                 <span className="text-xs font-medium text-muted-foreground flex items-center gap-1">
-                  Entry file
+                  {zh("Entry file")}
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <HelpCircle className="h-3 w-3 text-muted-foreground cursor-help" />
                     </TooltipTrigger>
                     <TooltipContent side="right" sideOffset={4}>
-                      The main file the agent reads first when loading instructions. Defaults to AGENTS.md.
+                      {zh("The main file the agent reads first when loading instructions. Defaults to AGENTS.md.")}
                     </TooltipContent>
                   </Tooltip>
                 </span>
@@ -2838,7 +2839,7 @@ export function PromptsTab({
           isMobile && !showFilePanel && "hidden",
         )}>
           <div className="flex items-center justify-between">
-            <h4 className="text-sm font-medium">Files</h4>
+            <h4 className="text-sm font-medium">{zh("Files")}</h4>
             <div className="flex items-center gap-1">
               {!showNewFileInput && (
                 <Button
@@ -2896,7 +2897,7 @@ export function PromptsTab({
                     setShowNewFileInput(false);
                   }}
                 >
-                  Create
+                  {zh("Create")}
                 </Button>
                 <Button
                   type="button"
@@ -2908,7 +2909,7 @@ export function PromptsTab({
                     setNewFilePath("");
                   }}
                 >
-                  Cancel
+                  {zh("Cancel")}
                 </Button>
               </div>
             </div>
@@ -2940,11 +2941,11 @@ export function PromptsTab({
                   <Tooltip>
                     <TooltipTrigger asChild>
                       <span className="ml-3 shrink-0 rounded border border-amber-500/40 bg-amber-500/10 text-amber-800 dark:text-amber-200 px-1.5 py-0.5 text-(length:--text-nano) uppercase tracking-wide cursor-help">
-                        virtual file
+                        {zh("virtual file")}
                       </span>
                     </TooltipTrigger>
                     <TooltipContent side="right" sideOffset={4}>
-                      Legacy inline prompt — this deprecated virtual file preserves the old promptTemplate content
+                      {zh("Legacy inline prompt — this deprecated virtual file preserves the old promptTemplate content")}
                     </TooltipContent>
                   </Tooltip>
                 );
@@ -2985,9 +2986,9 @@ export function PromptsTab({
                 <p className="text-xs text-muted-foreground">
                   {selectedFileExists
                     ? selectedFileSummary?.deprecated
-                      ? "Deprecated virtual file"
+                      ? zh("Deprecated virtual file")
                       : `${selectedFileDetail?.language ?? "text"} file`
-                    : "New file in this bundle"}
+                    : zh("New file in this bundle")}
                 </p>
               </div>
             </div>
@@ -2996,7 +2997,7 @@ export function PromptsTab({
                 <CopyText
                   text={displayValue}
                   ariaLabel="Copy instructions file as markdown"
-                  title="Copy as markdown"
+                  title={zh("Copy as markdown")}
                   copiedLabel="Copied"
                   className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-border text-muted-foreground hover:bg-accent hover:text-foreground"
                 >
@@ -3020,7 +3021,7 @@ export function PromptsTab({
                   }}
                   disabled={deleteFile.isPending}
                 >
-                  Delete
+                  {zh("Delete")}
                 </Button>
               )}
             </div>
@@ -3193,13 +3194,13 @@ export function RunsTab({
   const selection = useSelectedHeartbeatRun(sorted, effectiveRunId, companyId, agentId);
   const selectedRun = selection.run;
   if (selectedRunId && !selectedRun) {
-    if (selection.loading) return <p className="text-sm text-muted-foreground">Loading run…</p>;
+    if (selection.loading) return <p className="text-sm text-muted-foreground">{zh("Loading run…")}</p>;
     return <div role="alert">
-      <p className="text-sm text-destructive">{selection.error instanceof Error ? selection.error.message : "This run is unavailable for this agent."}</p>
-      {selection.error && <Button variant="outline" onClick={() => { void selection.retry(); }}>Try again</Button>}
+      <p className="text-sm text-destructive">{selection.error instanceof Error ? selection.error.message : zh("This run is unavailable for this agent.")}</p>
+      {selection.error && <Button variant="outline" onClick={() => { void selection.retry(); }}>{zh("Try again")}</Button>}
     </div>;
   }
-  if (runs.length === 0 && !selectedRun) return <p className="text-sm text-muted-foreground">No runs yet.</p>;
+  if (runs.length === 0 && !selectedRun) return <p className="text-sm text-muted-foreground">{zh("No runs yet.")}</p>;
 
   // Mobile: show either run list OR run detail with back button
   if (isMobile) {
@@ -3211,7 +3212,7 @@ export function RunsTab({
             className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors no-underline"
           >
             <ArrowLeft className="h-3.5 w-3.5" />
-            Back to runs
+            {zh("Back to runs")}
           </Link>
           <RunDetail key={selectedRun.id} run={selectedRun} agentRouteId={agentRouteId} adapterType={adapterType} adapterConfig={adapterConfig} />
         </div>
@@ -3421,7 +3422,7 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
                   onClick={() => cancelRun.mutate()}
                   disabled={cancelRun.isPending}
                 >
-                  {cancelRun.isPending ? "Cancelling…" : "Cancel"}
+                  {cancelRun.isPending ? zh("Cancelling…") : zh("Cancel")}
                 </Button>
               )}
               {canResumeLostRun && (
@@ -3433,7 +3434,7 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
                   disabled={resumeRun.isPending}
                 >
                   <RotateCcw className="h-3.5 w-3.5 mr-1" />
-                  {resumeRun.isPending ? "Resuming…" : "Resume"}
+                  {resumeRun.isPending ? zh("Resuming…") : zh("Resume")}
                 </Button>
               )}
               {canRetryRun && !canResumeLostRun && (
@@ -3445,7 +3446,7 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
                   disabled={retryRun.isPending}
                 >
                   <RotateCcw className="h-3.5 w-3.5 mr-1" />
-                  {retryRun.isPending ? "Retrying…" : "Retry"}
+                  {retryRun.isPending ? zh("Retrying…") : zh("Retry")}
                 </Button>
               )}
             </div>
@@ -3475,7 +3476,7 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
                 data-testid="run-detail-on-behalf-of"
                 className="text-xs text-muted-foreground"
               >
-                On behalf of{" "}
+                {zh("On behalf of")}{" "}
                 <span className="text-foreground">
                   {responsibleUserName ?? responsibleUserLabel(null)}
                 </span>
@@ -3483,12 +3484,12 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
             )}
             {resumeRun.isError && ( // query-error-ok: mutation result, not a query
               <div className="text-xs text-destructive">
-                {resumeRun.error instanceof Error ? resumeRun.error.message : "Failed to resume run"}
+                {resumeRun.error instanceof Error ? resumeRun.error.message : zh("Failed to resume run")}
               </div>
             )}
             {retryRun.isError && ( // query-error-ok: mutation result, not a query
               <div className="text-xs text-destructive">
-                {retryRun.error instanceof Error ? retryRun.error.message : "Failed to retry run"}
+                {retryRun.error instanceof Error ? retryRun.error.message : zh("Failed to retry run")}
               </div>
             )}
             {startTime && (
@@ -3504,7 +3505,7 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
                 </div>
                 {displayDurationSec !== null && (
                   <div className="text-xs text-muted-foreground">
-                    Duration: {displayDurationSec >= 60 ? `${Math.floor(displayDurationSec / 60)}m ${displayDurationSec % 60}s` : `${displayDurationSec}s`}
+                    {zh("Duration:")} {displayDurationSec >= 60 ? `${Math.floor(displayDurationSec / 60)}m ${displayDurationSec % 60}s` : `${displayDurationSec}s`}
                   </div>
                 )}
               </div>
@@ -3524,18 +3525,18 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
                   onClick={() => runClaudeLogin.mutate()}
                   disabled={runClaudeLogin.isPending}
                 >
-                  {runClaudeLogin.isPending ? "Running claude login..." : "Login to Claude Code"}
+                  {runClaudeLogin.isPending ? zh("Running claude login...") : zh("Login to Claude Code")}
                 </Button>
                 {runClaudeLogin.isError && ( // query-error-ok: mutation result, not a query
                   <p className="text-xs text-destructive">
                     {runClaudeLogin.error instanceof Error
                       ? runClaudeLogin.error.message
-                      : "Failed to run Claude login"}
+                      : zh("Failed to run Claude login")}
                   </p>
                 )}
                 {claudeLoginResult?.loginUrl && (
                   <p className="text-xs">
-                    Login URL:
+                    {zh("Login URL:")}
                     <a
                       href={claudeLoginResult.loginUrl}
                       className="text-blue-600 underline underline-offset-2 ml-1 break-all dark:text-blue-400"
@@ -3570,7 +3571,7 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
             )}
             {hasNonZeroExit && (
               <div className="text-xs text-red-600 dark:text-red-400">
-                Exit code {run.exitCode}
+                {zh("Exit code")} {run.exitCode}
                 {run.signal && <span className="text-muted-foreground ml-1">(signal: {run.signal})</span>}
               </div>
             )}
@@ -3604,19 +3605,19 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
           {hasMetrics && (
             <div className="border-t sm:border-t-0 sm:border-l border-border p-4 grid grid-cols-2 gap-x-4 sm:gap-x-8 gap-y-3 content-center tabular-nums">
               <div>
-                <div className="text-xs text-muted-foreground">Input</div>
+                <div className="text-xs text-muted-foreground">{zh("Input")}</div>
                 <div className="text-sm font-medium font-mono">{formatTokens(metrics.input)}</div>
               </div>
               <div>
-                <div className="text-xs text-muted-foreground">Output</div>
+                <div className="text-xs text-muted-foreground">{zh("Output")}</div>
                 <div className="text-sm font-medium font-mono">{formatTokens(metrics.output)}</div>
               </div>
               <div>
-                <div className="text-xs text-muted-foreground">Cached</div>
+                <div className="text-xs text-muted-foreground">{zh("Cached")}</div>
                 <div className="text-sm font-medium font-mono">{formatTokens(metrics.cached)}</div>
               </div>
               <div>
-                <div className="text-xs text-muted-foreground">Cost</div>
+                <div className="text-xs text-muted-foreground">{zh("Cost")}</div>
                 <div className="text-sm font-medium font-mono">{metrics.cost > 0 ? `$${metrics.cost.toFixed(4)}` : "-"}</div>
               </div>
             </div>
@@ -3631,20 +3632,20 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
               onClick={() => setSessionOpen((v) => !v)}
             >
               <ChevronRight className={cn("h-3 w-3 transition-transform", sessionOpen && "rotate-90")} />
-              Session
-              {sessionChanged && <span className="text-yellow-400 ml-1">(changed)</span>}
+              {zh("Session")}
+              {sessionChanged && <span className="text-yellow-400 ml-1">{zh("(changed)")}</span>}
             </button>
             {sessionOpen && (
               <div className="px-4 pb-3 space-y-1 text-xs">
                 {run.sessionIdBefore && (
                   <div className="flex items-center gap-2">
-                    <span className="text-muted-foreground w-12">{sessionChanged ? "Before" : "ID"}</span>
+                    <span className="text-muted-foreground w-12">{sessionChanged ? zh("Before") : "ID"}</span>
                     <CopyText text={run.sessionIdBefore} className="font-mono" />
                   </div>
                 )}
                 {sessionChanged && run.sessionIdAfter && (
                   <div className="flex items-center gap-2">
-                    <span className="text-muted-foreground w-12">After</span>
+                    <span className="text-muted-foreground w-12">{zh("After")}</span>
                     <CopyText text={run.sessionIdAfter} className="font-mono" />
                   </div>
                 )}
@@ -3671,7 +3672,7 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
                       <p className="text-(length:--text-micro) text-destructive mt-1">
                         {clearSessionsForTouchedIssues.error instanceof Error
                           ? clearSessionsForTouchedIssues.error.message
-                          : "Failed to clear sessions"}
+                          : zh("Failed to clear sessions")}
                       </p>
                     )}
                   </div>
@@ -3685,7 +3686,7 @@ function RunDetail({ run: initialRun, agentRouteId, adapterType, adapterConfig }
       {/* Issues touched by this run */}
       {touchedIssues && touchedIssues.length > 0 && (
         <div className="space-y-2">
-          <span className="text-xs font-medium text-muted-foreground">Tasks Touched ({touchedIssues.length})</span>
+          <span className="text-xs font-medium text-muted-foreground">{zh("Tasks Touched (")}{touchedIssues.length})</span>
           <div className="border border-border rounded-lg divide-y divide-border">
             {touchedIssues.map((issue) => (
               <Link
@@ -4155,11 +4156,11 @@ export function LogViewer({ run, adapterType }: { run: HeartbeatRun; adapterType
   }, [run.id]);
 
   if (loading && logLoading) {
-    return <p className="text-xs text-muted-foreground">Loading run logs...</p>;
+    return <p className="text-xs text-muted-foreground">{zh("Loading run logs...")}</p>;
   }
 
   if (events.length === 0 && logLines.length === 0 && !logError && !eventsError) {
-    return <p className="text-xs text-muted-foreground">No log events.</p>;
+    return <p className="text-xs text-muted-foreground">{zh("No log events.")}</p>;
   }
 
   const levelColors: Record<string, string> = {
@@ -4186,7 +4187,7 @@ export function LogViewer({ run, adapterType }: { run: HeartbeatRun; adapterType
 
       <div className="flex items-center justify-between">
         <span className="text-xs font-medium text-muted-foreground">
-          Transcript ({transcript.length})
+          {zh("Transcript (")}{transcript.length})
         </span>
         <div className="flex items-center gap-2">
           <div className="inline-flex rounded-lg border border-border/70 bg-background/70 p-0.5">
@@ -4218,7 +4219,7 @@ export function LogViewer({ run, adapterType }: { run: HeartbeatRun; adapterType
                 lastMetricsRef.current = readScrollMetrics(container);
               }}
             >
-              Jump to live
+              {zh("Jump to live")}
             </Button>
           )}
           {isLive && (
@@ -4227,7 +4228,7 @@ export function LogViewer({ run, adapterType }: { run: HeartbeatRun; adapterType
                 <span className="animate-pulse absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75" />
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500" />
               </span>
-              Live
+              {zh("Live")}
             </span>
           )}
         </div>
@@ -4239,7 +4240,7 @@ export function LogViewer({ run, adapterType }: { run: HeartbeatRun; adapterType
           mode={transcriptMode}
           streaming={isLive}
           limit={isLive ? LIVE_TRANSCRIPT_RENDER_LIMIT : undefined}
-          emptyMessage={run.logRef ? "Waiting for transcript..." : "No persisted transcript for this run."}
+          emptyMessage={run.logRef ? zh("Waiting for transcript...") : zh("No persisted transcript for this run.")}
         />
         {hasMoreLog && (
           <div className="mt-3 flex flex-wrap items-center gap-2 border-t border-border/60 pt-3">
@@ -4250,7 +4251,7 @@ export function LogViewer({ run, adapterType }: { run: HeartbeatRun; adapterType
               onClick={loadMorePersistedLog}
               disabled={loadingMoreLog}
             >
-              {loadingMoreLog ? "Loading..." : "Load more log"}
+              {loadingMoreLog ? zh("Loading...") : zh("Load more log")}
             </Button>
             <span className="text-xs text-muted-foreground">
               Showing the first {Math.round(logOffset / 1024).toLocaleString("en-US")} KB
@@ -4270,16 +4271,16 @@ export function LogViewer({ run, adapterType }: { run: HeartbeatRun; adapterType
 
       {(run.status === "failed" || run.status === "timed_out") && (
         <div className="rounded-lg border border-red-300 dark:border-red-500/30 bg-red-50 dark:bg-red-950/20 p-3 space-y-2">
-          <div className="text-xs font-medium text-red-700 dark:text-red-300">Failure details</div>
+          <div className="text-xs font-medium text-red-700 dark:text-red-300">{zh("Failure details")}</div>
           {run.error && (
             <div className="text-xs text-red-600 dark:text-red-200">
-              <span className="text-red-700 dark:text-red-300">Error: </span>
+              <span className="text-red-700 dark:text-red-300">{zh("Error:")} </span>
               {redactPathText(run.error, censorUsernameInLogs)}
             </div>
           )}
           {run.stderrExcerpt && run.stderrExcerpt.trim() && (
             <div>
-              <div className="text-xs text-red-700 dark:text-red-300 mb-1">stderr excerpt</div>
+              <div className="text-xs text-red-700 dark:text-red-300 mb-1">{zh("stderr excerpt")}</div>
               <pre className="bg-red-50 dark:bg-neutral-950 rounded-md p-2 text-xs overflow-x-auto whitespace-pre-wrap text-red-800 dark:text-red-100">
                 {redactPathText(run.stderrExcerpt, censorUsernameInLogs)}
               </pre>
@@ -4295,7 +4296,7 @@ export function LogViewer({ run, adapterType }: { run: HeartbeatRun; adapterType
           )}
           {run.stdoutExcerpt && run.stdoutExcerpt.trim() && !run.resultJson && (
             <div>
-              <div className="text-xs text-red-700 dark:text-red-300 mb-1">stdout excerpt</div>
+              <div className="text-xs text-red-700 dark:text-red-300 mb-1">{zh("stdout excerpt")}</div>
               <pre className="bg-red-50 dark:bg-neutral-950 rounded-md p-2 text-xs overflow-x-auto whitespace-pre-wrap text-red-800 dark:text-red-100">
                 {redactPathText(run.stdoutExcerpt, censorUsernameInLogs)}
               </pre>
@@ -4306,11 +4307,11 @@ export function LogViewer({ run, adapterType }: { run: HeartbeatRun; adapterType
 
       {(events.length > 0 || eventsError) && (
         <div>
-          <div className="mb-2 text-xs font-medium text-muted-foreground">Events ({events.length})</div>
+          <div className="mb-2 text-xs font-medium text-muted-foreground">{zh("Events (")}{events.length})</div>
           {eventsError && <p className="text-sm text-destructive">{eventsError}</p>}
           {(hasMoreEvents || eventsError) && (
             <Button variant="outline" size="sm" disabled={loadingMoreEvents} onClick={() => loadMoreEventsRef.current?.()}>
-              {loadingMoreEvents ? "Loading..." : eventsError ? "Retry events" : "Load more events"}
+              {loadingMoreEvents ? zh("Loading...") : eventsError ? zh("Retry events") : zh("Load more events")}
             </Button>
           )}
           <div className="bg-neutral-100 dark:bg-neutral-950 rounded-lg p-3 font-mono text-xs space-y-0.5">
@@ -4398,7 +4399,7 @@ function KeysTab({ agentId, companyId }: { agentId: string; companyId?: string }
       {newToken && (
         <div className="border border-yellow-300 dark:border-yellow-600/40 bg-yellow-50 dark:bg-yellow-500/5 rounded-lg p-4 space-y-2">
           <p className="text-sm font-medium text-yellow-700 dark:text-yellow-400">
-            API key created — copy it now, it will not be shown again.
+            {zh("API key created — copy it now, it will not be shown again.")}
           </p>
           <div className="flex items-center gap-2">
             <code className="flex-1 bg-neutral-100 dark:bg-neutral-950 rounded px-3 py-1.5 text-xs font-mono text-green-700 dark:text-green-300 truncate">
@@ -4408,7 +4409,7 @@ function KeysTab({ agentId, companyId }: { agentId: string; companyId?: string }
               variant="ghost"
               size="icon-sm"
               onClick={() => setTokenVisible((v) => !v)}
-              title={tokenVisible ? "Hide" : "Show"}
+              title={tokenVisible ? zh("Hide") : zh("Show")}
             >
               {tokenVisible ? <EyeOff className="h-3.5 w-3.5" /> : <Eye className="h-3.5 w-3.5" />}
             </Button>
@@ -4416,11 +4417,11 @@ function KeysTab({ agentId, companyId }: { agentId: string; companyId?: string }
               variant="ghost"
               size="icon-sm"
               onClick={copyToken}
-              title="Copy"
+              title={zh("Copy")}
             >
               <Copy className="h-3.5 w-3.5" />
             </Button>
-            {copied && <span className="text-xs text-green-400">Copied!</span>}
+            {copied && <span className="text-xs text-green-400">{zh("Copied!")}</span>}
           </div>
           <Button
             variant="ghost"
@@ -4428,7 +4429,7 @@ function KeysTab({ agentId, companyId }: { agentId: string; companyId?: string }
             className="text-muted-foreground text-xs"
             onClick={() => setNewToken(null)}
           >
-            Dismiss
+            {zh("Dismiss")}
           </Button>
         </div>
       )}
@@ -4437,14 +4438,14 @@ function KeysTab({ agentId, companyId }: { agentId: string; companyId?: string }
       <div className="border border-border rounded-lg p-4 space-y-3">
         <h3 className="text-xs font-medium text-muted-foreground flex items-center gap-2">
           <Key className="h-3.5 w-3.5" />
-          Create API Key
+          {zh("Create API Key")}
         </h3>
         <p className="text-xs text-muted-foreground">
-          API keys allow this agent to authenticate calls to the Paperclip server.
+          {zh("API keys allow this agent to authenticate calls to the Paperclip server.")}
         </p>
         <div className="flex items-center gap-2">
           <Input
-            placeholder="Key name (e.g. production)"
+            placeholder={zh("Key name (e.g. production)")}
             value={newKeyName}
             onChange={(e) => setNewKeyName(e.target.value)}
             className="h-8 text-sm"
@@ -4458,22 +4459,22 @@ function KeysTab({ agentId, companyId }: { agentId: string; companyId?: string }
             disabled={createKey.isPending}
           >
             <Plus className="h-3.5 w-3.5 mr-1" />
-            Create
+            {zh("Create")}
           </Button>
         </div>
       </div>
 
       {/* Active keys */}
-      {isLoading && <p className="text-sm text-muted-foreground">Loading keys...</p>}
+      {isLoading && <p className="text-sm text-muted-foreground">{zh("Loading keys...")}</p>}
 
       {!isLoading && activeKeys.length === 0 && !newToken && (
-        <p className="text-sm text-muted-foreground">No active API keys.</p>
+        <p className="text-sm text-muted-foreground">{zh("No active API keys.")}</p>
       )}
 
       {activeKeys.length > 0 && (
         <div>
           <h3 className="text-xs font-medium text-muted-foreground mb-2">
-            Active Keys
+            {zh("Active Keys")}
           </h3>
           <div className="border border-border rounded-lg divide-y divide-border">
             {activeKeys.map((key: AgentKey) => (
@@ -4481,7 +4482,7 @@ function KeysTab({ agentId, companyId }: { agentId: string; companyId?: string }
                 <div>
                   <span className="text-sm font-medium">{key.name}</span>
                   <span className="text-xs text-muted-foreground ml-3">
-                    Created {formatDate(key.createdAt)}
+                    {zh("Created")} {formatDate(key.createdAt)}
                   </span>
                 </div>
                 <Button
@@ -4491,7 +4492,7 @@ function KeysTab({ agentId, companyId }: { agentId: string; companyId?: string }
                   onClick={() => revokeKey.mutate(key.id)}
                   disabled={revokeKey.isPending}
                 >
-                  Revoke
+                  {zh("Revoke")}
                 </Button>
               </div>
             ))}
@@ -4503,7 +4504,7 @@ function KeysTab({ agentId, companyId }: { agentId: string; companyId?: string }
       {revokedKeys.length > 0 && (
         <div>
           <h3 className="text-xs font-medium text-muted-foreground mb-2">
-            Revoked Keys
+            {zh("Revoked Keys")}
           </h3>
           <div className="border border-border rounded-lg divide-y divide-border opacity-50">
             {revokedKeys.map((key: AgentKey) => (
@@ -4511,7 +4512,7 @@ function KeysTab({ agentId, companyId }: { agentId: string; companyId?: string }
                 <div>
                   <span className="text-sm line-through">{key.name}</span>
                   <span className="text-xs text-muted-foreground ml-3">
-                    Revoked {key.revokedAt ? formatDate(key.revokedAt) : ""}
+                    {zh("Revoked")} {key.revokedAt ? formatDate(key.revokedAt) : ""}
                   </span>
                 </div>
               </div>

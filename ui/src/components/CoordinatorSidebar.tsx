@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { coordinatorAttentionQueryKey } from "@/lib/coordinator-attention";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -23,17 +24,17 @@ import { Flyout, FlyoutContent, FlyoutTrigger, FlyoutAppearanceProvider } from "
 import { StatusIcon } from "./StatusIcon";
 
 const moreDestinations = [
-  { label: "Search", to: "/search", icon: Search },
-  { label: "Inbox", to: "/inbox", icon: Inbox },
-  { label: "Dashboard", to: "/dashboard", icon: LayoutDashboard },
-  { label: "Projects", to: "/projects", icon: FolderOpen },
-  { label: "Routines", to: "/routines", icon: Repeat },
-  { label: "Artifacts", to: "/artifacts", icon: Boxes },
-  { label: "Agents", to: "/agents/all", icon: Network },
-  { label: "Skills", to: "/skills", icon: Boxes },
-  { label: "Connectors", to: "/apps", icon: Unplug },
-  { label: "Audit", to: "/activity", icon: History },
-  { label: "Settings", to: "/settings", icon: Settings },
+  { label: zh("Search"), to: "/search", icon: Search },
+  { label: zh("Inbox"), to: "/inbox", icon: Inbox },
+  { label: zh("Dashboard"), to: "/dashboard", icon: LayoutDashboard },
+  { label: zh("Projects"), to: "/projects", icon: FolderOpen },
+  { label: zh("Routines"), to: "/routines", icon: Repeat },
+  { label: zh("Artifacts"), to: "/artifacts", icon: Boxes },
+  { label: zh("Agents"), to: "/agents/all", icon: Network },
+  { label: zh("Skills"), to: "/skills", icon: Boxes },
+  { label: zh("Connectors"), to: "/apps", icon: Unplug },
+  { label: zh("Audit"), to: "/activity", icon: History },
+  { label: zh("Settings"), to: "/settings", icon: Settings },
 ] as const;
 
 function ProjectRecent({ project }: { project: Project }) {
@@ -54,7 +55,7 @@ function ProjectRecent({ project }: { project: Project }) {
     {expanded && <div className="ml-5 border-l border-border pl-1">
       {isPending ? <p className="px-3 py-2 text-xs text-muted-foreground" role="status">Loading tasks…</p> : error ? <p className="px-3 py-2 text-xs text-muted-foreground">Couldn’t load tasks.</p> : tasks?.length ? tasks.map(task =>
         <SidebarNavItem className="design-sidebar-item" key={task.id} to={`/issues/${task.identifier ?? task.id}`} label={task.title} iconNode={<StatusIcon status={task.status} />} />)
-        : <p className="px-3 py-2 text-xs text-muted-foreground">No tasks yet.</p>}
+        : <p className="px-3 py-2 text-xs text-muted-foreground">{zh("No tasks yet.")}</p>}
     </div>}
   </div>;
 }
@@ -100,15 +101,15 @@ export function CoordinatorSidebar({ children }: { children?: ReactNode }) {
     <div className="design-sidebar-brand"><SidebarCompanyMenu showChevron={false} /></div>
     <nav className="design-sidebar-navigation" aria-label="Workspace navigation">
       <div className="design-sidebar-primary">
-        <SidebarNavItem className="design-sidebar-item" to="/chats" label="Chat" icon={MessageCircle} />
+        <SidebarNavItem className="design-sidebar-item" to="/chats" label={zh("Chat")} icon={MessageCircle} />
         <div className="group/coordinator-new relative">
-          <SidebarNavItem to="/issues" label="Tasks" icon={CircleCheck} className={cn("design-sidebar-item", !rail && "pr-9")} />
-          {!rail && <button type="button" aria-label="New task" title="New task" onClick={() => openNewIssue()}
+          <SidebarNavItem to="/issues" label={zh("Tasks")} icon={CircleCheck} className={cn("design-sidebar-item", !rail && "pr-9")} />
+          {!rail && <button type="button" aria-label={zh("New task")} title={zh("New task")} onClick={() => openNewIssue()}
             className="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 text-muted-foreground opacity-0 transition-opacity group-hover/coordinator-new:opacity-100 group-focus-within/coordinator-new:opacity-100 pointer-coarse:opacity-100 hover:bg-sidebar-accent focus-visible:ring-2 focus-visible:ring-ring"><Plus className="size-4" /></button>}
         </div>
-        <SidebarNavItem className="design-sidebar-item" to="/decisions" label="Needs You" icon={Bell} badge={attention?.totalCount ?? 0} badgeLabel="decisions" />
+        <SidebarNavItem className="design-sidebar-item" to="/decisions" label={zh("Needs You")} icon={Bell} badge={attention?.totalCount ?? 0} badgeLabel={zh("decisions")} />
         <Flyout open={moreOpen} onOpenChange={setMoreOpen}>
-          <FlyoutTrigger asChild><button type="button" aria-label="More workspace pages" className="design-sidebar-item flex w-auto items-center gap-2.5 rounded-lg py-1.5 text-left transition-colors focus-visible:ring-2 focus-visible:ring-ring"><MoreHorizontal className="size-4 shrink-0" /><span className={rail ? SIDEBAR_RAIL_HIDDEN_LABEL : undefined}>More</span></button></FlyoutTrigger>
+          <FlyoutTrigger asChild><button type="button" aria-label="More workspace pages" className="design-sidebar-item flex w-auto items-center gap-2.5 rounded-lg py-1.5 text-left transition-colors focus-visible:ring-2 focus-visible:ring-ring"><MoreHorizontal className="size-4 shrink-0" /><span className={rail ? SIDEBAR_RAIL_HIDDEN_LABEL : undefined}>{zh("More")}</span></button></FlyoutTrigger>
           <FlyoutContent ref={moreContentRef} tabIndex={-1} onOpenAutoFocus={(event) => { event.preventDefault(); moreContentRef.current?.focus(); }} side={isMobile ? "bottom" : "right"} align="start" className="w-56 p-1" aria-label="More workspace pages">
             {moreDestinations.map(({ label, to, icon: Icon }, index) => {
               const pinned = pinnedNavigation.pins.includes(to);
@@ -119,7 +120,7 @@ export function CoordinatorSidebar({ children }: { children?: ReactNode }) {
                   <Link to={to} onClick={() => { setMoreOpen(false); if (isMobile) setSidebarOpen(false); }} className="flex min-w-0 flex-1 items-center gap-2 rounded-sm px-2 py-1.5 pr-10 text-sm outline-none focus-visible:ring-2 focus-visible:ring-ring">
                     <Icon className="size-4 shrink-0 text-muted-foreground" />{label}
                   </Link>
-                  <button type="button" aria-label={`${pinned ? "Unpin" : "Pin"} ${label}`} aria-pressed={pinned} title={`${pinned ? "Unpin" : "Pin"} ${label}`} disabled={!pinnedNavigation.canPin} onClick={() => pinnedNavigation.toggle(to)} className={cn("absolute right-0.5 top-1/2 flex size-8 -translate-y-1/2 items-center justify-center rounded-sm opacity-0 transition-opacity outline-none group-hover/coordinator-more:opacity-100 focus-visible:opacity-100 pointer-coarse:opacity-100 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring", pinned ? "text-foreground" : "text-muted-foreground")}>
+                  <button type="button" aria-label={`${pinned ? "Unpin" : zh("Pin")} ${label}`} aria-pressed={pinned} title={`${pinned ? "Unpin" : zh("Pin")} ${label}`} disabled={!pinnedNavigation.canPin} onClick={() => pinnedNavigation.toggle(to)} className={cn("absolute right-0.5 top-1/2 flex size-8 -translate-y-1/2 items-center justify-center rounded-sm opacity-0 transition-opacity outline-none group-hover/coordinator-more:opacity-100 focus-visible:opacity-100 pointer-coarse:opacity-100 hover:text-foreground focus-visible:ring-2 focus-visible:ring-ring", pinned ? "text-foreground" : "text-muted-foreground")}>
                     <PinIcon className="size-3.5" />
                   </button>
                 </div>

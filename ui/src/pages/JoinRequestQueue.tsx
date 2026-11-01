@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { UserPlus2 } from "lucide-react";
@@ -22,7 +23,7 @@ export function JoinRequestQueue() {
   useEffect(() => {
     setBreadcrumbs([
       { label: selectedCompany?.name ?? "Organization", href: "/dashboard" },
-      { label: "Inbox", href: "/inbox" },
+      { label: zh("Inbox"), href: "/inbox" },
       { label: "Join Requests" },
     ]);
   }, [selectedCompany?.name, setBreadcrumbs]);
@@ -88,7 +89,7 @@ export function JoinRequestQueue() {
 
       <Card className="flex-row flex-wrap gap-3 p-4">
         <label className="space-y-2 text-sm">
-          <span className="font-medium">Status</span>
+          <span className="font-medium">{zh("Status")}</span>
           <select
             className="rounded-md border border-border bg-background px-3 py-2"
             value={status}
@@ -110,9 +111,9 @@ export function JoinRequestQueue() {
               setRequestType(event.target.value as "all" | "human" | "agent")
             }
           >
-            <option value="all">All</option>
+            <option value="all">{zh("All")}</option>
             <option value="human">Human</option>
-            <option value="agent">Agent</option>
+            <option value="agent">{zh("Agent")}</option>
           </select>
         </label>
       </Card>
@@ -137,7 +138,7 @@ export function JoinRequestQueue() {
                   <div>
                     <div className="text-base font-medium">
                       {request.requestType === "human"
-                        ? request.requesterUser?.name || request.requestEmailSnapshot || request.requestingUserId || "Unknown human requester"
+                        ? request.requesterUser?.name || request.requestEmailSnapshot || request.requestingUserId || zh("Unknown human requester")
                         : request.agentName || "Unknown agent requester"}
                     </div>
                     <div className="text-sm text-muted-foreground">
@@ -155,13 +156,13 @@ export function JoinRequestQueue() {
                       onClick={() => rejectMutation.mutate(request.id)}
                       disabled={rejectMutation.isPending}
                     >
-                      Reject
+                      {zh("Reject")}
                     </Button>
                     <Button
                       onClick={() => approveMutation.mutate(request.id)}
                       disabled={approveMutation.isPending}
                     >
-                      Approve
+                      {zh("Approve")}
                     </Button>
                   </div>
                 ) : null}
@@ -173,7 +174,7 @@ export function JoinRequestQueue() {
                   <div className="mt-2">
                     {request.invite
                       ? `${request.invite.allowedJoinTypes} join invite${request.invite.humanRole ? ` • default role ${request.invite.humanRole}` : ""}`
-                      : "Invite metadata unavailable"}
+                      : zh("Invite metadata unavailable")}
                   </div>
                   {request.invite?.inviteMessage ? (
                     <div className="mt-2 text-foreground">{request.invite.inviteMessage}</div>

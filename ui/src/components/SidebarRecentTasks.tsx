@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState, type FormEvent } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Archive, MoreHorizontal, Pencil, RefreshCw } from "lucide-react";
@@ -140,10 +141,10 @@ function RecentTasksList({
       if (storageKey) updateRecentTaskSnapshots(storageKey, companyId, [updated]);
       await refreshIssueQueries(renameEntry.id);
       setRenameEntry(null);
-      toastActions?.pushToast({ title: "Task renamed", tone: "success" });
+      toastActions?.pushToast({ title: zh("Task renamed"), tone: "success" });
     } catch (error) {
       toastActions?.pushToast({
-        title: "Task rename failed",
+        title: zh("Task rename failed"),
         body: errorMessage(error, "Unable to rename this task."),
         tone: "error",
       });
@@ -160,10 +161,10 @@ function RecentTasksList({
       await queryClient.invalidateQueries({
         queryKey: queryKeys.sidebarBadges(companyId),
       });
-      toastActions?.pushToast({ title: "Task archived from inbox", tone: "success" });
+      toastActions?.pushToast({ title: zh("Task archived from inbox"), tone: "success" });
     } catch (error) {
       toastActions?.pushToast({
-        title: "Task archive failed",
+        title: zh("Task archive failed"),
         body: errorMessage(error, "Unable to archive this task from the inbox."),
         tone: "error",
       });
@@ -198,7 +199,7 @@ function RecentTasksList({
           }
         }
         setRestartWakeRetryPending(restartRetryStorageKey, entry.id, false);
-        toastActions?.pushToast({ title: "Task restarted", tone: "success" });
+        toastActions?.pushToast({ title: zh("Task restarted"), tone: "success" });
       } else if (state.activePauseHold) {
         throw new Error("This task is paused by a parent task. Restart it from the pause root.");
       } else if (readRestartWakeRetryIssueIds(restartRetryStorageKey).has(entry.id)) {
@@ -219,14 +220,14 @@ function RecentTasksList({
           }
         }
         setRestartWakeRetryPending(restartRetryStorageKey, entry.id, false);
-        toastActions?.pushToast({ title: "Task restarted", tone: "success" });
+        toastActions?.pushToast({ title: zh("Task restarted"), tone: "success" });
       } else {
         await issuesApi.createTreeHold(entry.id, {
           mode: "pause",
           reason: "Paused from Recent Tasks.",
           releasePolicy: { strategy: "manual" },
         });
-        toastActions?.pushToast({ title: "Task paused", tone: "success" });
+        toastActions?.pushToast({ title: zh("Task paused"), tone: "success" });
       }
       await queryClient.invalidateQueries({
         queryKey: ["issues", "tree-control-state", entry.id],
@@ -234,7 +235,7 @@ function RecentTasksList({
       await queryClient.invalidateQueries({ queryKey: queryKeys.issues.summaries(companyId) });
     } catch (error) {
       toastActions?.pushToast({
-        title: "Task pause update failed",
+        title: zh("Task pause update failed"),
         body: errorMessage(error, "Unable to pause or restart this task."),
         tone: "error",
       });
@@ -245,15 +246,15 @@ function RecentTasksList({
 
   return (
     <>
-      <SidebarSection label="Recent Tasks">
+      <SidebarSection label={zh("Recent Tasks")}>
         {entries.map((entry) => (
           <div key={entry.id} className="sidebar-action-row group/recent-task relative">
             <SidebarNavItem
               to={`/issues/${entry.id}`}
               label={entry.title}
               trailing={entry.status === "in_review" && entry.externalConversationState === "waiting"
-                ? <span className="text-xs text-muted-foreground">Idle</span> : undefined}
-              trailingLabel={entry.status === "in_review" && entry.externalConversationState === "waiting" ? "Idle" : undefined}
+                ? <span className="text-xs text-muted-foreground">{zh("Idle")}</span> : undefined}
+              trailingLabel={entry.status === "in_review" && entry.externalConversationState === "waiting" ? zh("Idle") : undefined}
               className={rail ? undefined : "sidebar-action-link pointer-coarse:pr-8"}
               liveCount={liveIssueIds.has(entry.id) ? 1 : undefined}
             />
@@ -280,7 +281,7 @@ function RecentTasksList({
                     onSelect={() => beginRename(entry)}
                   >
                     <Pencil aria-hidden="true" />
-                    Rename
+                    {zh("Rename")}
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className={RECENT_TASK_MENU_ITEM_CLASS}
@@ -288,7 +289,7 @@ function RecentTasksList({
                     onSelect={() => void archiveTask(entry)}
                   >
                     <Archive aria-hidden="true" />
-                    Archive
+                    {zh("Archive")}
                   </DropdownMenuItem>
                   <DropdownMenuItem
                     className={RECENT_TASK_MENU_ITEM_CLASS}
@@ -296,7 +297,7 @@ function RecentTasksList({
                     onSelect={() => void toggleTaskPause(entry)}
                   >
                     <RefreshCw aria-hidden="true" />
-                    Pause/Restart
+                    {zh("Pause/Restart")}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -314,12 +315,12 @@ function RecentTasksList({
         <DialogContent className="sm:max-w-md">
           <form className="grid gap-4" onSubmit={(event) => void submitRename(event)}>
             <DialogHeader>
-              <DialogTitle>Rename task</DialogTitle>
-              <DialogDescription>Choose a short, clear name for this task.</DialogDescription>
+              <DialogTitle>{zh("Rename task")}</DialogTitle>
+              <DialogDescription>{zh("Choose a short, clear name for this task.")}</DialogDescription>
             </DialogHeader>
             <Input
               autoFocus
-              aria-label="Task name"
+              aria-label={zh("Task name")}
               value={renameValue}
               disabled={pendingAction === "rename"}
               onChange={(event) => setRenameValue(event.target.value)}
@@ -331,13 +332,13 @@ function RecentTasksList({
                 disabled={pendingAction === "rename"}
                 onClick={() => setRenameEntry(null)}
               >
-                Cancel
+                {zh("Cancel")}
               </Button>
               <Button
                 type="submit"
                 disabled={pendingAction === "rename" || !renameValue.trim()}
               >
-                {pendingAction === "rename" ? "Saving..." : "Save"}
+                {pendingAction === "rename" ? zh("Saving...") : zh("Save")}
               </Button>
             </DialogFooter>
           </form>

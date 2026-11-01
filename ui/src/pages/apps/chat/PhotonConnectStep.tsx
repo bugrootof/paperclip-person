@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { Button } from "@/components/ui/button";
@@ -48,7 +49,7 @@ export function PhotonConnectStep({
       <div className="space-y-2">
         <h1 className="text-xl font-bold">Connect iMessage Photon</h1>
         <p className="text-sm text-muted-foreground">
-          Connect {agentName} to Photon Cloud. Pro supports direct messages through
+          {zh("Connect")} {agentName} to Photon Cloud. Pro supports direct messages through
           a shared line. Dedicated numbers also support individually enabled groups.
         </p>
         <p className="text-sm">
@@ -79,7 +80,7 @@ export function PhotonConnectStep({
         </p>
       )}
       <label className="grid gap-2 text-sm font-medium">
-        Project ID
+        {zh("Project ID")}
         <Input
           value={projectId}
           autoComplete="off"
@@ -120,7 +121,7 @@ export function PhotonConnectStep({
       {inspection.data && (
         <fieldset className="space-y-3">
           <legend className="text-sm font-medium">
-            {inspection.data.allocation === "shared" ? "Shared DMs" : "Dedicated numbers"} in {inspection.data.projectName}
+            {inspection.data.allocation === "shared" ? "Shared DMs" : "Dedicated numbers"} {zh("in")} {inspection.data.projectName}
           </legend>
           {!inspection.data.eligible && (
             <p role="alert" className="text-sm text-destructive">
@@ -181,7 +182,7 @@ export function PhotonConnectStep({
           }
         >
           {pending
-            ? "Connecting…"
+            ? zh("Connecting…")
             : repairing
               ? "Reconnect Photon"
               : inspection.data?.allocation === "shared" ? "Connect shared DMs" : "Connect selected number"}

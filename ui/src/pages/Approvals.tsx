@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { describeError } from "../api/errors";
 import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "@/lib/router";
@@ -28,7 +29,7 @@ export function Approvals() {
   const [actionError, setActionError] = useState<string | null>(null);
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Approvals" }]);
+    setBreadcrumbs([{ label: zh("Approvals") }]);
   }, [setBreadcrumbs]);
 
   const { data, isLoading, error } = useQuery({
@@ -89,7 +90,7 @@ export function Approvals() {
       <div className="flex items-center justify-between">
         <Tabs value={statusFilter} onValueChange={(v) => navigate(`/approvals/${v}`)}>
           <PageTabBar items={[
-            { value: "pending", label: <>Pending{pendingCount > 0 && (
+            { value: "pending", label: <>{zh("Pending")}{pendingCount > 0 && (
               <Badge variant="ghost" className={cn(
                 "ml-1.5 px-1.5 text-(length:--text-nano)",
                 "bg-yellow-500/20 text-yellow-500"
@@ -97,7 +98,7 @@ export function Approvals() {
                 {pendingCount}
               </Badge>
             )}</> },
-            { value: "all", label: "All" },
+            { value: "all", label: zh("All") },
           ]} />
         </Tabs>
       </div>

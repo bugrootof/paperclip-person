@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ArchiveRestore, Copy, Pencil, PlugZap, ShieldCheck, Trash2, UserMinus } from "lucide-react";
@@ -161,7 +162,7 @@ export function ProfileDetail({
     onError: (error: unknown) => pushToast({ title: "Could not submit review", body: errorBody(error), tone: "error" }),
   });
 
-  if (data.profiles.isLoading) return <LoadingState label="Loading profile..." />;
+  if (data.profiles.isLoading) return <LoadingState label={zh("Loading profile...")} />;
   if (data.profiles.isError) return <ErrorState error={data.profiles.error} onRetry={() => data.profiles.refetch()} />;
   if (!profile) {
     return (
@@ -184,7 +185,7 @@ export function ProfileDetail({
           <div className="flex flex-wrap gap-2">
             <Button variant="outline" disabled={archived} onClick={() => setDialog("edit")}>
               <Pencil className="mr-1.5 h-4 w-4" />
-              Edit
+              {zh("Edit")}
             </Button>
             <Button variant="outline" disabled={archived} onClick={() => setDialog("duplicate")}>
               <Copy className="mr-1.5 h-4 w-4" />
@@ -193,14 +194,14 @@ export function ProfileDetail({
             {archived ? (
               <Button variant="outline" onClick={() => setDialog("restore")}>
                 <ArchiveRestore className="mr-1.5 h-4 w-4" />
-                Restore
+                {zh("Restore")}
               </Button>
             ) : (
-              <Button variant="outline" onClick={() => setDialog("archive")}>Archive</Button>
+              <Button variant="outline" onClick={() => setDialog("archive")}>{zh("Archive")}</Button>
             )}
             <Button variant="outline" className="text-destructive hover:text-destructive" onClick={() => setDialog("delete")}>
               <Trash2 className="mr-1.5 h-4 w-4" />
-              Delete
+              {zh("Delete")}
             </Button>
           </div>
         }
@@ -208,7 +209,7 @@ export function ProfileDetail({
 
       <div className="flex flex-wrap items-center gap-3 text-sm">
         <Badge variant={archived ? "outline" : "default"}>{STATUS_LABEL[profile.status]}</Badge>
-        <span className="text-muted-foreground">Updated <RelativeTime value={profile.updatedAt} /></span>
+        <span className="text-muted-foreground">{zh("Updated")} <RelativeTime value={profile.updatedAt} /></span>
         <span className="text-muted-foreground">{allowsLabel(profile.summary)}</span>
       </div>
 
@@ -225,7 +226,7 @@ export function ProfileDetail({
               Assign
             </Button>
             <Button size="sm" variant="ghost" onClick={() => setSearchParams({})}>
-              Dismiss
+              {zh("Dismiss")}
             </Button>
           </div>
         </div>
@@ -345,7 +346,7 @@ function NewToolsReviewBanner({
         </p>
         <p className="text-amber-900/80">Choose which ones this profile should allow.</p>
       </div>
-      <Button size="sm" onClick={onReview}>Review</Button>
+      <Button size="sm" onClick={onReview}>{zh("Review")}</Button>
     </div>
   );
 }
@@ -416,7 +417,7 @@ function NewToolsReviewDialog({
                       checked={(decisions[tool.catalogEntryId] ?? "keep_blocked") === "allow"}
                       onChange={() => onDecision(tool.catalogEntryId, "allow")}
                     />
-                    Allow
+                    {zh("Allow")}
                   </label>
                   <label className="inline-flex items-center gap-1.5 text-sm">
                     <input
@@ -433,7 +434,7 @@ function NewToolsReviewDialog({
           </div>
         )}
         <DialogFooter>
-          <Button variant="ghost" onClick={onClose}>Cancel</Button>
+          <Button variant="ghost" onClick={onClose}>{zh("Cancel")}</Button>
           <Button disabled={pending || loading || tools.length === 0} onClick={onSubmit}>
             Submit review
           </Button>
@@ -458,8 +459,8 @@ function AllowList({ rows, total }: { rows: AllowRow[]; total: number }) {
           <tr className="border-b border-border bg-muted/40 text-left text-xs font-medium text-muted-foreground">
             <th className="px-3 py-2 font-medium">Tool</th>
             <th className="px-3 py-2 font-medium">App</th>
-            <th className="px-3 py-2 font-medium">Capabilities</th>
-            <th className="px-3 py-2 font-medium">Source</th>
+            <th className="px-3 py-2 font-medium">{zh("Capabilities")}</th>
+            <th className="px-3 py-2 font-medium">{zh("Source")}</th>
           </tr>
         </thead>
         <tbody>
@@ -471,7 +472,7 @@ function AllowList({ rows, total }: { rows: AllowRow[]; total: number }) {
                   {row.degraded ? (
                     <a className="mt-0.5 inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline" href={`/apps/${row.connectionId}`}>
                       <PlugZap className="h-3 w-3" />
-                      Reconnect
+                      {zh("Reconnect")}
                     </a>
                   ) : null}
                 </div>
@@ -546,7 +547,7 @@ function Assignments({
           </div>
           <Button variant="ghost" size="sm" disabled={archived} onClick={() => onRemove(binding)}>
             <UserMinus className="mr-1.5 h-4 w-4" />
-            Remove
+            {zh("Remove")}
           </Button>
         </div>
       ))}
@@ -641,16 +642,16 @@ function ProfileDialogs({
           </DialogHeader>
           <div className="space-y-3">
             <div className="space-y-1.5">
-              <Label htmlFor="edit-profile-name">Name</Label>
+              <Label htmlFor="edit-profile-name">{zh("Name")}</Label>
               <Input id="edit-profile-name" value={name} onChange={(e) => setName(e.target.value)} />
               {duplicateName ? <p className="text-xs text-destructive">Another profile already uses this name.</p> : null}
             </div>
             <div className="space-y-1.5">
-              <Label htmlFor="edit-profile-description">Description</Label>
+              <Label htmlFor="edit-profile-description">{zh("Description")}</Label>
               <Textarea id="edit-profile-description" value={description} onChange={(e) => setDescription(e.target.value)} rows={3} />
             </div>
             <button type="button" className="text-sm font-medium text-muted-foreground hover:text-foreground" onClick={() => setAdvancedOpen((v) => !v)}>
-              Advanced
+              {zh("Advanced")}
             </button>
             {advancedOpen ? (
               <div className="space-y-1.5">
@@ -660,9 +661,9 @@ function ProfileDialogs({
             ) : null}
           </div>
           <DialogFooter>
-            <Button variant="ghost" onClick={onClose}>Cancel</Button>
+            <Button variant="ghost" onClick={onClose}>{zh("Cancel")}</Button>
             <Button disabled={!name.trim() || duplicateName || pending} onClick={() => onUpdate({ name: name.trim(), description: description.trim() || null, profileKey: profileKey.trim() })}>
-              Save
+              {zh("Save")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -680,7 +681,7 @@ function ProfileDialogs({
           </DialogHeader>
           <div className="space-y-3">
             <div className="space-y-1.5">
-              <Label htmlFor="copy-profile-name">Name</Label>
+              <Label htmlFor="copy-profile-name">{zh("Name")}</Label>
               <Input id="copy-profile-name" value={copyName} onChange={(e) => setCopyName(e.target.value)} />
               {duplicateCopyName ? <p className="text-xs text-destructive">Another profile already uses this name.</p> : null}
             </div>
@@ -690,7 +691,7 @@ function ProfileDialogs({
             </label>
           </div>
           <DialogFooter>
-            <Button variant="ghost" onClick={onClose}>Cancel</Button>
+            <Button variant="ghost" onClick={onClose}>{zh("Cancel")}</Button>
             <Button disabled={!copyName.trim() || duplicateCopyName || pending} onClick={() => onDuplicate({ name: copyName.trim(), includeAssignments: copyAssignments })}>
               Duplicate
             </Button>
@@ -738,8 +739,8 @@ function RemoveAssignmentDialog({
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Button variant="ghost" onClick={onClose}>Cancel</Button>
-          <Button disabled={pending} onClick={onConfirm}>Remove</Button>
+          <Button variant="ghost" onClick={onClose}>{zh("Cancel")}</Button>
+          <Button disabled={pending} onClick={onConfirm}>{zh("Remove")}</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

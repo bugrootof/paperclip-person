@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useSearchParams } from "@/lib/router";
@@ -136,7 +137,7 @@ export function AuthPage() {
           >
             {mode === "sign_up" && (
               <div>
-                <label htmlFor="name" className="text-xs text-muted-foreground mb-1 block">Name</label>
+                <label htmlFor="name" className="text-xs text-muted-foreground mb-1 block">{zh("Name")}</label>
                 <input
                   id="name"
                   name="name"
@@ -153,7 +154,7 @@ export function AuthPage() {
               </div>
             )}
             <div>
-              <label htmlFor="email" className="text-xs text-muted-foreground mb-1 block">Email</label>
+              <label htmlFor="email" className="text-xs text-muted-foreground mb-1 block">{zh("Email")}</label>
               <input
                 id="email"
                 name="email"
@@ -214,7 +215,7 @@ export function AuthPage() {
                 setMode(mode === "sign_in" ? "sign_up" : "sign_in");
               }}
             >
-              {mode === "sign_in" ? "Create one" : "Sign in"}
+              {mode === "sign_in" ? "Create one" : zh("Sign in")}
             </button>
           </div>
         </div>

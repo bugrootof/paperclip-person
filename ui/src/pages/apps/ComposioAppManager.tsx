@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ExternalLink } from "lucide-react";
@@ -17,7 +18,7 @@ export function ComposioAppManager({ app, connections, initialConnectionId, onCl
   const [connectionId, setConnectionId] = useState(initialConnectionId ?? connections[0]?.id ?? "");
   const connection = connections.find(candidate => candidate.id === connectionId);
   return <Dialog open onOpenChange={open => { if (!open) onClose(); }}><DialogContent>
-    <DialogHeader><DialogTitle>Manage {app.name}</DialogTitle><DialogDescription>Accounts and sign-in are managed in Composio.</DialogDescription></DialogHeader>
+    <DialogHeader><DialogTitle>{zh("Manage")} {app.name}</DialogTitle><DialogDescription>Accounts and sign-in are managed in Composio.</DialogDescription></DialogHeader>
     {connections.length > 1 ? <div className="space-y-2"><Label htmlFor="composio-manage-gateway">Composio account</Label>
       <select id="composio-manage-gateway" value={connectionId} onChange={event => setConnectionId(event.target.value)} className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm">
         {connections.map(candidate => <option key={candidate.id} value={candidate.id}>{candidate.name}</option>)}
@@ -58,8 +59,8 @@ function ComposioAccountObservations({ app, connection, onClose }: { app: Aggreg
       <p>Via <Link to={`/apps/${connection.id}/permissions`} onClick={onClose} className="underline underline-offset-2">“{connection.name}”</Link></p>
       <p>Composio permissions apply to all apps on this connection.</p>
     </div>
-    <DialogFooter className="sm:items-center sm:justify-between"><Button variant="ghost" onClick={onClose}>Close</Button>
-      <div className="flex items-center gap-2"><Button variant="ghost" disabled={busy} onClick={() => void refresh()}>{busy ? "Checking…" : "Refresh"}</Button>
+    <DialogFooter className="sm:items-center sm:justify-between"><Button variant="ghost" onClick={onClose}>{zh("Close")}</Button>
+      <div className="flex items-center gap-2"><Button variant="ghost" disabled={busy} onClick={() => void refresh()}>{busy ? zh("Checking…") : zh("Refresh")}</Button>
         <Button asChild><a href={COMPOSIO_APP_MANAGEMENT_URL} target="_blank" rel="noopener noreferrer">Open in Composio<ExternalLink className="size-4" /></a></Button></div>
     </DialogFooter>
   </>;

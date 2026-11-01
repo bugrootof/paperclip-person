@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { FilterX, RotateCcw } from "lucide-react";
 import type { CompanySearchZeroResults } from "@paperclipai/shared";
 import { Button } from "@/components/ui/button";
@@ -59,7 +60,7 @@ export function ZeroResultsRecovery({
               onClick={() => onChange(clearFilterDimension(filters, suggestion.filter))}
             >
               <span className="min-w-0 truncate">
-                Remove{" "}
+                {zh("Remove")}{" "}
                 <span className="font-medium">
                   {describeLoosenSuggestion(suggestion.filter, suggestion.values, lookups)}
                 </span>

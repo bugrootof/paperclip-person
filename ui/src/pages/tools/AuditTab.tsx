@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { ChevronDown, ChevronRight, ScrollText } from "lucide-react";
@@ -31,20 +32,20 @@ const ALL = "__all";
 /** Outcome chip vocabulary (spec §4C / §5): Allowed · Blocked · Asked first · Failed · Waiting. */
 const OUTCOME_META: Record<ToolAuditOutcome, { label: string; status: string }> = {
   allowed: { label: "Allowed", status: "allowed" },
-  blocked: { label: "Blocked", status: "denied" },
+  blocked: { label: zh("Blocked"), status: "denied" },
   asked_first: { label: "Asked first", status: "require-approval" },
   waiting: { label: "Waiting", status: "deferred" },
-  failed: { label: "Failed", status: "failed" },
+  failed: { label: zh("Failed"), status: "failed" },
   unknown: { label: "Recorded", status: "unchecked" },
 };
 
 const OUTCOME_FILTERS: { value: string; label: string }[] = [
   { value: ALL, label: "All outcomes" },
   { value: "allowed", label: "Allowed" },
-  { value: "blocked", label: "Blocked" },
+  { value: "blocked", label: zh("Blocked") },
   { value: "asked_first", label: "Asked first" },
   { value: "waiting", label: "Waiting" },
-  { value: "failed", label: "Failed" },
+  { value: "failed", label: zh("Failed") },
 ];
 
 const WINDOW_FILTERS: { value: ToolAuditWindow; label: string }[] = [
@@ -226,7 +227,7 @@ function ActivityRow({
               {app ? (
                 <>
                   {" "}
-                  in <span className="font-medium">{app}</span>
+                  {zh("in")} <span className="font-medium">{app}</span>
                 </>
               ) : null}
             </span>
@@ -255,7 +256,7 @@ function ActivityRow({
           <div className="flex flex-wrap gap-3 text-xs">
             {issueId ? (
               <Link to={`/issues/${issueId}`} className="text-primary hover:underline">
-                View task
+                {zh("View task")}
               </Link>
             ) : null}
             {runId && agentId ? (
@@ -272,7 +273,7 @@ function ActivityRow({
               className="flex items-center gap-1 text-xs font-medium text-muted-foreground hover:text-foreground"
             >
               {detailsOpen ? <ChevronDown className="h-3.5 w-3.5" /> : <ChevronRight className="h-3.5 w-3.5" />}
-              Details
+              {zh("Details")}
             </button>
             {detailsOpen ? (
               <div className="mt-2 space-y-1.5 text-xs">
@@ -297,7 +298,7 @@ function ActivityRow({
                       const connectionName = detailString(connection, "name") ?? "Unnamed connection";
                       return connectionId ? (
                         <div key={connectionId} className="flex gap-2">
-                          <span className="shrink-0 text-muted-foreground">Not installed</span>
+                          <span className="shrink-0 text-muted-foreground">{zh("Not installed")}</span>
                           <Link to={`/apps/${connectionId}/permissions`} className="font-medium text-primary hover:underline">
                             {connectionName}
                           </Link>
@@ -396,7 +397,7 @@ export function AuditTab({ companyId }: { companyId: string }) {
   return (
     <div className="space-y-4">
       <ToolsPageHeader
-        title="Activity"
+        title={zh("Activity")}
         description="What your agents actually did with your apps, newest first. Each line is one decision — allowed, blocked, asked first, waiting, or failed."
       />
 
@@ -452,7 +453,7 @@ export function AuditTab({ companyId }: { companyId: string }) {
         />
         {hasActiveFilters ? (
           <Button variant="ghost" size="sm" onClick={clearFilters}>
-            Clear filters
+            {zh("Clear filters")}
           </Button>
         ) : null}
       </div>
@@ -473,7 +474,7 @@ export function AuditTab({ companyId }: { companyId: string }) {
                 </p>
               </div>
               <Button variant="outline" size="sm" onClick={clearFilters}>
-                Clear filters
+                {zh("Clear filters")}
               </Button>
             </CardContent>
           </Card>
@@ -510,7 +511,7 @@ export function AuditTab({ companyId }: { companyId: string }) {
             onClick={() => activity.fetchNextPage()}
             disabled={activity.isFetchingNextPage}
           >
-            {activity.isFetchingNextPage ? "Loading…" : "Load more"}
+            {activity.isFetchingNextPage ? zh("Loading…") : "Load more"}
           </Button>
         </div>
       ) : null}

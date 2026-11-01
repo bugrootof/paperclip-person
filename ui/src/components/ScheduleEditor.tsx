@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -11,8 +12,8 @@ const PRESETS: { value: SchedulePreset; label: string }[] = [
   { value: "every_hour", label: "Every hour" },
   { value: "every_day", label: "Every day" },
   { value: "weekdays", label: "Weekdays" },
-  { value: "weekly", label: "Weekly" },
-  { value: "monthly", label: "Monthly" },
+  { value: "weekly", label: zh("Weekly") },
+  { value: "monthly", label: zh("Monthly") },
   { value: "custom", label: "Custom (cron)" },
 ];
 

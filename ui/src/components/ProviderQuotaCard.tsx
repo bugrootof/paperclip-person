@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AccountQuotaPanels } from "./AccountQuotaPanels";
 import { quotaUnavailableMessage } from "@/lib/quota-refresh";
 import { useMemo } from "react";
@@ -148,7 +149,7 @@ export function ProviderQuotaCard({
               {providerDisplayName(provider)}
             </CardTitle>
             <CardDescription className="text-xs mt-0.5">
-              <span className="font-mono">{formatTokens(totalInputTokens)}</span> in
+              <span className="font-mono">{formatTokens(totalInputTokens)}</span> {zh("in")}
               {" · "}
               <span className="font-mono">{formatTokens(totalOutputTokens)}</span> out
               {(totalApiRuns > 0 || totalSubRuns > 0) && (
@@ -241,11 +242,11 @@ export function ProviderQuotaCard({
                 {" · "}
                 {totalSubTokens > 0 && (
                   <>
-                    <span className="font-mono text-foreground">{formatTokens(totalSubTokens)}</span> total
+                    <span className="font-mono text-foreground">{formatTokens(totalSubTokens)}</span> {zh("total")}
                     {" · "}
                   </>
                 )}
-                <span className="font-mono text-foreground">{formatTokens(totalSubInputTokens)}</span> in
+                <span className="font-mono text-foreground">{formatTokens(totalSubInputTokens)}</span> {zh("in")}
                 {" · "}
                 <span className="font-mono text-foreground">{formatTokens(totalSubOutputTokens)}</span> out
               </p>

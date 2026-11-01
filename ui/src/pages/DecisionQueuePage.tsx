@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Check, Loader2, Settings2, X } from "lucide-react";
@@ -128,7 +129,7 @@ export function DecisionQueuePage() {
   }, [agents]);
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Decisions", href: "/decisions" }, { label: queue?.title ?? queueKey }]);
+    setBreadcrumbs([{ label: zh("Decisions"), href: "/decisions" }, { label: queue?.title ?? queueKey }]);
   }, [setBreadcrumbs, queue?.title, queueKey]);
 
   // Re-hydrate per-company preferences when the company changes.
@@ -401,7 +402,7 @@ function SeedRulesCard({
         </div>
         <Button type="button" variant="outline" size="xs" className="h-7 shrink-0" disabled={pending} onClick={onToggle}>
           {pending && <Loader2 className="h-3 w-3 animate-spin" />}
-          {enabled ? "Disable" : "Enable"}
+          {enabled ? zh("Disable") : zh("Enable")}
         </Button>
       </div>
     </div>
@@ -480,7 +481,7 @@ function QueueItemRow({
             />
             <div className="flex justify-end gap-1">
               <Button type="button" variant="ghost" size="xs" onClick={() => setOpen(false)}>
-                Cancel
+                {zh("Cancel")}
               </Button>
               <Button
                 type="button"

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import type { ToolProfileWithDetails } from "@paperclipai/shared";
 import { Link } from "@/lib/router";
 import { cn } from "@/lib/utils";
@@ -33,8 +34,8 @@ export function AppsToolsPanel({
             <thead>
               <tr className="border-b border-border bg-muted/40 text-left text-(length:--text-micro) font-semibold uppercase tracking-wide text-muted-foreground">
                 <th className="px-4 py-2.5">App</th>
-                <th className="px-4 py-2.5">Tools</th>
-                <th className="px-4 py-2.5">Status</th>
+                <th className="px-4 py-2.5">{zh("Tools")}</th>
+                <th className="px-4 py-2.5">{zh("Status")}</th>
                 <th className="px-4 py-2.5 text-right" />
               </tr>
             </thead>
@@ -65,7 +66,7 @@ export function AppsToolsPanel({
                             : "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300",
                         )}
                       >
-                        {app.needsAttention ? "Needs attention" : "Healthy"}
+                        {app.needsAttention ? zh("Needs attention") : zh("Healthy")}
                       </span>
                     </td>
                     <td className="px-4 py-3 text-right">

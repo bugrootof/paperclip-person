@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import type { Agent } from "@paperclipai/shared";
 import { AgentIcon } from "@/components/AgentIconPicker";
@@ -70,15 +71,15 @@ function AgentChatPickerResults({ agents, onSelect, onComplete, loading, error, 
       {error ? (
         <div role="alert" className="flex flex-col items-start gap-2 p-4 text-sm">
           <p>Couldn’t load agents. Try again.</p>
-          {onRetry && <Button variant="outline" size="sm" onClick={onRetry}>Retry</Button>}
+          {onRetry && <Button variant="outline" size="sm" onClick={onRetry}>{zh("Retry")}</Button>}
         </div>
       ) : loading ? (
-        <p role="status" className="p-4 text-sm text-muted-foreground">Loading agents…</p>
+        <p role="status" className="p-4 text-sm text-muted-foreground">{zh("Loading agents…")}</p>
       ) : (
         <CommandList>
           <CommandEmpty>
             <div className="flex flex-col items-center gap-2 px-4">
-              <span>{agents.length ? `No agents match “${search}”` : "No agents yet."}</span>
+              <span>{agents.length ? `No agents match “${search}”` : zh("No agents yet.")}</span>
               {agents.length ? <>
                 <span className="text-xs text-muted-foreground">Try another name or role.</span>
                 <Button variant="ghost" size="sm" onClick={() => setSearch("")}>Clear search</Button>
@@ -101,7 +102,7 @@ function AgentChatPickerResults({ agents, onSelect, onComplete, loading, error, 
                   <span className="truncate text-xs text-muted-foreground">{agent.title ?? agent.role}</span>
                 </span>
                 {existingChatAgentIds && <span className="shrink-0 text-xs text-muted-foreground">{existingChatAgentIds.includes(agent.id) ? "Open chat" : "New chat"}</span>}
-                {agent.status === "paused" && <span className="text-xs text-(--status-agent-paused)">Paused</span>}
+                {agent.status === "paused" && <span className="text-xs text-(--status-agent-paused)">{zh("Paused")}</span>}
                 {agent.status === "terminated" && <span className="text-xs text-muted-foreground">Terminated</span>}
                 {agent.status === "pending_approval" && <span className="text-xs text-muted-foreground">Awaiting approval</span>}
               </CommandItem>

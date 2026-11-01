@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { ExternalLink } from "lucide-react";
@@ -19,10 +20,10 @@ export function AggregatorAppManager({ app, connections, initialConnectionId, on
   const connection = connections.find(candidate => candidate.id === connectionId);
   const provider = connection?.config?.sourceTemplateKey;
   return <Dialog open onOpenChange={open => { if (!open) onClose(); }}><DialogContent>
-    <DialogHeader><DialogTitle>Manage {app.name}</DialogTitle>
+    <DialogHeader><DialogTitle>{zh("Manage")} {app.name}</DialogTitle>
       <DialogDescription>Accounts and sign-in are managed in {isAppAggregator(provider) ? AGGREGATOR_NAMES[provider] : "the provider"}.</DialogDescription>
     </DialogHeader>
-    {connections.length > 1 ? <div className="space-y-2"><Label htmlFor="manage-aggregator-gateway">Connection</Label>
+    {connections.length > 1 ? <div className="space-y-2"><Label htmlFor="manage-aggregator-gateway">{zh("Connection")}</Label>
       <select id="manage-aggregator-gateway" className="h-9 w-full rounded-md border border-input bg-background px-3 text-sm" value={connectionId} onChange={event => setConnectionId(event.target.value)}>
         {connections.map(candidate => <option key={candidate.id} value={candidate.id}>{candidate.name}</option>)}
       </select></div> : null}
@@ -50,8 +51,8 @@ function AccountObservations({ app, connection, onClose }: { app: AggregatorAppC
       </div>)}
     </div> : <p className="text-sm text-muted-foreground">{query.data?.discovery.message ?? `No connected ${app.name} accounts.`}</p>}
     <p className="text-xs text-muted-foreground">Via <Link to={`/apps/${connection.id}/permissions`} onClick={onClose} className="underline underline-offset-2">“{connection.name}”</Link></p>
-    <DialogFooter className="sm:justify-between"><Button variant="ghost" onClick={onClose}>Close</Button><div className="flex flex-wrap items-center gap-2">
-      <Button variant="ghost" disabled={!settled || refresh.isPending || query.data?.discovery.availability !== "available"} onClick={() => refresh.mutate()}>Refresh</Button>
+    <DialogFooter className="sm:justify-between"><Button variant="ghost" onClick={onClose}>{zh("Close")}</Button><div className="flex flex-wrap items-center gap-2">
+      <Button variant="ghost" disabled={!settled || refresh.isPending || query.data?.discovery.availability !== "available"} onClick={() => refresh.mutate()}>{zh("Refresh")}</Button>
       {managementUrl ? <Button asChild><a href={managementUrl} target="_blank" rel="noopener noreferrer">Open in {name}<ExternalLink className="size-4" /></a></Button> : null}
     </div></DialogFooter>
   </>;

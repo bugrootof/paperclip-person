@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { TaskVoiceLauncher } from "@/components/voice/TaskVoiceLauncher";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -563,7 +564,7 @@ function ConnectedTaskComposer({
           {binding.externalUrl && (
             <Button asChild size="sm" variant="outline">
               <a href={binding.externalUrl} target="_blank" rel="noreferrer">
-                Open {providerNames[binding.provider]} <ExternalLink />
+                {zh("Open")} {providerNames[binding.provider]} <ExternalLink />
               </a>
             </Button>
           )}
@@ -576,7 +577,7 @@ function ConnectedTaskComposer({
           </Button>
           <Button asChild size="sm" variant="ghost">
             <Link to={`/apps/chat/${binding.endpointId}/conversations`}>
-              Connection
+              {zh("Connection")}
             </Link>
           </Button>
         </div>
@@ -633,7 +634,7 @@ function ConnectedTaskComposer({
               onClick={() => fileInput.current?.click()}
             >
               <Paperclip />
-              {uploading ? "Uploading…" : "Attach file"}
+              {uploading ? zh("Uploading…") : "Attach file"}
             </Button>
             <p className="text-xs text-muted-foreground">
               Files stay on this task until you send them to the channel.

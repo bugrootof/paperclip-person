@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import type {
   IssueBlockerAttention,
   IssueRecoveryAction,
@@ -111,17 +112,17 @@ function SuccessfulRunRetryNowControl({
           {retryNow.isPending ? (
             <span className="inline-flex items-center gap-1.5">
               <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
-              Retrying...
+              {zh("Retrying...")}
             </span>
           ) : success ? (
             <span className="inline-flex items-center gap-1.5">
               <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
-              {retryNow.data?.outcome === "already_promoted" ? "Already promoted" : "Promoted"}
+              {retryNow.data?.outcome === "already_promoted" ? zh("Already promoted") : zh("Promoted")}
             </span>
           ) : (
             <span className="inline-flex items-center gap-1.5">
               <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
-              Retry now
+              {zh("Retry now")}
             </span>
           )}
         </Button>
@@ -169,7 +170,7 @@ function WaitingChipLink({
       </span>
       {running ? (
         <span className="ml-0.5 rounded-full bg-blue-500/15 px-1.5 py-0.5 text-(length:--text-nano) font-medium uppercase tracking-wide text-blue-700 dark:bg-blue-400/20 dark:text-blue-200">
-          running
+          {zh("running")}
         </span>
       ) : null}
     </IssueLinkQuicklook>
@@ -302,7 +303,7 @@ function WaitingOnLiveWorkNotice({
 
           <div className="space-y-1" data-testid="issue-blocked-notice-progress">
             <div className="text-xs font-medium text-blue-800 dark:text-blue-200">
-              {doneCount} of {total} done
+              {doneCount} of {total} {zh("done")}
               {runningCount > 0 ? ` · ${runningCount} running` : null}
             </div>
             <div
@@ -387,7 +388,7 @@ function WaitingOnLiveWorkNotice({
             >
               <span className="inline-flex items-center gap-1 text-xs font-medium text-amber-800 dark:text-amber-200">
                 <Flag className="h-3 w-3" aria-hidden />
-                Blocked by parked work
+                {zh("Blocked by parked work")}
               </span>
               {parkedBlockers.map((blocker) => renderParkedChip(blocker))}
             </div>
@@ -722,7 +723,7 @@ export function IssueBlockedNotice({
                 >
                   <span className="inline-flex items-center gap-1 text-xs font-medium text-amber-800 dark:text-amber-200">
                     <Flag className="h-3 w-3" aria-hidden />
-                    Blocked by parked work
+                    {zh("Blocked by parked work")}
                   </span>
                   {parkedBlockers.map(renderBlockerChip)}
                 </div>

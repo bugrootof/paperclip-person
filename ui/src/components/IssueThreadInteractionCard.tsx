@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { createContext, useContext, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import type { Agent } from "@paperclipai/shared";
 import { AlertTriangle, ArrowUpRight, Bot, Check, CheckCircle2, ChevronDown, ChevronRight, CircleDashed, Clock, ExternalLink, FileText, GitBranch, ImagePlus, KeyRound, Loader2, MessageSquareQuote, MinusCircle, ShieldAlert, ThumbsUp, TriangleAlert, Wrench, X, XCircle } from "lucide-react";
@@ -325,7 +326,7 @@ function planStatusClasses(
       return {
         shell: "border-2 border-violet-500/80 bg-transparent",
         badge: "border-violet-500/60 bg-violet-500/10 text-violet-900 dark:bg-violet-500/15 dark:text-violet-100",
-        label: "In review",
+        label: zh("In review"),
         Icon: FileText,
       };
   }
@@ -501,7 +502,7 @@ function toolActionStatusClasses(state: ToolActionCardState): {
       return {
         shell: "border-2 border-amber-500/70 bg-transparent",
         badge: "border-amber-500/60 bg-amber-500/10 text-amber-900 dark:bg-amber-500/15 dark:text-amber-100",
-        label: "Failed",
+        label: zh("Failed"),
         Icon: XCircle,
       };
     case "declined":
@@ -674,16 +675,16 @@ function TaskTreeNode({
         {hasMetadata ? (
           <div className="mt-2 flex flex-wrap gap-1.5">
             {hasExplicitAssignee ? (
-              <TaskField label="Responsible" value={assigneeLabel} />
+              <TaskField label={zh("Responsible")} value={assigneeLabel} />
             ) : null}
             {node.task.billingCode ? (
               <TaskField label="Billing" value={node.task.billingCode} />
             ) : null}
             {node.task.projectId ? (
-              <TaskField label="Project" value={node.task.projectId} tone="subtle" />
+              <TaskField label={zh("Project")} value={node.task.projectId} tone="subtle" />
             ) : null}
             {labels.map((label) => (
-              <TaskField key={label} label="Label" value={label} tone="subtle" />
+              <TaskField key={label} label={zh("Label")} value={label} tone="subtle" />
             ))}
           </div>
         ) : null}
@@ -940,7 +941,7 @@ function SuggestTasksCard({
                   disabled={!onRejectInteraction || working !== null}
                   onClick={() => setRejecting((current) => !current)}
                 >
-                  Reject
+                  {zh("Reject")}
                 </Button>
                 {selectedCount < totalTasks ? (
                   <Button
@@ -974,7 +975,7 @@ function SuggestTasksCard({
                   {working === "reject" ? (
                     <>
                       <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
-                      Saving...
+                      {zh("Saving...")}
                     </>
                   ) : (
                     "Save rejection"
@@ -1212,7 +1213,7 @@ function AskUserQuestionsCard({
       {!compact ? <div className="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
         <Badge variant="outline" className="border-border/70 bg-background/70 px-2.5 py-1 uppercase tracking-(--tracking-eyebrow) text-foreground/70">
           <MessageSquareQuote className="h-3 w-3" />
-          Ask user questions
+          {zh("Ask user questions")}
         </Badge>
         <span>
           {questions.length === 1
@@ -1364,7 +1365,7 @@ function AskUserQuestionsCard({
                       onClick={() =>
                         toggleOption(question.id, OTHER_ANSWER_ID, question.selectionMode)}
                     >
-                      Other
+                      {zh("Other")}
                     </button>
                     {otherActiveQuestions[question.id] ? (
                       <Textarea
@@ -1836,7 +1837,7 @@ function RequestToolActionCard({
           </Button>
           <div className="inline-flex" role="group" aria-label="Approve request">
             <Button size="sm" variant={variant} className={payload.rememberActionScope ? "rounded-r-none" : undefined} disabled={!onAcceptInteraction || working !== null} onClick={() => void decide("accept")}>
-              {working === "accept" || working === "always" ? <><Loader2 className="h-3.5 w-3.5 animate-spin" />{working === "always" ? "Saving…" : "Approving…"}</> : "Approve & run"}
+              {working === "accept" || working === "always" ? <><Loader2 className="h-3.5 w-3.5 animate-spin" />{working === "always" ? zh("Saving…") : "Approving…"}</> : "Approve & run"}
             </Button>
             {payload.rememberActionScope ? (
               <DropdownMenu>
@@ -1847,7 +1848,7 @@ function RequestToolActionCard({
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem onSelect={() => void decide("always")} title={payload.rememberActionScope} aria-description={payload.rememberActionScope}>
-                    Always allow
+                    {zh("Always allow")}
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
@@ -2335,7 +2336,7 @@ function ConfirmationActionRow({
                   setAttempted(false);
                 }}
               >
-                Cancel
+                {zh("Cancel")}
               </Button>
               <Button
                 size="sm"
@@ -2521,7 +2522,7 @@ function RequestConnectionAuthorizationCard({
               >
                 <Button asChild size="sm" variant="cta" className="w-full sm:w-auto">
                   <a href={href} target="_blank" rel="noreferrer">
-                    Connect {providerName}
+                    {zh("Connect")} {providerName}
                     <ArrowUpRight className="ml-1.5 h-3.5 w-3.5" />
                   </a>
                 </Button>
@@ -2535,7 +2536,7 @@ function RequestConnectionAuthorizationCard({
                   {working ? (
                     <>
                       <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
-                      Saving…
+                      {zh("Saving…")}
                     </>
                   ) : (
                     "Not now"
@@ -2738,7 +2739,7 @@ function RequestConfirmationCard({
             compact ? <details className="group/confirmation-details">
               <summary className="flex cursor-pointer list-none items-center gap-1 rounded-sm text-xs font-medium text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
                 <ChevronRight aria-hidden className="h-3.5 w-3.5 transition-transform group-open/confirmation-details:rotate-90 motion-reduce:transition-none" />
-                Details
+                {zh("Details")}
               </summary>
               <div className="mt-2 rounded-sm bg-muted/40 px-2.5 py-2 text-sm text-muted-foreground">
                 <MarkdownBody externalReferences={externalReferences}>{interaction.payload.detailsMarkdown}</MarkdownBody>
@@ -2824,7 +2825,7 @@ function RequestConfirmationCard({
                   {uploading ? (
                     <>
                       <Loader2 className="mr-2 h-3.5 w-3.5 animate-spin" />
-                      Uploading...
+                      {zh("Uploading...")}
                     </>
                   ) : (
                     <>
@@ -2897,7 +2898,7 @@ function RequestCheckboxConfirmationResolution({
                 )}
                 aria-expanded={expanded}
               >
-                {expanded ? "Show less" : `+${hiddenCount} more`}
+                {expanded ? zh("Show less") : `+${hiddenCount} more`}
               </button>
             ) : null}
           </div>
@@ -3147,7 +3148,7 @@ function RequestCheckboxConfirmationCard({
               disabled={working !== null || selectedCount === 0}
               onClick={handleClearSelection}
             >
-              Clear selection
+              {zh("Clear selection")}
             </Button>
           </div>
         </div>
@@ -3248,7 +3249,7 @@ function ItemVerdictDeepLink({ item, interaction }: { item: RequestItemVerdictsI
     "inline-flex items-center gap-1 text-xs font-medium text-primary hover:underline focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-1";
   const label = (
     <>
-      Open
+      {zh("Open")}
       {isInternal ? <ArrowUpRight className="h-3 w-3" aria-hidden /> : <ExternalLink className="h-3 w-3" aria-hidden />}
     </>
   );
@@ -3595,7 +3596,7 @@ function RequestItemVerdictsCard({
         <div className="flex flex-wrap items-center gap-2 rounded-sm border border-emerald-500/50 bg-emerald-500/10 px-3 py-2 text-sm text-emerald-900 dark:text-emerald-100">
           <CheckCircle2 className="h-4 w-4" aria-hidden />
           <span className="font-medium">
-            {progress.decided} decided · {progress.approved} approved · {progress.rejected} rejected
+            {progress.decided} decided · {progress.approved} approved · {progress.rejected} {zh("rejected")}
             {progress.deferred > 0 ? ` · ${progress.deferred} deferred` : ""}
           </span>
         </div>
@@ -3909,7 +3910,7 @@ export function IssueThreadInteractionCard({
                   <span>{statusText}</span>
                 ) : (
                   <>
-                    {isPlan ? "Plan" : interactionKindLabel(interaction.kind)}
+                    {isPlan ? zh("Plan") : interactionKindLabel(interaction.kind)}
                     <span className="text-current/60">/</span>
                     {statusText}
                   </>
@@ -3981,7 +3982,7 @@ export function IssueThreadInteractionCard({
               </div>
             </TooltipTrigger>
             <TooltipContent side="bottom" className="text-xs">
-              Created {formatDateTime(interaction.createdAt)}
+              {zh("Created")} {formatDateTime(interaction.createdAt)}
             </TooltipContent>
           </Tooltip>
         </div>}
@@ -4127,7 +4128,7 @@ function ResolvedByAgentChip() {
           data-testid="interaction-resolved-by-agent-chip"
         >
           <Bot className="h-3 w-3" />
-          Agent
+          {zh("Agent")}
         </Badge>
       </TooltipTrigger>
       <TooltipContent side="bottom" className="max-w-xs text-xs">

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AlertCircle, Check, FileText, LoaderCircle } from 'lucide-react';
 import type { SkillSourceCandidate, SkillSourceScanProgress } from '@paperclipai/shared';
 import { formatBytes } from '@/lib/issue-output';
@@ -67,7 +68,7 @@ export function SkillImportProgress({ repository, progress, found = [], importin
       <div className="flex min-w-0 items-center gap-2 border-t border-border px-3 py-2 text-xs text-muted-foreground">
         <LoaderCircle className="size-3 shrink-0 motion-safe:animate-spin" aria-hidden />
         <span className="min-w-0 flex-1 truncate" title={progress?.currentPath ?? undefined}>{importing ? 'Saving complete packages, including scripts and references' : progress?.currentPath ?? 'Waiting for repository contents…'}</span>
-        {checking && progress?.totalFiles != null && <span className="shrink-0 tabular-nums">{progress.checkedFiles}/{progress.totalFiles} files</span>}
+        {checking && progress?.totalFiles != null && <span className="shrink-0 tabular-nums">{progress.checkedFiles}/{progress.totalFiles} {zh("files")}</span>}
       </div>
     </div>
     <p className="text-xs text-muted-foreground">{importing ? 'This may take a moment for larger packages.' : 'You’ll choose what to import after every package has been checked.'}</p>

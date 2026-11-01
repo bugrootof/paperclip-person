@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import { useEffect, useMemo, useState } from "react";
 import {
@@ -161,10 +162,10 @@ export function OverviewSection({
             value={editDraft.assigneeAgentId}
             options={assigneeOptions}
             recentOptionIds={recentAssigneeIds}
-            placeholder="Responsible"
-            noneLabel="No responsible"
-            searchPlaceholder="Search responsible..."
-            emptyMessage="No responsible found."
+            placeholder={zh("Responsible")}
+            noneLabel={zh("No responsible")}
+            searchPlaceholder={zh("Search responsible...")}
+            emptyMessage={zh("No responsible found.")}
             onChange={(assigneeAgentId) =>
               setEditDraft((current) => ({ ...current, assigneeAgentId }))
             }
@@ -186,7 +187,7 @@ export function OverviewSection({
                   <span className="truncate">{option.label}</span>
                 )
               ) : (
-                <span className="text-muted-foreground">Responsible</span>
+                <span className="text-muted-foreground">{zh("Responsible")}</span>
               )
             }
             renderOption={(option) => {
@@ -202,16 +203,16 @@ export function OverviewSection({
               );
             }}
           />
-          <span>in</span>
+          <span>{zh("in")}</span>
           <InlineEntitySelector
             ref={projectSelectorRef}
             value={editDraft.projectId}
             options={projectOptions}
             recentOptionIds={recentProjectIds}
-            placeholder="Project"
-            noneLabel="No project"
-            searchPlaceholder="Search projects..."
-            emptyMessage="No projects found."
+            placeholder={zh("Project")}
+            noneLabel={zh("No project")}
+            searchPlaceholder={zh("Search projects...")}
+            emptyMessage={zh("No projects found.")}
             onChange={(projectId) => setEditDraft((current) => ({ ...current, projectId }))}
             onConfirm={() => descriptionEditorRef.current?.focus()}
             renderTriggerValue={(option) =>
@@ -224,7 +225,7 @@ export function OverviewSection({
                   <span className="truncate">{option.label}</span>
                 </>
               ) : (
-                <span className="text-muted-foreground">Project</span>
+                <span className="text-muted-foreground">{zh("Project")}</span>
               )
             }
             renderOption={(option) => {
@@ -281,7 +282,7 @@ export function OverviewSection({
               ref={descriptionEditorRef}
               value={editDraft.description}
               onChange={(description) => setEditDraft((current) => ({ ...current, description }))}
-              placeholder="Add instructions..."
+              placeholder={zh("Add instructions...")}
               bordered={false}
               contentClassName="min-h-(--sz-120px) text-sm leading-7"
               mentions={mentionOptions}
@@ -297,7 +298,7 @@ export function OverviewSection({
             ref={descriptionEditorRef}
             value={editDraft.description}
             onChange={(description) => setEditDraft((current) => ({ ...current, description }))}
-            placeholder="Add instructions..."
+            placeholder={zh("Add instructions...")}
             bordered={false}
             contentClassName="min-h-(--sz-120px) text-sm leading-7"
             mentions={mentionOptions}
@@ -333,7 +334,7 @@ export function OverviewSection({
         />
         <SummaryCard
           icon={KeyRound}
-          label="Secrets"
+          label={zh("Secrets")}
           value={boundSecrets === 0 ? "None" : `${boundSecrets} bound`}
           hint="Manage bound secrets"
           to={() => navigateToSection("secrets")}
@@ -341,7 +342,7 @@ export function OverviewSection({
         />
         <SummaryCard
           icon={Play}
-          label="Last run"
+          label={zh("Last run")}
           value={lastRun ? lastRun.status.replaceAll("_", " ") : "No runs"}
           hint={lastRun ? timeAgo(lastRun.triggeredAt) : "Trigger a run"}
           to={() => navigateToSection("runs")}
@@ -452,7 +453,7 @@ export function TriggersSection() {
           {addOpen ? (
             <>
               <X className="mr-1.5 h-3.5 w-3.5" />
-              Cancel
+              {zh("Cancel")}
             </>
           ) : (
             <>
@@ -469,7 +470,7 @@ export function TriggersSection() {
         <p className="text-sm font-medium">Add trigger</p>
         <div className="grid gap-3 md:grid-cols-2">
           <div className="space-y-1.5">
-            <Label className="text-xs">Kind</Label>
+            <Label className="text-xs">{zh("Kind")}</Label>
             <Select
               value={newTrigger.kind}
               onValueChange={(kind) => setNewTrigger((current) => ({ ...current, kind }))}
@@ -488,7 +489,7 @@ export function TriggersSection() {
           </div>
           {newTrigger.kind === "schedule" && (
             <div className="space-y-1.5 md:col-span-2">
-              <Label className="text-xs">Schedule</Label>
+              <Label className="text-xs">{zh("Schedule")}</Label>
               <ScheduleEditor
                 value={newTrigger.cronExpression}
                 onChange={(cronExpression) =>
@@ -539,7 +540,7 @@ export function TriggersSection() {
         </div>
         <div className="flex items-center justify-end gap-2">
           <Button size="sm" variant="ghost" onClick={() => setAddOpen(false)}>
-            Cancel
+            {zh("Cancel")}
           </Button>
           <Button
             size="sm"
@@ -579,13 +580,13 @@ export function TriggersSection() {
                 <div className="flex items-center gap-2">
                   <Input aria-label="New webhook secret" value={entry.webhookSecret} readOnly className="flex-1" />
                   <Button variant="outline" size="sm" onClick={() => copySecretValue("Webhook secret", entry.webhookSecret)}>
-                    Secret
+                    {zh("Secret")}
                   </Button>
                 </div>
               </div>
             ))}
           </div>
-          <Button variant="outline" size="sm" onClick={() => setSecretMessage(null)}>Done</Button>
+          <Button variant="outline" size="sm" onClick={() => setSecretMessage(null)}>{zh("Done")}</Button>
         </div>
       ) : null}
 
@@ -705,7 +706,7 @@ export function DeliverySection() {
     <div className="space-y-6">
       <div className="space-y-3">
         <p className="text-xs font-medium uppercase tracking-(--tracking-caps) text-muted-foreground">
-          Concurrency
+          {zh("Concurrency")}
         </p>
         <RadioCardGroup
           ariaLabel="Concurrency policy"
@@ -718,7 +719,7 @@ export function DeliverySection() {
       </div>
       <div className="space-y-3">
         <p className="text-xs font-medium uppercase tracking-(--tracking-caps) text-muted-foreground">
-          Catch-up
+          {zh("Catch-up")}
         </p>
         <RadioCardGroup
           ariaLabel="Catch-up policy"

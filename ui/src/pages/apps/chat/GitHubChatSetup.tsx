@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { ExternalLink, Loader2 } from "lucide-react";
@@ -187,7 +188,7 @@ export function GitHubChatSetup() {
   }, [connected, bot, selectedAgent, state, queryClient, navigate]);
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Connectors", href: "/apps" },
+      { label: zh("Connectors"), href: "/apps" },
       { label: "GitHub Code Review Bot" },
     ]);
     return () => setBreadcrumbs([]);
@@ -280,7 +281,7 @@ export function GitHubChatSetup() {
             Loading your draft…
           </p>
         )}
-        {footer(current.error ? "Try again" : undefined, async () => {
+        {footer(current.error ? zh("Try again") : undefined, async () => {
           await current.refetch();
         })}
       </div>
@@ -303,7 +304,7 @@ export function GitHubChatSetup() {
           ? "Choose agent"
           : identityOnly || state?.state === "identity"
               ? "Connect your account"
-              : reconnect && existing ? "Reconnect GitHub" : "Connect GitHub"}
+              : reconnect && existing ? "Reconnect GitHub" : zh("Connect GitHub")}
       </h1>
       {(error || (!identityOnly && !existing && progress.error) || accounts.error) && (
         <p role="alert" className="text-sm text-destructive">
@@ -622,7 +623,7 @@ export function GitHubChatSetup() {
           </div>
           {accountChoice === "organization" && (
             <div className="space-y-2">
-              <Label htmlFor="github-owner-login">Organization</Label>
+              <Label htmlFor="github-owner-login">{zh("Organization")}</Label>
               <Input
                 id="github-owner-login"
                 disabled={busy || !!state?.registration}

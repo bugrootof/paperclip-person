@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { configFieldsForSection } from "../config-sections";
 import { useEffect, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
@@ -259,7 +260,7 @@ export function OpenClawGatewayConfigFields({
         placeholder="Gateway shared password"
       />
 
-      <Field label="Role">
+      <Field label={zh("Role")}>
         <DraftInput
           value={
             isCreate

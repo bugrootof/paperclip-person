@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useState, type ComponentProps, type ReactNode } from "react";
 import { ChevronRight } from "lucide-react";
 import { Identity } from "@/components/Identity";
@@ -178,7 +179,7 @@ export function MemberMultiSelect({
                 );
               })}
               {filteredMembers.length === 0 ? (
-                <div className="px-3 py-4 text-sm text-muted-foreground">No matches.</div>
+                <div className="px-3 py-4 text-sm text-muted-foreground">{zh("No matches.")}</div>
               ) : null}
             </div>
           )}
@@ -189,7 +190,7 @@ export function MemberMultiSelect({
             <div className="flex items-center gap-2">
               {staged ? (
                 <Button type="button" variant="ghost" size="sm" onClick={() => setOpen(false)} disabled={pending}>
-                  Cancel
+                  {zh("Cancel")}
                 </Button>
               ) : null}
               <Button
@@ -201,7 +202,7 @@ export function MemberMultiSelect({
                 }}
                 disabled={pending}
               >
-                {staged ? (pending ? "Saving…" : "Save") : "Done"}
+                {staged ? (pending ? zh("Saving…") : zh("Save")) : zh("Done")}
               </Button>
             </div>
           </div>
@@ -216,7 +217,7 @@ export function MemberMultiSelect({
           ))}
           {selectedMembers.length > 3 ? (
             <p className="px-1.5 pt-0.5 text-xs text-muted-foreground">
-              and {selectedMembers.length - 3} more
+              {zh("and")} {selectedMembers.length - 3} {zh("more")}
             </p>
           ) : null}
         </div>

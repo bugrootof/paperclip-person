@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -391,7 +392,7 @@ export function ConnectionIntentInteractionBody({
                     variant="outline"
                     onClick={() => setupQuery.refetch()}
                   >
-                    Try again
+                    {zh("Try again")}
                   </Button>
                 </div>
               ) : setupProps ? (
@@ -534,8 +535,8 @@ export function ConnectionIntentInteractionBody({
                   {authorizing
                     ? "Continue setup"
                     : needsRetry
-                      ? "Try again"
-                      : setupQuery.data?.existingConnections.length ? "Connect / Use existing" : "Connect"}
+                      ? zh("Try again")
+                      : setupQuery.data?.existingConnections.length ? "Connect / Use existing" : zh("Connect")}
                 </Button>
               </DialogTrigger>
               <DialogContent
@@ -548,7 +549,7 @@ export function ConnectionIntentInteractionBody({
               >
                 <DialogHeader className="sr-only">
                   <DialogTitle>
-                    Connect {interaction.payload.serviceName}
+                    {zh("Connect")} {interaction.payload.serviceName}
                   </DialogTitle>
                   <DialogDescription>
                     Complete connection setup without leaving this task.

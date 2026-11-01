@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo } from "react";
 import { Link, Navigate, useParams } from "@/lib/router";
 import { useQuery } from "@tanstack/react-query";
@@ -119,7 +120,7 @@ export function PluginPage() {
       return;
     }
     setBreadcrumbs([
-      { label: "Plugins", href: "/company/settings/instance/plugins" },
+      { label: zh("Plugins"), href: "/company/settings/instance/plugins" },
       { label: pageSlot.pluginDisplayName },
     ]);
   }, [pageSlot, pluginRouteSplat, setBreadcrumbs, routeSidebarActive]);
@@ -136,7 +137,7 @@ export function PluginPage() {
   }
 
   if (!contributions) {
-    return <div className="text-sm text-muted-foreground">Loading…</div>;
+    return <div className="text-sm text-muted-foreground">{zh("Loading…")}</div>;
   }
 
   if (!pluginId && pluginRoutePath) {
@@ -170,7 +171,7 @@ export function PluginPage() {
           <Button variant="ghost" size="sm" asChild>
             <Link to={companyPrefix ? `/${companyPrefix}/dashboard` : "/dashboard"}>
               <ArrowLeft className="h-4 w-4 mr-1" />
-              Back
+              {zh("Back")}
             </Link>
           </Button>
         </div>

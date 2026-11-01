@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo } from "react";
 import { useParams } from "@/lib/router";
 import { useBreadcrumbs } from "@/context/BreadcrumbContext";
@@ -42,7 +43,7 @@ export function CompanySettingsPluginPage() {
   useEffect(() => {
     if (!pageSlot) return;
     setBreadcrumbs([
-      { label: "Settings", href: "/company/settings" },
+      { label: zh("Settings"), href: "/company/settings" },
       { label: pageSlot.displayName },
     ]);
   }, [pageSlot, setBreadcrumbs]);
@@ -55,7 +56,7 @@ export function CompanySettingsPluginPage() {
   }
 
   if (!settingsRoutePath || isLoading) {
-    return <div className="text-sm text-muted-foreground">Loading...</div>;
+    return <div className="text-sm text-muted-foreground">{zh("Loading...")}</div>;
   }
 
   // Only a real failure reaches here; an outage keeps `isLoading` true above.

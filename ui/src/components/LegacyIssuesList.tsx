@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { saveTaskCollectionPreferences } from "../lib/task-collection-preferences";
 import { useShowAgentCreatedTasks } from "../hooks/useShowAgentCreatedTasks";
 import { useIssueHierarchyContext } from "../hooks/useIssueHierarchyContext";
@@ -541,9 +542,9 @@ function IssueSearchInput({
             e.currentTarget.blur();
           }
         }}
-        placeholder="Search tasks..."
+        placeholder={zh("Search tasks...")}
         className="pl-7 text-xs sm:text-sm"
-        aria-label="Search tasks"
+        aria-label={zh("Search tasks")}
         data-page-search-target="true"
       />
     </div>
@@ -589,13 +590,13 @@ function SubIssueProgressSummaryStrip({
         <div className="min-w-0 flex-1 space-y-2">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
             <span className="font-medium text-foreground">
-              {summary.doneCount}/{summary.totalCount} done
+              {summary.doneCount}/{summary.totalCount} {zh("done")}
             </span>
             <span className="text-muted-foreground">
               {summary.inProgressCount} in progress
             </span>
             <span className="text-muted-foreground">
-              {summary.blockedCount} blocked
+              {summary.blockedCount} {zh("blocked")}
             </span>
             {showCostSummary && (
               <>
@@ -617,7 +618,7 @@ function SubIssueProgressSummaryStrip({
           </div>
           <div
             role="progressbar"
-            aria-label="Sub-tasks completion progress"
+            aria-label={zh("Sub-tasks completion progress")}
             aria-valuemin={0}
             aria-valuenow={summary.doneCount}
             aria-valuemax={summary.totalCount}
@@ -639,7 +640,7 @@ function SubIssueProgressSummaryStrip({
           {target && targetIssue ? (
             <>
               <div className="text-xs font-medium text-muted-foreground">
-                {target.kind === "next" ? "Next up" : "Waiting on blockers"}
+                {target.kind === "next" ? zh("Next up") : zh("Waiting on blockers")}
               </div>
               <Link
                 to={createIssueDetailPath(targetPathId)}
@@ -654,11 +655,11 @@ function SubIssueProgressSummaryStrip({
               </Link>
             </>
           ) : summary.totalCount === 0 ? (
-            <div className="text-sm font-medium text-foreground">No active sub-tasks</div>
+            <div className="text-sm font-medium text-foreground">{zh("No active sub-tasks")}</div>
           ) : summary.doneCount === summary.totalCount ? (
-            <div className="text-sm font-medium text-foreground">All sub-tasks done</div>
+            <div className="text-sm font-medium text-foreground">{zh("All sub-tasks done")}</div>
           ) : (
-            <div className="text-sm font-medium text-foreground">No actionable sub-tasks</div>
+            <div className="text-sm font-medium text-foreground">{zh("No actionable sub-tasks")}</div>
           )}
         </div>
       </div>
@@ -1701,12 +1702,12 @@ export function IssuesList({
 
         <div className="flex items-center gap-0.5 sm:gap-1 shrink-0">
           {/* View mode toggle */}
-          <div className="flex items-center border border-border rounded-md overflow-hidden mr-1" role="group" aria-label="View mode">
+          <div className="flex items-center border border-border rounded-md overflow-hidden mr-1" role="group" aria-label={zh("View mode")}>
             <button
               className={`flex h-8 w-8 items-center justify-center transition-colors ${viewState.viewMode === "list" ? "bg-accent text-foreground" : "text-muted-foreground hover:text-foreground"}`}
               onClick={() => updateView({ viewMode: "list" })}
-              title="List view"
-              aria-label="List view"
+              title={zh("List view")}
+              aria-label={zh("List view")}
               aria-pressed={viewState.viewMode === "list"}
             >
               <List className="h-3.5 w-3.5" />
@@ -1714,8 +1715,8 @@ export function IssuesList({
             <button
               className={`flex h-8 w-8 items-center justify-center transition-colors ${viewState.viewMode === "board" ? "bg-accent text-foreground" : "text-muted-foreground hover:text-foreground"}`}
               onClick={() => updateView({ viewMode: "board" })}
-              title="Board view"
-              aria-label="Board view"
+              title={zh("Board view")}
+              aria-label={zh("Board view")}
               aria-pressed={viewState.viewMode === "board"}
             >
               <SquareKanban className="h-3.5 w-3.5" />
@@ -1729,7 +1730,7 @@ export function IssuesList({
               size="icon"
               className={cn("hidden h-8 w-8 shrink-0 sm:inline-flex", viewState.nestingEnabled && "bg-accent")}
               onClick={() => updateView({ nestingEnabled: !viewState.nestingEnabled })}
-              title={viewState.nestingEnabled ? "Disable parent-child nesting" : "Enable parent-child nesting"}
+              title={viewState.nestingEnabled ? zh("Disable parent-child nesting") : zh("Enable parent-child nesting")}
             >
               <ListTree className="h-3.5 w-3.5" />
             </Button>
@@ -1743,7 +1744,7 @@ export function IssuesList({
                 size="icon"
                 className={cn("h-8 w-8 shrink-0", boardCompactCards && "bg-accent")}
                 onClick={() => updateView({ boardCardDensity: boardCompactCards ? "comfortable" : "compact" })}
-                title={boardCompactCards ? "Use comfortable cards" : "Use compact cards"}
+                title={boardCompactCards ? zh("Use comfortable cards") : zh("Use compact cards")}
               >
                 <ChevronsDownUp className="h-3.5 w-3.5" />
               </Button>
@@ -1753,7 +1754,7 @@ export function IssuesList({
                 size="icon"
                 className={cn("h-8 w-8 shrink-0", boardCollapsedStatuses.length > 0 && "bg-accent")}
                 onClick={() => updateView({ boardColdLaneMode: boardCollapsedStatuses.length > 0 ? "expanded" : "collapsed" })}
-                title={boardCollapsedStatuses.length > 0 ? "Expand cold lanes" : "Collapse cold lanes"}
+                title={boardCollapsedStatuses.length > 0 ? zh("Expand cold lanes") : zh("Collapse cold lanes")}
               >
                 <PanelTopClose className="h-3.5 w-3.5" />
               </Button>
@@ -1767,7 +1768,7 @@ export function IssuesList({
                       "h-8 shrink-0 gap-1.5 px-2",
                       viewState.boardColumnPageSize !== KANBAN_COLUMN_DEFAULT_PAGE_SIZE && "bg-accent",
                     )}
-                    title="Cards per column"
+                    title={zh("Cards per column")}
                   >
                     <ListCollapse className="h-3.5 w-3.5" />
                     <span className="min-w-4 text-xs tabular-nums">{viewState.boardColumnPageSize}</span>
@@ -1805,7 +1806,7 @@ export function IssuesList({
                   boardColumnPageSize: KANBAN_COLUMN_DEFAULT_PAGE_SIZE,
                 })}
                 disabled={!boardDensityCustomized}
-                title="Reset board density"
+                title={zh("Reset board density")}
               >
                 <RotateCcw className="h-3.5 w-3.5" />
               </Button>
@@ -1817,7 +1818,7 @@ export function IssuesList({
             visibleColumnSet={visibleIssueColumnSet}
             onToggleColumn={toggleIssueColumn}
             onResetColumns={() => setIssueColumns(DEFAULT_INBOX_ISSUE_COLUMNS)}
-            title="Choose which task columns stay visible"
+            title={zh("Choose which task columns stay visible")}
             iconOnly
           />
 
@@ -1841,7 +1842,7 @@ export function IssuesList({
           {viewState.viewMode === "list" && (
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" size="icon" className="h-8 w-8 shrink-0" title="Sort">
+                <Button variant="outline" size="icon" className="h-8 w-8 shrink-0" title={zh("Sort")}>
                   <ArrowUpDown className="h-3.5 w-3.5" />
                 </Button>
               </PopoverTrigger>
@@ -1888,7 +1889,7 @@ export function IssuesList({
           {viewState.viewMode === "list" && (
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" size="icon" className="h-8 w-8 shrink-0" title="Group">
+                <Button variant="outline" size="icon" className="h-8 w-8 shrink-0" title={zh("Group")}>
                   <Layers className="h-3.5 w-3.5" />
                 </Button>
               </PopoverTrigger>
@@ -1936,11 +1937,11 @@ export function IssuesList({
           Some board columns are showing up to {ISSUE_BOARD_COLUMN_RESULT_LIMIT} tasks. Refine filters or search to reveal the rest.
         </p>
       )}
-      {hierarchy.error ? <p className="text-sm text-destructive">Failed to load task hierarchy: {hierarchy.error.message}</p> : null}
+      {hierarchy.error ? <p className="text-sm text-destructive">{zh("Failed to load task hierarchy:")} {hierarchy.error.message}</p> : null}
       {!isLoading && !externalObjectFilterLoading && visibleListRowCount === 0 && viewState.viewMode === "list" && (
         <EmptyState
           icon={CircleDot}
-          message="No tasks match the current filters or search."
+          message={zh("No tasks match the current filters or search.")}
           action={createActionLabel}
           onAction={() => openCreateIssueDialog()}
         />
@@ -2134,18 +2135,18 @@ export function IssuesList({
                           <>
                             {hasChildren && !isExpanded ? (
                               <span className="ml-1.5 text-xs text-muted-foreground">
-                                ({totalDescendants} sub-task{totalDescendants !== 1 ? "s" : ""})
+                                ({totalDescendants} {zh("sub-task")}{totalDescendants !== 1 ? "s" : ""})
                               </span>
                             ) : null}
                             {issueBadge ? (
                               issueBadge === "Paused" ? (
                                 <Badge variant="ghost"
                                   className={cn("ml-1.5 px-1.5 text-(length:--text-nano)", statusBadge.paused)}
-                                  aria-label="Paused"
-                                  title="Paused"
+                                  aria-label={zh("Paused")}
+                                  title={zh("Paused")}
                                 >
                                   <CircleSlash2 className="h-3 w-3" />
-                                  Paused
+                                  {zh("Paused")}
                                 </Badge>
                               ) : (
                                 <Badge variant="outline" className="ml-1.5 border-amber-500/40 bg-amber-500/10 px-1.5 text-(length:--text-nano) text-amber-700 dark:text-amber-300">
@@ -2156,11 +2157,11 @@ export function IssuesList({
                             {isSuccessfulRunHandoffRequired(issue) ? (
                               <Badge variant="outline"
                                 className="ml-1.5 border-amber-400/45 bg-amber-50/60 px-1.5 text-(length:--text-nano) text-amber-700 dark:border-amber-300/35 dark:bg-amber-400/10 dark:text-amber-300"
-                                aria-label="Needs next step"
-                                title="This task needs a next step"
+                                aria-label={zh("Needs next step")}
+                                title={zh("This task needs a next step")}
                               >
                                 <CircleDot className="h-3 w-3" />
-                                Needs next step
+                                {zh("Needs next step")}
                               </Badge>
                             ) : null}
                           </>
@@ -2260,7 +2261,7 @@ export function IssuesList({
                                           <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-dashed border-muted-foreground/35 bg-muted/30">
                                             <User className="h-3.5 w-3.5" />
                                           </span>
-                                          Assignee
+                                          {zh("Assignee")}
                                         </span>
                                       )}
                                     </button>
@@ -2273,7 +2274,7 @@ export function IssuesList({
                                   >
                                     <input
                                       className="mb-1 w-full border-b border-border bg-transparent px-2 py-1.5 text-xs outline-none placeholder:text-muted-foreground/50"
-                                      placeholder="Search responsible..."
+                                      placeholder={zh("Search responsible...")}
                                       value={assigneeSearch}
                                       onChange={(e) => setAssigneeSearch(e.target.value)}
                                       autoFocus
@@ -2290,7 +2291,7 @@ export function IssuesList({
                                           assignIssue(issue.id, null, null);
                                         }}
                                       >
-                                        No responsible
+                                        {zh("No responsible")}
                                       </button>
                                       {currentUserId && (
                                         <button
@@ -2305,7 +2306,7 @@ export function IssuesList({
                                           }}
                                         >
                                           <User className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
-                                          <span>Me</span>
+                                          <span>{zh("Me")}</span>
                                         </button>
                                       )}
                                       {(agents ?? [])
@@ -2384,10 +2385,10 @@ export function IssuesList({
             <div className="py-2" data-testid="issues-load-more-sentinel">
               <p className="text-xs text-muted-foreground">
                 {isLoadingMoreIssues || (hierarchyEnabled && hierarchy.isFetching)
-                  ? "Loading more tasks..."
+                  ? zh("Loading more tasks...")
                   : remainingIssueRowCount > 0
                     ? `Rendering ${Math.min(renderedIssueRowLimit, visibleListRowCount)} of ${visibleListRowCount} tasks`
-                    : "Scroll to load more tasks"}
+                    : zh("Scroll to load more tasks")}
               </p>
             </div>
           )}

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { QueryClient, QueryKey } from "@tanstack/react-query";
@@ -1034,18 +1035,18 @@ function AccountIssueDocumentsSection({
           <Button variant="outline" size="sm" onClick={beginNewDocument} className="shrink-0">
             <Plus className="mr-1.5 h-3.5 w-3.5" />
             <span className="hidden sm:inline">New document</span>
-            <span className="sm:hidden">New</span>
+            <span className="sm:hidden">{zh("New")}</span>
           </Button>
         </div>
       ) : (
         <div className="flex flex-wrap items-center gap-2 min-w-0">
-          <h3 className="w-full text-sm font-medium text-muted-foreground shrink-0 sm:w-auto">Documents</h3>
+          <h3 className="w-full text-sm font-medium text-muted-foreground shrink-0 sm:w-auto">{zh("Documents")}</h3>
           <div className="flex flex-wrap items-center gap-2 min-w-0 sm:ml-auto">
             {extraActions}
             <Button variant="outline" size="sm" onClick={beginNewDocument} className="shrink-0">
               <Plus className="mr-1.5 h-3.5 w-3.5" />
               <span className="hidden sm:inline">New document</span>
-              <span className="sm:hidden">New</span>
+              <span className="sm:hidden">{zh("New")}</span>
             </Button>
           </div>
         </div>
@@ -1095,14 +1096,14 @@ function AccountIssueDocumentsSection({
           <div className="flex items-center justify-end gap-2">
             <Button variant="outline" size="sm" onClick={cancelDraft}>
               <X className="mr-1.5 h-3.5 w-3.5" />
-              Cancel
+              {zh("Cancel")}
             </Button>
             <Button
               size="sm"
               onClick={() => void commitDraft(draft, { clearAfterSave: false, trackAutosave: false })}
               disabled={upsertDocument.isPending}
             >
-              {upsertDocument.isPending ? "Saving..." : "Create document"}
+              {upsertDocument.isPending ? zh("Saving...") : "Create document"}
             </Button>
           </div>
         </div>
@@ -1230,7 +1231,7 @@ function AccountIssueDocumentsSection({
                         "text-muted-foreground transition-colors",
                         copiedDocumentKey === doc.key && "text-foreground",
                       )}
-                      title={copiedDocumentKey === doc.key ? "Copied" : "Copy document"}
+                      title={copiedDocumentKey === doc.key ? zh("Copied") : "Copy document"}
                       onClick={() => void copyDocumentBody(doc.key, displayedBody)}
                     >
                       {copiedDocumentKey === doc.key ? (
@@ -1267,7 +1268,7 @@ function AccountIssueDocumentsSection({
                         {doc.latestRevisionNumber > 1 ? (
                           <DropdownMenuItem onClick={() => setDiffViewKey(doc.key)}>
                             <Diff className="h-3.5 w-3.5" />
-                            View diff
+                            {zh("View diff")}
                           </DropdownMenuItem>
                         ) : null}
                         {canDeleteDocuments && !isLocked ? <DropdownMenuSeparator /> : null}
@@ -1388,7 +1389,7 @@ function AccountIssueDocumentsSection({
                             onClick={() => void overwriteDocumentFromDraft(doc.key)}
                             disabled={upsertDocument.isPending}
                           >
-                            {upsertDocument.isPending ? "Saving..." : "Overwrite remote"}
+                            {upsertDocument.isPending ? zh("Saving...") : "Overwrite remote"}
                           </Button>
                         </div>
                       </div>
@@ -1397,7 +1398,7 @@ function AccountIssueDocumentsSection({
                           <div className="mb-2 flex items-center gap-2 text-(length:--text-micro) text-muted-foreground">
                             <span>Remote revision {activeConflict.serverDocument.latestRevisionNumber}</span>
                             <span>•</span>
-                            <span>updated {relativeTime(activeConflict.serverDocument.updatedAt)}</span>
+                            <span>{zh("updated")} {relativeTime(activeConflict.serverDocument.updatedAt)}</span>
                           </div>
                           {!isPlanKey(doc.key) && activeConflict.serverDocument.title ? (
                             <p className="mb-2 text-sm font-medium">{activeConflict.serverDocument.title}</p>
@@ -1524,7 +1525,7 @@ function AccountIssueDocumentsSection({
                       onClick={() => setConfirmDeleteKey(null)}
                       disabled={deleteDocument.isPending}
                     >
-                      Cancel
+                      {zh("Cancel")}
                     </Button>
                     <Button
                       variant="destructive"
@@ -1532,7 +1533,7 @@ function AccountIssueDocumentsSection({
                       onClick={() => deleteDocument.mutate(doc.key)}
                       disabled={deleteDocument.isPending}
                     >
-                      {deleteDocument.isPending ? "Deleting..." : "Delete"}
+                      {deleteDocument.isPending ? zh("Deleting...") : zh("Delete")}
                     </Button>
                   </div>
                 </div>

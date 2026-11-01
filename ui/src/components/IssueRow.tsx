@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { requiresExecutionReconciliation } from "@paperclipai/shared";
 import { useState, type CSSProperties, type ReactNode } from "react";
 import type { ExternalObjectSummary, Issue, IssueRecoveryAction } from "@paperclipai/shared";
@@ -122,10 +123,10 @@ export function InboxArchiveButton({
         "inline-flex shrink-0 items-center gap-1.5 rounded-md px-2 text-xs font-medium text-muted-foreground opacity-0 transition-opacity hover:bg-accent hover:text-foreground group-hover:opacity-100 focus-visible:opacity-100 disabled:pointer-events-none disabled:opacity-30",
         compact ? "h-5 py-0" : "py-1",
       )}
-      aria-label="Archive"
+      aria-label={zh("Archive")}
     >
       <Archive className="h-3.5 w-3.5" />
-      Archive
+      {zh("Archive")}
     </button>
   );
 }
@@ -198,7 +199,7 @@ export function IssueRow({
         "inline-flex h-4 w-4 items-center justify-center rounded-full transition-colors",
         selected ? "hover:bg-muted/80" : "hover:bg-blue-500/20",
       )}
-      aria-label="Mark as read"
+      aria-label={zh("Mark as read")}
     >
       <span
         className={cn(
@@ -229,10 +230,10 @@ export function IssueRow({
     <Badge variant="outline"
       data-testid="issue-row-parked-blocker"
       className="[&>svg]:size-2.5 ml-1.5 gap-0.5 border-amber-500/60 bg-amber-500/15 text-(length:--text-nano) text-amber-700 dark:text-amber-300"
-      title="Blocked by parked work — at least one assigned blocker is in backlog and will not wake its assignee."
+      title={zh("Blocked by parked work — at least one assigned blocker is in backlog and will not wake its assignee.")}
     >
       <Flag className="h-2.5 w-2.5" aria-hidden />
-      Blocked by parked work
+      {zh("Blocked by parked work")}
     </Badge>
   ) : null;
 
@@ -283,7 +284,7 @@ export function IssueRow({
           refreshed && "task-row-link",
         )}
       >
-        <span className="sr-only">Open {identifier}: {issue.title}</span>
+        <span className="sr-only">{zh("Open")} {identifier}: {issue.title}</span>
       </Link>
     );
     return (
@@ -484,7 +485,7 @@ export function IssueRow({
           "absolute inset-0 rounded-lg no-underline text-inherit focus-visible:z-10 focus-visible:outline-none focus-visible:ring-(length:--rad-3) focus-visible:ring-ring",
         )}
       >
-        <span className="sr-only">Open {identifier}: {issue.title}</span>
+        <span className="sr-only">{zh("Open")} {identifier}: {issue.title}</span>
       </Link>
       <span className="flex shrink-0 items-center gap-1 pt-px sm:hidden">
         {mobileLeading ?? <StatusIcon status={issue.status} externalConversationState={issue.externalConversationState} blockerAttention={issue.blockerAttention} size="md" className={selectedStatusClass} />}
@@ -615,7 +616,7 @@ function renderRecoveryChip(
   const tone = RECOVERY_CHIP_DEFAULT_TONE[state];
   const Icon = tone.icon;
   const lineage = readRecoveryRetryLineage(action, liveness);
-  const label = recoveryChipLabel(state, action.kind, lineage);
+  const label = zh(recoveryChipLabel(state, action.kind, lineage));
   const detail = lineage ? formatRecoveryLineageSummary(lineage) : null;
   return (
     <Badge variant="outline"

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { KeyRound, Plus, ServerCog, Trash2, Variable } from "lucide-react";
 import type {
@@ -177,7 +178,7 @@ function DeliveryBadge({ mode }: { mode: "env" | "api" }) {
         variant="outline"
         className="h-5 gap-1 px-1.5 text-(length:--text-nano) font-normal border-sky-500/30 bg-sky-500/10 text-sky-700 dark:text-sky-300"
       >
-        <Variable className="size-3" /> Env var
+        <Variable className="size-3" /> {zh("Env var")}
       </Badge>
     );
   }
@@ -450,9 +451,9 @@ export function AgentSecretAccessEditor({
                           });
                         }}
                         disabled={disabled || !selectedSecret}
-                        aria-label="Version"
+                        aria-label={zh("Version")}
                       >
-                        <option value="latest">latest</option>
+                        <option value="latest">{zh("latest")}</option>
                         {selectedSecret
                           ? Array.from({ length: Math.max(0, selectedSecret.latestVersion) }, (_, index) => {
                               const version = selectedSecret.latestVersion - index;

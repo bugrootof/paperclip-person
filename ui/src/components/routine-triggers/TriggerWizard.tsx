@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useCallback, useEffect, useState } from "react";
 import {
   CalendarClock,
@@ -218,7 +219,7 @@ export function RoutineTriggerWizard({
     "w-full rounded-md border border-input bg-background px-3 py-2 text-sm";
   const goBack = (
     <Button variant="outline" onClick={() => patch({ step: draft.step - 1 })}>
-      Back
+      {zh("Back")}
     </Button>
   );
   return (
@@ -462,7 +463,7 @@ export function RoutineTriggerWizard({
             )}
             {webhookSecret ? (
               <CopyField
-                label={github ? "Secret" : draft.signingMode === "bearer" ? "Authorization header value" : "Secret key"}
+                label={github ? zh("Secret") : draft.signingMode === "bearer" ? "Authorization header value" : "Secret key"}
                 value={!github && draft.signingMode === "bearer" ? `Bearer ${webhookSecret}` : webhookSecret}
               />
             ) : (
@@ -569,7 +570,7 @@ export function RoutineTriggerWizard({
           {draft.step > 0 && goBack}
           {draft.step === 0 ? (
             <Button disabled={draft.kind === "choose"} onClick={advance}>
-              Continue
+              {zh("Continue")}
             </Button>
           ) : schedule ? (
             draft.step === 1 ? (
@@ -586,7 +587,7 @@ export function RoutineTriggerWizard({
           ) : (
             <Button onClick={() => void perform(() => onFinish(draft))}>
               {checkResult === "received"
-                ? "Finish setup"
+                ? zh("Finish setup")
                 : "Finish without checking"}
             </Button>
           )}

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { COPILOT_MODEL_DISCOVERY_QUERY_OPTIONS } from "@/lib/copilot-task-model-catalog";
 import type { AgentRunner, AgentRunnerChoice } from "@paperclipai/shared";
 import { needsClaudeSetupQualification, qualifyClaudeSetup } from "../lib/qualify-claude-setup";
@@ -1444,7 +1445,7 @@ function OnboardingWizardInner({
   */
   const connectCollapsed =
     connectPhase !== "idle" && connectPhase !== "unwindRow" && sourceSelected;
-  const connectProgress = sourceSelected && !setupPrepared && !createdAgentId && !setupError ? "Creating your agent…" : adapterEnvLoading ? "Testing connection…" : loading ? "Connecting…" : null;
+  const connectProgress = sourceSelected && !setupPrepared && !createdAgentId && !setupError ? zh("Creating your agent…") : adapterEnvLoading ? zh("Testing connection…") : loading ? zh("Connecting…") : null;
   const hasSavedSubscription = Boolean(savedSubscription || savedKeys.storedLogin.data ||
     (credentialMode !== "api" && managedBindingForStep()));
   const connectHasCard = credentialMode === "api" || connectStepNeedsLogin || connectStepHasNoSandbox || Boolean(connectProgress);
@@ -1588,12 +1589,12 @@ function OnboardingWizardInner({
    */
   const connectSourceLabel = isCopilot ? "GitHub Copilot" : CONNECT_SOURCE_NAMES[adapterType] ?? adapterType;
   const connectCta: { label: string; icon: FooterPrimaryIcon; disabled: boolean } =
-    setupError ? { label: "Retry", icon: "arrow", disabled: false } : connectProgress
-      ? { label: adapterEnvLoading ? "Testing…" : connectProgress, icon: "spinner", disabled: true }
+    setupError ? { label: zh("Retry"), icon: "arrow", disabled: false } : connectProgress
+      ? { label: adapterEnvLoading ? zh("Testing…") : connectProgress, icon: "spinner", disabled: true }
       : connectPhase === "waiting"
-      ? { label: "Waiting for code", icon: "spinner", disabled: true }
+      ? { label: zh("Waiting for code"), icon: "spinner", disabled: true }
       : connectPhase === "connecting"
-        ? { label: "Connecting", icon: "spinner", disabled: true }
+        ? { label: zh("Connecting"), icon: "spinner", disabled: true }
         : connectPhase === "ready"
           ? connectStepNeedsLogin
             ? {
@@ -1602,14 +1603,14 @@ function OnboardingWizardInner({
                 disabled: !connectAuthUrl,
               }
             : {
-                label: "Connect",
+                label: zh("Connect"),
                 icon: "arrow",
                 disabled:
                   !connectStepReady || (!isCopilot && credentialMode === "api" && !apiKey.trim() && !selectedApiKey && !restoredApiCredential && !managedBindingForStep()),
               }
           : // Nothing is chosen on arrival, and the row is what chooses. Until
             // it has been answered the button has nothing to do.
-            { label: "Next", icon: "arrow", disabled: true };
+            { label: zh("Next"), icon: "arrow", disabled: true };
 
   /**
    * Back, on the connect step, unwinds the sign-in before it leaves the step.
@@ -1996,7 +1997,7 @@ function OnboardingWizardInner({
       // dashboard) so they land on the conversation the agent will start in.
       navigate(prefix ? `/${prefix}/issues/${issueRef}` : `/issues/${issueRef}`);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to launch first task");
+      setError(err instanceof Error ? err.message : zh("Failed to launch first task"));
     } finally {
       setLoading(false);
     }
@@ -2340,7 +2341,7 @@ function OnboardingWizardInner({
       setSelectedCompanyId(company.id);
       setStep(3);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to create organization");
+      setError(err instanceof Error ? err.message : zh("Failed to create organization"));
     } finally {
       creatingCompanyRef.current = false;
       setLoading(false);
@@ -2587,7 +2588,7 @@ function OnboardingWizardInner({
       setStep(5);
     } catch (err) {
       if (!isCurrent()) return;
-      setError(err instanceof Error ? err.message : "Failed to create agent");
+      setError(err instanceof Error ? err.message : zh("Failed to create agent"));
     } finally {
       if (hiringAgentRef.current === attempt) hiringAgentRef.current = null;
       if (activeClaudeQualification.current?.attempt === attempt) activeClaudeQualification.current = null;
@@ -2908,12 +2909,12 @@ function OnboardingWizardInner({
                       title={
                         <motion.span key={step} {...titleSwapMotion} className="inline-block">
                           {step === 1
-                            ? "What is the name of your organization?"
+                            ? zh("What is the name of your organization?")
                             : step === 3
-                              ? "Create your first agent"
+                              ? zh("Create your first agent")
                               : step === 4
-                                ? "Connect a model"
-                                : "Let's get started..."}
+                                ? zh("Connect a model")
+                                : zh("Let's get started...")}
                         </motion.span>
                       }
                     />
@@ -2935,7 +2936,7 @@ function OnboardingWizardInner({
                       <p className="pt-2 text-base leading-relaxed text-muted-foreground">
                         <motion.span key={step} {...titleSwapMotion} className="inline-block">
                           {step === 4
-                            ? "Paperclip works with your subscription or API keys."
+                            ? zh("Paperclip works with your subscription or API keys.")
                             : `${agentName.trim() || "Your first agent"} is ready to work!`}
                         </motion.span>
                       </p>
@@ -2962,11 +2963,11 @@ function OnboardingWizardInner({
               {step === 1 && (
                 <motion.div key="step-1" {...stepContentMotion} exit={stepHandoff ? stepContentMotion.exit : undefined} className="mx-auto flex w-full flex-col gap-9">
                   <div className="flex flex-col gap-2">
-                    <Label htmlFor="onboarding-company-name">Name</Label>
+                    <Label htmlFor="onboarding-company-name">{zh("Name")}</Label>
                     <Input
                       id="onboarding-company-name"
                       className="h-(--sz-44px) rounded-lg border-transparent bg-muted shadow-none dark:bg-muted"
-                      placeholder="e.g. Northwind Labs"
+                      placeholder={zh("e.g. Northwind Labs")}
                       value={companyName}
                       onChange={(e) => setCompanyName(e.target.value)}
                       onKeyDown={(e) => {
@@ -2990,7 +2991,7 @@ function OnboardingWizardInner({
               {step === 3 && (
                 <motion.div key="step-3" {...stepContentMotion} exit={stepHandoff ? stepContentMotion.exit : undefined} className="mx-auto flex w-full flex-col gap-9">
                   <div className="flex flex-col gap-2">
-                    <Label htmlFor="onboarding-agent-name">Agent name</Label>
+                    <Label htmlFor="onboarding-agent-name">{zh("Agent name")}</Label>
                     {/*
                       Filled, not outlined, and the column's full width — the
                       same field the naming step before the hand-off draws.
@@ -3003,7 +3004,7 @@ function OnboardingWizardInner({
                     <Input
                       id="onboarding-agent-name"
                       className="h-(--sz-44px) rounded-lg border-transparent bg-muted shadow-none dark:bg-muted"
-                      placeholder="e.g. Chief of staff"
+                      placeholder={zh("e.g. Chief of staff")}
                       value={agentName}
                       onChange={(e) => setAgentName(e.target.value)}
                       onKeyDown={(e) => {
@@ -3031,7 +3032,7 @@ function OnboardingWizardInner({
                         Picking one starts the sign-in now. The row is the
                         question, and answering it is what opens the card. */}
                     <ModelSourceTiles
-                      label="Model source"
+                      label={zh("Model source")}
                       sources={recommendedAdapters.map((opt) => ({
                         id: opt.type,
                         label: opt.type === "paperclip_runner" ? "GitHub Copilot" : CONNECT_SOURCE_NAMES[opt.type] ?? opt.label,
@@ -3147,21 +3148,21 @@ function OnboardingWizardInner({
                             if (JSON.stringify(copilotConnection) === JSON.stringify(parsed.data)) void refreshAdapterModels();
                           }} />
                           {copilotConnection && <label className="block space-y-2 text-sm">
-                            <span>Model</span>
+                            <span>{zh("Model")}</span>
                             <select aria-label="Copilot model" className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm" value={model} disabled={adapterModelsFetching} onChange={(event) => setModel(event.target.value)}>
-                              <option value="">{adapterModelsFetching ? "Loading models…" : "Select a model"}</option>
+                              <option value="">{adapterModelsFetching ? zh("Loading models…") : zh("Select a model")}</option>
                               {model && !adapterModels?.some((entry) => entry.id === model) && <option value={model}>{model} (unavailable)</option>}
                               {(adapterModels ?? []).map((entry) => <option key={entry.id} value={entry.id}>{entry.label}</option>)}
                             </select>
                             {adapterModelsError && <p role="alert" className="text-destructive">{adapterModelsError instanceof Error ? adapterModelsError.message : "Could not discover Copilot models."}</p>}
                             {!adapterModelsFetching && !adapterModelsError && adapterModels?.length === 0 && <p role="alert" className="text-destructive">No available Copilot models were discovered. Check this account’s Copilot access.</p>}
-                            <Button type="button" variant="ghost" disabled={adapterModelsFetching} onClick={() => void refreshAdapterModels()}>Refresh models</Button>
+                            <Button type="button" variant="ghost" disabled={adapterModelsFetching} onClick={() => void refreshAdapterModels()}>{zh("Refresh models")}</Button>
                           </label>}
                         </>}
                       </OnboardingLoginCard>
                     ) : credentialMode === "api" ? (
                       <OnboardingLoginCard
-                        instruction={hasGatewaySelection || connectionModels ? "Choose a model for your saved connection" : savedKeys.options.length ? "Choose a saved API key or enter a new one" : `Provide your ${
+                        instruction={hasGatewaySelection || connectionModels ? "Choose a model for your saved connection" : savedKeys.options.length ? zh("Choose a saved API key or enter a new one") : `Provide your ${
                           CONNECT_SOURCE_NAMES[adapterType] ?? adapterType
                         } API key to connect`}
                       >
@@ -3172,8 +3173,8 @@ function OnboardingWizardInner({
                           setApiKey("");
                         }} />}
                         {!selectedApiKey && !hasGatewaySelection && !connectionModels && <OnboardingCardField
-                          label="API key"
-                          placeholder="Enter API key here"
+                          label={zh("API key")}
+                          placeholder={zh("Enter API key here")}
                           masked
                           // The card is the answer to the tile just pressed, so
                           // the field is unambiguously the next thing. Carried
@@ -3189,7 +3190,7 @@ function OnboardingWizardInner({
                         {hasGatewaySelection && (gatewayLookupFailed ? <>
                           <p role="alert" className="text-sm text-destructive">Your saved gateway connection could not be loaded. Retry to choose a model and connect your agent.</p>
                           <Button type="button" variant="outline" disabled={loading || adapterEnvLoading} onClick={() => { void connectionModelState.refresh(); }}>
-                            Retry loading connection
+                            {zh("Retry loading connection")}
                           </Button>
                         </> : <p role="status" className="text-sm text-muted-foreground">{connectionModelState.refreshing
                           ? "Loading your saved gateway connection…"
@@ -3315,7 +3316,7 @@ function OnboardingWizardInner({
                   </motion.div>
 
                   {sourceSelected && ["codex_local", "claude_local", "opencode_local", "pi_local"].includes(adapterType) && <details className="space-y-3">
-                    <summary className="cursor-pointer text-sm text-muted-foreground">Advanced</summary>
+                    <summary className="cursor-pointer text-sm text-muted-foreground">{zh("Advanced")}</summary>
                     <AgentRunnerSelect value={runner} disabled={loading || adapterEnvLoading}
                       pending={runnerDiscovery.isFetching} error={runnerDiscovery.error?.message} onRetry={() => { void runnerDiscovery.refetch(); }}
                       defaultRunner={runnerDiscovery.data?.find(item => item.type === adapterType)?.defaultRunner}
@@ -3351,7 +3352,7 @@ function OnboardingWizardInner({
 
                       {runnerDiscoveryError && (
                         <Button type="button" variant="outline" disabled={runnerDiscovery.isFetching || loginEnvironmentsFetching || loginSettingsFetching || loginPolicyFetching} onClick={() => void retryRunnerAvailability()}>
-                          Retry setup
+                          {zh("Retry setup")}
                         </Button>
                       )}
 
@@ -3367,7 +3368,7 @@ function OnboardingWizardInner({
                             style={{ "--sc": "var(--status-task-done)" } as CSSProperties}
                           >
                             <Check className="size-3.5 shrink-0" />
-                            <span className="font-medium">Passed</span>
+                            <span className="font-medium">{zh("Passed")}</span>
                           </div>
                           {/* Show the checks on a pass too, so the target and the
                               auth signals stay visible before the hire. */}
@@ -3395,7 +3396,7 @@ function OnboardingWizardInner({
                             onClick={() => void handleUnsetAnthropicApiKey()}
                           >
                             {unsetAnthropicLoading
-                              ? "Retrying..."
+                              ? zh("Retrying...")
                               : "Unset ANTHROPIC_API_KEY"}
                           </Button>
                         </div>
@@ -3403,7 +3404,7 @@ function OnboardingWizardInner({
 
                       {adapterEnvResult && adapterEnvResult.status === "fail" && localLoginHealth.isSuccess && !cloudInstance && (
                         <div className="rounded-md border border-border/70 bg-muted/20 px-2.5 py-2 text-(length:--text-micro) space-y-1.5">
-                          <p className="font-medium">Manual debug</p>
+                          <p className="font-medium">{zh("Manual debug")}</p>
                           <p className="text-muted-foreground font-mono break-all">
                             {adapterType === "cursor"
                               ? `${effectiveAdapterCommand} -p --mode ask --output-format json \"Respond with hello.\"`
@@ -3518,20 +3519,20 @@ function OnboardingWizardInner({
                   // prototype's own local flow draws with "Next".
                   primaryLabel={
                     step === 1
-                      ? "Continue"
+                      ? zh("Continue")
                       : step === 5
-                        ? "Get started"
+                        ? zh("Get started")
                         : step === 4
                           ? connectCta.label
-                          : "Next"
+                          : zh("Next")
                   }
                   primaryIcon={step === 4 ? connectCta.icon : undefined}
                   loadingLabel={
                     step === 1
-                      ? "Creating..."
+                      ? zh("Creating...")
                       : step === 4
-                        ? "Connecting"
-                        : "Launching..."
+                        ? zh("Connecting")
+                        : zh("Launching...")
                   }
                   // The browser-code login is finished on this screen, so the
                   // button is genuinely busy for its duration and shows it. The
@@ -3578,10 +3579,10 @@ function AdapterEnvironmentResult({
 }) {
   const statusLabel =
     result.status === "pass"
-      ? "Passed"
+      ? zh("Passed")
       : result.status === "warn"
-      ? "Warnings"
-      : "Failed";
+      ? zh("Warnings")
+      : zh("Failed");
   const statusClass =
     result.status === "pass"
       ? "text-green-700 dark:text-green-300 border-green-300 dark:border-green-500/40 bg-green-50 dark:bg-green-500/10"
@@ -3615,7 +3616,7 @@ function AdapterEnvironmentResult({
             )}
             {showHints && check.hint && (
               <span className="block opacity-90 break-words">
-                Hint: {check.hint}
+                {zh("Hint:")} {check.hint}
               </span>
             )}
           </div>

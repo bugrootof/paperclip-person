@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import {
   useEffect,
@@ -93,7 +94,7 @@ export function BoardChat() {
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Conference Room" }]);
+    setBreadcrumbs([{ label: zh("Conference Room") }]);
   }, [setBreadcrumbs]);
 
   const splitContainerRef = useRef<HTMLDivElement>(null);
@@ -676,7 +677,7 @@ export function BoardChat() {
             />
             <div className="min-w-0 flex-1">
               <h3 className="text-sm font-semibold">
-                {ceoAgent?.name ?? "Conference Room"}
+                {ceoAgent?.name ?? zh("Conference Room")}
               </h3>
               <p className="text-xs text-muted-foreground">
                 {selectedCompany?.name ?? "Your organization"}

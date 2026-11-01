@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState, type MouseEvent } from "react";
 import type { Issue, IssueLockedStub } from "@paperclipai/shared";
 import { Link } from "@/lib/router";
@@ -79,7 +80,7 @@ export function RemovableIssueReferencePill({
                 type="button"
                 data-mention-kind="issue"
                 className={chipClassName}
-                title={locked ? "Private task" : issue.title}
+                title={locked ? zh("Private task") : issue.title}
                 aria-label={`Actions for blocker ${issueLabel}`}
               >
                 {content}
@@ -141,12 +142,12 @@ export function RemovableIssueReferencePill({
           <DialogHeader>
             <DialogTitle>Remove blocker?</DialogTitle>
             <DialogDescription>
-              Remove {confirmLabel} as a blocker for this task.
+              {zh("Remove")} {confirmLabel} as a blocker for this task.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type="button" variant="outline">Cancel</Button>
+              <Button type="button" variant="outline">{zh("Cancel")}</Button>
             </DialogClose>
             <Button type="button" variant="destructive" onClick={confirmRemove}>
               Remove blocker
@@ -175,7 +176,7 @@ export function ExpandRelationListButton({
       onClick={onClick}
       aria-label={expanded ? "Show fewer items" : `Show ${hiddenCount} more items`}
     >
-      {expanded ? "Show less" : `Show ${hiddenCount} more`}
+      {expanded ? zh("Show less") : `Show ${hiddenCount} more`}
     </button>
   );
 }

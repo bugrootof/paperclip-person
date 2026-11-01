@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useQuery } from "@tanstack/react-query";
 import { aiConnectionsApi } from "@/api/ai-connections";
 import { AiConnectionCredentialStep } from "@/components/ai-connections/AiConnectionCredentialStep";
@@ -52,7 +53,7 @@ export function AppsConnect({ byoOnly = false, credentialSource = "paperclip_vau
   if (reuseComposio && selectedCompanyId && (saved.isPending || hasSavedComposio)) return <p role="status" className="text-sm text-muted-foreground">Checking saved Composio accounts…</p>;
   if (reuseComposio && saved.isError) return <div className="space-y-3">
     <p role="alert" className="text-sm text-destructive">Couldn’t load your Composio accounts.</p>
-    <div className="flex items-center justify-between"><Button variant="ghost" onClick={() => navigate("/apps")}>Cancel</Button><Button onClick={() => void saved.refetch()}>Try again</Button></div>
+    <div className="flex items-center justify-between"><Button variant="ghost" onClick={() => navigate("/apps")}>{zh("Cancel")}</Button><Button onClick={() => void saved.refetch()}>{zh("Try again")}</Button></div>
   </div>;
   const returningToSkills = source === "github" && selectedCompanyId && skillSourceReturnPath(selectedCompanyId);
   function returnToSkills() {

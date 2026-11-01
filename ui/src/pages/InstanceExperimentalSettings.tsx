@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useState, type ReactNode } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AlertTriangle, FlaskConical, Lock, Play } from "lucide-react";
@@ -128,8 +129,8 @@ export function InstanceExperimentalSettings() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Settings", href: "/company/settings" },
-      { label: "Experimental" },
+      { label: zh("Settings"), href: "/company/settings" },
+      { label: zh("Experimental") },
     ]);
   }, [setBreadcrumbs]);
 
@@ -264,7 +265,7 @@ export function InstanceExperimentalSettings() {
       <div className="space-y-2">
         <div className="flex items-center gap-2">
           <FlaskConical className="h-5 w-5 text-muted-foreground" />
-          <h1 className="text-lg font-semibold">Experimental</h1>
+          <h1 className="text-lg font-semibold">{zh("Experimental")}</h1>
         </div>
         <p className="text-sm text-muted-foreground">
           Opt into features that are still being evaluated before they become default behavior.
@@ -364,7 +365,7 @@ export function InstanceExperimentalSettings() {
         />
 
         <ExperimentalToggleCard
-          title="Cases"
+          title={zh("Cases")}
           description="Durable work products (blog posts, tweet storms…) that tasks create and iterate on. Adds the Cases tab and the agent case API."
           footnote="Turning Cases off hides the tab and blocks the case API; existing case data is kept."
           checked={enableCases}
@@ -413,7 +414,7 @@ export function InstanceExperimentalSettings() {
         ) : null}
 
         <ExperimentalToggleCard
-          title="Decisions"
+          title={zh("Decisions")}
           description="Show the Decisions item in the main sidebar — the attention home that surfaces the tasks awaiting your input — while the surface is still being evaluated."
           checked={enableDecisions}
           onCheckedChange={(checked) => toggleMutation.mutate({ enableDecisions: checked })}
@@ -528,7 +529,7 @@ export function InstanceExperimentalSettings() {
         />
 
         <ExperimentalToggleCard
-          title="Muse — Personal agent"
+          title={zh("Muse — Personal agent")}
           description="Connect your personal Meta Muse. Pair it, detect its receiver, and verify an independent background reply before assigning tasks."
           footnote="Requires Paperclip Runner and an authenticated instance with a public HTTPS URL. Turning this off blocks new work; cleanup and stop evidence remain available. Provider usage and cost are unavailable."
           checked={experimentalQuery.data?.enableMuse === true}

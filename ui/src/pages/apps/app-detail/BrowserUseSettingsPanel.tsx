@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useId, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import type {
@@ -109,7 +110,7 @@ function CredentialSettings({
               variant="ghost"
               onClick={() => void profiles.refetch()}
             >
-              Retry
+              {zh("Retry")}
             </Button>
           </p>
         )}

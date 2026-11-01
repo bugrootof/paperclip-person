@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { Copy } from "lucide-react";
 import type { ToolMcpGatewayWithTokens, ToolProfileWithDetails } from "@paperclipai/shared";
 import { Link } from "@/lib/router";
@@ -64,7 +65,7 @@ export function OverviewPanel({
     <div className="space-y-5">
       <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
         <div className="rounded-lg border border-border p-4">
-          <div className="text-xs font-medium text-muted-foreground">{on ? "On" : "Off"}</div>
+          <div className="text-xs font-medium text-muted-foreground">{on ? "On" : zh("Off")}</div>
           <div className="mt-2">
             <ToggleSwitch checked={on} disabled={toggleDisabled} onCheckedChange={onToggle} aria-label="Toggle gateway" />
           </div>
@@ -74,10 +75,10 @@ export function OverviewPanel({
           {apps.length} {apps.length === 1 ? "app" : "apps"}
           {profile ? ` · ${allowedToolsLabel(profile)}` : ""}
         </StatCard>
-        <StatCard label="Tokens">
-          {active} active{expiring > 0 ? ` · ${expiring} expiring` : ""}
+        <StatCard label={zh("Tokens")}>
+          {active} {zh("active")}{expiring > 0 ? ` · ${expiring} expiring` : ""}
         </StatCard>
-        <StatCard label="Health">
+        <StatCard label={zh("Health")}>
           {needsAttention.length === 0 ? "All green" : `${needsAttention.length} needs attention`}
         </StatCard>
       </div>
@@ -94,7 +95,7 @@ export function OverviewPanel({
         <div className="mt-3 flex flex-wrap gap-2">
           <Chip>Scope · {formatScope(gateway, projectNames, agentNames)}</Chip>
           <Chip>Profile · {profile?.name ?? "Unavailable"}</Chip>
-          <Chip>{active} active {active === 1 ? "token" : "tokens"}</Chip>
+          <Chip>{active} {zh("active")} {active === 1 ? "token" : "tokens"}</Chip>
         </div>
       </section>
 
@@ -118,7 +119,7 @@ export function OverviewPanel({
           <h3 className="text-sm font-semibold text-foreground">How clients connect</h3>
           <Button variant="outline" size="sm" onClick={() => void copy(snippet, "Client config")}>
             <Copy className="mr-1 h-3.5 w-3.5" />
-            Copy
+            {zh("Copy")}
           </Button>
         </div>
         <pre className="mt-3 overflow-auto whitespace-pre-wrap break-words rounded bg-background p-3 font-mono text-xs text-muted-foreground">
@@ -169,7 +170,7 @@ function AppRow({ app }: { app: GatewayAppRow }) {
             : "border-emerald-500/40 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300",
         )}
       >
-        {app.needsAttention ? "Needs attention" : "Healthy"}
+        {app.needsAttention ? zh("Needs attention") : zh("Healthy")}
       </span>
     </li>
   );

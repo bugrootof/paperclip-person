@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useCompany } from "@/context/CompanyContext";
 import { PAPERCLIP_RUNNER_ACPX_PROFILES } from "@paperclipai/adapter-utils";
 import { useAgentAppearanceDraft } from "@/hooks/useAgentAppearanceDraft";
@@ -191,7 +192,7 @@ export function AgentBasicsDialog({
       >
         <div
           className="flex items-center gap-2 px-6 py-5 text-xs text-muted-foreground"
-          aria-label="New agent progress"
+          aria-label={zh("New agent progress")}
         >
           <span
             className={cn(step === "name" && "font-medium text-foreground")}
@@ -218,12 +219,12 @@ export function AgentBasicsDialog({
               <div className="space-y-2">
                 <DialogTitle className="text-3xl font-semibold tracking-tight">
                   {step === "name"
-                    ? "Meet your next agent"
-                    : "Choose an adapter"}
+                    ? zh("Meet your next agent")
+                    : zh("Choose an adapter")}
                 </DialogTitle>
                 <DialogDescription className="text-base">
                   {step === "name"
-                    ? "Start with a name. Make them your own."
+                    ? zh("Start with a name. Make them your own.")
                     : `How should ${name.trim()} work?`}
                 </DialogDescription>
               </div>
@@ -231,14 +232,14 @@ export function AgentBasicsDialog({
             {step === "name" ? (
               <div className="space-y-2">
                 <label htmlFor={id} className="text-sm font-medium">
-                  Agent name
+                  {zh("Agent name")}
                 </label>
                 <Input
                   id={id}
                   autoFocus
                   disabled={saving}
                   maxLength={100}
-                  placeholder="e.g. Darnold"
+                  placeholder={zh("e.g. Darnold")}
                   value={name}
                   onChange={(event) => setName(event.target.value)}
                   className="h-12 text-base"
@@ -250,16 +251,16 @@ export function AgentBasicsDialog({
                     className="px-0 text-muted-foreground"
                     onClick={onInvite}
                   >
-                    Invite an external agent
+                    {zh("Invite an external agent")}
                   </Button>
                 )}
               </div>
             ) : (
               <fieldset className="space-y-4">
-                <legend className="sr-only">Adapter</legend>
+                <legend className="sr-only">{zh("Adapter")}</legend>
                 {isPending && (
                   <p role="status" className="text-sm text-muted-foreground">
-                    Loading adapters…
+                    {zh("Loading adapters…")}
                   </p>
                 )}
                 {error && (
@@ -297,7 +298,7 @@ export function AgentBasicsDialog({
                             {display.label}
                           </span>
                           {adapter.type === "antigravity_runtime" && !antigravityQualified && (
-                            <span className="text-xs text-muted-foreground">{antigravityCandidate ? "Candidate" : "Not available yet"}</span>
+                            <span className="text-xs text-muted-foreground">{antigravityCandidate ? "Candidate" : zh("Not available yet")}</span>
                           )}
                           {adapterType === adapter.type && (
                             <Check className="absolute right-2 top-2 size-3.5" />
@@ -308,7 +309,7 @@ export function AgentBasicsDialog({
                   })}
                 </div>
                 {experimentalRunnerAvailable && <details className="space-y-3">
-                  <summary className="cursor-pointer text-sm text-muted-foreground">Advanced</summary>
+                  <summary className="cursor-pointer text-sm text-muted-foreground">{zh("Advanced")}</summary>
                   <div className="space-y-2">
                     <label className="text-sm text-muted-foreground">Experimental harness</label>
                     <SelectPopover aria-label="Experimental harness"
@@ -333,11 +334,11 @@ export function AgentBasicsDialog({
               onClick={() => (step === "name" ? onClose() : setStep("name"))}
             >
               {step === "name" ? (
-                "Cancel"
+                zh("Cancel")
               ) : (
                 <>
                   <ArrowLeft className="size-4" />
-                  Back
+                  {zh("Back")}
                 </>
               )}
             </Button>
@@ -345,7 +346,7 @@ export function AgentBasicsDialog({
               type="submit"
               disabled={saving || !name.trim() || (step === "adapter" && !validAdapter)}
             >
-              {saving ? "Saving…" : step === "name" ? "Choose adapter" : "Configure agent"}
+              {saving ? zh("Saving…") : step === "name" ? zh("Choose adapter") : zh("Configure agent")}
               <ArrowRight className="size-4" />
             </Button>
           </div>

@@ -1,12 +1,13 @@
+import { boardT as zh } from "@/i18n";
 import type { ReactNode } from "react";
 import { Link } from "@/lib/router";
 import { useStreamlinedUiEnabled } from "@/hooks/useStreamlinedUiEnabled";
 import { SKILLS_NAVIGATION_HREFS, type SkillsNavigationView } from "@/pages/skills/skills-navigation";
 
 const views = [
-  { value: "installed", label: "Installed" },
-  { value: "discover", label: "Discover" },
-  { value: "authored", label: "My Skills" },
+  { value: "installed", label: zh("Installed") },
+  { value: "discover", label: zh("Discover") },
+  { value: "authored", label: zh("My Skills") },
 ] as const;
 
 /** Route navigation with the canonical tab appearance. Sources stays in the actions menu. */
@@ -14,7 +15,7 @@ export function SkillsNavigationTabs({ activeView }: { activeView: SkillsNavigat
   return <nav aria-label="Skills views" data-canonical-tabs="standard" className="canonical-tab-list">
     {views.map(view => <Link key={view.value} to={SKILLS_NAVIGATION_HREFS[view.value]}
       className="canonical-tab" data-state={activeView === view.value ? "active" : "inactive"}
-      aria-current={activeView === view.value ? "page" : undefined}>{view.label}</Link>)}
+      aria-current={activeView === view.value ? "page" : undefined}>{zh(view.label)}</Link>)}
   </nav>;
 }
 

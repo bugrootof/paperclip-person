@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import type { ReactNode } from "react";
 import type {
   ToolRiskLevel,
@@ -199,7 +200,7 @@ export function ErrorState({ error, onRetry }: { error: unknown; onRetry?: () =>
             onClick={onRetry}
             className="self-start rounded-md border border-border px-3 py-1.5 text-xs font-medium hover:bg-accent"
           >
-            Retry
+            {zh("Retry")}
           </button>
         ) : null}
       </CardContent>

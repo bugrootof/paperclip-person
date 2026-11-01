@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState, type ReactNode } from "react";
 import { ChevronRight } from "lucide-react";
 import type { ToolCatalogEntry, ToolConnection } from "@paperclipai/shared";
@@ -37,9 +38,9 @@ export function SetupPanel({
   return (
     <div className="space-y-10">
       {identities}
-      <SetupLinkSection title="Agents" summary={agentsSummary} onClick={onOpenPermissions} />
+      <SetupLinkSection title={zh("Agents")} summary={agentsSummary} onClick={onOpenPermissions} />
       <SetupLinkSection
-        title="Actions"
+        title={zh("Actions")}
         summary={permissionsLoading ? "Loading permissions…" : permissionsSummary ?? "Manage permissions"}
         onClick={onOpenPermissions}
       />
@@ -200,7 +201,7 @@ function GoogleSheetsAllowlistSection({
                   title={ids.length <= 1 ? "Add another sheet before removing this one." : undefined}
                   onClick={() => saveIds(ids.filter((current) => current !== id))}
                 >
-                  Remove
+                  {zh("Remove")}
                 </Button>
               </div>
             );
@@ -261,7 +262,7 @@ export function QuarantinedActionsReview({
       <div className="flex flex-wrap items-start justify-between gap-3">
         <div>
           <div className="text-sm font-semibold text-amber-800 dark:text-amber-200">
-            Review {count} new {count === 1 ? "action" : "actions"}
+            {zh("Review")} {count} new {count === 1 ? "action" : "actions"}
           </div>
           <p className="mt-1 text-xs text-amber-700 dark:text-amber-300">
             Turn on the actions agents may use. Anything left off stays blocked when you save.
@@ -320,7 +321,7 @@ export function QuarantinedActionsReview({
           {selectedIds.length} of {count} will be on
         </span>
         <Button size="sm" disabled={disabled} onClick={() => onSubmit(selectedIds)}>
-          {disabled ? "Saving…" : "Save choices"}
+          {disabled ? zh("Saving…") : "Save choices"}
         </Button>
       </div>
     </section>

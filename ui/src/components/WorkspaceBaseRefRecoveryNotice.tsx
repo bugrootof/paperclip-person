@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useId, useRef, useState } from "react";
 import { isValidExistingBranchName } from "@paperclipai/shared";
 import { Check, ChevronDown, GitBranch, Loader2, TriangleAlert } from "lucide-react";
@@ -66,7 +67,7 @@ export function WorkspaceBaseRefRecoveryNotice({
       <div className="flex min-w-0 flex-1 flex-col gap-3">
         <div className="flex flex-col gap-1" role="status" aria-live="polite">
           <h2 id={`${id}-title`} className="break-words text-sm font-semibold">
-            {repairedBranch ? "Branch updated · retry requested" : failureKind === "missing_branch" ? <>Branch <code className="font-mono">{requestedRef}</code> was not found</> : <>Couldn’t use branch <code className="font-mono">{requestedRef}</code></>}
+            {repairedBranch ? "Branch updated · retry requested" : failureKind === "missing_branch" ? <>{zh("Branch")} <code className="font-mono">{requestedRef}</code> was not found</> : <>Couldn’t use branch <code className="font-mono">{requestedRef}</code></>}
           </h2>
           <p className="text-sm leading-relaxed text-muted-foreground">
             {repairedBranch
@@ -87,7 +88,7 @@ export function WorkspaceBaseRefRecoveryNotice({
                   <Input id={`${id}-branch`} autoFocus value={branch} disabled={pending || Boolean(unavailableReason)} onChange={event => setBranch(event.target.value)} placeholder="Branch name" className="font-mono" aria-describedby={error ? `${id}-error` : undefined} autoComplete="off" spellCheck={false} />
                 </div>
                 <div className="flex flex-wrap items-center justify-between gap-2">
-                  {defaultBranch ? <Button type="button" variant="ghost" size="sm" disabled={pending} onClick={() => { setEditing(false); setError(null); }}>Cancel</Button> : <span />}
+                  {defaultBranch ? <Button type="button" variant="ghost" size="sm" disabled={pending} onClick={() => { setEditing(false); setError(null); }}>{zh("Cancel")}</Button> : <span />}
                   <Button type="submit" size="sm" disabled={pending || !changed || Boolean(unavailableReason)} aria-describedby={unavailableReason ? `${id}-unavailable` : undefined}>
                     {pending && <Loader2 aria-hidden className="size-3.5 animate-spin motion-reduce:animate-none" />}{pending ? "Saving & requesting retry…" : "Save branch & retry"}
                   </Button>

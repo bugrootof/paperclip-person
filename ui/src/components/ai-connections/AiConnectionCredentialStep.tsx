@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState, type ReactNode } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type AiProvider, type AiAuthMethod, type AiConnectionLoginIntent } from "@paperclipai/shared";
@@ -126,7 +127,7 @@ function ApiKeyConnectionStep({ companyId, provider, connectionId, name: initial
     </Select>}
     {environmentError && <p role="alert" className="text-sm text-destructive">{environmentError}</p>}
     {defaults}
-    <ProviderApiKeyCard providerName={copilot ? "GitHub Copilot" : provider === "google" ? "Google" : "OpenRouter"} value={apiKey} onChange={setApiKey} onSubmit={() => { if (!preparing && !environmentError && name.trim() && apiKey.trim()) save.mutate(); }} disabled={disabled || save.isPending || preparing || Boolean(environmentError)} placeholder={copilot ? "github_pat_..." : "Enter API key here"} autoFocus />
-    <div className="flex justify-between gap-2"><Button variant="ghost" onClick={onCancel}>Cancel</Button><Button disabled={disabled || !name.trim() || !apiKey.trim() || save.isPending || preparing || Boolean(environmentError)} onClick={() => save.mutate()}>{save.isPending ? "Connecting…" : "Connect"}</Button></div>
+    <ProviderApiKeyCard providerName={copilot ? "GitHub Copilot" : provider === "google" ? "Google" : "OpenRouter"} value={apiKey} onChange={setApiKey} onSubmit={() => { if (!preparing && !environmentError && name.trim() && apiKey.trim()) save.mutate(); }} disabled={disabled || save.isPending || preparing || Boolean(environmentError)} placeholder={copilot ? "github_pat_..." : zh("Enter API key here")} autoFocus />
+    <div className="flex justify-between gap-2"><Button variant="ghost" onClick={onCancel}>{zh("Cancel")}</Button><Button disabled={disabled || !name.trim() || !apiKey.trim() || save.isPending || preparing || Boolean(environmentError)} onClick={() => save.mutate()}>{save.isPending ? zh("Connecting…") : zh("Connect")}</Button></div>
   </div>;
 }

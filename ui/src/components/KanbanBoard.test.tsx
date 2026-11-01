@@ -5,6 +5,7 @@ import { flushSync } from "react-dom";
 import type { Issue, IssueStatus } from "@paperclipai/shared";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { getKanbanColumnTone, KanbanBoard, resolveKanbanTargetStatus } from "./KanbanBoard";
+import { i18n } from "@/i18n";
 
 vi.mock("@/lib/router", () => ({
   Link: ({
@@ -106,11 +107,28 @@ function renderBoard(
 }
 
 describe("KanbanBoard", () => {
-  beforeEach(() => {
+  it("translates expanded and collapsed status headers without changing drag target values", async () => {
+    const previousLanguage = i18n.language;
+    await i18n.changeLanguage("zh-CN");
+    try {
+      const { container } = renderBoard({ issues: [], collapsedStatuses: ["backlog"] });
+      for (const label of ["待规划", "待办", "进行中", "审核中", "受阻", "已完成", "已取消"]) {
+        expect(container.textContent).toContain(label);
+      }
+      expect(container.querySelector('[title="待规划: 0"]')).not.toBeNull();
+      expect(container.textContent).not.toContain("In Progress");
+      expect(resolveKanbanTargetStatus("in_progress", [])).toBe("in_progress");
+    } finally {
+      await i18n.changeLanguage(previousLanguage);
+    }
+  });
+
+  beforeEach(async () => {
+    await i18n.changeLanguage("en");
     document.body.innerHTML = "";
   });
 
-  afterEach(() => {
+  afterEach(async () => {
     while (mountedRoots.length > 0) {
       const root = mountedRoots.pop();
       if (root) {
@@ -118,6 +136,7 @@ describe("KanbanBoard", () => {
       }
     }
     document.body.innerHTML = "";
+    await i18n.changeLanguage("zh-CN");
   });
 
   it("limits visible cards and reveals more cards per column", () => {

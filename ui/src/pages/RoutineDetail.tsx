@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Navigate, useNavigate, useParams, useSearchParams } from "@/lib/router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -264,18 +265,18 @@ export function RoutineDetail() {
   const dirtyFields = useMemo<RoutineHistoryDirtyFieldDescriptor[]>(() => {
     if (!routineDefaults) return [];
     const result: RoutineHistoryDirtyFieldDescriptor[] = [];
-    if (editDraft.title !== routineDefaults.title) result.push({ key: "title", label: "the title" });
+    if (editDraft.title !== routineDefaults.title) result.push({ key: "title", label: zh("the title") });
     if (editDraft.description !== routineDefaults.description) {
-      result.push({ key: "description", label: "the description" });
+      result.push({ key: "description", label: zh("the description") });
     }
     if (editDraft.projectId !== routineDefaults.projectId) {
-      result.push({ key: "projectId", label: "the project" });
+      result.push({ key: "projectId", label: zh("the project") });
     }
     if (editDraft.assigneeAgentId !== routineDefaults.assigneeAgentId) {
-      result.push({ key: "assigneeAgentId", label: "the default agent" });
+      result.push({ key: "assigneeAgentId", label: zh("the default agent") });
     }
     if (editDraft.priority !== routineDefaults.priority) {
-      result.push({ key: "priority", label: "the priority" });
+      result.push({ key: "priority", label: zh("the priority") });
     }
     if (editDraft.concurrencyPolicy !== routineDefaults.concurrencyPolicy) {
       result.push({ key: "concurrencyPolicy", label: "the concurrency policy" });
@@ -290,10 +291,10 @@ export function RoutineDetail() {
       result.push({ key: "activityGateScope", label: "the activity gate scope" });
     }
     if (JSON.stringify(editDraft.variables) !== JSON.stringify(routineDefaults.variables)) {
-      result.push({ key: "variables", label: "the variables" });
+      result.push({ key: "variables", label: zh("the variables") });
     }
     if (JSON.stringify(editDraft.env ?? null) !== JSON.stringify(routineDefaults.env ?? null)) {
-      result.push({ key: "env", label: "the secrets" });
+      result.push({ key: "env", label: zh("the secrets") });
     }
     return result;
   }, [editDraft, routineDefaults]);
@@ -329,7 +330,7 @@ export function RoutineDetail() {
 
   useEffect(() => {
     if (!routine) return;
-    if (!triggerSetup) setBreadcrumbs([{ label: "Routines", href: "/routines" }, { label: routine.title }]);
+    if (!triggerSetup) setBreadcrumbs([{ label: zh("Routines"), href: "/routines" }, { label: routine.title }]);
     if (!routineDefaults) return;
     const changedRoutine = hydratedRoutineIdRef.current !== routine.id;
     if (changedRoutine || !isEditDirty) {
@@ -655,7 +656,7 @@ export function RoutineDetail() {
   );
 
   if (!selectedCompanyId) {
-    return <EmptyState icon={Repeat} message="Select an organization to view routines." />;
+    return <EmptyState icon={Repeat} message={zh("Select an organization to view routines.")} />;
   }
 
   const legacyTab = new URLSearchParams(window.location.search).get("tab");
@@ -677,7 +678,7 @@ export function RoutineDetail() {
     return (
       <EmptyState
         icon={AlertCircle}
-        message={error instanceof Error ? error.message : "We couldn't load this routine."}
+        message={error instanceof Error ? error.message : zh("We couldn't load this routine.")}
       />
     );
   }
@@ -776,7 +777,7 @@ export function RoutineDetail() {
         href="#routine-section"
         className="sr-only focus:not-sr-only focus:absolute focus:left-2 focus:top-2 focus:z-20 focus:rounded focus:bg-background focus:px-3 focus:py-1.5 focus:text-sm"
       >
-        Skip to section
+        {zh("Skip to section")}
       </a>
 
       {/* The global shell owns routine navigation. This surface keeps one
@@ -840,7 +841,7 @@ export function RoutineDetail() {
                 size="sm"
                 onClick={() => navigate(routineDetailHref(routine.id))}
               >
-                Back to overview
+                {zh("Back to overview")}
               </Button>
             ) : (
               <Button
@@ -849,7 +850,7 @@ export function RoutineDetail() {
                 onClick={() => navigate(routineDetailHref(routine.id, "history"))}
               >
                 <History className="h-3.5 w-3.5" />
-                History
+                {zh("History")}
               </Button>
             )}
             {section === "overview" ? (
@@ -863,12 +864,12 @@ export function RoutineDetail() {
                   }}
                 >
                   <X className="h-3.5 w-3.5" />
-                  Cancel editing
+                  {zh("Cancel editing")}
                 </Button>
               ) : (
                 <Button variant="outline" size="sm" onClick={() => setOverviewEditing(true)}>
                   <Pencil className="h-3.5 w-3.5" />
-                  Edit routine
+                  {zh("Edit routine")}
                 </Button>
               )
             ) : null}
@@ -879,7 +880,7 @@ export function RoutineDetail() {
                 checked={automationEnabled}
                 onCheckedChange={contextValue.onToggleAutomation}
                 disabled={automationToggleDisabled}
-                aria-label={automationEnabled ? "Pause automatic triggers" : "Enable automatic triggers"}
+                aria-label={automationEnabled ? zh("Pause automatic triggers") : zh("Enable automatic triggers")}
               />
               <span className={`text-sm font-medium ${automationLabelClassName}`}>{automationLabel}</span>
             </div>

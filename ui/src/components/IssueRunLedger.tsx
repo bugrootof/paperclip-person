@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import type { ActivityEvent, Issue, Agent, ProviderTraceMetadata } from "@paperclipai/shared";
 import {
@@ -92,12 +93,12 @@ type LivenessCopy = {
 
 const LIVENESS_COPY: Record<RunLivenessState, LivenessCopy> = {
   completed: {
-    label: "Completed",
+    label: zh("Completed"),
     tone: "border-emerald-500/30 bg-emerald-500/10 text-emerald-700 dark:text-emerald-300",
     description: "Task reached a terminal state.",
   },
   advanced: {
-    label: "Advanced",
+    label: zh("Advanced"),
     tone: "border-cyan-500/30 bg-cyan-500/10 text-cyan-700 dark:text-cyan-300",
     description: "Run produced concrete evidence of progress.",
   },
@@ -112,12 +113,12 @@ const LIVENESS_COPY: Record<RunLivenessState, LivenessCopy> = {
     description: "Run finished without useful output.",
   },
   blocked: {
-    label: "Blocked",
+    label: zh("Blocked"),
     tone: "border-yellow-500/30 bg-yellow-500/10 text-yellow-700 dark:text-yellow-300",
     description: "Run or task declared a blocker.",
   },
   failed: {
-    label: "Failed",
+    label: zh("Failed"),
     tone: "border-red-500/30 bg-red-500/10 text-red-700 dark:text-red-300",
     description: "Run ended unsuccessfully.",
   },
@@ -717,7 +718,7 @@ export function IssueRunLedgerContent({
               ))}
               {children.active.length > 4 ? (
                 <span className="rounded-md border border-border px-2 py-1 text-(length:--text-micro) text-muted-foreground">
-                  +{children.active.length - 4} more
+                  +{children.active.length - 4} {zh("more")}
                 </span>
               ) : null}
             </div>
@@ -747,7 +748,7 @@ export function IssueRunLedgerContent({
             {latestSilentRun.outputSilence.evaluationIssueIdentifier ? (
               <>
                 {" "}
-                Review{" "}
+                {zh("Review")}{" "}
                 <Link
                   to={`/issues/${latestSilentRun.outputSilence.evaluationIssueIdentifier}`}
                   className="font-medium underline underline-offset-2"
@@ -865,14 +866,14 @@ export function IssueRunLedgerContent({
                 className="space-y-1.5 rounded-lg border border-border/60 px-3 py-2 text-xs text-muted-foreground"
               >
                 <div className="flex flex-wrap items-center gap-1.5">
-                  <span className="font-medium text-foreground">Run</span>
+                  <span className="font-medium text-foreground">{zh("Run")}</span>
                   <Link
                     to={`/agents/${run.agentId}/runs/${run.runId}`}
                     className="min-w-0 max-w-full truncate font-mono text-foreground hover:underline"
                   >
                     {run.runId.slice(0, 8)}
                   </Link>
-                  <span>by {agentName}</span>
+                  <span>{zh("by")} {agentName}</span>
                   {onBehalfOfLabel ? (
                     <span
                       data-testid="run-on-behalf-of"
@@ -946,7 +947,7 @@ export function IssueRunLedgerContent({
                     className="rounded-md border border-border px-1.5 py-0.5 text-(length:--text-micro) text-foreground hover:bg-accent/40"
                     onClick={() => setInspectedRun(run)}
                   >
-                    Inspect run
+                    {zh("Inspect run")}
                   </button>
                 </div>
 
@@ -960,7 +961,7 @@ export function IssueRunLedgerContent({
                     {lastUsefulActionLabel(run)}
                   </div>
                   <div className="min-w-0">
-                    <span className="text-foreground">Stop</span>{" "}
+                    <span className="text-foreground">{zh("Stop")}</span>{" "}
                     {stopStatusLabel(run, stopReason)}
                   </div>
                 </div>

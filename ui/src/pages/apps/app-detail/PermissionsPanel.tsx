@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { Ban, Check, FlaskConical, Loader2, RefreshCw, Search, ShieldQuestion } from "lucide-react";
@@ -127,7 +128,7 @@ function AgentAccessSection({
     <section className="space-y-4 border-t border-border pt-8">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <h2 className="text-sm font-semibold text-foreground">Which agents can use this connection?</h2>
-        {disabled ? <span className="text-xs text-muted-foreground">Saving…</span> : null}
+        {disabled ? <span className="text-xs text-muted-foreground">{zh("Saving…")}</span> : null}
       </div>
 
       {canManage ? (
@@ -250,10 +251,10 @@ export function ActionsSection({
   return (
     <section className="space-y-6 border-t border-border pt-8">
       <div className="flex flex-wrap items-center justify-between gap-2">
-        <h2 className="text-lg font-semibold text-foreground">Actions</h2>
+        <h2 className="text-lg font-semibold text-foreground">{zh("Actions")}</h2>
         {canConfigure ? (
           <div className="flex items-center gap-2">
-            {disabled ? <span className="text-xs text-muted-foreground">Saving…</span> : null}
+            {disabled ? <span className="text-xs text-muted-foreground">{zh("Saving…")}</span> : null}
             <Button
               variant="outline"
               size="sm"
@@ -449,7 +450,7 @@ const PERMISSION_OPTIONS: Array<{
   description: string;
   icon: typeof Ban;
 }> = [
-  { value: "off", label: "Off", description: "Agents cannot run this action.", icon: Ban },
+  { value: "off", label: zh("Off"), description: "Agents cannot run this action.", icon: Ban },
   { value: "ask", label: "Ask first", description: "A human must approve each call.", icon: ShieldQuestion },
   { value: "allowed", label: "Allowed", description: "Runs without approval.", icon: Check },
 ];
@@ -554,7 +555,7 @@ function ActionRow({
           )}
           <Button type="button" size="sm" variant="outline" onClick={() => setTestOpen(true)}>
             <FlaskConical className="mr-1.5 h-3.5 w-3.5" />
-            Test
+            {zh("Test")}
           </Button>
         </div>
       </div>

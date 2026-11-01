@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useNavigate, useParams, useSearchParams } from "@/lib/router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -242,7 +243,7 @@ const TRUST_META: Record<
   { label: string; tip: string; tone: string; Icon: typeof ShieldCheck }
 > = {
   markdown_only: {
-    label: "Markdown only",
+    label: zh("Markdown only"),
     tip: "Contains only markdown and references. No executable content.",
     tone: "text-emerald-600 dark:text-emerald-300 border-emerald-500/30",
     Icon: ShieldCheck,
@@ -292,9 +293,9 @@ const COMPAT_META: Record<
   CatalogTeamCompatibility,
   { label: string; tone: string }
 > = {
-  compatible: { label: "Compatible", tone: "text-emerald-600 dark:text-emerald-300 border-emerald-500/30" },
+  compatible: { label: zh("Compatible"), tone: "text-emerald-600 dark:text-emerald-300 border-emerald-500/30" },
   unknown: { label: "Unknown compat", tone: "text-muted-foreground border-border" },
-  invalid: { label: "Invalid", tone: "text-rose-600 dark:text-rose-300 border-rose-500/30" },
+  invalid: { label: zh("Invalid"), tone: "text-rose-600 dark:text-rose-300 border-rose-500/30" },
 };
 
 function CompatChip({ compatibility }: { compatibility: CatalogTeamCompatibility }) {
@@ -736,7 +737,7 @@ export function TeamDetailPane({
               <ProvenanceBadge team={team} />
               {isInstalled && !outOfDate && (
                 <Badge variant="secondary" className="gap-1 text-(length:--text-nano)">
-                  <CheckCircle2 className="h-3 w-3" /> Installed
+                  <CheckCircle2 className="h-3 w-3" /> {zh("Installed")}
                 </Badge>
               )}
               {outOfDate && (
@@ -744,7 +745,7 @@ export function TeamDetailPane({
                   variant="outline"
                   className="gap-1 border-amber-500/40 bg-amber-500/10 text-(length:--text-nano) text-amber-600 dark:text-amber-300"
                 >
-                  <ChevronUp className="h-3 w-3" /> Update available
+                  <ChevronUp className="h-3 w-3" /> {zh("Update available")}
                 </Badge>
               )}
             </div>
@@ -779,9 +780,9 @@ export function TeamDetailPane({
 
         {/* Summary grid */}
         <div className="grid grid-cols-2 gap-3 xl:grid-cols-4">
-          <MetricTile label="Agents" value={team.counts.agents} Icon={Users2} />
-          <MetricTile label="Projects" value={team.counts.projects} Icon={FolderKanban} />
-          <MetricTile label="Routines" value={team.counts.routines} Icon={Repeat} />
+          <MetricTile label={zh("Agents")} value={team.counts.agents} Icon={Users2} />
+          <MetricTile label={zh("Projects")} value={team.counts.projects} Icon={FolderKanban} />
+          <MetricTile label={zh("Routines")} value={team.counts.routines} Icon={Repeat} />
           <MetricTile label="Required skills" value={skillCount(team)} Icon={Boxes} />
         </div>
 
@@ -794,7 +795,7 @@ export function TeamDetailPane({
         {/* Projects */}
         {team.projectSlugs.length > 0 && (
           <div className="space-y-2">
-            <SectionHeader>Projects</SectionHeader>
+            <SectionHeader>{zh("Projects")}</SectionHeader>
             <ul className="space-y-1">
               {team.projectSlugs.map((slug) => (
                 <li key={slug} className="flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm">
@@ -821,7 +822,7 @@ export function TeamDetailPane({
 
         {/* File inventory */}
         <div className="space-y-2">
-          <SectionHeader>Files</SectionHeader>
+          <SectionHeader>{zh("Files")}</SectionHeader>
           <div className="rounded-md border border-border p-1.5">
             <TeamFileTree
               nodes={tree}
@@ -840,7 +841,7 @@ export function TeamDetailPane({
                   className="text-xs text-muted-foreground hover:text-foreground"
                   onClick={() => onSelectFile(null)}
                 >
-                  Close
+                  {zh("Close")}
                 </button>
               </div>
               <div className="max-h-96 overflow-auto p-3">
@@ -1282,7 +1283,7 @@ export function TeamInstallerDialog({
   const headerTitle = (
     <span className="flex items-center gap-2">
       <Users2 className="h-4 w-4" />
-      Install {team.name}
+      {zh("Install")} {team.name}
     </span>
   );
   const headerDescription =
@@ -1386,15 +1387,15 @@ export function TeamInstallerDialog({
       <div className="flex items-center justify-between gap-3">
         <div>
           {stepIndex > 0 ? (
-            <Button variant="ghost" onClick={goBack}>Back</Button>
+            <Button variant="ghost" onClick={goBack}>{zh("Back")}</Button>
           ) : (
-            <Button variant="ghost" onClick={onClose}>Cancel</Button>
+            <Button variant="ghost" onClick={onClose}>{zh("Cancel")}</Button>
           )}
         </div>
         <div className="flex items-center gap-3">
           {currentStep === "preview" && hasErrors && (
             <span className="text-xs text-rose-600 dark:text-rose-300">
-              Install blocked: {blockedCount} error{blockedCount === 1 ? "" : "s"}
+              Install blocked: {blockedCount} {zh("error")}{blockedCount === 1 ? "" : "s"}
             </span>
           )}
           {currentStep === "preview" && !hasErrors && missingRequiredSecretCount > 0 && (
@@ -1420,13 +1421,13 @@ export function TeamInstallerDialog({
               </Button>
             )
           ) : (
-            <Button onClick={goNext} disabled={!canContinue(currentStep)}>Continue</Button>
+            <Button onClick={goNext} disabled={!canContinue(currentStep)}>{zh("Continue")}</Button>
           )}
         </div>
       </div>
     ) : phase === "error" ? (
       <div className="flex justify-end">
-        <Button variant="ghost" onClick={onClose}>Close</Button>
+        <Button variant="ghost" onClick={onClose}>{zh("Close")}</Button>
       </div>
     ) : null;
 
@@ -1508,9 +1509,9 @@ export function StepTargetManager({
         <div className="space-y-1.5" aria-describedby="target-manager-help">
           <SectionHeader>Target manager</SectionHeader>
           {agents.length === 0 ? <p role="status" className="rounded-md border border-border p-3 text-sm text-muted-foreground">No agents are available to manage this team. Create an agent in your company, then try again.</p> : <Command className="rounded-md border border-border">
-            <CommandInput placeholder="Search agents…" />
+            <CommandInput placeholder={zh("Search agents…")} />
             <CommandList>
-              <CommandEmpty>No agents found.</CommandEmpty>
+              <CommandEmpty>{zh("No agents found.")}</CommandEmpty>
               <CommandGroup>
                 {agents.map((agent) => (
                   <CommandItem
@@ -1661,7 +1662,7 @@ const SKILL_ACTION_META: Record<
   already_in_package: { label: "Bundled in package", tone: "text-emerald-600 dark:text-emerald-300 border-emerald-500/30" },
   catalog_install_required: { label: "Will install from catalog", tone: "text-blue-600 dark:text-blue-300 border-blue-500/30" },
   external_import_required: { label: "Will import from source", tone: "text-amber-600 dark:text-amber-300 border-amber-500/30" },
-  blocked: { label: "Blocked", tone: "text-rose-600 dark:text-rose-300 border-rose-500/30" },
+  blocked: { label: zh("Blocked"), tone: "text-rose-600 dark:text-rose-300 border-rose-500/30" },
 };
 
 export function StepSkillPlan({
@@ -1802,7 +1803,7 @@ export function StepPreview({
   if (loading && !result) {
     return (
       <div className="flex items-center gap-2 py-12 text-sm text-muted-foreground">
-        <Loader2 className="h-4 w-4 animate-spin" /> Preparing preview…
+        <Loader2 className="h-4 w-4 animate-spin" /> {zh("Preparing preview…")}
       </div>
     );
   }
@@ -1814,7 +1815,7 @@ export function StepPreview({
           {error}
         </div>
         <Button variant="outline" onClick={onRetry}>
-          <RotateCcw className="h-4 w-4" /> Retry
+          <RotateCcw className="h-4 w-4" /> {zh("Retry")}
         </Button>
       </div>
     );
@@ -1832,8 +1833,8 @@ export function StepPreview({
       <div className="space-y-2">
         <SectionHeader>Summary</SectionHeader>
         <div className="grid grid-cols-2 gap-2 text-sm sm:grid-cols-4">
-          <SummaryCount label="Agents" value={plan.agentPlans.length} />
-          <SummaryCount label="Projects" value={plan.projectPlans.length} />
+          <SummaryCount label={zh("Agents")} value={plan.agentPlans.length} />
+          <SummaryCount label={zh("Projects")} value={plan.projectPlans.length} />
           <SummaryCount label="Starter tasks" value={plan.issuePlans.length} />
           <SummaryCount label="Required skills" value={result.skillPreparations.length} />
         </div>
@@ -1982,7 +1983,7 @@ export function StepPreview({
                     type={visible ? "text" : "password"}
                     value={secretValues[formKey] ?? ""}
                     onChange={(event) => onSecretChange(formKey, event.target.value)}
-                    placeholder={input.requirement === "required" ? "Required" : "Optional"}
+                    placeholder={input.requirement === "required" ? "Required" : zh("Optional")}
                     aria-label={`${input.key} value`}
                     aria-invalid={missingRequired || undefined}
                     className={cn("h-8 min-w-0", missingRequired && "border-rose-500/60 focus-visible:ring-rose-500/30")}
@@ -2110,7 +2111,7 @@ export function ApplySuccess({
         <li><a className="text-primary hover:underline" href="/activity">View activity log →</a></li>
       </ul>
       <div className="flex justify-end">
-        <Button onClick={onClose}>Done</Button>
+        <Button onClick={onClose}>{zh("Done")}</Button>
       </div>
     </div>
   );
@@ -2151,7 +2152,7 @@ export function TeamRow({
           <Tooltip>
             <TooltipTrigger asChild>
               <span
-                aria-label="Update available"
+                aria-label={zh("Update available")}
                 className="inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-amber-500/40 bg-amber-500/10 text-amber-600 dark:text-amber-300"
               >
                 <ChevronUp className="h-3 w-3" />
@@ -2216,9 +2217,9 @@ export function TeamCard({
       <div className="space-y-0.5">
         <h3 className="text-sm font-semibold leading-snug">{team.name}</h3>
         <p className="text-xs text-muted-foreground">
-          {team.counts.agents} agent{team.counts.agents === 1 ? "" : "s"} ·{" "}
-          {team.counts.projects} project{team.counts.projects === 1 ? "" : "s"} ·{" "}
-          {team.counts.routines} routine{team.counts.routines === 1 ? "" : "s"}
+          {team.counts.agents} {zh("agent")}{team.counts.agents === 1 ? "" : "s"} ·{" "}
+          {team.counts.projects} {zh("project")}{team.counts.projects === 1 ? "" : "s"} ·{" "}
+          {team.counts.routines} {zh("routine")}{team.counts.routines === 1 ? "" : "s"}
         </p>
       </div>
 
@@ -2412,16 +2413,16 @@ export function TeamCatalog() {
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm" className="h-8">
               <Filter className="h-3.5 w-3.5" />
-              {kindFilter === "all" ? "All kinds" : kindFilter === "bundled" ? "Bundled" : "Optional"}
+              {kindFilter === "all" ? "All kinds" : kindFilter === "bundled" ? zh("Bundled") : zh("Optional")}
               <ChevronDown className="h-3.5 w-3.5" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="start">
-            <DropdownMenuLabel>Kind</DropdownMenuLabel>
+            <DropdownMenuLabel>{zh("Kind")}</DropdownMenuLabel>
             <DropdownMenuRadioGroup value={kindFilter} onValueChange={(v) => setFilterParam("kind", v)}>
               <DropdownMenuRadioItem value="all">All kinds</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="bundled">Bundled</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="optional">Optional</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="bundled">{zh("Bundled")}</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="optional">{zh("Optional")}</DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -2430,14 +2431,14 @@ export function TeamCatalog() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm" className="h-8">
-                {categoryFilter ? `Category · ${titleCase(categoryFilter)}` : "All categories"}
+                {categoryFilter ? `Category · ${titleCase(categoryFilter)}` : zh("All categories")}
                 <ChevronDown className="h-3.5 w-3.5" />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">
-              <DropdownMenuLabel>Category</DropdownMenuLabel>
+              <DropdownMenuLabel>{zh("Category")}</DropdownMenuLabel>
               <DropdownMenuRadioGroup value={categoryFilter} onValueChange={(v) => setFilterParam("category", v)}>
-                <DropdownMenuRadioItem value="">All categories</DropdownMenuRadioItem>
+                <DropdownMenuRadioItem value="">{zh("All categories")}</DropdownMenuRadioItem>
                 {categories.map((cat) => (
                   <DropdownMenuRadioItem key={cat} value={cat}>{titleCase(cat)}</DropdownMenuRadioItem>
                 ))}
@@ -2449,7 +2450,7 @@ export function TeamCatalog() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="sm" className="h-8">
-              {riskFilter === "any" ? "Any risk" : riskFilter === "safe" ? "Safe only" : riskFilter === "has_warnings" ? "Has warnings" : "Blocked"}
+              {riskFilter === "any" ? "Any risk" : riskFilter === "safe" ? "Safe only" : riskFilter === "has_warnings" ? "Has warnings" : zh("Blocked")}
               <ChevronDown className="h-3.5 w-3.5" />
             </Button>
           </DropdownMenuTrigger>
@@ -2459,7 +2460,7 @@ export function TeamCatalog() {
               <DropdownMenuRadioItem value="any">Any risk</DropdownMenuRadioItem>
               <DropdownMenuRadioItem value="safe">Safe only</DropdownMenuRadioItem>
               <DropdownMenuRadioItem value="has_warnings">Has warnings</DropdownMenuRadioItem>
-              <DropdownMenuRadioItem value="blocked">Blocked</DropdownMenuRadioItem>
+              <DropdownMenuRadioItem value="blocked">{zh("Blocked")}</DropdownMenuRadioItem>
             </DropdownMenuRadioGroup>
             {anyFilterActive && (
               <>
@@ -2503,7 +2504,7 @@ export function TeamCatalog() {
                 Failed to load team catalog.
               </div>
               <Button variant="outline" size="sm" className="mt-3" onClick={() => catalogQuery.refetch()}>
-                <RotateCcw className="h-3.5 w-3.5" /> Retry
+                <RotateCcw className="h-3.5 w-3.5" /> {zh("Retry")}
               </Button>
             </div>
           ) : teams.length === 0 ? (
@@ -2535,7 +2536,7 @@ export function TeamCatalog() {
               {grouped.optional.length > 0 && (
                 <>
                   <div className="px-3 py-2 text-(length:--text-micro) font-semibold uppercase tracking-wide text-muted-foreground">
-                    Optional · {grouped.optional.length}
+                    {zh("Optional ·")} {grouped.optional.length}
                   </div>
                   {grouped.optional.map((team) => (
                     <TeamRow
@@ -2550,7 +2551,7 @@ export function TeamCatalog() {
               {grouped.installed.length > 0 && (
                 <>
                   <div className="px-3 py-2 text-(length:--text-micro) font-semibold uppercase tracking-wide text-muted-foreground">
-                    Installed · {grouped.installed.length}
+                    {zh("Installed ·")} {grouped.installed.length}
                   </div>
                   {grouped.installed.map((team) => (
                     <TeamRow

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Loader2, Plus, Trash2, Users } from "lucide-react";
@@ -354,7 +355,7 @@ function AgentRow({
             className="h-8 rounded-md border border-border bg-background px-2 text-xs text-foreground disabled:opacity-60"
           >
             <option value={LATEST_VALUE}>
-              Latest{latestRevision !== null ? ` (v${latestRevision})` : ""}
+              {zh("Latest")}{latestRevision !== null ? ` (v${latestRevision})` : ""}
             </option>
             {versions.map((version) => (
               <option key={version.id} value={version.id}>
@@ -387,10 +388,10 @@ function AgentRow({
               disabled={busy}
               aria-label={`Confirm removing this skill from ${agent.name}`}
             >
-              {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : "Remove"}
+              {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : zh("Remove")}
             </Button>
             <Button variant="ghost" size="sm" onClick={onCancelRemove} disabled={busy}>
-              Cancel
+              {zh("Cancel")}
             </Button>
           </div>
         ) : (
@@ -441,7 +442,7 @@ function AddAgentPicker({
       loading={loading}
       loadingMessage="Loading agents..."
       placeholder="Add agent…"
-      searchPlaceholder="Search agents..."
+      searchPlaceholder={zh("Search agents...")}
       emptyMessage="All eligible agents already have this skill."
       disabled={disabled}
       onValueChange={(_value, option) => {

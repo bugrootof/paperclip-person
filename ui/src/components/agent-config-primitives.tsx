@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState, useRef, useEffect, useCallback } from "react";
 import {
   Tooltip,
@@ -81,7 +82,7 @@ export function HintIcon({ text }: { text: string }) {
         </button>
       </TooltipTrigger>
       <TooltipContent side="top" className="max-w-xs">
-        {text}
+        {zh(text)}
       </TooltipContent>
     </Tooltip>
   );
@@ -91,7 +92,7 @@ export function Field({ label, hint, children }: { label: string; hint?: string;
   return (
     <div>
       <div className="flex items-center gap-1.5 mb-1">
-        <label className="text-xs text-muted-foreground">{label}</label>
+        <label className="text-xs text-muted-foreground">{zh(label)}</label>
         {hint && <HintIcon text={hint} />}
       </div>
       {children}
@@ -115,7 +116,7 @@ export function ToggleField({
   return (
     <div className="flex items-center justify-between">
       <div className="flex items-center gap-1.5">
-        <span className="text-xs text-muted-foreground">{label}</span>
+        <span className="text-xs text-muted-foreground">{zh(label)}</span>
         {hint && <HintIcon text={hint} />}
       </div>
       {/* Gallery feedback r3: was a hand-rolled h-5 w-9 pill with a bg-green-600
@@ -123,7 +124,7 @@ export function ToggleField({
           canonical ToggleSwitch (status-green on-state), DESIGN.md principle 1. */}
       <ToggleSwitch
         data-testid={toggleTestId}
-        aria-label={label}
+        aria-label={zh(label)}
         checked={checked}
         onCheckedChange={onChange}
       />
@@ -158,7 +159,7 @@ export function ToggleWithNumber({
     <div className="space-y-2">
       <div className="flex items-center justify-between gap-3">
         <div className="flex items-center gap-1.5">
-          <span className="text-xs text-muted-foreground">{label}</span>
+          <span className="text-xs text-muted-foreground">{zh(label)}</span>
           {hint && <HintIcon text={hint} />}
         </div>
         <ToggleSwitch
@@ -208,7 +209,7 @@ export function CollapsibleSection({
       >
         {open ? <ChevronDown className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
         {icon}
-        {title}
+        {zh(title)}
       </button>
       {open && <div className="px-4 pb-3">{children}</div>}
     </div>
@@ -429,8 +430,8 @@ export function ChoosePathButton() {
             <section className="space-y-1.5">
               <p className="font-medium">Terminal fallback (macOS/Linux)</p>
               <ol className="list-decimal space-y-1 pl-5 text-muted-foreground">
-                <li>Run <code>cd /path/to/folder</code>.</li>
-                <li>Run <code>pwd</code>.</li>
+                <li>{zh("Run")} <code>cd /path/to/folder</code>.</li>
+                <li>{zh("Run")} <code>pwd</code>.</li>
                 <li>Copy the output and paste it into the path input.</li>
               </ol>
             </section>
@@ -453,7 +454,7 @@ export function InlineField({ label, hint, children }: { label: string; hint?: s
   return (
     <div className="flex items-center gap-3">
       <div className="flex items-center gap-1.5 shrink-0">
-        <label className="text-xs text-muted-foreground">{label}</label>
+        <label className="text-xs text-muted-foreground">{zh(label)}</label>
         {hint && <HintIcon text={hint} />}
       </div>
       <div className="w-24 ml-auto">{children}</div>

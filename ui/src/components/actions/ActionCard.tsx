@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import type { ReactNode } from "react";
 import { Clock, Pencil, ShieldCheck } from "lucide-react";
 import type { ToolRiskLevel } from "@paperclipai/shared";
@@ -154,8 +155,8 @@ function bindingRows(binding: ActionCardBinding, isStale: boolean): BindingRow[]
         </span>
       ),
     },
-    { label: "Connection", value: binding.connection, mono: true },
-    { label: "Catalog", value: catalogValue, mono: !isStale },
+    { label: zh("Connection"), value: binding.connection, mono: true },
+    { label: zh("Catalog"), value: catalogValue, mono: !isStale },
     {
       label: "Payload",
       value: (
@@ -203,12 +204,12 @@ export function ActionCard({
       className={mobile ? "w-full" : undefined}
       title={isStale ? "Re-issue the request before approving — the catalog hash changed." : undefined}
     >
-      Approve
+      {zh("Approve")}
     </Button>
   );
   const denyButton = (
     <Button size="sm" variant="outline" onClick={onDeny} className={mobile ? "w-full" : undefined}>
-      Deny
+      {zh("Deny")}
     </Button>
   );
   const editButton = (
@@ -266,7 +267,7 @@ export function ActionCard({
 
         {/* JSON input */}
         <div className="space-y-1">
-          <p className="text-xs font-medium uppercase tracking-normal text-muted-foreground">Input</p>
+          <p className="text-xs font-medium uppercase tracking-normal text-muted-foreground">{zh("Input")}</p>
           <pre className="overflow-x-auto rounded-md border border-border bg-muted/40 p-3 font-mono text-xs leading-relaxed text-foreground">
             {json}
           </pre>

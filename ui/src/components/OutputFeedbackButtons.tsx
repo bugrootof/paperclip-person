@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useState } from "react";
 import type { FeedbackDataSharingPreference, FeedbackVoteValue } from "@paperclipai/shared";
 import { Button } from "@/components/ui/button";
@@ -161,7 +162,7 @@ export function OutputFeedbackButtons({
                 setDownvoteAllowSharing(undefined);
               }}
             >
-              Dismiss
+              {zh("Dismiss")}
             </Button>
             <Button
               type="button"
@@ -174,7 +175,7 @@ export function OutputFeedbackButtons({
                 });
               }}
             >
-              {isSaving ? "Saving..." : "Save note"}
+              {isSaving ? zh("Saving...") : "Save note"}
             </Button>
           </div>
         </div>
@@ -202,9 +203,9 @@ export function OutputFeedbackButtons({
               This vote is always saved locally.
             </p>
             <p>
-              Choose <span className="font-medium text-foreground">Always allow</span> to share
+              Choose <span className="font-medium text-foreground">{zh("Always allow")}</span> to share
               this vote and future voted AI outputs. Choose{" "}
-              <span className="font-medium text-foreground">Don't allow</span> to keep this vote
+              <span className="font-medium text-foreground">{zh("Don't allow")}</span> to keep this vote
               and future votes local.
             </p>
             <p>
@@ -217,7 +218,7 @@ export function OutputFeedbackButtons({
                 rel="noreferrer"
                 className="inline-flex text-sm text-foreground underline underline-offset-4"
               >
-                Read our terms of service
+                {zh("Read our terms of service")}
               </a>
             ) : null}
           </div>
@@ -238,7 +239,7 @@ export function OutputFeedbackButtons({
                 );
               }}
             >
-              {isSaving ? "Saving..." : "Don't allow"}
+              {isSaving ? zh("Saving...") : zh("Don't allow")}
             </Button>
             <Button
               type="button"
@@ -258,7 +259,7 @@ export function OutputFeedbackButtons({
                 );
               }}
             >
-              {isSaving ? "Saving..." : "Always allow"}
+              {isSaving ? zh("Saving...") : zh("Always allow")}
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { ExecutionWorkspace } from "@paperclipai/shared";
 import { Link } from "@/lib/router";
@@ -93,7 +94,7 @@ export function ExecutionWorkspaceCloseDialog({
         <DialogHeader>
           <DialogTitle>{actionLabel}</DialogTitle>
           <DialogDescription className="break-words">
-            Archive <span className="font-medium text-foreground">{workspaceName}</span> and clean up any owned workspace
+            {zh("Archive")} <span className="font-medium text-foreground">{workspaceName}</span> and clean up any owned workspace
             artifacts. Paperclip keeps the workspace record and task history, but removes it from active workspace views.
           </DialogDescription>
         </DialogHeader>
@@ -161,7 +162,7 @@ export function ExecutionWorkspaceCloseDialog({
 
             {readiness.warnings.length > 0 ? (
               <section className="space-y-2">
-                <h3 className="text-sm font-medium">Warnings</h3>
+                <h3 className="text-sm font-medium">{zh("Warnings")}</h3>
                 <ul className="space-y-2 text-sm text-muted-foreground">
                   {readiness.warnings.map((warning) => (
                     <li key={warning} className="break-words rounded-lg border border-amber-500/20 bg-amber-500/5 px-3 py-2">
@@ -178,16 +179,16 @@ export function ExecutionWorkspaceCloseDialog({
                 <div className="rounded-xl border border-border bg-background px-4 py-3 text-sm">
                   <div className="grid gap-2 sm:grid-cols-2">
                     <div>
-                      <div className="text-xs uppercase tracking-(--tracking-eyebrow) text-muted-foreground">Branch</div>
-                      <div className="font-mono text-xs">{readiness.git.branchName ?? "Unknown"}</div>
+                      <div className="text-xs uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{zh("Branch")}</div>
+                      <div className="font-mono text-xs">{readiness.git.branchName ?? zh("Unknown")}</div>
                     </div>
                     <div>
-                      <div className="text-xs uppercase tracking-(--tracking-eyebrow) text-muted-foreground">Base ref</div>
-                      <div className="font-mono text-xs">{readiness.git.baseRef ?? "Not set"}</div>
+                      <div className="text-xs uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{zh("Base ref")}</div>
+                      <div className="font-mono text-xs">{readiness.git.baseRef ?? zh("Not set")}</div>
                     </div>
                     <div>
                       <div className="text-xs uppercase tracking-(--tracking-eyebrow) text-muted-foreground">Merged into base</div>
-                      <div>{readiness.git.isMergedIntoBase == null ? "Unknown" : readiness.git.isMergedIntoBase ? "Yes" : "No"}</div>
+                      <div>{readiness.git.isMergedIntoBase == null ? zh("Unknown") : readiness.git.isMergedIntoBase ? zh("Yes") : zh("No")}</div>
                     </div>
                     <div>
                       <div className="text-xs uppercase tracking-(--tracking-eyebrow) text-muted-foreground">Ahead / behind</div>
@@ -283,7 +284,7 @@ export function ExecutionWorkspaceCloseDialog({
 
             {readiness.git?.repoRoot ? (
               <div className="break-words text-xs text-muted-foreground">
-                Repo root: <span className="font-mono break-all">{readiness.git.repoRoot}</span>
+                {zh("Repo root:")} <span className="font-mono break-all">{readiness.git.repoRoot}</span>
                 {readiness.git.workspacePath ? (
                   <>
                     {" · "}Workspace path: <span className="font-mono break-all">{readiness.git.workspacePath}</span>
@@ -304,7 +305,7 @@ export function ExecutionWorkspaceCloseDialog({
             onClick={() => onOpenChange(false)}
             disabled={closeWorkspace.isPending}
           >
-            Cancel
+            {zh("Cancel")}
           </Button>
           <Button
             variant={currentStatus === "cleanup_failed" ? "default" : "destructive"}

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useId, useState, type ReactNode } from "react";
 import {
   Check,
@@ -106,7 +107,7 @@ function ResearchDetails({ item }: { item: TaskChatProviderActivityItem }) {
               className="mt-1.5 text-muted-foreground hover:text-foreground"
               onClick={() => setShowAllResults(true)}
             >
-              Show {hiddenResultCount} more {hiddenResultCount === 1 ? "result" : "results"}
+              {zh("Show")} {hiddenResultCount} {zh("more")} {hiddenResultCount === 1 ? "result" : "results"}
             </button>
           ) : showAllResults && item.links.length > COMPACT_RESEARCH_RESULT_LIMIT ? (
             <button
@@ -200,7 +201,7 @@ function WorkspaceChangeDetails({ item }: { item: TaskChatWorkspaceChangeItem })
           </li>
         ))}
       </ul>
-      {hiddenFileCount > 0 ? <p className="mt-1.5 text-muted-foreground">{hiddenFileCount} more {hiddenFileCount === 1 ? "file" : "files"} not shown</p> : null}
+      {hiddenFileCount > 0 ? <p className="mt-1.5 text-muted-foreground">{hiddenFileCount} {zh("more")} {hiddenFileCount === 1 ? "file" : "files"} not shown</p> : null}
     </div>
   );
 }
@@ -292,12 +293,12 @@ export function TaskChatProtocolActivityRow({ item }: { item: TaskChatProtocolIt
       <div className="flex min-w-0 flex-col gap-1.5 py-1 text-xs" data-testid="task-chat-protocol-activity-row" data-activity-family="provider_notice">
         <div className="flex items-center gap-2 text-muted-foreground">
           <NoticeIcon className="size-(--sz-protocol-notice-icon) shrink-0" aria-hidden data-testid="task-chat-protocol-activity-icon" />
-          <span className="font-medium">{severity === "error" ? "Error" : severity === "info" ? "Provider update" : "Warning"}</span>
+          <span className="font-medium">{severity === "error" ? "Error" : severity === "info" ? "Provider update" : zh("Warning")}</span>
         </div>
         <p className="min-w-0 whitespace-pre-wrap break-words text-foreground">{summary}</p>
         {item.details.some(detail => detail.label !== "Summary") ? (
           <details className="text-muted-foreground">
-            <summary className="cursor-pointer">Details</summary>
+            <summary className="cursor-pointer">{zh("Details")}</summary>
             <DetailList details={item.details.filter(detail => detail.label !== "Summary")} />
           </details>
         ) : null}

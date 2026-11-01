@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { TextAttachmentContext } from "@/context/TextAttachmentContext";
 import { isTextAttachment } from "@/lib/issue-attachments";
 import { getAttachmentArtifactWorkProductMetadata } from "@paperclipai/shared";
@@ -39,19 +40,19 @@ export function stateChipFor(
   reviewState: IssueWorkProduct["reviewState"] | string | null | undefined,
 ): StateChip | null {
   if (reviewState === "changes_requested" || status === "changes_requested") {
-    return { label: "Changes requested", tone: "failure" };
+    return { label: zh("Changes requested"), tone: "failure" };
   }
   if (reviewState === "needs_board_review" || status === "ready_for_review") {
-    return { label: "Review", tone: "review" };
+    return { label: zh("Review"), tone: "review" };
   }
   if (["failed", "unhealthy", "down"].includes(status ?? "")) {
-    return { label: "Failed", tone: "failure" };
+    return { label: zh("Failed"), tone: "failure" };
   }
   if (["pending", "opening"].includes(status ?? "")) {
     return { label: status === "opening" ? "Opening" : "Pending", tone: "progress", dashed: true };
   }
   if (kind === "pull_request" && (status === "active" || status === "open")) {
-    return { label: "Open", tone: "progress" };
+    return { label: zh("Open"), tone: "progress" };
   }
   if (kind === "pull_request" && status === "draft") {
     return { label: "Draft", tone: "review" };
@@ -307,7 +308,7 @@ export function RichWorkProductCard({ workProduct, href, variant = "card" }: Ric
             aria-label={`Open in tab: ${workProduct.title}`}
             className="inline-flex items-center gap-1 text-xs font-medium text-foreground after:absolute after:inset-0 after:rounded-md focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-ring"
           >
-            {compact ? null : <span className="hidden @sm:inline">Open in tab</span>}<FileText aria-hidden className="h-3 w-3" />
+            {compact ? null : <span className="hidden @sm:inline">{zh("Open in tab")}</span>}<FileText aria-hidden className="h-3 w-3" />
           </button>
         ) : null}
         {mediaPath ? (
@@ -322,7 +323,7 @@ export function RichWorkProductCard({ workProduct, href, variant = "card" }: Ric
           <button
             type="button"
             onClick={() => setDetailsOpen((open) => !open)}
-            aria-label={`${detailsOpen ? "Hide" : "Show"} details: ${workProduct.title}`}
+            aria-label={`${detailsOpen ? zh("Hide") : zh("Show")} details: ${workProduct.title}`}
             aria-expanded={detailsOpen}
             className="inline-flex cursor-pointer items-center gap-1 text-xs font-medium text-foreground after:absolute after:inset-0 after:rounded-md focus-visible:outline-none focus-visible:after:ring-2 focus-visible:after:ring-ring"
           >

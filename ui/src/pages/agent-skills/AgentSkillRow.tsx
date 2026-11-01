@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import type { ReactNode } from "react";
 import { Lock, type LucideIcon } from "lucide-react";
 import { Link } from "@/lib/router";
@@ -128,7 +129,7 @@ export function AgentSkillRow({
           checked={checked}
           disabled={disabled}
           onCheckedChange={(next) => onCheckedChange?.(next)}
-          aria-label={`${checked ? "Disable" : "Enable"} ${data.name}`}
+          aria-label={`${checked ? zh("Disable") : zh("Enable")} ${data.name}`}
         />
       );
       if (disabled && disabledReason) {

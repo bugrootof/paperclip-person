@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -59,7 +60,7 @@ export function PendingSendNotice({
           </Button>
         ) : null}
         <Button type="button" size="sm" variant="ghost" disabled={resending} onClick={onCancel}>
-          Cancel
+          {zh("Cancel")}
         </Button>
       </div>
     </div>

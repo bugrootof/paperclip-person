@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import type { AgentPermissions, TrustPreset } from "@paperclipai/shared";
 import { Lock, ShieldAlert } from "lucide-react";
@@ -108,7 +109,7 @@ export function TrustPresetSection({
 
   return (
     <div>
-      <h3 className="mb-3 text-sm font-medium">Trust</h3>
+      <h3 className="mb-3 text-sm font-medium">{zh("Trust")}</h3>
       <div className="rounded-lg border border-border p-4 space-y-3">
         <Field label="Trust preset" hint="Choose how broadly this agent can read and act on Paperclip work objects.">
           <select
@@ -160,7 +161,7 @@ export function TrustPresetSection({
                         onChange={(event) => setTargetType(event.target.value as LowTrustBoundaryTargetType)}
                         disabled={disabled}
                       >
-                        <option value="project">Project</option>
+                        <option value="project">{zh("Project")}</option>
                         <option value="root_issue">Root issue</option>
                         {allowSingleIssue && <option value="issue">Issue</option>}
                       </select>
@@ -174,7 +175,7 @@ export function TrustPresetSection({
                       >
                         <option value="">
                           {candidatesLoading
-                            ? "Loading…"
+                            ? zh("Loading…")
                             : targetCandidates.length === 0
                               ? `No ${targetType === "project" ? "projects" : "issues"} available`
                               : "Select boundary"}
@@ -232,7 +233,7 @@ export function TrustPresetSection({
                 <div className="divide-y divide-border/60 text-foreground">
                   <PolicyRow label="Preset" value="Low-trust review v1" />
                   <PolicyRow label="Raw output" value="Quarantined from higher-trust agents" />
-                  <PolicyRow label="Projects" value={formatCount(boundary?.projectIds, "project", "projects")} />
+                  <PolicyRow label={zh("Projects")} value={formatCount(boundary?.projectIds, "project", "projects")} />
                   <PolicyRow label="Root issue" value={boundary?.rootIssueId ? boundary.rootIssueId.slice(0, 8) : "-"} />
                   <PolicyRow label="Explicit issues" value={formatCount(boundary?.issueIds, "issue", "issues")} />
                   <PolicyRow label="Allowed agents" value={formatCount(boundary?.allowedAgentIds, "agent", "agents")} />

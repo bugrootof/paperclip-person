@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { type ReactNode } from "react";
 import { ArrowUpDown, Check, Layers, ListFilter } from "lucide-react";
 import {
@@ -70,9 +71,9 @@ export function DecisionsToolbar({
             variant="outline"
             size="icon"
             className={cn("h-8 w-8 shrink-0", activeFilterCount > 0 && "bg-accent")}
-            title="Filter"
+            title={zh("Filter")}
             data-active={activeFilterCount > 0}
-            aria-label="Filter"
+            aria-label={zh("Filter")}
           >
             <ListFilter className="h-3.5 w-3.5" />
           </Button>
@@ -89,9 +90,9 @@ export function DecisionsToolbar({
             variant="outline"
             size="icon"
             className={cn("h-8 w-8 shrink-0", groupBy !== "none" && "bg-accent")}
-            title="Group"
+            title={zh("Group")}
             data-active={groupBy !== "none"}
-            aria-label="Group"
+            aria-label={zh("Group")}
           >
             <Layers className="h-3.5 w-3.5" />
           </Button>
@@ -123,8 +124,8 @@ export function DecisionsToolbar({
             variant="outline"
             size="icon"
             className="h-8 w-8 shrink-0"
-            title="Sort"
-            aria-label="Sort"
+            title={zh("Sort")}
+            aria-label={zh("Sort")}
           >
             <ArrowUpDown className="h-3.5 w-3.5" />
           </Button>
@@ -172,20 +173,20 @@ function FilterMenu({
   return (
     <div className="max-h-(--sz-70vh) overflow-y-auto">
       <div className="flex items-center justify-between px-3 py-2">
-        <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">Filter</span>
+        <span className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{zh("Filter")}</span>
         {hasActive && (
           <button
             type="button"
             className="text-xs text-muted-foreground hover:text-foreground"
             onClick={() => onChange(defaultAttentionFilterState)}
           >
-            Clear
+            {zh("Clear")}
           </button>
         )}
       </div>
 
       {options.sourceKinds.length > 1 && (
-        <FilterSection title="Type">
+        <FilterSection title={zh("Type")}>
           {options.sourceKinds.map((kind) => (
             <FilterRow
               key={kind}
@@ -211,7 +212,7 @@ function FilterMenu({
       )}
 
       {(options.projects.length > 0 || options.hasNoProject) && (
-        <FilterSection title="Project">
+        <FilterSection title={zh("Project")}>
           {options.projects.map((project) => (
             <FilterRow
               key={project.id}
@@ -222,7 +223,7 @@ function FilterMenu({
           ))}
           {options.hasNoProject && (
             <FilterRow
-              label="No project"
+              label={zh("No project")}
               checked={filters.projectIds.includes(NO_GROUP_SENTINEL)}
               onToggle={() => toggle("projectIds", NO_GROUP_SENTINEL)}
             />
@@ -231,7 +232,7 @@ function FilterMenu({
       )}
 
       {(options.workspaces.length > 0 || options.hasNoWorkspace) && (
-        <FilterSection title="Workspace">
+        <FilterSection title={zh("Workspace")}>
           {options.workspaces.map((workspace) => (
             <FilterRow
               key={workspace.id}

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { Link } from "@/lib/router";
 import type { ExecutionWorkspace } from "@paperclipai/shared";
 import { Button } from "@/components/ui/button";
@@ -66,7 +67,7 @@ export function ProjectWorkspaceSummaryCard({
                 {workspaceKindLabel(summary.kind)}
               </Badge>
               <Badge variant="outline" className="border-border/70 bg-background px-2.5 py-1 text-muted-foreground">
-                Updated {timeAgo(summary.lastUpdatedAt)}
+                {zh("Updated")} {timeAgo(summary.lastUpdatedAt)}
               </Badge>
               {summary.serviceCount > 0 ? (
                 <Badge variant="outline"
@@ -152,7 +153,7 @@ export function ProjectWorkspaceSummaryCard({
               <div className="flex items-start gap-2">
                 <GitBranch className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
                 <div className="min-w-0 flex-1">
-                  <div className="text-(length:--text-micro) uppercase tracking-(--tracking-eyebrow) text-muted-foreground">Branch</div>
+                  <div className="text-(length:--text-micro) uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{zh("Branch")}</div>
                   <div className="flex items-start gap-2">
                     <CopyText
                       text={summary.branchName}
@@ -212,7 +213,7 @@ export function ProjectWorkspaceSummaryCard({
               <div className="flex items-start gap-2">
                 <ExternalLink className="mt-0.5 h-3.5 w-3.5 shrink-0 text-muted-foreground" />
                 <div className="min-w-0">
-                  <div className="text-(length:--text-micro) uppercase tracking-(--tracking-eyebrow) text-muted-foreground">Service</div>
+                  <div className="text-(length:--text-micro) uppercase tracking-(--tracking-eyebrow) text-muted-foreground">{zh("Service")}</div>
                   <a
                     href={summary.primaryServiceUrl}
                     target="_blank"
@@ -246,7 +247,7 @@ export function ProjectWorkspaceSummaryCard({
                   to={workspaceHref}
                   className="inline-flex items-center rounded-full border border-border bg-background px-2.5 py-1 text-xs text-muted-foreground hover:text-foreground hover:underline"
                 >
-                  +{hiddenIssueCount} more
+                  +{hiddenIssueCount} {zh("more")}
                 </Link>
               ) : null}
             </div>

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState } from "react";
 import { aggregatorManagementUrl } from "@paperclipai/shared/aggregator-apps";
 import { Label } from "@/components/ui/label";
@@ -50,7 +51,7 @@ export function AggregatorConnectDialog({ app, connections, initialProvider, onC
         const accounts = connections[route.provider] ?? [];
         const name = remoteMcpProviders[route.provider].name;
         const status = accounts.some((connection) => connection.status === "active" && connection.enabled && !isToolConnectionAttentionHealth(connection.healthStatus))
-          ? "Already connected" : accounts.some((connection) => connection.status === "draft") ? "Setup incomplete" : accounts.length ? "Needs attention" : "Set up a connection";
+          ? "Already connected" : accounts.some((connection) => connection.status === "draft") ? "Setup incomplete" : accounts.length ? zh("Needs attention") : "Set up a connection";
         return <button type="button" key={route.provider} onClick={() => choose(route)}
           className="flex w-full items-center gap-3 rounded-lg border border-border px-4 py-3 text-left hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
           <AppLogo name={name} brandKey={route.provider} size={24} />
@@ -68,9 +69,9 @@ export function AggregatorConnectDialog({ app, connections, initialProvider, onC
 
       </div>}
       {selected?.provider !== "composio" ? <DialogFooter className="sm:items-center sm:justify-between">
-        <Button variant="ghost" onClick={selected && canChooseProvider ? () => setSelected(null) : onClose}>{selected && canChooseProvider ? "Back" : "Cancel"}</Button>
+        <Button variant="ghost" onClick={selected && canChooseProvider ? () => setSelected(null) : onClose}>{selected && canChooseProvider ? zh("Back") : zh("Cancel")}</Button>
         {selected ? <div className="flex flex-wrap items-center gap-3">
-          {managementUrl ? <Button asChild><a href={managementUrl} target="_blank" rel="noopener noreferrer" onClick={onClose}>Continue<ExternalLink className="size-4" /></a></Button> : null}
+          {managementUrl ? <Button asChild><a href={managementUrl} target="_blank" rel="noopener noreferrer" onClick={onClose}>{zh("Continue")}<ExternalLink className="size-4" /></a></Button> : null}
           <Button variant="link" size="sm" className="h-auto p-0 text-xs text-muted-foreground hover:text-foreground" onClick={() => { onNavigate(`${aggregatorAppConnectHref(selected)}&new=1`); onClose(); }}>Connect a new account</Button>
         </div> : null}
       </DialogFooter> : null}

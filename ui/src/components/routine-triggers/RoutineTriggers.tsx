@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useCallback, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { CalendarClock, Plus, Webhook } from "lucide-react";
@@ -163,7 +164,7 @@ export function RoutineTriggers() {
         >
           <span className="flex-1">
             {trigger.kind === "schedule"
-              ? "Schedule"
+              ? zh("Schedule")
               : trigger.kind === "api"
                 ? "API trigger"
                 : "Webhook"}{" "}
@@ -184,7 +185,7 @@ export function RoutineTriggers() {
               })
             }
           >
-            Undo
+            {zh("Undo")}
           </Button>
         </div>
       ))}
@@ -198,7 +199,7 @@ export function RoutineTriggers() {
             </div>
           ))}
           <Button variant="outline" onClick={() => ctx.setSecretMessage(null)}>
-            Done
+            {zh("Done")}
           </Button>
         </div>
       )}
@@ -227,7 +228,7 @@ export function RoutineTriggers() {
             }
             title={
               trigger.kind === "schedule"
-                ? (describeCron(trigger.cronExpression) ?? "Schedule")
+                ? (describeCron(trigger.cronExpression) ?? zh("Schedule"))
                 : trigger.kind === "api"
                   ? "API trigger"
                   : trigger.signingMode === "github_hmac"
@@ -496,7 +497,7 @@ function ScheduleSettings({
           Save schedule
         </Button>
         <Button variant="outline" onClick={onCancel}>
-          Cancel
+          {zh("Cancel")}
         </Button>
       </div>
     </fieldset>

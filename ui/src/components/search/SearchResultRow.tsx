@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AgentAvatar } from "../AgentAvatar";
 import { AgentIdentity } from "../AgentIdentity";
 import { memo, type ComponentType, type SVGProps } from "react";
@@ -18,7 +19,7 @@ const SNIPPET_STYLES: Record<string, SnippetStyle> = {
   comment: { Icon: MessageSquare, label: "Comment" },
   document: { Icon: FileText, label: "Doc" },
   artifact: { Icon: Paperclip, label: "Artifact" },
-  description: { Icon: Quote, label: "Description" },
+  description: { Icon: Quote, label: zh("Description") },
 };
 
 function snippetStyle(field: string, fallbackLabel: string): SnippetStyle {

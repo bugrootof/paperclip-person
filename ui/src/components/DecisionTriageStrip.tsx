@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AlarmClock, CalendarClock, ChevronDown, Loader2, Plus, UserPlus, X } from "lucide-react";
@@ -239,7 +240,7 @@ export function DecisionTriageStrip({ item, companyId, agents }: DecisionTriageS
               disabled={pending}
               onClick={() => setSnooze.mutate(null)}
             >
-              Clear
+              {zh("Clear")}
             </button>
           </span>
         ) : (
@@ -367,11 +368,11 @@ function QueuePicker({
             />
             <div className="flex justify-end gap-1">
               <Button type="button" variant="ghost" size="xs" onClick={() => setCreating(false)}>
-                Cancel
+                {zh("Cancel")}
               </Button>
               <Button type="button" size="xs" disabled={!title.trim() || create.isPending} onClick={() => create.mutate(title)}>
                 {create.isPending && <Loader2 className="h-3 w-3 animate-spin" />}
-                Create
+                {zh("Create")}
               </Button>
             </div>
           </div>

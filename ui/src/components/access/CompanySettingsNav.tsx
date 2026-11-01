@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { PageTabBar } from "@/components/PageTabBar";
 import { Tabs } from "@/components/ui/tabs";
 import { useCloudInstance } from "@/hooks/useCloudInstance";
@@ -6,18 +7,18 @@ import { INSTANCE_SETTINGS_PATH_PREFIX } from "@/lib/instance-settings";
 import { useLocation, useNavigate } from "@/lib/router";
 
 const items = [
-  { value: "general", label: "General", href: "/company/settings" },
-  { value: "export", label: "Export", href: "/company/export" },
-  { value: "import", label: "Import", href: "/company/import" },
-  { value: "members", label: "Members", href: "/company/settings/members" },
-  { value: "secrets", label: "Secrets", href: "/company/settings/secrets" },
-  { value: "instance-profile", label: "Profile", href: `${INSTANCE_SETTINGS_PATH_PREFIX}/profile` },
-  { value: "instance-environments", label: "Environments", href: `${INSTANCE_SETTINGS_PATH_PREFIX}/environments` },
-  { value: "connections", label: "Connections", href: "/company/settings/connections" },
-  { value: "instance-access", label: "Access", href: `${INSTANCE_SETTINGS_PATH_PREFIX}/access` },
-  { value: "instance-experimental", label: "Experimental", href: `${INSTANCE_SETTINGS_PATH_PREFIX}/experimental` },
-  { value: "instance-plugins", label: "Plugins", href: `${INSTANCE_SETTINGS_PATH_PREFIX}/plugins` },
-  { value: "instance-adapters", label: "Adapters", href: `${INSTANCE_SETTINGS_PATH_PREFIX}/adapters` },
+  { value: "general", label: zh("General"), href: "/company/settings" },
+  { value: "export", label: zh("Export"), href: "/company/export" },
+  { value: "import", label: zh("Import"), href: "/company/import" },
+  { value: "members", label: zh("Members"), href: "/company/settings/members" },
+  { value: "secrets", label: zh("Secrets"), href: "/company/settings/secrets" },
+  { value: "instance-profile", label: zh("Profile"), href: `${INSTANCE_SETTINGS_PATH_PREFIX}/profile` },
+  { value: "instance-environments", label: zh("Environments"), href: `${INSTANCE_SETTINGS_PATH_PREFIX}/environments` },
+  { value: "connections", label: zh("Connections"), href: "/company/settings/connections" },
+  { value: "instance-access", label: zh("Access"), href: `${INSTANCE_SETTINGS_PATH_PREFIX}/access` },
+  { value: "instance-experimental", label: zh("Experimental"), href: `${INSTANCE_SETTINGS_PATH_PREFIX}/experimental` },
+  { value: "instance-plugins", label: zh("Plugins"), href: `${INSTANCE_SETTINGS_PATH_PREFIX}/plugins` },
+  { value: "instance-adapters", label: zh("Adapters"), href: `${INSTANCE_SETTINGS_PATH_PREFIX}/adapters` },
 ] as const;
 
 type CompanySettingsTab = (typeof items)[number]["value"];

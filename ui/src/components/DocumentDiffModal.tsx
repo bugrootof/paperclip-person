@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { QueryKey } from "@tanstack/react-query";
@@ -101,7 +102,7 @@ export function DocumentDiffModal({
 
           <div className="flex items-center gap-4 shrink-0">
             <div className="flex items-center gap-2">
-              <Badge variant="outline" className="border-red-500/30 bg-red-500/10 text-(length:--text-nano) uppercase tracking-wider text-red-400">Old</Badge>
+              <Badge variant="outline" className="border-red-500/30 bg-red-500/10 text-(length:--text-nano) uppercase tracking-wider text-red-400">{zh("Old")}</Badge>
               <Select
                 value={effectiveLeftId ?? ""}
                 onValueChange={(value) => setLeftRevisionId(value)}
@@ -119,7 +120,7 @@ export function DocumentDiffModal({
               </Select>
             </div>
             <div className="flex items-center gap-2">
-              <Badge variant="outline" className="border-green-500/30 bg-green-500/10 text-(length:--text-nano) uppercase tracking-wider text-green-400">New</Badge>
+              <Badge variant="outline" className="border-green-500/30 bg-green-500/10 text-(length:--text-nano) uppercase tracking-wider text-green-400">{zh("New")}</Badge>
               <Select
                 value={effectiveRightId ?? ""}
                 onValueChange={(value) => setRightRevisionId(value)}
@@ -149,8 +150,8 @@ export function DocumentDiffModal({
           ) : (
             <div className="font-mono text-xs leading-6">
               <div className="grid grid-cols-(--gtc-1) border-b border-border/60 bg-muted/30 px-3 py-2 text-(length:--text-micro) uppercase tracking-wide text-muted-foreground">
-                <span>Old</span>
-                <span>New</span>
+                <span>{zh("Old")}</span>
+                <span>{zh("New")}</span>
                 <span />
                 <span>Content</span>
               </div>

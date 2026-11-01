@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect } from "react";
 import { Wrench } from "lucide-react";
 import { Link, Navigate, useParams } from "@/lib/router";
@@ -88,7 +89,7 @@ export function ToolsAccess() {
           <div className="flex items-center gap-2.5">
             <h1 className="text-xl font-bold text-foreground">Advanced setup</h1>
             <span className="inline-flex items-center rounded-full bg-foreground px-2.5 py-0.5 text-(length:--text-micro) font-bold text-background">
-              Advanced
+              {zh("Advanced")}
             </span>
           </div>
           <p className="mt-1 text-sm text-muted-foreground">

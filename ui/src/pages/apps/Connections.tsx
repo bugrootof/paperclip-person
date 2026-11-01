@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { isRetiredComposioConnection, RETIRED_COMPOSIO_MESSAGE } from "@paperclipai/shared";
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -127,8 +128,8 @@ export function Connections() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Connectors", href: "/apps" },
-      { label: "Connections" },
+      { label: zh("Connectors"), href: "/apps" },
+      { label: zh("Connections") },
     ]);
     return () => setBreadcrumbs([]);
   }, [setBreadcrumbs]);
@@ -334,7 +335,7 @@ export function Connections() {
         <div className="space-y-5">
           <header className="flex flex-wrap items-end justify-between gap-3">
             <div>
-              <h1 className="text-2xl font-bold tracking-tight">Connections</h1>
+              <h1 className="text-2xl font-bold tracking-tight">{zh("Connections")}</h1>
               <p className="mt-1 text-sm text-muted-foreground">
                 The tools you’ve connected, and whether they’re working.
               </p>
@@ -344,7 +345,7 @@ export function Connections() {
 
           <div className="flex flex-wrap items-center gap-2">
             <FilterChip active={filter === "all"} onClick={() => setFilter("all")}>
-              All ({rows.length})
+              {zh("All (")}{rows.length})
             </FilterChip>
             <FilterChip
               active={filter === "attention"}
@@ -398,11 +399,11 @@ export function Connections() {
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-border bg-muted/40 text-left text-(length:--text-micro) font-semibold uppercase tracking-wide text-muted-foreground">
-                  <th className="px-4 py-2.5">Connection</th>
-                  <th className="px-4 py-2.5">Type</th>
+                  <th className="px-4 py-2.5">{zh("Connection")}</th>
+                  <th className="px-4 py-2.5">{zh("Type")}</th>
                   <th className="px-4 py-2.5">Connected by</th>
-                  <th className="px-4 py-2.5">Status</th>
-                  <th className="px-4 py-2.5">Actions</th>
+                  <th className="px-4 py-2.5">{zh("Status")}</th>
+                  <th className="px-4 py-2.5">{zh("Actions")}</th>
                   <th className="px-4 py-2.5">Last used</th>
                   <th className="px-4 py-2.5" />
                 </tr>
@@ -428,11 +429,11 @@ export function Connections() {
                     ? `/apps/${connection.id}/permissions`
                     : `/apps/app/${application.id}/permissions`;
                   const actionLabel = !connection
-                    ? "Connect"
-                    : connection && isRetiredComposioConnection(connection) ? "Review"
+                    ? zh("Connect")
+                    : connection && isRetiredComposioConnection(connection) ? zh("Review")
                     : status.tone === "attention"
-                      ? "Reconnect"
-                      : "Permissions";
+                      ? zh("Reconnect")
+                      : zh("Permissions");
                   return (
                     <tr
                       key={connection?.id ?? application.id}
@@ -477,7 +478,7 @@ export function Connections() {
                             STATUS_CLASS[status.tone],
                           )}
                         >
-                          {status.label}
+                          {zh(status.label)}
                         </span>
                       </td>
                       <td className="px-4 py-3">
@@ -545,7 +546,7 @@ export function Connections() {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Delete {connectionToDelete?.appName ?? "this"} connection?
+              {zh("Delete")} {connectionToDelete?.appName ?? "this"} connection?
             </AlertDialogTitle>
             <AlertDialogDescription>
               {connectionToDelete && connectionToDelete.remainingConnectionCount > 0
@@ -554,7 +555,7 @@ export function Connections() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel disabled={deleteConnection.isPending}>Cancel</AlertDialogCancel>
+            <AlertDialogCancel disabled={deleteConnection.isPending}>{zh("Cancel")}</AlertDialogCancel>
             <AlertDialogAction
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               disabled={!connectionToDelete || deleteConnection.isPending}
@@ -564,7 +565,7 @@ export function Connections() {
               }}
             >
               {deleteConnection.isPending && <Loader2 className="h-4 w-4 animate-spin" />}
-              {deleteConnection.isPending ? "Deleting..." : "Delete connection"}
+              {deleteConnection.isPending ? zh("Deleting...") : "Delete connection"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
@@ -618,7 +619,7 @@ function CloudConnectorEnrollmentBanner({
       </div>
       <Button variant="outline" size="sm" disabled={busy} onClick={onEnable}>
         {busy ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
-        {status?.status === "pending" ? "Continue enrollment" : "Enable"}
+        {status?.status === "pending" ? "Continue enrollment" : zh("Enable")}
       </Button>
     </div>
   );
@@ -675,7 +676,7 @@ function EmptyConnections({ onBrowse }: { onBrowse: () => void }) {
   return (
     <div className="space-y-6">
       <header>
-        <h1 className="text-2xl font-bold tracking-tight">Connections</h1>
+        <h1 className="text-2xl font-bold tracking-tight">{zh("Connections")}</h1>
         <p className="mt-1 text-sm text-muted-foreground">
           The tools you’ve connected, and whether they’re working.
         </p>

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useId, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { DotPairing } from "@paperclipai/shared";
@@ -60,8 +61,8 @@ export function GrokBotConnection({ companyId, agentId }: { companyId?: string; 
     {state.data && !state.data.enabled && <p className="text-muted-foreground">Enable Grok Bot, Assistant connections (MCP), and Paperclip Runner on an authenticated public HTTPS instance.</p>}
     {binding?.connected ? <>
       <p>Agent access connected. {routine?.verified && !recovering ? "Routine round trip verified." : "Assignments require a verified routine round trip."}</p>
-      <dl className="space-y-2 text-muted-foreground"><div><dt>Bot</dt><dd>{routine?.botName ?? "Not configured"}</dd></div><div><dt>Last verified exchange</dt><dd>{routine?.verifiedAt ? new Date(routine.verifiedAt).toLocaleString() : "Not yet verified"}</dd></div><div><dt>Last authenticated contact</dt><dd>{routine?.lastContactAt ? new Date(routine.lastContactAt).toLocaleString() : "Not yet observed"}</dd></div></dl>
-      {exchange && <p>Assignment delivered: {["accepted", "acknowledged"].includes(exchange.status) ? "Yes" : "Unconfirmed"}. Reply received: {exchange.acknowledgedAt ? "Yes" : "No"}.</p>}
+      <dl className="space-y-2 text-muted-foreground"><div><dt>Bot</dt><dd>{routine?.botName ?? zh("Not configured")}</dd></div><div><dt>Last verified exchange</dt><dd>{routine?.verifiedAt ? new Date(routine.verifiedAt).toLocaleString() : "Not yet verified"}</dd></div><div><dt>Last authenticated contact</dt><dd>{routine?.lastContactAt ? new Date(routine.lastContactAt).toLocaleString() : "Not yet observed"}</dd></div></dl>
+      {exchange && <p>Assignment delivered: {["accepted", "acknowledged"].includes(exchange.status) ? zh("Yes") : "Unconfirmed"}. Reply received: {exchange.acknowledgedAt ? zh("Yes") : zh("No")}.</p>}
       {exchange?.status === "rejected" && <div className="space-y-2"><p>The routine rejected this delivery. Check the routine in Grok before retrying.</p><Button variant="outline" disabled={busy || recovering} onClick={() => retryDelivery.mutate(exchange.id)}>Retry rejected delivery</Button></div>}
       {!routine?.configured || replace ? <div className="space-y-3">
         <label className="block space-y-2"><span>Bot name in Grok</span><Input value={botName} onChange={e => setBotName(e.target.value)} maxLength={100} /></label>
@@ -81,15 +82,15 @@ export function GrokBotConnection({ companyId, agentId }: { companyId?: string; 
           <label htmlFor={pairingCodeId}>One-use pairing code</label>
           <div className="flex items-center gap-2">
             <Input id={pairingCodeId} type="password" autoComplete="off" readOnly value={pairing.pairingCode} onFocus={e => e.target.select()} />
-            <CopyText text={pairing.pairingCode} ariaLabel="Copy pairing code" className={buttonVariants({ variant: "outline", size: "sm" })}>Copy code</CopyText>
+            <CopyText text={pairing.pairingCode} ariaLabel="Copy pairing code" className={buttonVariants({ variant: "outline", size: "sm" })}>{zh("Copy code")}</CopyText>
           </div>
           <p className="text-xs text-muted-foreground">Copy this code into Paperclip’s authorization page. Keep it out of Bot chat.</p>
         </div>
       </>}
     </>}
-    {binding?.assignment && <div className="space-y-2"><p>{binding.assignment.status === "offered" ? "Awaiting acknowledgement" : "Working in a Paperclip work session"}</p><Button variant="outline" disabled={busy} onClick={() => stop.mutate(binding.assignment!.runId)}>Stop Paperclip work</Button><p className="text-xs text-muted-foreground">Revokes this session’s Paperclip authority and stops future dispatch. Remote execution may continue. Open Grok Bot to inspect it.</p></div>}
+    {binding?.assignment && <div className="space-y-2"><p>{binding.assignment.status === "offered" ? "Awaiting acknowledgement" : "Working in a Paperclip work session"}</p><Button variant="outline" disabled={busy} onClick={() => stop.mutate(binding.assignment!.runId)}>{zh("Stop Paperclip work")}</Button><p className="text-xs text-muted-foreground">Revokes this session’s Paperclip authority and stops future dispatch. Remote execution may continue. Open Grok Bot to inspect it.</p></div>}
     {recovering && <div className="space-y-3 rounded-md border border-border p-3">
-      <p className="font-medium">Recovery needed</p><p className="text-muted-foreground">Paperclip cannot determine whether Grok is still working. Open Grok Bot, inspect this Bot and stop the old work before clearing the hold. The session must be stopped in Paperclip too.</p>
+      <p className="font-medium">{zh("Recovery needed")}</p><p className="text-muted-foreground">Paperclip cannot determine whether Grok is still working. Open Grok Bot, inspect this Bot and stop the old work before clearing the hold. The session must be stopped in Paperclip too.</p>
       <label className="flex items-start gap-2"><input type="checkbox" checked={inspected} onChange={e => setInspected(e.target.checked)} /><span>I inspected Grok and resolved the old work.</span></label>
       <Button variant="outline" disabled={busy || !inspected || !!binding?.assignment} onClick={() => recover.mutate()}>Clear recovery hold</Button>
       <p className="text-xs text-muted-foreground">This records your inspection. It does not confirm remote termination. Verify the routine again before new work.</p>

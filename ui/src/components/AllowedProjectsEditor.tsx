@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState } from "react";
 import { Check, FolderOpen, Loader2, Plus, X } from "lucide-react";
 import { Button } from "./ui/button";
@@ -40,14 +41,14 @@ export function AllowedProjectsEditor({ projects, projectIds, canManage, agentNa
       {canManage && <Popover open={open} onOpenChange={setOpen}><PopoverTrigger asChild>
         <Button variant="outline" size="sm" disabled={saving}><Plus className="size-4" aria-hidden />Add project</Button>
       </PopoverTrigger><PopoverContent align="end" className="w-72 space-y-3">
-        <Input aria-label="Search projects" placeholder="Search projects…" value={query} onChange={event => setQuery(event.target.value)} />
+        <Input aria-label={zh("Search projects")} placeholder={zh("Search projects…")} value={query} onChange={event => setQuery(event.target.value)} />
         <div className="max-h-64 space-y-1 overflow-y-auto">{matches.map(project => <label key={project.id} className="flex cursor-pointer items-start gap-3 rounded-md px-2 py-2 hover:bg-accent">
           <Checkbox aria-label={project.name} checked={projectIds.includes(project.id) || pending.includes(project.id)} disabled={projectIds.includes(project.id)} className="mt-0.5"
             onCheckedChange={checked => { setAdded(current => checked ? [...new Set([...current, project.id])] : current.filter(id => id !== project.id)); setSaved(false); }} />
           <span className="min-w-0 text-sm">{project.name}{projectIds.includes(project.id) && <span className="block text-xs text-muted-foreground">Already allowed</span>}</span>
         </label>)}</div>
-        {!matches.length && <p className="text-sm text-muted-foreground">No projects found.</p>}
-        <Button variant="secondary" size="sm" className="w-full" onClick={() => setOpen(false)}>Done</Button>
+        {!matches.length && <p className="text-sm text-muted-foreground">{zh("No projects found.")}</p>}
+        <Button variant="secondary" size="sm" className="w-full" onClick={() => setOpen(false)}>{zh("Done")}</Button>
       </PopoverContent></Popover>}
     </div>
     {visibleIds.length ? <ul aria-label="Allowed projects" className="divide-y divide-border rounded-lg border">
@@ -65,7 +66,7 @@ export function AllowedProjectsEditor({ projects, projectIds, canManage, agentNa
     {error && <p role="alert" className="text-sm text-destructive">Couldn’t save project access. Your selection is kept. {error}</p>}
     {saved && <p role="status" className="inline-flex items-center gap-2 text-sm"><Check className="size-4" aria-hidden />Project access saved. Return to your task to retry.</p>}
     {canManage && <div className="flex items-center justify-between gap-3 border-t pt-4">
-      <Button variant="ghost" disabled={saving || !pending.length} onClick={() => { setAdded([]); setError(null); setSaved(false); }}>Cancel</Button>
+      <Button variant="ghost" disabled={saving || !pending.length} onClick={() => { setAdded([]); setError(null); setSaved(false); }}>{zh("Cancel")}</Button>
       <Button disabled={saving || !pending.length} onClick={() => void save()}>{saving && <Loader2 className="size-4 animate-spin" aria-hidden />}{saving ? "Saving access…" : error ? "Try saving again" : "Save project access"}</Button>
     </div>}
   </section>;

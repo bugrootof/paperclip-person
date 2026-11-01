@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AgentIdentity } from "@/components/AgentIdentity";
 import { CheckCircle2, XCircle, Clock } from "lucide-react";
 import { Link } from "@/lib/router";
@@ -120,7 +121,7 @@ export function ApprovalCard({
                   onClick={onApprove}
                   disabled={isPending}
                 >
-                  {pendingAction === "approve" ? "Approving..." : "Approve"}
+                  {pendingAction === "approve" ? "Approving..." : zh("Approve")}
                 </Button>
                 <Button
                   variant="destructive"
@@ -128,7 +129,7 @@ export function ApprovalCard({
                   onClick={onReject}
                   disabled={isPending}
                 >
-                  {pendingAction === "reject" ? "Rejecting..." : "Reject"}
+                  {pendingAction === "reject" ? "Rejecting..." : zh("Reject")}
                 </Button>
               </>
             )}
@@ -139,11 +140,11 @@ export function ApprovalCard({
                 to={detailLink}
                 className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "h-auto px-2 text-xs text-muted-foreground")}
               >
-                View details
+                {zh("View details")}
               </Link>
             ) : (
               <Button variant="ghost" size="sm" className="h-auto px-2 text-xs text-muted-foreground" onClick={onOpen}>
-                View details
+                {zh("View details")}
               </Button>
             )
           ) : null}

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQueries, useQuery, useQueryClient } from "@tanstack/react-query";
 import { HelpCircle, PackageCheck } from "lucide-react";
@@ -101,7 +102,7 @@ function GitHubIdentitySection({
         {!loading ? (
           <div className="flex flex-wrap items-center gap-2">
             {loadError ? (
-              <Button variant="outline" size="sm" onClick={onRetry}>Retry</Button>
+              <Button variant="outline" size="sm" onClick={onRetry}>{zh("Retry")}</Button>
             ) : dedicatedIdentity ? (
               <Button variant="outline" size="sm" asChild>
                 <Link to={`/apps/${dedicatedIdentity.connection.id}/permissions`}>Manage GitHub identity</Link>
@@ -238,7 +239,7 @@ function InstalledAppsSection({
                       <span className="flex flex-wrap items-center gap-2">
                         <span className="truncate text-sm font-medium text-foreground">{connection.name}</span>
                         <InstallBadge installed={checked} installedForAll={installedForAll} permitted={permitted} />
-                        {rowPending ? <span className="text-xs text-muted-foreground">Saving...</span> : null}
+                        {rowPending ? <span className="text-xs text-muted-foreground">{zh("Saving...")}</span> : null}
                       </span>
                       <span className="mt-0.5 block text-xs text-muted-foreground">
                         {installedForAll
@@ -308,10 +309,10 @@ function InstallSaveStatusChip({
   unsaved: boolean;
   error: boolean;
 }) {
-  if (pending) return <span className="text-xs text-muted-foreground">Saving...</span>;
+  if (pending) return <span className="text-xs text-muted-foreground">{zh("Saving...")}</span>;
   if (error) return <span className="text-xs text-destructive">Could not save</span>;
-  if (unsaved) return <span className="text-xs text-muted-foreground">Unsaved changes</span>;
-  return <span className="text-xs text-muted-foreground">Saved</span>;
+  if (unsaved) return <span className="text-xs text-muted-foreground">{zh("Unsaved changes")}</span>;
+  return <span className="text-xs text-muted-foreground">{zh("Saved")}</span>;
 }
 
 const POLICY_EFFECT_LABEL: Record<string, string> = {
@@ -626,7 +627,7 @@ export function AgentToolsTab({ agent, companyId }: { agent: AgentDetailRecord; 
                     <th className="px-3 py-2 font-medium">Tool</th>
                     <th className="px-3 py-2 font-medium">Capability</th>
                     <th className="px-3 py-2 font-medium">Risk</th>
-                    <th className="px-3 py-2 font-medium">Source</th>
+                    <th className="px-3 py-2 font-medium">{zh("Source")}</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
@@ -771,7 +772,7 @@ export function AgentToolsTab({ agent, companyId }: { agent: AgentDetailRecord; 
                   </div>
                   {deniedTools.length > DENIED_TOOLS_DISPLAY_LIMIT ? (
                     <p className="text-(length:--text-micro) text-muted-foreground">
-                      +{deniedTools.length - DENIED_TOOLS_DISPLAY_LIMIT} more
+                      +{deniedTools.length - DENIED_TOOLS_DISPLAY_LIMIT} {zh("more")}
                     </p>
                   ) : null}
                 </>

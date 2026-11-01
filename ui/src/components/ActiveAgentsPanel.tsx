@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AgentIdentity } from "@/components/AgentIdentity";
 import { memo, useMemo } from "react";
 import { Link } from "@/lib/router";
@@ -160,7 +161,7 @@ export function ActiveAgentsPanel({
           <Link to="/dashboard/live" className="hover:text-foreground hover:underline">
             {hiddenRunCount > 0
               ? `${hiddenRunCount} more active/recent run${hiddenRunCount === 1 ? "" : "s"}`
-              : "View all runs"}
+              : zh("View all runs")}
           </Link>
         </div>
       )}
@@ -193,7 +194,7 @@ export const AgentRunCard = memo(function AgentRunCard({
     ? `Finished ${relativeTime(run.finishedAt)}`
     : run.startedAt ? `Started ${relativeTime(run.startedAt)}` : `Queued ${relativeTime(run.createdAt)}`;
   const taskStatus = issue?.status === "in_review" && issue.externalConversationState === "waiting" ? "idle" : issue?.status ?? "backlog";
-  const taskTitle = issue?.title ?? (issueLoadFailed ? "Task unavailable" : "Loading task…");
+  const taskTitle = issue?.title ?? (issueLoadFailed ? zh("Task unavailable") : zh("Loading task…"));
 
   return (
     <div className={cn(
@@ -236,7 +237,7 @@ export const AgentRunCard = memo(function AgentRunCard({
         ) : (
           <Link to={runUrl} className="flex items-center gap-1.5 rounded-lg border border-border/60 bg-background/60 px-2.5 py-2 text-sm text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring">
             <Clock3 className="size-4 shrink-0" aria-hidden />
-            <span className="truncate">{run.invocationSource === "timer" ? "Scheduled heartbeat" : "No linked task"}</span>
+            <span className="truncate">{run.invocationSource === "timer" ? zh("Scheduled heartbeat") : zh("No linked task")}</span>
           </Link>
         )}
         <time

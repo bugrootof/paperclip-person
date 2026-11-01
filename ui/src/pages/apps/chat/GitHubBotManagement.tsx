@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useRef, useState } from "react";
 import { useInfiniteQuery, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -118,7 +119,7 @@ export function GitHubRepositoryAccess({
             value={search} maxLength={200} onChange={(event) => setSearch(event.target.value)} />
         </div>
         <Button variant="outline" size="sm" disabled={pending || list.isFetching || !summary || !summary.totalCount || (!disableAll && !summary.availableCount)}
-          aria-label={`${disableAll ? "Disable" : "Enable"} all repositories`}
+          aria-label={`${disableAll ? zh("Disable") : zh("Enable")} all repositories`}
           onClick={() => onToggleAll(!disableAll)}>
           {disableAll ? "Disable all" : "Enable all"}
         </Button>
@@ -127,7 +128,7 @@ export function GitHubRepositoryAccess({
         {summary.enabledCount} of {summary.totalCount} repositories enabled. Toggle all applies across the entire connection.
       </p>}
       {list.isError && <p role="alert" className="text-sm text-destructive">
-        Could not load repositories. <Button variant="link" size="sm" onClick={() => void list.refetch()}>Try again</Button>
+        Could not load repositories. <Button variant="link" size="sm" onClick={() => void list.refetch()}>{zh("Try again")}</Button>
       </p>}
       <div ref={scroller} role="region" aria-label="Repositories" tabIndex={0}
         className="max-h-96 overflow-y-auto overscroll-contain border-y border-border">
@@ -242,14 +243,14 @@ export function GitHubBotManagement({
             void query.refetch();
           }}
         >
-          Try again
+          {zh("Try again")}
         </Button>
       </p>
     );
   if (!record)
     return (
       <p role="status" className="text-sm text-muted-foreground">
-        Loading configuration…
+        {zh("Loading configuration…")}
       </p>
     );
   const config = record.configuration;
@@ -380,7 +381,7 @@ export function GitHubBotManagement({
               })
             }
           >
-            {pending ? "Saving…" : "Save changes"}
+            {pending ? zh("Saving…") : zh("Save changes")}
           </Button>
         </div>
       )}
@@ -495,7 +496,7 @@ function ReviewResult({ review }: { review: GitHubTaskReview }) {
                   ))}
                 </section>
               )}
-              <h3 className="font-medium">Coverage</h3>
+              <h3 className="font-medium">{zh("Coverage")}</h3>
               <p className="text-xs text-muted-foreground">
                 {review.assessment.coverage.reviewedPaths.length} files reviewed
                 · {review.assessment.coverage.omittedPaths.length} omitted
@@ -614,7 +615,7 @@ export function GitHubReviews({
       <p role="alert" className="text-sm text-destructive">
         {reviewId ? "This review could not be loaded or was not found in this connection." : "Reviews could not be loaded."}{" "}
         <Button variant="link" onClick={() => void query.refetch()}>
-          Try again
+          {zh("Try again")}
         </Button>
       </p>
     );

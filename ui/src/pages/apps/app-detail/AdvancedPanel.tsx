@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { ArrowUpRight, ChevronRight, Loader2, Lock } from "lucide-react";
@@ -115,7 +116,7 @@ function KeySection({
         <div className="flex items-start gap-3">
           <Lock className="mt-0.5 h-4 w-4 text-muted-foreground" />
           <div>
-            <h2 className="text-sm font-medium text-foreground">Reconnect</h2>
+            <h2 className="text-sm font-medium text-foreground">{zh("Reconnect")}</h2>
             <p className="mt-0.5 text-xs text-muted-foreground">
               {canReplace ? "Replace the stored credential." : unavailableMessage}
             </p>
@@ -123,7 +124,7 @@ function KeySection({
         </div>
         {canReplace && !open && (
           <Button size="sm" variant="outline" onClick={() => setOpen(true)}>
-            Reconnect
+            {zh("Reconnect")}
           </Button>
         )}
       </div>
@@ -235,7 +236,7 @@ export function ReconnectCard({
             </Link>
           </Button>
         ) : onReconnect ? (
-          <Button size="sm" variant="outline" onClick={onReconnect}>Reconnect</Button>
+          <Button size="sm" variant="outline" onClick={onReconnect}>{zh("Reconnect")}</Button>
         ) : managedByVercel && !oauth ? (
           <div className="flex items-center gap-2">
             <Button type="button" size="sm" variant="outline" asChild>
@@ -261,7 +262,7 @@ export function ReconnectCard({
             onClick={() => reconnectOAuth.mutate()}
           >
             {reconnectOAuth.isPending && <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />}
-            {reconnectOAuth.isPending ? "Opening sign-in…" : "Reconnect"}
+            {reconnectOAuth.isPending ? "Opening sign-in…" : zh("Reconnect")}
           </Button>
         ) : (
           <ReconnectForm connection={connection} galleryEntry={galleryEntry} onReconnected={onReconnected} />
@@ -396,7 +397,7 @@ function ReconnectForm({
         </Button>
         {onCancel && (
           <Button size="sm" variant="ghost" onClick={onCancel} disabled={reconnect.isPending}>
-            Cancel
+            {zh("Cancel")}
           </Button>
         )}
       </div>
@@ -419,9 +420,9 @@ function TechnicalDetails({ connection }: { connection: ToolConnection }) {
         </CollapsibleTrigger>
         <CollapsibleContent>
           <dl className="mt-4 grid gap-2 pb-2 text-xs sm:grid-cols-(--gtc-59)">
-            <dt className="text-muted-foreground">Address</dt>
+            <dt className="text-muted-foreground">{zh("Address")}</dt>
             <dd className="break-all font-mono text-foreground">{connectionAddress(connection)}</dd>
-            <dt className="text-muted-foreground">Type</dt>
+            <dt className="text-muted-foreground">{zh("Type")}</dt>
             <dd className="text-foreground">{connectionTransportLabel(connection.transport)}</dd>
           </dl>
         </CollapsibleContent>
@@ -490,7 +491,7 @@ export function DangerZone({
             type="button"
             className="flex w-full items-center gap-3 py-1 text-left"
           >
-            <span className="min-w-0 flex-1 text-sm font-medium text-destructive">Danger zone</span>
+            <span className="min-w-0 flex-1 text-sm font-medium text-destructive">{zh("Danger zone")}</span>
             <ChevronRight
               className={cn("h-4 w-4 shrink-0 text-muted-foreground transition-transform", open && "rotate-90")}
             />
@@ -527,7 +528,7 @@ export function DangerZone({
             {connection?.authKind === "oauth" && !methodUnavailable && (onReconnectIdentity || !canReplaceCredential) ? (
               <div className="flex flex-wrap items-center justify-between gap-3 py-4">
                 <div>
-                  <p className="text-sm font-medium text-foreground">Reconnect</p>
+                  <p className="text-sm font-medium text-foreground">{zh("Reconnect")}</p>
                   <p className="text-xs text-muted-foreground">
                     {canReplaceCredential
                       ? `Sign in to ${identityProviderName} again.`
@@ -542,7 +543,7 @@ export function DangerZone({
                     onClick={onReconnectIdentity}
                   >
                     {identityActionPending ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : null}
-                    Reconnect
+                    {zh("Reconnect")}
                   </Button>
                 ) : null}
               </div>
@@ -563,7 +564,7 @@ export function DangerZone({
                     size="sm"
                     onClick={() => setRevokeTarget(identityGrant)}
                   >
-                    Revoke
+                    {zh("Revoke")}
                   </Button>
                 </div>
             ) : null}
@@ -578,7 +579,7 @@ export function DangerZone({
               {confirming ? (
                 <div className="flex items-center gap-2">
                   <Button variant="ghost" size="sm" onClick={() => setConfirming(false)} disabled={removing}>
-                    Cancel
+                    {zh("Cancel")}
                   </Button>
                   <Button variant="destructive" size="sm" onClick={onRemove} disabled={removing}>
                     {removing && <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" />}

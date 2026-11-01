@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import type { CaseSummary } from "@/api/cases";
 import { AgentIdentity } from "@/components/AgentIdentity";
 import { EntityRow } from "@/components/EntityRow";
@@ -26,8 +27,8 @@ export function CaseListRow({
     : null;
   const work = task ? <>
     {show.has("phase") && caseData.phase ? <span className="text-xs text-muted-foreground">{caseData.phase}</span> : null}
-    {show.has("assignee") && (assignee ? <AgentIdentity agent={assignee} size="xs" /> : <span className="text-xs text-muted-foreground">Unassigned</span>)}
-  </> : <span className="text-xs text-muted-foreground">{caseData.workIssueId ? "Task unavailable" : "No task linked"}</span>;
+    {show.has("assignee") && (assignee ? <AgentIdentity agent={assignee} size="xs" /> : <span className="text-xs text-muted-foreground">{zh("Unassigned")}</span>)}
+  </> : <span className="text-xs text-muted-foreground">{caseData.workIssueId ? zh("Task unavailable") : "No task linked"}</span>;
   const subtitle = [show.has("identifier") ? caseData.identifier : null, show.has("type") ? caseData.caseType : null,
     show.has("project") ? projectName : null].filter(Boolean);
 

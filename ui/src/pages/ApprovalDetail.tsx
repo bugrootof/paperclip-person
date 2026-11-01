@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { describeError } from "../api/errors";
 import { AgentIdentity } from "@/components/AgentIdentity";
 import { useEffect, useMemo, useState } from "react";
@@ -67,7 +68,7 @@ export function ApprovalDetail() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Approvals", href: "/approvals" },
+      { label: zh("Approvals"), href: "/approvals" },
       { label: approval?.id?.slice(0, 8) ?? approvalId ?? "Approval" },
     ]);
   }, [setBreadcrumbs, approval, approvalId]);
@@ -271,7 +272,7 @@ export function ApprovalDetail() {
                 onClick={() => approveMutation.mutate()}
                 disabled={approveMutation.isPending}
               >
-                Approve
+                {zh("Approve")}
               </Button>
               <Button
                 variant="destructive"
@@ -279,7 +280,7 @@ export function ApprovalDetail() {
                 onClick={() => rejectMutation.mutate()}
                 disabled={rejectMutation.isPending}
               >
-                Reject
+                {zh("Reject")}
               </Button>
             </>
           )}

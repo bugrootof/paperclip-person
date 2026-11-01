@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import type {
   WorkspaceCommandDefinition,
   RuntimeExposureStatus,
@@ -373,11 +374,11 @@ function CommandActionButtons({
         const request = buildRequest(item, action);
         const Icon = action === "stop" ? Square : action === "restart" ? RotateCcw : Play;
         const label = action === "run"
-          ? "Run"
+          ? zh("Run")
           : action === "start"
             ? "Start"
             : action === "stop"
-              ? "Stop"
+              ? zh("Stop")
               : "Restart";
         const showSpinner = isPending && requestMatchesPending(pendingRequest, request);
         const disabled =
@@ -476,7 +477,7 @@ function CommandSection({
                       <ExternalLink className="h-3.5 w-3.5" />
                     </a>
                   ) : null}
-                  {item.port ? <div>Port {item.port}</div> : null}
+                  {item.port ? <div>{zh("Port")} {item.port}</div> : null}
                   {item.command ? <div className="break-all font-mono">{item.command}</div> : null}
                   {item.cwd && !hideHostPaths ? <div className="break-all font-mono">{item.cwd}</div> : null}
                   {item.disabledReason ? <div>{item.disabledReason}</div> : null}

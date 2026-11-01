@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { isNativeWorkspaceExportRepairCause } from "@paperclipai/shared";
 import { useWorkspaceIsolationControls } from "@/hooks/useWorkspaceIsolationControls";
 import { requiresExecutionReconciliation } from "@paperclipai/shared";
@@ -593,7 +594,7 @@ function BreakGlassOverride({
         </dl>
         <div className="space-y-1">
           <Label htmlFor="recovery-breakglass-reason" className="text-(length:--text-micro) text-muted-foreground">
-            Reason <span className="text-red-600 dark:text-red-400">(required — recorded in the audit log)</span>
+            {zh("Reason")} <span className="text-red-600 dark:text-red-400">(required — recorded in the audit log)</span>
           </Label>
           <Textarea
             id="recovery-breakglass-reason"
@@ -954,7 +955,7 @@ const RESOLVE_OPTIONS: Array<{
 }> = [
   {
     outcome: "todo",
-    label: "Try again",
+    label: zh("Try again"),
     description: "Dismiss recovery and return the source task to todo.",
   },
   {
@@ -1200,7 +1201,7 @@ export function IssueRecoveryActionCard({
                   </>
                 ) : action.ownerType === "board" ? (
                   <>
-                    <span className="font-medium">Board</span>
+                    <span className="font-medium">{zh("Board")}</span>
                     <span className="text-muted-foreground">decides the next step only</span>
                   </>
                 ) : action.ownerType === "user" && action.ownerUserId ? (
@@ -1264,7 +1265,7 @@ export function IssueRecoveryActionCard({
             ) : null}
           </>
         ) : (
-        <MetadataRow label="Owner">
+        <MetadataRow label={zh("Owner")}>
           <span className="inline-flex flex-wrap items-center gap-1.5">
             {action.ownerType === "agent" && action.ownerAgentId ? (
               <>
@@ -1272,11 +1273,11 @@ export function IssueRecoveryActionCard({
                 <AgentLink agentId={action.ownerAgentId} agentMap={agentMap} />
               </>
             ) : action.ownerType === "board" ? (
-              <span className="font-medium">Board</span>
+              <span className="font-medium">{zh("Board")}</span>
             ) : action.ownerType === "user" && action.ownerUserId ? (
               <span className="font-medium">user {action.ownerUserId.slice(0, 6)}</span>
             ) : action.ownerType === "system" ? (
-              <span className="font-medium">System</span>
+              <span className="font-medium">{zh("System")}</span>
             ) : (
               <span className="text-muted-foreground">unassigned — pick one to wake them</span>
             )}
@@ -1447,7 +1448,7 @@ export function IssueRecoveryActionCard({
                 </div>
                 <dl className="space-y-1 rounded-md border border-border/70 bg-muted/30 px-2.5 py-2 text-(length:--text-micro)">
                   <div className="flex items-center justify-between gap-2">
-                    <dt className="text-muted-foreground">Base ref</dt>
+                    <dt className="text-muted-foreground">{zh("Base ref")}</dt>
                     <dd className="min-w-0 truncate font-mono text-foreground/90">{reissueBaseRef}</dd>
                   </div>
                   <div className="flex items-center justify-between gap-2">
@@ -1478,7 +1479,7 @@ export function IssueRecoveryActionCard({
                     })
                   }
                 >
-                  {reissuePending ? "Creating…" : "Create isolated re-issue"}
+                  {reissuePending ? zh("Creating…") : "Create isolated re-issue"}
                 </Button>
               </PopoverContent>
             </Popover>

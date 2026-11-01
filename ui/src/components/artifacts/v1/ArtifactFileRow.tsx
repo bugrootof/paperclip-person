@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { Download, ExternalLink } from "lucide-react";
 import { useContext, useState, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -67,12 +68,12 @@ export function ArtifactFileRow({
         </Button>
       ) : null}
       {openPath ? (
-        <a href={openPath} target="_blank" rel="noreferrer" aria-label={`Open raw ${filename}`} title="Open raw" className={ROW_ACTION_CLASS}>
+        <a href={openPath} target="_blank" rel="noreferrer" aria-label={`Open raw ${filename}`} title={zh("Open raw")} className={ROW_ACTION_CLASS}>
           <ExternalLink className="h-3 w-3" aria-hidden />
         </a>
       ) : null}
       {downloadPath ? (
-        <a href={downloadPath} download={filename} aria-label={`Download ${filename}`} title="Download" className={ROW_ACTION_CLASS}>
+        <a href={downloadPath} download={filename} aria-label={`Download ${filename}`} title={zh("Download")} className={ROW_ACTION_CLASS}>
           <Download className="h-3 w-3" aria-hidden />
         </a>
       ) : null}

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { ChevronDown, ChevronRight, HelpCircle } from "lucide-react";
 import { isValidRoutineDateString, syncRoutineVariablesWithTemplate, type RoutineVariable } from "@paperclipai/shared";
@@ -104,7 +105,7 @@ export function RoutineVariablesEditor({
 
             <div className="grid gap-3 md:grid-cols-2">
               <div className="space-y-1.5">
-                <Label className="text-xs">Label</Label>
+                <Label className="text-xs">{zh("Label")}</Label>
                 <Input
                   value={variable.label ?? ""}
                   onChange={(event) => onChange(updateVariableList(syncedVariables, variable.name, (current) => ({
@@ -116,7 +117,7 @@ export function RoutineVariablesEditor({
               </div>
 
               <div className="space-y-1.5">
-                <Label className="text-xs">Type</Label>
+                <Label className="text-xs">{zh("Type")}</Label>
                 <Select
                   value={variable.type}
                   onValueChange={(type) => onChange(updateVariableList(syncedVariables, variable.name, (current) => ({
@@ -302,7 +303,7 @@ export function RoutineVariablesHint() {
                 Custom variables
               </h3>
               <p className="text-muted-foreground">
-                Type{" "}
+                {zh("Type")}{" "}
                 <code className="rounded bg-muted px-1 py-0.5 font-mono text-xs text-foreground">
                   {"{{variable_name}}"}
                 </code>{" "}
@@ -331,8 +332,8 @@ export function RoutineVariablesHint() {
                   <thead className="bg-muted/40 text-muted-foreground">
                     <tr>
                       <th className="px-3 py-2 font-medium">Placeholder</th>
-                      <th className="px-3 py-2 font-medium">Example</th>
-                      <th className="px-3 py-2 font-medium">Description</th>
+                      <th className="px-3 py-2 font-medium">{zh("Example")}</th>
+                      <th className="px-3 py-2 font-medium">{zh("Description")}</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-border/70">

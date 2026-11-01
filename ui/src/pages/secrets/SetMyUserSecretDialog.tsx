@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { CompanySecret, UserSecretDefinition } from "@paperclipai/shared";
@@ -127,7 +128,7 @@ export function SetMyUserSecretDialog({
 
             {isExternal ? (
               <div className="space-y-1">
-                <label className="text-xs font-medium text-foreground">External reference</label>
+                <label className="text-xs font-medium text-foreground">{zh("External reference")}</label>
                 <Input
                   value={externalRef}
                   onChange={(event) => setExternalRef(event.target.value)}
@@ -162,10 +163,10 @@ export function SetMyUserSecretDialog({
 
         <DialogFooter>
           <Button variant="ghost" onClick={() => onOpenChange(false)} disabled={save.isPending}>
-            Cancel
+            {zh("Cancel")}
           </Button>
           <Button onClick={() => save.mutate()} disabled={!canSave || save.isPending}>
-            {save.isPending ? "Saving…" : existingSecret ? "Update value" : "Save value"}
+            {save.isPending ? zh("Saving…") : existingSecret ? zh("Update value") : "Save value"}
           </Button>
         </DialogFooter>
       </DialogContent>

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { lazy } from "react";
 import { useDialogActions, useDialogState } from "../context/DialogContext";
 import { DeferredOverlay } from "./DeferredOverlay";
@@ -11,9 +12,9 @@ export function BoardDialogs() {
   const { newIssueOpen, newProjectOpen, newGoalOpen, newAgentOpen } = useDialogState();
   const { closeNewIssue, closeNewProject, closeNewGoal, closeNewAgent } = useDialogActions();
   return <>
-    <DeferredOverlay requested={newIssueOpen} title="New task" onClose={closeNewIssue}><NewIssueDialog /></DeferredOverlay>
-    <DeferredOverlay requested={newProjectOpen} title="New project" onClose={closeNewProject}><NewProjectDialog /></DeferredOverlay>
-    <DeferredOverlay requested={newGoalOpen} title="New goal" onClose={closeNewGoal}><NewGoalDialog /></DeferredOverlay>
-    <DeferredOverlay requested={newAgentOpen} title="New agent" onClose={closeNewAgent}><NewAgentDialog /></DeferredOverlay>
+    <DeferredOverlay requested={newIssueOpen} title={zh("New task")} onClose={closeNewIssue}><NewIssueDialog /></DeferredOverlay>
+    <DeferredOverlay requested={newProjectOpen} title={zh("New project")} onClose={closeNewProject}><NewProjectDialog /></DeferredOverlay>
+    <DeferredOverlay requested={newGoalOpen} title={zh("New goal")} onClose={closeNewGoal}><NewGoalDialog /></DeferredOverlay>
+    <DeferredOverlay requested={newAgentOpen} title={zh("New agent")} onClose={closeNewAgent}><NewAgentDialog /></DeferredOverlay>
   </>;
 }

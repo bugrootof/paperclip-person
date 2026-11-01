@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
@@ -67,7 +68,7 @@ function AuthAttempt({
       className="flex flex-col gap-4"
     >
       <div className="flex flex-col gap-1">
-        <h3 className="text-sm font-semibold">Connect {info.name}</h3>
+        <h3 className="text-sm font-semibold">{zh("Connect")} {info.name}</h3>
         <p className="text-xs text-muted-foreground">
           {aiMethodLabel(provider, method)}
         </p>
@@ -105,7 +106,7 @@ function AuthAttempt({
                   value={value}
                   onChange={setValue}
                   onSubmit={submit}
-                  placeholder="Enter API key here"
+                  placeholder={zh("Enter API key here")}
                   disabled={busy}
                   autoFocus
                 />
@@ -156,12 +157,12 @@ function AuthAttempt({
                 onCancel();
               }}
             >
-              Cancel
+              {zh("Cancel")}
             </Button>
             {!unsupported &&
               (method === "api_key" ? (
                 <Button disabled={busy || !value.trim()} onClick={submit}>
-                  {busy ? "Connecting…" : "Connect"}
+                  {busy ? zh("Connecting…") : zh("Connect")}
                 </Button>
               ) : state.phase === "waiting" ? (
                 provider === "anthropic" ? (
@@ -178,8 +179,8 @@ function AuthAttempt({
                   {busy
                     ? "Preparing sign-in…"
                     : state.phase === "idle"
-                      ? "Sign in"
-                      : "Try again"}
+                      ? zh("Sign in")
+                      : zh("Try again")}
                 </Button>
               ))}
           </div>

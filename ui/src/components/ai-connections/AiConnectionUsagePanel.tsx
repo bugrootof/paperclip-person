@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useMutation } from "@tanstack/react-query";
 import type { AiConnectionUsage, AiConnectionUsageLimit, AiManagedConnectionSummary } from "@paperclipai/shared";
 import { supportsAiConnectionUsage } from "@paperclipai/shared";
@@ -81,9 +82,9 @@ export function AiConnectionUsagePanel({ account, observation, cachedOnly = fals
   return (
     <section aria-label="Account usage limits" className="space-y-3">
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h3 className="text-sm font-semibold">Usage</h3>
+        <h3 className="text-sm font-semibold">{zh("Usage")}</h3>
         {supported && !cachedOnly && <Button variant="outline" size="sm" disabled={probe.isPending || account.status !== "connected"} onClick={() => probe.mutate()}>
-          {probe.isPending ? "Checking…" : usage?.status === "ok" ? "Refresh" : "Check usage"}
+          {probe.isPending ? zh("Checking…") : usage?.status === "ok" ? zh("Refresh") : "Check usage"}
         </Button>}
       </div>
       {cachedOnly && !usage && <p className="text-xs text-muted-foreground">Usage not observed.</p>}
@@ -108,7 +109,7 @@ export function AiConnectionUsagePanel({ account, observation, cachedOnly = fals
             <span className="text-muted-foreground">Overage</span>
             <span className="font-mono">{overageSummary(usage)}</span>
           </div>}
-          <p className="text-xs text-muted-foreground">Updated <time className="font-mono" dateTime={usage.checkedAt} title={formatDateTime(usage.checkedAt)}>{formatDateTime(usage.checkedAt, { includeYear: false })}</time>{usage.planType ? ` · ${usage.planType}` : ""}</p>
+          <p className="text-xs text-muted-foreground">{zh("Updated")} <time className="font-mono" dateTime={usage.checkedAt} title={formatDateTime(usage.checkedAt)}>{formatDateTime(usage.checkedAt, { includeYear: false })}</time>{usage.planType ? ` · ${usage.planType}` : ""}</p>
         </div>
       )}
     </section>

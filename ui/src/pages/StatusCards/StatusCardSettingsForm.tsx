@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import type { StatusCardRefreshPolicy } from "@paperclipai/shared";
 import { ChevronDown } from "lucide-react";
 
@@ -126,7 +127,7 @@ export function StatusCardSettingsForm({
             title="Manual only — updates when I press refresh"
             badge={
               <span className="ml-auto rounded-full bg-muted px-2 py-0.5 text-(length:--text-nano) font-medium uppercase tracking-wide text-muted-foreground">
-                Default
+                {zh("Default")}
               </span>
             }
             onSelect={() => setMode("manual")}
@@ -201,7 +202,7 @@ export function StatusCardSettingsForm({
       {autoUpdating ? (
         <Collapsible className="rounded-md border border-border">
           <CollapsibleTrigger className="group flex w-full items-center justify-between gap-2 px-3 py-2.5 text-sm font-semibold">
-            Advanced
+            {zh("Advanced")}
             <ChevronDown className="h-4 w-4 text-muted-foreground transition-transform group-data-[state=open]:rotate-180" />
           </CollapsibleTrigger>
           <CollapsibleContent className="space-y-6 border-t border-border px-3 py-3">

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useQuery } from "@tanstack/react-query";
 import { agentsApi } from "../api/agents";
 import { queryKeys } from "../lib/queryKeys";
@@ -61,7 +62,7 @@ export function AgentLifecycleStatus({ agent, onRetry, retryPending, refreshErro
     {phase && agent.lifecycleError && <div className="flex flex-wrap items-center gap-2 text-destructive">
       <span>{agent.lifecycleError}</span>
       <Button variant="outline" size="sm" disabled={retryPending} onClick={onRetry}>
-        {retryPending ? "Retrying…" : "Retry now"}
+        {retryPending ? zh("Retrying…") : zh("Retry now")}
       </Button>
     </div>}
     {phase && agent.lifecycleError && <p className="text-muted-foreground">Paperclip retries automatically; Retry now checks again immediately.</p>}

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { KeyRound, Stethoscope, Trash2, Vault } from "lucide-react";
@@ -461,10 +462,10 @@ export function AddConnectionDialog({
                         onChange={(e) => setPendingHeader(e.target.value)}
                         placeholder="Header"
                         className="w-32"
-                        aria-label="Header name"
+                        aria-label={zh("Header name")}
                       />
                       <Button type="button" size="sm" variant="outline" onClick={addCred} disabled={!pendingSecretId}>
-                        Add
+                        {zh("Add")}
                       </Button>
                     </div>
                     {pendingSecretId ? (
@@ -534,16 +535,16 @@ export function AddConnectionDialog({
 
         <DialogFooter>
           <Button variant="outline" onClick={onClose}>
-            Cancel
+            {zh("Cancel")}
           </Button>
           {step === 1 && !locked ? (
             <Button disabled={!appChoiceValid} onClick={() => setStep(2)}>
-              Continue
+              {zh("Continue")}
             </Button>
           ) : !locked ? (
             <>
               <Button variant="outline" onClick={() => setStep(1)}>
-                Back
+                {zh("Back")}
               </Button>
               <Button disabled={!canCreate} onClick={() => create.mutate()}>
                 {create.isPending ? "Creating draft…" : "Create & probe"}
@@ -556,7 +557,7 @@ export function AddConnectionDialog({
                 {probe.isPending ? "Probing…" : "Re-probe"}
               </Button>
               <Button disabled={activate.isPending || probe.isPending} onClick={() => draft && activate.mutate(draft.id)}>
-                {activate.isPending ? "Activating…" : "Activate"}
+                {activate.isPending ? "Activating…" : zh("Activate")}
               </Button>
             </>
           )}

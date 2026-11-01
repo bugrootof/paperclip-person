@@ -238,6 +238,7 @@ When adding endpoints:
 - Use company selection context for company-scoped pages
 - Surface failures clearly; do not silently ignore API errors
 - Form and wizard footers: keep Save & exit (or Cancel/Back) left and the primary action right in the same vertically aligned row. Each step owns the entire footer; never append Save & exit as a separate row. See `DESIGN.md`.
+- All user-facing UI copy must use the existing i18n layer. For board copy, wrap static English source text with `boardT` from `ui/src/i18n` and add its Simplified Chinese value to `ui/src/i18n/board-zh-CN.json`; use keyed locale resources for structured app messages. Do not leave new visible copy as a raw English JSX string. Preserve product/provider names, code, user-generated content, protocol values, and persisted/API values unchanged. Add or update a focused localization test when changing a user-facing flow.
 
 ## 10. Pull Request Requirements
 

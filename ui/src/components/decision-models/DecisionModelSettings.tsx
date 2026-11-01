@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { DECISION_MODELS, type DecisionConnectionChoice, type DecisionModelSettings, type DecisionProvider, type DecisionResult, type UpdateDecisionModel } from "@paperclipai/shared";
@@ -78,10 +79,10 @@ export function DecisionModelSettingsView({ settings, choices, saving, testing, 
     </div>}
     <div className="flex flex-wrap items-center justify-between gap-3">
       <div className="space-y-1">
-        <Button variant="outline" size="sm" disabled={!settings.enabled || dirty || saving || testing || selected?.status !== "connected"} onClick={onTest}>{testing ? "Running test…" : "Run test"}</Button>
-        <p className="text-xs text-muted-foreground">{dirty ? "Save changes before testing." : "Runs a small sample with an API charge."}</p>
+        <Button variant="outline" size="sm" disabled={!settings.enabled || dirty || saving || testing || selected?.status !== "connected"} onClick={onTest}>{testing ? "Running test…" : zh("Run test")}</Button>
+        <p className="text-xs text-muted-foreground">{dirty ? zh("Save changes before testing.") : "Runs a small sample with an API charge."}</p>
       </div>
-      {dirty && <Button onClick={() => onSave(draft)} disabled={saving || testing || (draft.enabled && selected?.status !== "connected")}>{saving ? "Saving…" : "Save decision model"}</Button>}
+      {dirty && <Button onClick={() => onSave(draft)} disabled={saving || testing || (draft.enabled && selected?.status !== "connected")}>{saving ? zh("Saving…") : "Save decision model"}</Button>}
     </div>
   </section>;
 }
@@ -101,7 +102,7 @@ export function DecisionModelSettingsSection({ companyId }: { companyId: string 
     setNewlyConnectedId(null); test.reset(); client.setQueryData(key, { ...query.data, settings });
   } });
   if (query.isPending) return <p className="text-sm text-muted-foreground">Loading decision model…</p>;
-  if (query.error) return <div role="alert" className="space-y-2"><p className="text-sm text-destructive">Could not load decision settings.</p><Button variant="outline" onClick={() => void query.refetch()}>Try again</Button></div>;
+  if (query.error) return <div role="alert" className="space-y-2"><p className="text-sm text-destructive">Could not load decision settings.</p><Button variant="outline" onClick={() => void query.refetch()}>{zh("Try again")}</Button></div>;
   if (!query.data?.canManage || !query.data.settings) return null;
   return <>
     <DecisionModelSettingsView settings={query.data.settings} choices={query.data.choices} saving={save.isPending} testing={test.isPending}

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo } from "react";
 import { Link, Navigate } from "@/lib/router";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
@@ -99,7 +100,7 @@ export function Workspaces() {
   const overviewView = useQueryView(overviewQuery);
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Workspaces" }]);
+    setBreadcrumbs([{ label: zh("Workspaces") }]);
   }, [setBreadcrumbs]);
 
   const overviewPages = overviewQuery.data?.pages ?? [];
@@ -123,7 +124,7 @@ export function Workspaces() {
       <QueryErrorState
         size="page"
         error={experimentalSettingsQuery.error}
-        action="load workspaces"
+        action={zh("load workspaces")}
         onRetry={experimentalSettingsView.retry}
         retrying={experimentalSettingsView.isFetching}
       />
@@ -132,13 +133,13 @@ export function Workspaces() {
   if (!isolatedWorkspacesEnabled) return <Navigate to="/issues" replace />;
   if (dataLoading) return <PageSkeleton variant="list" />;
   if (overviewView.kind === "error") {
-    return <QueryErrorState size="page" error={error} action="load workspaces" onRetry={overviewView.retry} retrying={overviewView.isFetching} />;
+    return <QueryErrorState size="page" error={error} action={zh("load workspaces")} onRetry={overviewView.retry} retrying={overviewView.isFetching} />;
   }
 
   return (
     <div className="space-y-6">
       <div>
-        <h2 className="text-xl font-bold">Workspaces</h2>
+        <h2 className="text-xl font-bold">{zh("Workspaces")}</h2>
       </div>
 
       <SummarySlotCard
@@ -187,7 +188,7 @@ export function Workspaces() {
                 onClick={() => void overviewQuery.fetchNextPage()}
                 disabled={overviewQuery.isFetchingNextPage}
               >
-                {overviewQuery.isFetchingNextPage ? "Loading..." : "Load more"}
+                {overviewQuery.isFetchingNextPage ? zh("Loading...") : "Load more"}
               </Button>
             </div>
           ) : null}

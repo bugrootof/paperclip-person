@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useId, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type {
@@ -151,7 +152,7 @@ export function SlackSearchView({
             <p className="text-sm">
               In Slack app settings, add this redirect URL under OAuth &amp;
               Permissions. Add user scopes <code>search:read.public</code>,{" "}
-              <code>search:read.private</code> and{" "}
+              <code>search:read.private</code> {zh("and")}{" "}
               <code>search:read.files</code>. Find Client ID and Client Secret
               under Basic Information.
             </p>

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { describeError } from "../api/errors";
 import { type ReactNode, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "@/lib/router";
@@ -333,7 +334,7 @@ export function FailedRunInboxRow({
                   "inline-flex h-4 w-4 items-center justify-center rounded-full transition-colors",
                   "hover:bg-(--status-task-in_progress)/20",
                 )}
-                aria-label="Mark as read"
+                aria-label={zh("Mark as read")}
               >
                 <span className={cn(
                   "block h-2 w-2 rounded-full transition-opacity duration-300",
@@ -368,7 +369,7 @@ export function FailedRunInboxRow({
                   {issue.title}
                 </>
               ) : (
-                <>Failed run{linkedAgentName ? ` — ${linkedAgentName}` : ""}</>
+                <>{zh("Failed run")}{linkedAgentName ? ` — ${linkedAgentName}` : ""}</>
               )}
             </span>
             <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
@@ -392,14 +393,14 @@ export function FailedRunInboxRow({
             disabled={isRetrying}
           >
             <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
-            {isRetrying ? "Retrying…" : "Retry"}
+            {isRetrying ? zh("Retrying…") : zh("Retry")}
           </Button>
           {!showUnreadSlot && (
             <button
               type="button"
               onClick={onDismiss}
               className="rounded-md p-1 text-muted-foreground opacity-0 transition-opacity hover:bg-accent hover:text-foreground group-hover:opacity-100"
-              aria-label="Dismiss"
+              aria-label={zh("Dismiss")}
             >
               <X className="h-4 w-4" />
             </button>
@@ -416,14 +417,14 @@ export function FailedRunInboxRow({
           disabled={isRetrying}
         >
           <RotateCcw className="mr-1.5 h-3.5 w-3.5" />
-          {isRetrying ? "Retrying…" : "Retry"}
+          {isRetrying ? zh("Retrying…") : zh("Retry")}
         </Button>
         {!showUnreadSlot && (
           <button
             type="button"
             onClick={onDismiss}
             className="rounded-md p-1 text-muted-foreground hover:bg-accent hover:text-foreground"
-            aria-label="Dismiss"
+            aria-label={zh("Dismiss")}
           >
             <X className="h-4 w-4" />
           </button>
@@ -482,7 +483,7 @@ function ApprovalInboxRow({
                   "inline-flex h-4 w-4 items-center justify-center rounded-full transition-colors",
                   "hover:bg-(--status-task-in_progress)/20",
                 )}
-                aria-label="Mark as read"
+                aria-label={zh("Mark as read")}
               >
                 <span className={cn(
                   "block h-2 w-2 rounded-full transition-opacity duration-300",
@@ -513,8 +514,8 @@ function ApprovalInboxRow({
             </span>
             <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
               <span className="capitalize">{approvalStatusLabel(approval.status)}</span>
-              {requesterName ? <span>requested by {requesterName}</span> : null}
-              <span>updated {timeAgo(approval.updatedAt)}</span>
+              {requesterName ? <span>{zh("requested by")} {requesterName}</span> : null}
+              <span>{zh("updated")} {timeAgo(approval.updatedAt)}</span>
             </span>
           </span>
         </Link>
@@ -531,7 +532,7 @@ function ApprovalInboxRow({
                   onClick={onApprove}
                   disabled={isPending}
                 >
-                  Approve
+                  {zh("Approve")}
                 </Button>
                 <Button
                   variant="destructive"
@@ -540,7 +541,7 @@ function ApprovalInboxRow({
                   onClick={onReject}
                   disabled={isPending}
                 >
-                  Reject
+                  {zh("Reject")}
                 </Button>
               </>
             ) : null}
@@ -555,7 +556,7 @@ function ApprovalInboxRow({
             onClick={onApprove}
             disabled={isPending}
           >
-            Approve
+            {zh("Approve")}
           </Button>
           <Button
             variant="destructive"
@@ -564,7 +565,7 @@ function ApprovalInboxRow({
             onClick={onReject}
             disabled={isPending}
           >
-            Reject
+            {zh("Reject")}
           </Button>
         </div>
       ) : null}
@@ -615,7 +616,7 @@ function JoinRequestInboxRow({
                   "inline-flex h-4 w-4 items-center justify-center rounded-full transition-colors",
                   "hover:bg-(--status-task-in_progress)/20",
                 )}
-                aria-label="Mark as read"
+                aria-label={zh("Mark as read")}
               >
                 <span className={cn(
                   "block h-2 w-2 rounded-full transition-opacity duration-300",
@@ -639,8 +640,8 @@ function JoinRequestInboxRow({
               {label}
             </span>
             <span className="mt-1 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
-              <span>requested {timeAgo(joinRequest.createdAt)} from IP {joinRequest.requestIp}</span>
-              {joinRequest.adapterType && <span>adapter: {joinRequest.adapterType}</span>}
+              <span>{zh("requested")} {timeAgo(joinRequest.createdAt)} {zh("from IP")} {joinRequest.requestIp}</span>
+              {joinRequest.adapterType && <span>{zh("adapter:")} {joinRequest.adapterType}</span>}
             </span>
           </span>
         </div>
@@ -654,7 +655,7 @@ function JoinRequestInboxRow({
             onClick={onApprove}
             disabled={isPending}
           >
-            Approve
+            {zh("Approve")}
           </Button>
           <Button
             variant="destructive"
@@ -663,7 +664,7 @@ function JoinRequestInboxRow({
             onClick={onReject}
             disabled={isPending}
           >
-            Reject
+            {zh("Reject")}
           </Button>
         </div>
       </div>
@@ -674,7 +675,7 @@ function JoinRequestInboxRow({
           onClick={onApprove}
           disabled={isPending}
         >
-          Approve
+          {zh("Approve")}
         </Button>
         <Button
           variant="destructive"
@@ -683,7 +684,7 @@ function JoinRequestInboxRow({
           onClick={onReject}
           disabled={isPending}
         >
-          Reject
+          {zh("Reject")}
         </Button>
       </div>
     </div>
@@ -772,7 +773,7 @@ export function Inbox() {
   });
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Inbox" }]);
+    setBreadcrumbs([{ label: zh("Inbox") }]);
   }, [setBreadcrumbs]);
 
   useEffect(() => {
@@ -2210,7 +2211,7 @@ export function Inbox() {
   }, [selectedIndex]);
 
   if (!selectedCompanyId) {
-    return <EmptyState icon={InboxIcon} message="Select a company to view inbox." />;
+    return <EmptyState icon={InboxIcon} message={zh("Select a company to view inbox.")} />;
   }
 
   const hasRunFailures = failedRuns.length > 0;
@@ -2268,7 +2269,7 @@ export function Inbox() {
           <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
           <Input
             type="search"
-            placeholder="Search inbox…"
+            placeholder={zh("Search inbox…")}
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             onKeyDown={(e) => {
@@ -2298,15 +2299,15 @@ export function Inbox() {
             items={[
               {
                 value: "mine",
-                label: "Mine",
+                label: zh("Mine"),
               },
               {
                 value: "recent",
-                label: "Recent",
+                label: zh("Recent"),
               },
-              { value: "unread", label: "Unread" },
-              { value: "blocked", label: "Blocked" },
-              { value: "all", label: "All" },
+              { value: "unread", label: zh("Unread") },
+              { value: "blocked", label: zh("Blocked") },
+              { value: "all", label: zh("All") },
             ]}
           />
         </Tabs>
@@ -2316,7 +2317,7 @@ export function Inbox() {
             <Search className="pointer-events-none absolute left-2.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-muted-foreground" />
             <Input
               type="search"
-              placeholder="Search inbox…"
+              placeholder={zh("Search inbox…")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               onKeyDown={(e) => {
@@ -2364,7 +2365,7 @@ export function Inbox() {
                     variant="outline"
                     size="icon"
                     className={cn("h-8 w-8 shrink-0", blockedGroupBy !== "none" && "bg-accent")}
-                    title="Group"
+                    title={zh("Group")}
                   >
                     <Layers className="h-3.5 w-3.5" />
                   </Button>
@@ -2393,7 +2394,7 @@ export function Inbox() {
                 visibleColumnSet={visibleIssueColumnSet}
                 onToggleColumn={toggleIssueColumn}
                 onResetColumns={() => setIssueColumns(DEFAULT_INBOX_ISSUE_COLUMNS)}
-                title="Choose which inbox columns stay visible"
+                title={zh("Choose which inbox columns stay visible")}
                 iconOnly
               />
               <Popover>
@@ -2403,7 +2404,7 @@ export function Inbox() {
                     variant="outline"
                     size="icon"
                     className="h-8 w-8 shrink-0"
-                    title="Sort"
+                    title={zh("Sort")}
                   >
                     <ArrowUpDown className="h-3.5 w-3.5" />
                   </Button>
@@ -2436,7 +2437,7 @@ export function Inbox() {
                 size="icon"
                 className={cn("hidden h-8 w-8 shrink-0 sm:inline-flex", nestingEnabled && "bg-accent")}
                 onClick={toggleNesting}
-                title={nestingEnabled ? "Disable parent-child nesting" : "Enable parent-child nesting"}
+                title={nestingEnabled ? zh("Disable parent-child nesting") : zh("Enable parent-child nesting")}
               >
                 <ListTree className="h-3.5 w-3.5" />
               </Button>
@@ -2462,7 +2463,7 @@ export function Inbox() {
                     variant="outline"
                     size="icon"
                     className={cn("h-8 w-8 shrink-0", groupBy !== "none" && "bg-accent")}
-                    title="Group"
+                    title={zh("Group")}
                   >
                     <Layers className="h-3.5 w-3.5" />
                   </Button>
@@ -2497,7 +2498,7 @@ export function Inbox() {
                 visibleColumnSet={visibleIssueColumnSet}
                 onToggleColumn={toggleIssueColumn}
                 onResetColumns={() => setIssueColumns(DEFAULT_INBOX_ISSUE_COLUMNS)}
-                title="Choose which inbox columns stay visible"
+                title={zh("Choose which inbox columns stay visible")}
                 iconOnly
               />
               {canMarkAllRead && (
@@ -2510,19 +2511,19 @@ export function Inbox() {
                     onClick={() => setShowMarkAllReadConfirm(true)}
                     disabled={markAllReadMutation.isPending}
                   >
-                    {markAllReadMutation.isPending ? "Marking…" : "Mark all as read"}
+                    {markAllReadMutation.isPending ? zh("Marking…") : zh("Mark all as read")}
                   </Button>
                   <Dialog open={showMarkAllReadConfirm} onOpenChange={setShowMarkAllReadConfirm}>
                     <DialogContent className="sm:max-w-md">
                       <DialogHeader>
-                        <DialogTitle>Mark all as read?</DialogTitle>
+                        <DialogTitle>{zh("Mark all as read?")}</DialogTitle>
                         <DialogDescription>
-                          This will mark {unreadIssueIds.length} unread {unreadIssueIds.length === 1 ? "item" : "items"} as read.
+                          This will mark {unreadIssueIds.length} {zh("unread")} {unreadIssueIds.length === 1 ? "item" : "items"} {zh("as read.")}
                         </DialogDescription>
                       </DialogHeader>
                       <DialogFooter>
                         <Button variant="outline" onClick={() => setShowMarkAllReadConfirm(false)}>
-                          Cancel
+                          {zh("Cancel")}
                         </Button>
                         <Button
                           onClick={() => {
@@ -2530,7 +2531,7 @@ export function Inbox() {
                             markAllReadMutation.mutate(unreadIssueIds);
                           }}
                         >
-                          Mark all as read
+                          {zh("Mark all as read")}
                         </Button>
                       </DialogFooter>
                     </DialogContent>
@@ -2550,15 +2551,15 @@ export function Inbox() {
             onValueChange={(value) => updateAllCategoryFilter(value as InboxCategoryFilter)}
           >
             <SelectTrigger className="h-8 w-(--sz-170px) text-xs">
-              <SelectValue placeholder="Category" />
+              <SelectValue placeholder={zh("Category")} />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="everything">All categories</SelectItem>
-              <SelectItem value="issues_i_touched">My recent tasks</SelectItem>
-              <SelectItem value="join_requests">Join requests</SelectItem>
-              <SelectItem value="approvals">Approvals</SelectItem>
-              <SelectItem value="failed_runs">Failed runs</SelectItem>
-              <SelectItem value="alerts">Alerts</SelectItem>
+              <SelectItem value="everything">{zh("All categories")}</SelectItem>
+              <SelectItem value="issues_i_touched">{zh("My recent tasks")}</SelectItem>
+              <SelectItem value="join_requests">{zh("Join requests")}</SelectItem>
+              <SelectItem value="approvals">{zh("Approvals")}</SelectItem>
+              <SelectItem value="failed_runs">{zh("Failed runs")}</SelectItem>
+              <SelectItem value="alerts">{zh("Alerts")}</SelectItem>
             </SelectContent>
           </Select>
 
@@ -2568,12 +2569,12 @@ export function Inbox() {
               onValueChange={(value) => updateAllApprovalFilter(value as InboxApprovalFilter)}
             >
               <SelectTrigger className="h-8 w-(--sz-170px) text-xs">
-                <SelectValue placeholder="Approval status" />
+                <SelectValue placeholder={zh("Approval status")} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="all">All approval statuses</SelectItem>
-                <SelectItem value="actionable">Needs action</SelectItem>
-                <SelectItem value="resolved">Resolved</SelectItem>
+                <SelectItem value="all">{zh("All approval statuses")}</SelectItem>
+                <SelectItem value="actionable">{zh("Needs action")}</SelectItem>
+                <SelectItem value="resolved">{zh("Resolved")}</SelectItem>
               </SelectContent>
             </Select>
           )}
@@ -2613,14 +2614,14 @@ export function Inbox() {
           icon={searchQuery.trim() ? Search : InboxIcon}
           message={
             searchQuery.trim()
-              ? "No inbox items match your search."
+              ? zh("No inbox items match your search.")
               : tab === "mine"
-              ? "Inbox zero."
+              ? zh("Inbox zero.")
               : tab === "unread"
-              ? "No new inbox items."
+              ? zh("No new inbox items.")
               : tab === "recent"
-                ? "No recent inbox items."
-                : "No inbox items match these filters."
+                ? zh("No recent inbox items.")
+                : zh("No inbox items match these filters.")
           }
         />
       )}
@@ -2732,7 +2733,7 @@ export function Inbox() {
                       }
                       titleSuffix={hasChildren && !isExpanded && depth === 0 ? (
                         <span className="ml-1.5 text-xs text-muted-foreground">
-                          ({childCount} sub-task{childCount !== 1 ? "s" : ""})
+                          ({childCount} {zh("sub-task")}{childCount !== 1 ? "s" : ""})
                         </span>
                       ) : undefined}
                       mobileMeta={issueActivityText(issue).toLowerCase()}
@@ -2807,7 +2808,7 @@ export function Inbox() {
                       >
                         <div className="h-px flex-1 bg-border/80" />
                         <span className="shrink-0 text-(length:--text-micro) font-semibold uppercase tracking-wide text-muted-foreground">
-                          {group.searchSection === "archived" ? "Archived" : "Other results"}
+                          {group.searchSection === "archived" ? zh("Archived") : zh("Other results")}
                         </span>
                         <div className="h-px flex-1 bg-border/80" />
                       </div>,
@@ -2887,7 +2888,7 @@ export function Inbox() {
                         <div key={`today-divider-${group.key}-${index}`} className="my-2 flex items-center gap-3 px-4">
                           <div className="flex-1 border-t border-zinc-600" />
                           <span className="shrink-0 text-(length:--text-micro) font-medium uppercase tracking-wider text-zinc-500">
-                            Earlier
+                            {zh("Earlier")}
                           </span>
                         </div>,
                       );
@@ -3102,7 +3103,7 @@ export function Inbox() {
           {showSeparatorBefore("alerts") && <Separator />}
           <div>
             <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-muted-foreground">
-              Alerts
+              {zh("Alerts")}
             </h3>
             <div className="divide-y divide-border border border-border">
               {showAggregateAgentError && (
@@ -3114,14 +3115,14 @@ export function Inbox() {
                     <AlertTriangle className="h-4 w-4 shrink-0 text-red-600 dark:text-red-400" />
                     <span className="text-sm">
                       <span className="font-medium">{dashboard!.agents.error}</span>{" "}
-                      {dashboard!.agents.error === 1 ? "agent has" : "agents have"} errors
+                      {dashboard!.agents.error === 1 ? "agent has" : "agents have"} {zh("errors")}
                     </span>
                   </Link>
                   <button
                     type="button"
                     onClick={() => dismissAlert("alert:agent-errors")}
                     className="rounded-md p-1 text-muted-foreground opacity-0 transition-opacity hover:bg-accent hover:text-foreground group-hover/alert:opacity-100"
-                    aria-label="Dismiss"
+                    aria-label={zh("Dismiss")}
                   >
                     <X className="h-3.5 w-3.5" />
                   </button>
@@ -3135,16 +3136,16 @@ export function Inbox() {
                   >
                     <AlertTriangle className="h-4 w-4 shrink-0 text-yellow-400" />
                     <span className="text-sm">
-                      Budget at{" "}
+                      {zh("Budget at")}{" "}
                       <span className="font-medium">{dashboard!.costs.monthUtilizationPercent}%</span>{" "}
-                      utilization this month
+                      {zh("utilization this month")}
                     </span>
                   </Link>
                   <button
                     type="button"
                     onClick={() => dismissAlert("alert:budget")}
                     className="rounded-md p-1 text-muted-foreground opacity-0 transition-opacity hover:bg-accent hover:text-foreground group-hover/alert:opacity-100"
-                    aria-label="Dismiss"
+                    aria-label={zh("Dismiss")}
                   >
                     <X className="h-3.5 w-3.5" />
                   </button>

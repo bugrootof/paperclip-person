@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useCoordinatorWorkspaceEnabled } from "../hooks/useCoordinatorWorkspaceEnabled";
@@ -144,7 +145,7 @@ function ClassicWhatNeedsMe() {
   );
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Decisions" }]);
+    setBreadcrumbs([{ label: zh("Decisions") }]);
   }, [setBreadcrumbs]);
 
   // Re-hydrate per-company preferences when the company changes.
@@ -445,7 +446,7 @@ function ClassicWhatNeedsMe() {
         body: item.subject.title ?? undefined,
         tone: "info",
         ttlMs: 8000,
-        action: { label: "Undo", onClick: () => handleUndoDismiss(item) },
+        action: { label: zh("Undo"), onClick: () => handleUndoDismiss(item) },
       });
     },
     [dismiss, handleUndoDismiss, pushToast],
@@ -528,7 +529,7 @@ function ClassicWhatNeedsMe() {
   return (
     <div ref={rootRef} className="max-w-3xl space-y-4">
       <div className="space-y-4">
-        <h1 className="text-xl font-bold">Decisions</h1>
+        <h1 className="text-xl font-bold">{zh("Decisions")}</h1>
         <DecisionsToolbar
           query={searchQuery}
           onQueryChange={setSearchQuery}
@@ -806,7 +807,7 @@ export function DecisionBundleHeader({
         </span>
       )}
       {title && <span className="text-muted-foreground">· {title}</span>}
-      <span className="text-muted-foreground">· {count} pending</span>
+      <span className="text-muted-foreground">· {count} {zh("pending")}</span>
     </div>
   );
 }

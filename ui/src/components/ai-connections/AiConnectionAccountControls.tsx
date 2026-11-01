@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState, type ReactNode } from "react";
 import { RefreshCw, Star, Unplug } from "lucide-react";
 import type { ConnectionGrant } from "@paperclipai/shared";
@@ -37,17 +38,17 @@ export function AiConnectionAccountControls({
             <h3 role={account.isDefault ? "status" : undefined} className={cn("text-sm font-semibold", account.isDefault && !available && "text-destructive")}>{account.isDefault && !available ? "Default unavailable" : "Personal default"}</h3>
           </div>
           {!account.isDefault && (!readOnly ? (
-            <Button variant="outline" size="sm" disabled={!available} onClick={onMakeDefault}>Make default</Button>
+            <Button variant="outline" size="sm" disabled={!available} onClick={onMakeDefault}>{zh("Make default")}</Button>
           ) : <span className="text-xs text-muted-foreground">Not default</span>)}
         </div>
       )}
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="min-w-0 text-sm">
-          <p className="break-words text-xs text-muted-foreground">{account.method === "subscription" ? "Subscription" : "API key"}{account.accountLabel ? ` · ${account.accountLabel}` : ""}</p>
+          <p className="break-words text-xs text-muted-foreground">{account.method === "subscription" ? "Subscription" : zh("API key")}{account.accountLabel ? ` · ${account.accountLabel}` : ""}</p>
         </div>
         {!readOnly && grant.capabilities?.canRevoke && (
           <div className="flex flex-wrap items-center gap-2">
-            {<Button variant="outline" size="sm" onClick={onReconnect}><RefreshCw className="size-4" aria-hidden />Reconnect</Button>}
+            {<Button variant="outline" size="sm" onClick={onReconnect}><RefreshCw className="size-4" aria-hidden />{zh("Reconnect")}</Button>}
             {account.status !== "revoked" && <Button variant="ghost" size="sm" className="text-destructive" onClick={() => setRevoking(true)}><Unplug className="size-4" aria-hidden />Revoke identity</Button>}
           </div>
         )}

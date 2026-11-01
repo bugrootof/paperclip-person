@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useLayoutEffect, useRef } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FolderOpen, Search } from "lucide-react";
@@ -68,7 +69,7 @@ export function Cases() {
     ...(view.groupBy !== "none" ? { groupBy: view.groupBy } : {}),
   };
 
-  useEffect(() => setBreadcrumbs([{ label: "Cases" }]), [setBreadcrumbs]);
+  useEffect(() => setBreadcrumbs([{ label: zh("Cases") }]), [setBreadcrumbs]);
 
   const casesQuery = useQuery({
     queryKey: [...queryKeys.cases.list(selectedCompanyId ?? ""), filters],
@@ -154,25 +155,25 @@ export function Cases() {
         onSortChange={(field, dir) => setView({ sort: field === "updated" ? "" : field, dir: dir === "desc" ? "" : dir })}
         groupBy={view.groupBy} onGroupChange={group => setView({ group: group === "none" ? "" : group })}
         filters={<>
-        <CaseFilter label="Status" value={status} onChange={value => setFilter("status", value)} options={[
-          { value: ALL, label: "All statuses" },
+        <CaseFilter label={zh("Status")} value={status} onChange={value => setFilter("status", value)} options={[
+          { value: ALL, label: zh("All statuses") },
           ...CASE_STATUSES.map(value => ({ value, label: CASE_STATUS_LABELS[value] })),
         ]} />
-        <CaseFilter label="Type" value={type} disabled={typesQuery.isPending || typesQuery.isError}
+        <CaseFilter label={zh("Type")} value={type} disabled={typesQuery.isPending || typesQuery.isError}
           onChange={value => setFilter("type", value)} options={[
             { value: ALL, label: "All types" },
             ...typeOptions.map(value => ({ value, label: value })),
           ]} />
-        <CaseFilter label="Project" value={project} disabled={projectsQuery.isPending || projectsQuery.isError}
+        <CaseFilter label={zh("Project")} value={project} disabled={projectsQuery.isPending || projectsQuery.isError}
           onChange={value => setFilter("project", value)} options={[
             { value: ALL, label: "All projects" },
-            { value: "none", label: "No project" },
+            { value: "none", label: zh("No project") },
             ...(projectsQuery.data ?? []).map(item => ({ value: item.id, label: item.name })),
             ...(project !== ALL && project !== "none" && !projectNames.has(project)
               ? [{ value: project, label: "Selected project" }] : []),
           ]} />
         </>} />}
-        feedback={hasFilters ? <Button variant="ghost" size="sm" onClick={clearFilters}>Clear filters</Button> : undefined} />
+        feedback={hasFilters ? <Button variant="ghost" size="sm" onClick={clearFilters}>{zh("Clear filters")}</Button> : undefined} />
 
       {typesQuery.isError || projectsQuery.isError ? <div role="alert" className="flex flex-wrap items-center gap-3 text-sm">
         <p>Some case filters couldn’t be loaded.</p>
@@ -186,11 +187,11 @@ export function Cases() {
         {Array.from({ length: 6 }, (_, index) => <Skeleton key={index} className="h-16 w-full rounded-none" />)}
       </div> : casesQuery.isError ? <div role="alert" className="flex flex-wrap items-center gap-3 py-6 text-sm">
         <p>Cases couldn’t be loaded.</p>
-        <Button variant="outline" size="sm" onClick={() => void casesQuery.refetch()}>Try again</Button>
+        <Button variant="outline" size="sm" onClick={() => void casesQuery.refetch()}>{zh("Try again")}</Button>
       </div> : records.length === 0 ? (
         <EmptyState icon={hasFilters ? Search : FolderOpen}
           message={page > 1 ? "No cases on this page" : hasFilters ? "No cases match these filters" : "No cases yet"}
-          action={page > 1 ? "First page" : hasFilters ? "Clear filters" : undefined} hideActionIcon
+          action={page > 1 ? "First page" : hasFilters ? zh("Clear filters") : undefined} hideActionIcon
           onAction={() => page > 1 ? setPage(1) : clearFilters()} />
       ) : <section aria-label="Case list" aria-busy={casesQuery.isFetching} inert={casesQuery.isPlaceholderData} className="border-t border-border">
         {[...groups].map(([key, group]) => <div key={key}>
@@ -203,7 +204,7 @@ export function Cases() {
 
       {page > 1 || hasNext ? <nav aria-label="Case list pages" className="flex items-center justify-end gap-2">
         <Button variant="outline" size="sm" disabled={page === 1 || casesQuery.isFetching} onClick={() => setPage(page - 1)}>Previous</Button>
-        <Button variant="outline" size="sm" disabled={!hasNext || casesQuery.isFetching} onClick={() => setPage(page + 1)}>Next</Button>
+        <Button variant="outline" size="sm" disabled={!hasNext || casesQuery.isFetching} onClick={() => setPage(page + 1)}>{zh("Next")}</Button>
       </nav> : null}
     </div>
   );

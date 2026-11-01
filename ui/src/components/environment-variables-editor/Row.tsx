@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useRef, useState } from "react";
 import {
   ChevronDown,
@@ -288,7 +289,7 @@ export function EnvironmentVariableRow({
                     <span className="text-(length:--text-micro) text-muted-foreground">Resolve a stored organization secret at run start.</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem className="flex-col items-start gap-0.5" onSelect={() => switchSource("user_secret")}>
-                    <span className="text-sm">User secret</span>
+                    <span className="text-sm">{zh("User secret")}</span>
                     <span className="text-(length:--text-micro) text-muted-foreground">
                       Resolve the responsible user&apos;s own value at run start.
                     </span>
@@ -367,7 +368,7 @@ export function EnvironmentVariableRow({
                             event.stopPropagation();
                             setVersionOpen((prev) => !prev);
                           }}
-                          aria-label="Version"
+                          aria-label={zh("Version")}
                           className={cn(
                             "absolute right-8 top-1/2 z-10 -translate-y-1/2 rounded px-1.5 py-0.5 text-(length:--text-nano) font-medium",
                             versionPinned
@@ -392,7 +393,7 @@ export function EnvironmentVariableRow({
                             row.version === "latest" && "font-medium",
                           )}
                         >
-                          latest <span className="text-(length:--text-micro) text-muted-foreground">(recommended)</span>
+                          {zh("latest")} <span className="text-(length:--text-micro) text-muted-foreground">(recommended)</span>
                         </button>
                         {Array.from({ length: versions }, (_, idx) => versions - idx)
                           .filter((v) => v > 0)
@@ -422,7 +423,7 @@ export function EnvironmentVariableRow({
                 <div className="grid min-w-0 flex-1 grid-cols-(--gtc-13)">
                   {userSecretsEnabled ? (
                     <select
-                      aria-label="User secret"
+                      aria-label={zh("User secret")}
                       value={row.userSecretKey}
                       disabled={disabled}
                       onChange={(event) => {
@@ -465,7 +466,7 @@ export function EnvironmentVariableRow({
                     className="border-l border-border bg-transparent px-2 py-1.5 text-xs font-medium text-muted-foreground outline-none disabled:pointer-events-none"
                   >
                     <option value="required">Required</option>
-                    <option value="optional">Optional</option>
+                    <option value="optional">{zh("Optional")}</option>
                   </select>
                 </div>
               )}
@@ -542,7 +543,7 @@ export function EnvironmentVariableRow({
                 setUndoPrev(null);
               }}
             >
-              Undo
+              {zh("Undo")}
             </button>
           </p>
         ) : null}
@@ -567,7 +568,7 @@ export function EnvironmentVariableRow({
             <DropdownMenuTrigger asChild disabled={disabled}>
               <button
                 type="button"
-                aria-label="More actions"
+                aria-label={zh("More actions")}
                 className="rounded p-1 text-muted-foreground opacity-100 hover:bg-accent hover:text-foreground @[40rem]/env:opacity-0 @[40rem]/env:group-hover/row:opacity-100 @[40rem]/env:group-focus-within/row:opacity-100"
               >
                 <MoreHorizontal className="size-4" />

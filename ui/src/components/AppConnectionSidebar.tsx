@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { ChevronLeft } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { aiConnectionRouterPluginKey, aiConnectionRouterSlug, humanizeConnectionDisplayName } from "@paperclipai/shared";
@@ -117,7 +118,7 @@ export function AppDetailSidebar(props: AppDetailSidebarProps) {
             <SidebarNavItem
               key={tab.key}
               to={tabHref(props, tab.key)}
-              label={poolPluginKey ? "Settings" : tab.label}
+              label={poolPluginKey ? zh("Settings") : tab.label}
               icon={tab.icon}
               end
               badge={tab.key === "review" && reviewCount > 0 ? reviewCount : undefined}

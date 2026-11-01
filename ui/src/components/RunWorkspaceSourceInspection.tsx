@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useMutation } from "@tanstack/react-query";
 import { ENVIRONMENT_LEASE_POLICIES, WORKSPACE_SOURCE_VERIFICATION_REASONS } from "@paperclipai/shared";
 import { issuesApi } from "../api/issues";
@@ -45,7 +46,7 @@ export function RunWorkspaceSourceInspection({ issueId, runId }: { issueId: stri
       ))}
       {current ? <div className="space-y-2 text-xs" role="status">
         <p className="font-medium">Current recorded-source identity</p>
-        <p className="font-mono text-muted-foreground">Action {current.actionId}</p>
+        <p className="font-mono text-muted-foreground">{zh("Action")} {current.actionId}</p>
         <p className="text-muted-foreground">This read-only observation checks recorded identity. It does not confirm provider termination, local files, or successful preservation.</p>
         {current.status === "verified" ? <p>Recorded-source identity verified.</p>
           : current.status === "not_inspected" ? <p>Source not inspected: this record exceeds the inspection limit. Service attention is required.</p>

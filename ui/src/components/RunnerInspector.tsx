@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import {
   useCallback,
   useEffect,
@@ -88,7 +89,7 @@ const VIEW_OPTIONS: Array<{
   label: string;
   icon: typeof Layers3;
 }> = [
-  { value: "overview", label: "Overview", icon: Layers3 },
+  { value: "overview", label: zh("Overview"), icon: Layers3 },
   { value: "pipeline", label: "Pipeline", icon: ArrowRight },
   { value: "trace", label: "Exact trace", icon: FileJson2 },
 ];
@@ -447,7 +448,7 @@ function JsonNode({
         <span className="ml-auto hidden items-center gap-0.5 group-hover:flex">
           <button
             type="button"
-            title={pathCopy.copied ? "JSON path copied" : pathCopy.failed ? "Copy failed" : "Copy JSON path"}
+            title={pathCopy.copied ? "JSON path copied" : pathCopy.failed ? zh("Copy failed") : "Copy JSON path"}
             className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
             onClick={() => void pathCopy.copy(path)}
           >
@@ -455,7 +456,7 @@ function JsonNode({
           </button>
           <button
             type="button"
-            title={valueCopy.copied ? "Value copied" : valueCopy.failed ? "Copy failed" : "Copy value"}
+            title={valueCopy.copied ? "Value copied" : valueCopy.failed ? zh("Copy failed") : "Copy value"}
             className="rounded p-1 text-muted-foreground hover:bg-muted hover:text-foreground"
             onClick={copyValue}
           >
@@ -559,10 +560,10 @@ function InterpretationStage({ entry, last }: { entry: TraceEntry; last: boolean
             <table className="w-full min-w-(--sz-36rem) text-left text-xs">
               <thead className="bg-muted/30 text-muted-foreground">
                 <tr>
-                  <th className="px-3 py-1.5 font-medium">Action</th>
+                  <th className="px-3 py-1.5 font-medium">{zh("Action")}</th>
                   <th className="px-3 py-1.5 font-medium">Provider path</th>
                   <th className="px-3 py-1.5 font-medium">Output path</th>
-                  <th className="px-3 py-1.5 font-medium">Reason</th>
+                  <th className="px-3 py-1.5 font-medium">{zh("Reason")}</th>
                 </tr>
               </thead>
               <tbody>
@@ -623,7 +624,7 @@ function ProductionSurfacePreview({ event, runId }: { event: HeartbeatRunEvent; 
         <div className="min-w-0">
           <p className="text-sm font-medium">{event.eventType}</p>
           <p className="mt-0.5 text-xs text-muted-foreground">
-            Production surface: {decision.surface} · {decision.action} in {decision.container}
+            Production surface: {decision.surface} · {decision.action} {zh("in")} {decision.container}
           </p>
         </div>
       </div>
@@ -1077,7 +1078,7 @@ export function RunnerInspector({
                 <p className="mt-1 text-sm text-muted-foreground">Canonical PRP events and persisted presentation decisions remain available below.</p>
               </div>
               {onRerunWithTrace && canInspectRaw === true ? (
-                <Button size="sm" onClick={onRerunWithTrace}><RefreshCw className="mr-1.5 h-4 w-4" />Re-run with provider trace</Button>
+                <Button size="sm" onClick={onRerunWithTrace}><RefreshCw className="mr-1.5 h-4 w-4" />{zh("Re-run with provider trace")}</Button>
               ) : null}
             </div>
           ) : null}
@@ -1087,7 +1088,7 @@ export function RunnerInspector({
               <div className="space-y-6 p-5">
                 {loading ? <p className="text-sm text-muted-foreground">Loading run pipeline…</p> : null}
                 <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
-                  <StatCard label="Provider" value={capturedProviders.join(", ") || inspection?.trace?.provider || "PRP only"} detail={inspection?.trace ? `captured through ${inspection.trace.provider}` : "capture was off"} />
+                  <StatCard label={zh("Provider")} value={capturedProviders.join(", ") || inspection?.trace?.provider || "PRP only"} detail={inspection?.trace ? `captured through ${inspection.trace.provider}` : "capture was off"} />
                   <StatCard label="Raw frames" value={frames.length} detail={inspection?.trace ? formatBytes(inspection.trace.byteCount) : "no exact bytes"} />
                   <StatCard label="Operations" value={operations.length} detail="correlated groups" />
                   <StatCard label="PRP events" value={events.length} detail={`${visibleEventCount} visible`} />
@@ -1135,7 +1136,7 @@ export function RunnerInspector({
                 <Select value={nativeMethod} onValueChange={setNativeMethod}><SelectTrigger><SelectValue placeholder="Native method" /></SelectTrigger><SelectContent><SelectItem value="all">All native methods</SelectItem>{unique(frames.map(frameMethod)).sort().map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
                 <Select value={disposition} onValueChange={setDisposition}><SelectTrigger><SelectValue placeholder="Mapping" /></SelectTrigger><SelectContent><SelectItem value="all">All mappings</SelectItem>{["mapped", "generic", "ignored", "rejected", "operator_only"].map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
                 <Select value={prpType} onValueChange={setPrpType}><SelectTrigger><SelectValue placeholder="PRP type" /></SelectTrigger><SelectContent><SelectItem value="all">All PRP types</SelectItem>{unique(events.map((event) => event.eventType)).sort().map((value) => <SelectItem key={value} value={value}>{value}</SelectItem>)}</SelectContent></Select>
-                <Select value={visibility} onValueChange={setVisibility}><SelectTrigger><SelectValue placeholder="Visibility" /></SelectTrigger><SelectContent><SelectItem value="all">Visible + hidden</SelectItem><SelectItem value="visible">Visible</SelectItem><SelectItem value="hidden">Hidden</SelectItem></SelectContent></Select>
+                <Select value={visibility} onValueChange={setVisibility}><SelectTrigger><SelectValue placeholder={zh("Visibility")} /></SelectTrigger><SelectContent><SelectItem value="all">Visible + hidden</SelectItem><SelectItem value="visible">Visible</SelectItem><SelectItem value="hidden">Hidden</SelectItem></SelectContent></Select>
               </div>
               <div className="grid min-h-0 flex-1 lg:grid-cols-(--gtc-runner-inspector-pipeline)">
                 <ScrollArea className="border-r border-border">
@@ -1188,7 +1189,7 @@ export function RunnerInspector({
                         <div className="mb-3 flex items-center gap-2"><span className="flex h-6 w-6 items-center justify-center rounded-full bg-muted text-xs font-semibold text-foreground">4</span><h3 className="text-sm font-semibold">Production presentation</h3></div>
                         {selectedEvents.length ? selectedEvents.map((event) => {
                           const decision = visibilityDecision(event);
-                          return <div key={event.id} className="mb-4 grid gap-3 xl:grid-cols-(--gtc-runner-inspector-presentation)"><dl className="grid grid-cols-(--gtc-runner-inspector-fields) gap-x-3 gap-y-1 rounded-lg border border-border p-3 text-sm"><dt className="text-muted-foreground">Visible</dt><dd className="flex items-center gap-1.5">{decision.visible ? <Check className="h-3.5 w-3.5 text-primary" /> : <CircleOff className="h-3.5 w-3.5 text-muted-foreground" />}{decision.visible ? "yes" : "no"}</dd><dt className="text-muted-foreground">Surface</dt><dd>{decision.surface}</dd><dt className="text-muted-foreground">Container</dt><dd>{decision.container}</dd><dt className="text-muted-foreground">State</dt><dd>{decision.state}</dd><dt className="text-muted-foreground">Action</dt><dd>{decision.action}</dd><dt className="text-muted-foreground">Reason</dt><dd>{decision.reason}</dd><dt className="text-muted-foreground">Reason code</dt><dd><code className="text-xs">{decision.reasonCode}</code></dd></dl><div><p className="mb-2 text-(length:--text-nano) font-medium uppercase tracking-wide text-muted-foreground">Production surface preview</p><ProductionSurfacePreview event={event} runId={runId} /></div></div>;
+                          return <div key={event.id} className="mb-4 grid gap-3 xl:grid-cols-(--gtc-runner-inspector-presentation)"><dl className="grid grid-cols-(--gtc-runner-inspector-fields) gap-x-3 gap-y-1 rounded-lg border border-border p-3 text-sm"><dt className="text-muted-foreground">Visible</dt><dd className="flex items-center gap-1.5">{decision.visible ? <Check className="h-3.5 w-3.5 text-primary" /> : <CircleOff className="h-3.5 w-3.5 text-muted-foreground" />}{decision.visible ? "yes" : "no"}</dd><dt className="text-muted-foreground">Surface</dt><dd>{decision.surface}</dd><dt className="text-muted-foreground">Container</dt><dd>{decision.container}</dd><dt className="text-muted-foreground">State</dt><dd>{decision.state}</dd><dt className="text-muted-foreground">{zh("Action")}</dt><dd>{decision.action}</dd><dt className="text-muted-foreground">{zh("Reason")}</dt><dd>{decision.reason}</dd><dt className="text-muted-foreground">Reason code</dt><dd><code className="text-xs">{decision.reasonCode}</code></dd></dl><div><p className="mb-2 text-(length:--text-nano) font-medium uppercase tracking-wide text-muted-foreground">Production surface preview</p><ProductionSurfacePreview event={event} runId={runId} /></div></div>;
                         }) : <p className="text-sm text-muted-foreground">No presentation surface was emitted for this operation.</p>}
                         {Object.keys(presentationDecision).length > 0 ? <details className="rounded-lg border border-border"><summary className="cursor-pointer px-3 py-2 text-xs font-medium text-muted-foreground">Resolved final response decision</summary><div className="p-3 pt-0"><JsonExplorer value={presentationDecision} /></div></details> : null}
                         {verificationCaveats.length > 0 || ignoredAttentionRequests.length > 0 ? (

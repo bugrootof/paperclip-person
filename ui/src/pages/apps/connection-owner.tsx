@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import type { McpConnection, ToolConnection } from "@paperclipai/shared";
 import { humanizeConnectionDisplayName } from "@paperclipai/shared";
 import { Identity } from "@/components/Identity";
@@ -60,7 +61,7 @@ export function assistantConnectionDisplayName(connection: McpConnection): strin
 }
 
 export function ConnectionOwnerIdentity({ owner }: { owner: ConnectionOwnerProfile | null }) {
-  if (!owner) return <span className="text-xs text-muted-foreground">Unknown</span>;
+  if (!owner) return <span className="text-xs text-muted-foreground">{zh("Unknown")}</span>;
   return (
     <Identity
       name={owner.label}

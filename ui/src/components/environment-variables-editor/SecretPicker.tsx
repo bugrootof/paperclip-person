@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useCallback, useMemo, useState } from "react";
 import { CornerUpLeft, Folder, KeyRound, Plus } from "lucide-react";
 import type { CompanySecret, SecretStatus } from "@paperclipai/shared";
@@ -107,7 +108,7 @@ function buildFolderGroup(
     options.push({
       key: `folder-up-${pathKey(currentPath)}`,
       value: folderValue(parentPath),
-      label: "Up one folder",
+      label: zh("Up one folder"),
       title: pathLabel(parentPath),
       searchText: pathLabel(parentPath),
       kind: "back",
@@ -171,7 +172,7 @@ export function SecretPicker({
     if (boundMissing) {
       result.push({
         id: "current-missing",
-        label: "Current",
+        label: zh("Current"),
         options: [
           {
             key: `missing-${secretId}`,
@@ -324,7 +325,7 @@ export function SecretPicker({
                 <Plus className="size-3.5 shrink-0" />
                 {query.trim() ? (
                   <span>
-                    Create secret <span className="font-mono">&ldquo;{query.trim()}&rdquo;</span>…
+                    {zh("Create secret")} <span className="font-mono">&ldquo;{query.trim()}&rdquo;</span>…
                   </span>
                 ) : (
                   <span>Create new secret…</span>

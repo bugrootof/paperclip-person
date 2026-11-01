@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { SecretStatus, UserSecretDefinition } from "@paperclipai/shared";
@@ -174,7 +175,7 @@ export function UserSecretDefinitionsTab({ companyId }: { companyId: string }) {
             <AlertCircle className="h-4 w-4" /> Failed to load definitions:{" "}
             {(definitionsQuery.error as Error).message}
             <Button variant="ghost" size="sm" onClick={() => definitionsQuery.refetch()}>
-              Retry
+              {zh("Retry")}
             </Button>
           </div>
         ) : definitions.length === 0 && !definitionsQuery.isPending ? (
@@ -244,7 +245,7 @@ export function UserSecretDefinitionsTab({ companyId }: { companyId: string }) {
 
           <div className="space-y-3">
             <div className="space-y-1">
-              <label className="text-xs font-medium text-foreground">Name</label>
+              <label className="text-xs font-medium text-foreground">{zh("Name")}</label>
               <Input
                 value={form.name}
                 onChange={(event) => {
@@ -255,12 +256,12 @@ export function UserSecretDefinitionsTab({ companyId }: { companyId: string }) {
                     key: keyDirty ? current.key : keyFromName(name),
                   }));
                 }}
-                placeholder="Personal GitHub token"
+                placeholder={zh("Personal GitHub token")}
                 autoFocus
               />
             </div>
             <div className="space-y-1">
-              <label className="text-xs font-medium text-foreground">Key</label>
+              <label className="text-xs font-medium text-foreground">{zh("Key")}</label>
               <Input
                 value={form.key}
                 onChange={(event) => {
@@ -276,7 +277,7 @@ export function UserSecretDefinitionsTab({ companyId }: { companyId: string }) {
               </p>
             </div>
             <div className="space-y-1">
-              <label className="text-xs font-medium text-foreground">Description</label>
+              <label className="text-xs font-medium text-foreground">{zh("Description")}</label>
               <Input
                 value={form.description}
                 onChange={(event) =>
@@ -287,20 +288,20 @@ export function UserSecretDefinitionsTab({ companyId }: { companyId: string }) {
             </div>
             <div className="space-y-1">
               <label className="text-xs font-medium text-foreground">
-                Usage guidance <span className="text-muted-foreground">(optional)</span>
+                {zh("Usage guidance")} <span className="text-muted-foreground">{zh("(optional)")}</span>
               </label>
               <Textarea
                 value={form.usageGuidance}
                 onChange={(event) =>
                   setForm((current) => ({ ...current, usageGuidance: event.target.value }))
                 }
-                placeholder="Tell members how to create their token, required scopes, etc."
+                placeholder={zh("Tell members how to create their token, required scopes, etc.")}
                 className="min-h-(--sz-70px) text-sm"
               />
             </div>
             {editing ? (
               <div className="space-y-1">
-                <label className="text-xs font-medium text-foreground">Status</label>
+                <label className="text-xs font-medium text-foreground">{zh("Status")}</label>
                 <Select
                   value={form.status}
                   onValueChange={(status) =>
@@ -311,9 +312,9 @@ export function UserSecretDefinitionsTab({ companyId }: { companyId: string }) {
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="active">Active</SelectItem>
-                    <SelectItem value="disabled">Disabled</SelectItem>
-                    <SelectItem value="archived">Archived</SelectItem>
+                    <SelectItem value="active">{zh("Active")}</SelectItem>
+                    <SelectItem value="disabled">{zh("Disabled")}</SelectItem>
+                    <SelectItem value="archived">{zh("Archived")}</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -323,10 +324,10 @@ export function UserSecretDefinitionsTab({ companyId }: { companyId: string }) {
 
           <DialogFooter>
             <Button variant="ghost" onClick={() => setDialogOpen(false)} disabled={save.isPending}>
-              Cancel
+              {zh("Cancel")}
             </Button>
             <Button onClick={() => save.mutate()} disabled={!canSave || save.isPending}>
-              {save.isPending ? "Saving…" : editing ? "Save changes" : "Create"}
+              {save.isPending ? zh("Saving…") : editing ? zh("Save changes") : zh("Create")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -344,14 +345,14 @@ export function UserSecretDefinitionsTab({ companyId }: { companyId: string }) {
           </DialogHeader>
           <DialogFooter>
             <Button variant="ghost" onClick={() => setDeleteTarget(null)} disabled={remove.isPending}>
-              Cancel
+              {zh("Cancel")}
             </Button>
             <Button
               variant="destructive"
               onClick={() => deleteTarget && remove.mutate(deleteTarget)}
               disabled={remove.isPending}
             >
-              {remove.isPending ? "Removing…" : "Remove"}
+              {remove.isPending ? zh("Removing…") : zh("Remove")}
             </Button>
           </DialogFooter>
         </DialogContent>

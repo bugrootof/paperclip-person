@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useId, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -167,7 +168,7 @@ export function FastResponseSettingsView({
               htmlFor={`${modelListId}-input`}
               className="text-sm font-medium"
             >
-              Model
+              {zh("Model")}
             </label>
             <Input
               id={`${modelListId}-input`}
@@ -238,11 +239,11 @@ export function FastResponseSettingsView({
             onClick={onTest}
             disabled={dirty || !settings.enabled || saving || testing}
           >
-            {testing ? "Testing…" : "Test response"}
+            {testing ? zh("Testing…") : "Test response"}
           </Button>
           <p className="text-xs text-muted-foreground">
             {dirty
-              ? "Save changes before testing."
+              ? zh("Save changes before testing.")
               : "Runs a small sample with an API charge."}
           </p>
         </div>
@@ -256,7 +257,7 @@ export function FastResponseSettingsView({
             }
             onClick={() => onSave(draft)}
           >
-            {saving ? "Saving…" : "Save fast response"}
+            {saving ? zh("Saving…") : "Save fast response"}
           </Button>
         )}
       </div>
@@ -320,7 +321,7 @@ export function FastResponseSettingsSection({
           Could not load fast response settings.
         </p>
         <Button variant="outline" onClick={() => void query.refetch()}>
-          Try again
+          {zh("Try again")}
         </Button>
       </div>
     );

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { Flag } from "lucide-react";
 import type { Agent } from "@paperclipai/shared";
 import { Button } from "@/components/ui/button";
@@ -50,7 +51,7 @@ export function IssueAssignedBacklogNotice({
                 disabled={resuming}
                 data-testid="issue-assigned-backlog-resume"
               >
-                {resuming ? "Resuming…" : "Resume now"}
+                {resuming ? zh("Resuming…") : "Resume now"}
               </Button>
             </div>
           ) : null}

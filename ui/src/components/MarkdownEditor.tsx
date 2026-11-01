@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AgentAvatar } from "./AgentAvatar";
 import {
   Component,
@@ -1680,17 +1681,17 @@ export const MarkdownEditor = forwardRef<MarkdownEditorRef, MarkdownEditorProps>
                 )}
                 {option.kind === "issue" && (
                   <span className="ml-auto text-(length:--text-nano) uppercase tracking-wide text-muted-foreground">
-                    Task
+                    {zh("Task")}
                   </span>
                 )}
                 {option.kind === "project" && option.projectId && (
                   <span className="ml-auto text-(length:--text-nano) uppercase tracking-wide text-muted-foreground">
-                    Project
+                    {zh("Project")}
                   </span>
                 )}
                 {option.kind === "user" && (
                   <span className="ml-auto text-(length:--text-nano) uppercase tracking-wide text-muted-foreground">
-                    User
+                    {zh("User")}
                   </span>
                 )}
                 {option.kind === "skill" && (
@@ -1700,7 +1701,7 @@ export const MarkdownEditor = forwardRef<MarkdownEditorRef, MarkdownEditorProps>
                 )}
                 {option.kind === "routine" && (
                   <span className="ml-auto text-(length:--text-nano) uppercase tracking-wide text-muted-foreground">
-                    Routine
+                    {zh("Routine")}
                   </span>
                 )}
                 {option.kind === "action" && (

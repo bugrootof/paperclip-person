@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { useStreamlinedTaskChatPresentation } from "./presentation-mode";
@@ -206,7 +207,7 @@ export function TaskChatTurn({
         <SummaryIcon className="h-3.5 w-3.5 shrink-0" />
       ) : null}
       <span>
-        {item.historical ? "Activity" : item.standaloneHeader && item.summary.durationLabel
+        {item.historical ? zh("Activity") : item.standaloneHeader && item.summary.durationLabel
           ? `${item.summary.failed ? "Stopped" : "Worked"} for ${item.summary.durationLabel}`
           : item.summary.failed
             ? "Stopped"

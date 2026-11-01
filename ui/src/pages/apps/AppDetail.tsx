@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AiConnectionPoolConnector } from "@/components/ai-connections/AiConnectionPoolConnector";
 import { aiConnectionRouterPluginKey } from "@paperclipai/shared";
 import { ConnectionInstructionsSettings } from "@/features/connections/ConnectionInstructions";
@@ -253,7 +254,7 @@ function StandardAppDetail({ renderActions, renderAgentSettings, renderConnectio
   useEffect(() => {
     if (!activeTab) return;
     setBreadcrumbs([
-      { label: "Connectors", href: "/apps" },
+      { label: zh("Connectors"), href: "/apps" },
       { label: appName, href: appTabHref(connectionId, "permissions") },
       { label: appTabLabel(activeTab) },
     ]);
@@ -560,7 +561,7 @@ function StandardAppDetail({ renderActions, renderAgentSettings, renderConnectio
 
   const aiGrantRevoked = connection.connectionPurpose === "ai"
     && grantRows.length > 0 && grantRows.every((grant) => grant.status === "revoked");
-  const status: StatusInfo = aiGrantRevoked ? { label: "Revoked", tone: "attention" } : statusFor(connection);
+  const status: StatusInfo = aiGrantRevoked ? { label: zh("Revoked"), tone: "attention" } : statusFor(connection);
   const needsReconnect = connection.requiresReauthorization
     ?? (status.tone === "attention" && connection.healthStatus !== "unknown");
   const quarantined = catalog.filter((e) => e.status === "quarantined");
@@ -808,10 +809,10 @@ export function AppDetailHeader({
                 autoFocus
               />
               <Button type="submit" size="sm" disabled={renamePending || !nameDraft.trim()}>
-                {renamePending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : "Save"}
+                {renamePending ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : zh("Save")}
               </Button>
               <Button type="button" size="sm" variant="ghost" onClick={onRenameCancel} disabled={renamePending}>
-                Cancel
+                {zh("Cancel")}
               </Button>
             </form>
           ) : (
@@ -863,7 +864,7 @@ function ToolsLoadError({ onRetry }: { onRetry: () => void }) {
   return (
     <div className="space-y-3 py-8">
       <p className="text-sm text-destructive">Couldn’t load tools for this app.</p>
-      <Button size="sm" variant="outline" onClick={onRetry}>Try again</Button>
+      <Button size="sm" variant="outline" onClick={onRetry}>{zh("Try again")}</Button>
     </div>
   );
 }
@@ -894,10 +895,10 @@ type StatusInfo = { label: string; tone: "connected" | "attention" | "paused" };
 
 function statusFor(connection: ToolConnection): StatusInfo {
   if (connection.enabled === false || connection.status === "disabled") {
-    return { label: "Paused", tone: "paused" };
+    return { label: zh("Paused"), tone: "paused" };
   }
   if (isAttentionHealthStatus(connection.healthStatus) || (connection.connectionPurpose === "ai" && (connection.healthStatus !== "ok" || aiSubscriptionNeedsIsolatedLogin(connection.config)))) {
-    return { label: "Needs attention", tone: "attention" };
+    return { label: zh("Needs attention"), tone: "attention" };
   }
   return { label: "Connected", tone: "connected" };
 }

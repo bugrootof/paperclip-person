@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useId, useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { PROMPT_INJECTION_DEFAULT_MODEL, updatePromptInjectionPreventionSchema,
@@ -61,7 +62,7 @@ export function PromptInjectionPreventionSettingsView({ settings, choices, model
     {draft.connectionId && <fieldset disabled={saving || testing} className="space-y-4">
       {(!selected || selected.status !== "connected") && <p role="status" className="text-sm text-muted-foreground">The saved connection is unavailable. Choose a replacement, disable model checks, or clear the selection. Built-in detection stays active.</p>}
       <div className="space-y-2">
-        <label htmlFor={`${modelId}-input`} className="text-sm font-medium">Model</label>
+        <label htmlFor={`${modelId}-input`} className="text-sm font-medium">{zh("Model")}</label>
         <Input id={`${modelId}-input`} list={modelId} value={draft.model} placeholder={PROMPT_INJECTION_DEFAULT_MODEL}
           onChange={e => setDraft(d => ({ ...d, model: e.target.value }))} />
         <datalist id={modelId}>{models.map(m => <option key={m.id} value={m.id}>{m.label ?? m.id}</option>)}</datalist>
@@ -69,20 +70,20 @@ export function PromptInjectionPreventionSettingsView({ settings, choices, model
       <ToggleField label="Use model for prompt injection checks" checked={draft.enabled} onChange={enabled => setDraft(d => ({ ...d, enabled }))} />
       <Button variant="ghost" size="sm" onClick={() => {
         setDraft(d => ({ ...d, connectionId: null, grantId: null, enabled: false })); onConnectionChange?.(null);
-      }}>Clear selection</Button>
+      }}>{zh("Clear selection")}</Button>
     </fieldset>}
     {error && <p role="alert" className="text-sm text-destructive">{error}</p>}
     {!dirty && result && <div role={result.passed ? "status" : "alert"} className={result.passed ? "space-y-2 text-sm" : "space-y-2 text-sm text-destructive"}>
       <p>{result.passed ? "Both model checks passed." : "Model checks did not pass. Check the connection and model, then try again."}</p>
-      {result.samples.map(s => <p key={s.name} className="text-xs">{s.name}: {s.passed ? "Passed" : s.reason ? `Model unavailable (${s.reason}); built-in detection is the fallback.` : "Incorrect verdict"} · {(s.durationMs / 1000).toFixed(2)} seconds</p>)}
+      {result.samples.map(s => <p key={s.name} className="text-xs">{s.name}: {s.passed ? zh("Passed") : s.reason ? `Model unavailable (${s.reason}); built-in detection is the fallback.` : "Incorrect verdict"} · {(s.durationMs / 1000).toFixed(2)} seconds</p>)}
     </div>}
     <div className="flex items-center justify-between gap-3">
       <div className="space-y-1">
-        <Button variant="outline" size="sm" onClick={onTest} disabled={dirty || !settings.enabled || saving || testing}>{testing ? "Testing…" : "Test model checks"}</Button>
-        <p className="text-xs text-muted-foreground">{dirty ? "Save changes before testing." : "Tests two fixed samples with an API charge."}</p>
+        <Button variant="outline" size="sm" onClick={onTest} disabled={dirty || !settings.enabled || saving || testing}>{testing ? zh("Testing…") : "Test model checks"}</Button>
+        <p className="text-xs text-muted-foreground">{dirty ? zh("Save changes before testing.") : "Tests two fixed samples with an API charge."}</p>
       </div>
       {dirty && <Button disabled={saving || testing || !updatePromptInjectionPreventionSchema.safeParse(draft).success || (draft.enabled && selected?.status !== "connected")}
-        onClick={() => onSave(draft)}>{saving ? "Saving…" : "Save prompt injection settings"}</Button>}
+        onClick={() => onSave(draft)}>{saving ? zh("Saving…") : "Save prompt injection settings"}</Button>}
     </div>
   </section>;
 }
@@ -101,7 +102,7 @@ export function PromptInjectionPreventionSettingsSection({ companyId }: { compan
   const save = useMutation({ mutationFn: (data: UpdatePromptInjectionPrevention) => promptInjectionPreventionApi.update(companyId, data),
     onSuccess: settings => { test.reset(); client.setQueryData(key, { ...query.data, settings }); } });
   if (query.isPending) return <p className="text-sm text-muted-foreground">Loading prompt injection settings…</p>;
-  if (query.error) return <div role="alert" className="space-y-2"><p className="text-sm text-destructive">Could not load prompt injection settings.</p><Button variant="outline" onClick={() => void query.refetch()}>Try again</Button></div>;
+  if (query.error) return <div role="alert" className="space-y-2"><p className="text-sm text-destructive">Could not load prompt injection settings.</p><Button variant="outline" onClick={() => void query.refetch()}>{zh("Try again")}</Button></div>;
   if (!query.data?.canManage || !query.data.settings) return null;
   return <>
     <PromptInjectionPreventionSettingsView key={companyId} settings={query.data.settings} choices={query.data.choices} models={models.data}

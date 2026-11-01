@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Network, Monitor } from "lucide-react";
@@ -273,17 +274,17 @@ export function AiProviderSetup({
   ) : undefined;
   const cancel = () => reconnect || initialProvider ? onCancel() : setStep("provider");
   if (!reconnect && accounts.isPending) return <p role="status">Loading connection permissions…</p>;
-  if (!reconnect && accounts.isError) return <p role="alert">Could not load connection permissions. <Button type="button" variant="ghost" onClick={() => void accounts.refetch()}>Retry</Button></p>;
+  if (!reconnect && accounts.isError) return <p role="alert">Could not load connection permissions. <Button type="button" variant="ghost" onClick={() => void accounts.refetch()}>{zh("Retry")}</Button></p>;
   return (
     <div className="mx-auto w-full max-w-2xl space-y-6" onSubmit={(event) => event.stopPropagation()}>
       <div className="space-y-2">
         <h2 className="text-xl font-semibold">
           {step === "provider"
             ? "Connect a model provider"
-            : `${reconnect ? "Reconnect" : "Connect"} ${label}`}
+            : `${reconnect ? zh("Reconnect") : zh("Connect")} ${label}`}
         </h2>
       </div>
-      {agents.isError && <p role="alert" className="text-sm text-destructive">Could not load agents. <Button type="button" variant="ghost" onClick={() => void agents.refetch()}>Retry</Button></p>}
+      {agents.isError && <p role="alert" className="text-sm text-destructive">Could not load agents. <Button type="button" variant="ghost" onClick={() => void agents.refetch()}>{zh("Retry")}</Button></p>}
       {step === "provider" ? (
         <>
           {advancedOnly ? choices(true) : <>
@@ -296,7 +297,7 @@ export function AiProviderSetup({
           </details>
           </>}
           <Button type="button" variant="ghost" onClick={onCancel}>
-            Cancel
+            {zh("Cancel")}
           </Button>
         </>
       ) : !advanced ? (
@@ -372,9 +373,9 @@ export function AiProviderSetup({
           )}
           {provider === "bedrock" && (
             <label className="block space-y-2 text-xs text-muted-foreground">
-              AWS region
+              {zh("AWS region")}
               <Input
-                aria-label="AWS region"
+                aria-label={zh("AWS region")}
                 value={region}
                 onChange={(e) => setRegion(e.target.value)}
                 disabled={Boolean(reconnect)}
@@ -415,9 +416,9 @@ export function AiProviderSetup({
           {
             auth !== "none" && (
               <label className="block space-y-2 text-xs text-muted-foreground">
-                API key
+                {zh("API key")}
                 <Input
-                  aria-label="API key"
+                  aria-label={zh("API key")}
                   type="password"
                   autoComplete="new-password"
                   value={apiKey}
@@ -446,7 +447,7 @@ export function AiProviderSetup({
               onClick={cancel}
               disabled={save.isPending}
             >
-              Back
+              {zh("Back")}
             </Button>
             <Button
               type="submit"
@@ -457,10 +458,10 @@ export function AiProviderSetup({
               }
             >
               {save.isPending
-                ? submitLabel ? "Saving…" : "Connecting…"
+                ? submitLabel ? zh("Saving…") : zh("Connecting…")
                 : reconnect
-                  ? "Reconnect"
-                  : submitLabel ?? "Connect"}
+                  ? zh("Reconnect")
+                  : submitLabel ?? zh("Connect")}
             </Button>
           </div>
         </form>

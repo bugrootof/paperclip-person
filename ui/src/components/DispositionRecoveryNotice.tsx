@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { createContext, useContext, useId, useRef, useState, type ReactNode } from "react";
 import { Check, ChevronDown, Loader2, RotateCcw, TriangleAlert } from "lucide-react";
 import type { Agent, Issue, IssueCommentMetadata, IssueRecoveryAction } from "@paperclipai/shared";
@@ -129,7 +130,7 @@ export function DispositionRecoveryNotice({ snapshot, createdAt, defaultExpanded
             </Button>
           ) : null}
           <Button size="xs" variant="ghost" className="text-muted-foreground" aria-expanded={expanded} aria-controls={detailsId} onClick={() => setExpanded(current => !current)}>
-            {expanded ? "Hide details" : "View details"}
+            {expanded ? "Hide details" : zh("View details")}
             <ChevronDown aria-hidden="true" className={cn("size-3", expanded && "rotate-180")} />
           </Button>
           {createdAt ? <time dateTime={createdAt} className="font-mono text-xs text-muted-foreground sm:ml-auto">{timeAgo(createdAt)}</time> : null}

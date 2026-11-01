@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useId } from "react";
 import { Check, Circle, Loader2 } from "lucide-react";
 import { AGENT_ROLES, type CreateGrokInvitation, type DotPairing, type GrokConnection } from "@paperclipai/shared";
@@ -48,13 +49,13 @@ export function GrokBotSetupContent(p: GrokBotSetupContentProps) {
       <ol aria-label="Grok Bot setup" className="grid grid-cols-4 gap-2 text-xs text-muted-foreground">
         {steps.map((label, index) => <li key={label} aria-current={p.step === index ? "step" : undefined} className={p.step === index ? "font-medium text-foreground" : ""}>{index + 1}. {label}</li>)}
       </ol>
-      {p.error && <div role="alert" className="space-y-2 text-sm text-destructive"><p>{p.error}</p><Button variant="outline" disabled={p.busy} onClick={p.onRetry}>Try again</Button></div>}
+      {p.error && <div role="alert" className="space-y-2 text-sm text-destructive"><p>{p.error}</p><Button variant="outline" disabled={p.busy} onClick={p.onRetry}>{zh("Try again")}</Button></div>}
       {p.loading ? <p role="status" className="text-sm text-muted-foreground">Restoring saved setup…</p> : p.approvalHref ? <p className="text-sm text-muted-foreground">An organization admin needs to approve this agent. Setup is saved and will resume after approval.</p> : <>
         {p.step === 0 && <div className="space-y-4">
           <label className="block space-y-2 text-sm"><span>Paperclip name</span><Input value={p.details.name} disabled={p.created} onChange={e => p.onDetails({ ...p.details, name: e.target.value })} autoComplete="off" maxLength={100} /></label>
           <label className="block space-y-2 text-sm"><span>Bot name in Grok</span><Input value={p.details.botName} disabled={p.created} onChange={e => p.onDetails({ ...p.details, botName: e.target.value })} autoComplete="off" maxLength={100} /></label>
           <p className="text-xs text-muted-foreground">Use the name shown in the Grok Bot desktop app. Bot web links may no longer work.</p>
-          <label className="block space-y-2 text-sm"><span>Role</span><NativeSelect disabled={p.created} value={p.details.role ?? "general"} onChange={e => p.onDetails({ ...p.details, role: e.target.value as CreateGrokInvitation["role"] })}>{AGENT_ROLES.map(role => <option key={role} value={role}>{role.replaceAll("_", " ")}</option>)}</NativeSelect></label>
+          <label className="block space-y-2 text-sm"><span>{zh("Role")}</span><NativeSelect disabled={p.created} value={p.details.role ?? "general"} onChange={e => p.onDetails({ ...p.details, role: e.target.value as CreateGrokInvitation["role"] })}>{AGENT_ROLES.map(role => <option key={role} value={role}>{role.replaceAll("_", " ")}</option>)}</NativeSelect></label>
           <label className="block space-y-2 text-sm"><span>Manager</span><NativeSelect disabled={p.created} value={p.details.reportsTo ?? ""} onChange={e => p.onDetails({ ...p.details, reportsTo: e.target.value || null })}><option value="">No manager</option>{p.managers.map(manager => <option key={manager.id} value={manager.id}>{manager.name}</option>)}</NativeSelect></label>
         </div>}
         {p.step === 1 && <div className="space-y-4 text-sm">
@@ -64,7 +65,7 @@ export function GrokBotSetupContent(p: GrokBotSetupContentProps) {
             <label htmlFor={pairingCodeId}>One-use pairing code</label>
             <div className="flex items-center gap-2">
               <Input id={pairingCodeId} value={p.pairing.pairingCode} readOnly type="password" autoComplete="off" />
-              <CopyText text={p.pairing.pairingCode} ariaLabel="Copy pairing code" className={buttonVariants({ variant: "outline", size: "sm" })}>Copy code</CopyText>
+              <CopyText text={p.pairing.pairingCode} ariaLabel="Copy pairing code" className={buttonVariants({ variant: "outline", size: "sm" })}>{zh("Copy code")}</CopyText>
             </div>
             <p className="text-xs text-muted-foreground">Copy this code into Paperclip’s authorization page. Do not paste it into Bot chat. Expires {new Date(p.pairing.expiresAt).toLocaleTimeString()}.</p>
           </div>}
@@ -89,8 +90,8 @@ export function GrokBotSetupContent(p: GrokBotSetupContentProps) {
       </>}
     </div>
     <div className="flex items-center justify-between gap-3 border-t px-6 py-4 sm:px-8">
-      <div className="flex items-center gap-2"><Button variant="ghost" onClick={p.onBack} disabled={p.busy}>Back</Button><Button variant="ghost" onClick={p.onExit} disabled={p.busy}>Save &amp; exit</Button></div>
-      {p.approvalHref ? <Button asChild><Link to={p.approvalHref} onClick={p.onExit}>Review approval</Link></Button> : <Button onClick={p.onNext} disabled={nextDisabled}>{p.busy ? "Saving…" : ready ? "Done" : p.step === 3 ? pending ? "Waiting for reply…" : replied ? "Finishing setup…" : "Verify connection" : "Continue"}</Button>}
+      <div className="flex items-center gap-2"><Button variant="ghost" onClick={p.onBack} disabled={p.busy}>{zh("Back")}</Button><Button variant="ghost" onClick={p.onExit} disabled={p.busy}>{zh("Save & exit")}</Button></div>
+      {p.approvalHref ? <Button asChild><Link to={p.approvalHref} onClick={p.onExit}>Review approval</Link></Button> : <Button onClick={p.onNext} disabled={nextDisabled}>{p.busy ? zh("Saving…") : ready ? zh("Done") : p.step === 3 ? pending ? "Waiting for reply…" : replied ? "Finishing setup…" : "Verify connection" : zh("Continue")}</Button>}
     </div>
   </>;
 }

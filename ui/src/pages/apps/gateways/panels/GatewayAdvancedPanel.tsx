@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Copy } from "lucide-react";
@@ -88,7 +89,7 @@ export function GatewayAdvancedPanel({
           </code>
           <Button variant="outline" size="sm" onClick={() => void copy(endpoint, "Endpoint URL")}>
             <Copy className="mr-1 h-3.5 w-3.5" />
-            Copy
+            {zh("Copy")}
           </Button>
         </div>
       </section>
@@ -107,7 +108,7 @@ export function GatewayAdvancedPanel({
       </section>
 
       <section className="space-y-2 rounded-lg border border-destructive/40 p-4">
-        <h3 className="text-sm font-semibold text-destructive">Danger zone</h3>
+        <h3 className="text-sm font-semibold text-destructive">{zh("Danger zone")}</h3>
         <p className="text-sm text-muted-foreground">
           Archiving takes the gateway offline for every client. Existing tokens stop working. Type the
           gateway name to confirm.
@@ -130,7 +131,7 @@ export function GatewayAdvancedPanel({
                 {archiveMutation.isPending ? "Archiving…" : "Archive gateway"}
               </Button>
               <Button variant="ghost" size="sm" onClick={() => { setConfirming(false); setConfirmName(""); }}>
-                Cancel
+                {zh("Cancel")}
               </Button>
             </div>
           </div>

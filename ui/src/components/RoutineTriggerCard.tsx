@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useState } from "react";
 import { Clock3, RefreshCw, Save, Trash2, Webhook, Zap } from "lucide-react";
 import type { RoutineTrigger } from "@paperclipai/shared";
@@ -114,7 +115,7 @@ export function RoutineTriggerCard({
 
       <div className="grid gap-3 md:grid-cols-2">
         <div className="space-y-1.5">
-          <Label className="text-xs">Label</Label>
+          <Label className="text-xs">{zh("Label")}</Label>
           <Input
             value={draft.label}
             disabled={disabled}
@@ -123,7 +124,7 @@ export function RoutineTriggerCard({
         </div>
         {trigger.kind === "schedule" && (
           <div className="space-y-1.5 md:col-span-2">
-            <Label className="text-xs">Schedule</Label>
+            <Label className="text-xs">{zh("Schedule")}</Label>
             <ScheduleEditor
               value={draft.cronExpression}
               onChange={(cronExpression) =>
@@ -180,7 +181,7 @@ export function RoutineTriggerCard({
             onClick={() => onDelete(trigger.id)}
           >
             <Trash2 className="mr-1.5 h-3.5 w-3.5" />
-            Delete
+            {zh("Delete")}
           </Button>
           {trigger.kind === "webhook" && (
             <Button variant="outline" size="sm" onClick={() => onRotate(trigger.id)}>

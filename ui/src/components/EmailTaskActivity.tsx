@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { EmailMessageCard } from "./EmailMessageCard";
 import { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -89,7 +90,7 @@ function EmailDelivery({
         </article>
       )}
       <p>
-        Email {p.outcome}
+        {zh("Email")} {p.outcome}
         {p.error ? ` — ${p.error}` : ""}
       </p>
       {p.outcome === "uncertain" && (

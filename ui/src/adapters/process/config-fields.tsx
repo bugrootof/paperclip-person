@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { configFieldsForSection } from "../config-sections";
 import type { AdapterConfigFieldsProps } from "../types";
 import {
@@ -36,7 +37,7 @@ export function ProcessConfigFields({
 }: AdapterConfigFieldsProps) {
   return configFieldsForSection(section, (
     <>
-      <Field configSection="advanced" label="Command" hint={help.command}>
+      <Field configSection="advanced" label={zh("Command")} hint={help.command}>
         <DraftInput
           value={
             isCreate

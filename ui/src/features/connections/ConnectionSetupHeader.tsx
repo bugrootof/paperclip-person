@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import type { Ref } from "react";
 import { AppLogo } from "@/pages/apps/AppLogo";
 import { UnverifiedServerBadge } from "@/pages/apps/UnverifiedServerBadge";
@@ -46,7 +47,7 @@ export function StepHeader({
           </div>
         </div>
         {onCancel && <Button variant="ghost" size="sm" onClick={onCancel}>
-          Cancel
+          {zh("Cancel")}
         </Button>}
       </div>
       {step !== "gallery" && labels.length > 1 && (

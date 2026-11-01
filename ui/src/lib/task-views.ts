@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import type { InboxTab } from "./inbox";
 
 /**
@@ -49,22 +50,22 @@ export interface TaskViewGroup {
 
 export const TASK_VIEW_GROUPS: TaskViewGroup[] = [
   {
-    label: "My work",
+    label: zh("My work"),
     views: [
-      { key: "mine", label: "Mine", surface: "inbox", inboxTab: "mine", hint: "Assigned to you or waiting on you" },
-      { key: "unread", label: "Unread", surface: "inbox", inboxTab: "unread", hint: "Tasks you touched with new activity" },
-      { key: "blocked", label: "Blocked", surface: "inbox", inboxTab: "blocked", hint: "Blocked tasks, grouped by blocker" },
-      { key: "recent", label: "Recent", surface: "inbox", inboxTab: "recent", hint: "Everything you touched lately" },
-      { key: "everything", label: "Everything", surface: "inbox", inboxTab: "all", hint: "Tasks, approvals, failed runs and join requests" },
+      { key: "mine", label: zh("Mine"), surface: "inbox", inboxTab: "mine", hint: zh("Assigned to you or waiting on you") },
+      { key: "unread", label: zh("Unread"), surface: "inbox", inboxTab: "unread", hint: zh("Tasks you touched with new activity") },
+      { key: "blocked", label: zh("Blocked"), surface: "inbox", inboxTab: "blocked", hint: zh("Blocked tasks, grouped by blocker") },
+      { key: "recent", label: zh("Recent"), surface: "inbox", inboxTab: "recent", hint: zh("Everything you touched lately") },
+      { key: "everything", label: zh("Everything"), surface: "inbox", inboxTab: "all", hint: zh("Tasks, approvals, failed runs and join requests") },
     ],
   },
   {
-    label: "Organization",
+    label: zh("Organization"),
     views: [
-      { key: "all", label: "All tasks", surface: "issues", statuses: [], hint: "Every task in the organization" },
-      { key: "active", label: "Active", surface: "issues", statuses: ["todo", "in_progress", "in_review", "blocked"], hint: "Open tasks, running or not" },
-      { key: "backlog", label: "Backlog", surface: "issues", statuses: ["backlog"], hint: "Not started yet" },
-      { key: "done", label: "Done", surface: "issues", statuses: ["done", "cancelled"], hint: "Completed and cancelled" },
+      { key: "all", label: zh("All tasks"), surface: "issues", statuses: [], hint: zh("Every task in the organization") },
+      { key: "active", label: zh("Active"), surface: "issues", statuses: ["todo", "in_progress", "in_review", "blocked"], hint: zh("Open tasks, running or not") },
+      { key: "backlog", label: zh("Backlog"), surface: "issues", statuses: ["backlog"], hint: zh("Not started yet") },
+      { key: "done", label: zh("Done"), surface: "issues", statuses: ["done", "cancelled"], hint: zh("Completed and cancelled") },
     ],
   },
 ];

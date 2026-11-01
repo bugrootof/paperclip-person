@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { type FormEvent, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type {
@@ -314,7 +315,7 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
             </label>
           </div>
           <label className="space-y-1.5 text-sm">
-            <span className="text-xs font-medium text-muted-foreground">Description</span>
+            <span className="text-xs font-medium text-muted-foreground">{zh("Description")}</span>
             <textarea
               className="min-h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
               value={createDraft.description}
@@ -327,10 +328,10 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
           ) : null}
           <div className="flex flex-wrap justify-end gap-2">
             <Button type="button" variant="ghost" size="sm" onClick={() => setCreating(false)}>
-              Cancel
+              {zh("Cancel")}
             </Button>
             <Button type="submit" size="sm" disabled={createDisabled || !createDraft.name.trim() || !createDraft.profileId}>
-              {createGatewayMutation.isPending ? "Creating..." : "Create gateway"}
+              {createGatewayMutation.isPending ? zh("Creating...") : "Create gateway"}
             </Button>
           </div>
         </form>
@@ -380,11 +381,11 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
 
                 <dl className="grid gap-x-4 gap-y-2 text-sm sm:grid-cols-2 lg:grid-cols-4">
                   <div>
-                    <dt className="text-xs font-medium text-muted-foreground">Owner</dt>
+                    <dt className="text-xs font-medium text-muted-foreground">{zh("Owner")}</dt>
                     <dd className="mt-0.5 text-foreground">{formatOwner(gateway, agentNames)}</dd>
                   </div>
                   <div>
-                    <dt className="text-xs font-medium text-muted-foreground">Scope</dt>
+                    <dt className="text-xs font-medium text-muted-foreground">{zh("Scope")}</dt>
                     <dd className="mt-0.5 text-foreground">{formatScope(gateway, projectNames, agentNames)}</dd>
                   </div>
                   <div>
@@ -486,7 +487,7 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
                     </div>
                     <div className="flex flex-wrap justify-end gap-2">
                       <Button type="button" variant="ghost" size="sm" onClick={() => setIssuingGatewayId(null)}>
-                        Cancel
+                        {zh("Cancel")}
                       </Button>
                       <Button
                         type="submit"
@@ -524,7 +525,7 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
                   <div>
                     <div className="mb-1.5 flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
                       <KeyRound className="h-3.5 w-3.5" />
-                      Tokens
+                      {zh("Tokens")}
                     </div>
                     <div className="space-y-1 text-sm">
                       {gateway.tokens.length === 0 ? (
@@ -566,7 +567,7 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
                                       aria-label={`Revoke ${token.name}`}
                                     >
                                       <RotateCcw className="mr-1 h-3.5 w-3.5" />
-                                      Revoke
+                                      {zh("Revoke")}
                                     </Button>
                                   ) : null}
                                 </div>
@@ -582,7 +583,7 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
                                     onClick={() => setConfirmingRevokeTokenId(null)}
                                   >
                                     <X className="mr-1 h-3.5 w-3.5" />
-                                    Cancel
+                                    {zh("Cancel")}
                                   </Button>
                                   <Button
                                     type="button"
@@ -593,7 +594,7 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
                                     disabled={revokeTokenMutation.isPending}
                                   >
                                     <Check className="mr-1 h-3.5 w-3.5" />
-                                    Confirm
+                                    {zh("Confirm")}
                                   </Button>
                                 </div>
                               ) : null}
@@ -628,7 +629,7 @@ export function GatewaysTab({ companyId }: { companyId: string }) {
                                 }}
                               >
                                 <Copy className="mr-1 h-3.5 w-3.5" />
-                                Copy
+                                {zh("Copy")}
                               </Button>
                             </summary>
                             <pre className="mt-2 max-h-56 overflow-auto whitespace-pre-wrap break-words rounded bg-background p-3 text-xs text-muted-foreground">

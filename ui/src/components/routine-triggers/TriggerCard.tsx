@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useId, type ReactNode } from "react";
 import { Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -26,7 +27,7 @@ export function RoutineTriggerCard({
   const editorId = useId();
   return (
     <section
-      aria-label={`${kind === "schedule" ? "Schedule" : kind === "api" ? "API" : "Webhook"} trigger`}
+      aria-label={`${kind === "schedule" ? zh("Schedule") : kind === "api" ? "API" : "Webhook"} trigger`}
       className="rounded-md border border-border"
     >
       <div className="flex flex-wrap items-center gap-3 p-4">
@@ -43,7 +44,7 @@ export function RoutineTriggerCard({
             aria-controls={editorId}
             onClick={onEdit}
           >
-            {editLabel ?? (expanded ? "Close" : `Edit ${kind}`)}
+            {editLabel ?? (expanded ? zh("Close") : `Edit ${kind}`)}
           </Button>
           <Button
             variant="ghost"

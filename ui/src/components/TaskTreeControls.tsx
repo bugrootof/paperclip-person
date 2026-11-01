@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { PauseCircle, PlayCircle, Repeat, XCircle } from "lucide-react";
@@ -42,7 +43,7 @@ export function TaskTreeControlMenuItems({
       {canPause ? (
         <button disabled={pending} className={itemClass} onClick={onPause}>
           <PauseCircle className="h-3 w-3" />
-          {scope === "leaf" ? "Pause work" : "Pause subtree"}
+          {scope === "leaf" ? zh("Pause work") : "Pause subtree"}
         </button>
       ) : null}
       {canResume ? (
@@ -128,7 +129,7 @@ export function TaskTreeControlDialog({
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>
             {loading
-              ? "Loading…"
+              ? zh("Loading…")
               : cancel
                 ? `${tasks} will be cancelled.`
                 : mode === "restore"
@@ -171,7 +172,7 @@ export function TaskTreeControlDialog({
             disabled={pending}
             onClick={() => onOpenChange(false)}
           >
-            {cancel ? "Keep tasks" : "Close"}
+            {cancel ? "Keep tasks" : zh("Close")}
           </Button>
           <Button
             variant={cancel ? "destructive" : "default"}

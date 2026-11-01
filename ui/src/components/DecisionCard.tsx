@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useMemo, useState, type ReactNode } from "react";
 import {
   AlertTriangle,
@@ -521,7 +522,7 @@ export function DecisionCard({
                       </p>
                     )}
                     <p className="mt-2 text-xs text-muted-foreground">
-                      Type <span className="font-mono font-medium text-foreground">{confirmToken}</span> to confirm.
+                      {zh("Type")} <span className="font-mono font-medium text-foreground">{confirmToken}</span> to confirm.
                     </p>
                     <Input
                       value={confirmText}
@@ -540,7 +541,7 @@ export function DecisionCard({
                           setConfirmText("");
                         }}
                       >
-                        Cancel
+                        {zh("Cancel")}
                       </Button>
                       <Button
                         variant="destructive"

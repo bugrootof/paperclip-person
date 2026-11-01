@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import type { CSSProperties, KeyboardEvent, ReactNode } from "react";
 import { useMemo, useRef, useState } from "react";
 import { cn } from "../lib/utils";
@@ -383,13 +384,13 @@ export function FileTree({
                 statusBadge.error ?? statusBadgeDefault,
               )}
             >
-              error
+              {zh("error")}
             </Badge>
             <span className="min-w-0 text-destructive">{error.message}</span>
           </div>
           {error.retry && (
             <Button type="button" size="xs" variant="outline" onClick={error.retry}>
-              Retry
+              {zh("Retry")}
             </Button>
           )}
         </div>

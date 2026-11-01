@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { SpekoProviderSetup } from "@/components/voice/SpekoProviderSetup";
 import { NativeVoiceConversation } from "@/components/voice/NativeVoiceConversation";
 import { buildSlackAppManifest, defaultSlackAppConfiguration } from "@paperclipai/shared";
@@ -116,7 +117,7 @@ export function ChatConnectionPurpose({ provider, onChat, onTools, slackLabels }
 }) {
   const { setBreadcrumbs } = useBreadcrumbs();
   useEffect(() => {
-    setBreadcrumbs([{ label: "Connectors", href: "/apps" }, { label: "Choose connection" }]);
+    setBreadcrumbs([{ label: zh("Connectors"), href: "/apps" }, { label: "Choose connection" }]);
     return () => setBreadcrumbs([]);
   }, [setBreadcrumbs]);
   return (
@@ -205,7 +206,7 @@ function ChatSdkEndpointSetup() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Connectors", href: "/apps" },
+      { label: zh("Connectors"), href: "/apps" },
       { label: "Connect chat" },
     ]);
     return () => setBreadcrumbs([]);
@@ -570,7 +571,7 @@ function ChatSdkEndpointSetup() {
               >Use your own app</Button>}
             </SlackSetupAdvanced>}
             {isSlack && !endpoint && !slackChoices.data && (slackChoices.isError
-              ? <div role="alert" className="text-sm text-destructive">Couldn&apos;t load Slack setup. <Button variant="link" disabled={slackChoices.isFetching} onClick={() => void slackChoices.refetch()}>Retry</Button></div>
+              ? <div role="alert" className="text-sm text-destructive">Couldn&apos;t load Slack setup. <Button variant="link" disabled={slackChoices.isFetching} onClick={() => void slackChoices.refetch()}>{zh("Retry")}</Button></div>
               : <p role="status" className="flex items-center gap-2 text-sm text-muted-foreground"><Loader2 className="size-4 animate-spin" />Loading Slack…</p>)}
             {provider === "github" && <GitHubAgentTrustWarning agent={selectedAgent} />}
             <SetupWizardFooter disabled={agentStepBusy || isSlack && !endpoint && Boolean(agentId) && !slackChoices.data} onSaveExit={() => void continueFromAgent(true)}>
@@ -581,7 +582,7 @@ function ChatSdkEndpointSetup() {
                 {createEndpoint.isPending && (
                   <Loader2 className="h-4 w-4 animate-spin" />
                 )}
-                Continue
+                {zh("Continue")}
               </Button>
             </SetupWizardFooter>
           </>
@@ -668,7 +669,7 @@ function ChatSdkEndpointSetup() {
               </p>
             </div>
             <Button disabled={testConnection.isPending} onClick={() => testConnection.mutate()}>
-              {testConnection.isPending && <Loader2 className="size-4 animate-spin" />}Done
+              {testConnection.isPending && <Loader2 className="size-4 animate-spin" />}{zh("Done")}
             </Button>
           </div> : <TryStep
             endpointId={endpoint.id}
@@ -697,7 +698,7 @@ function ChatSdkEndpointSetup() {
         )}
         {step !== 0 && !isSlack && provider !== "speko" && <div className="flex justify-start">
           <Button className="text-muted-foreground" variant="ghost" onClick={() => navigate("/apps")}>
-            Save &amp; exit
+            {zh("Save & exit")}
           </Button>
         </div>}
       </div>
@@ -936,7 +937,7 @@ function ProviderConnectStep({
     return (
       <div className="space-y-5">
         <div>
-          <h1 className="text-xl font-bold">Connect {agentName} to Discord</h1>
+          <h1 className="text-xl font-bold">{zh("Connect")} {agentName} to Discord</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             {repairing
               ? "Reconnect verifies this same Discord application and server installation. It does not add or remove the bot from the server. Leave fields blank to reuse saved credentials."
@@ -1007,7 +1008,7 @@ function ProviderConnectStep({
     return (
       <div className="space-y-5">
         <div>
-          <h1 className="text-xl font-bold">Create {agentName} in Telegram</h1>
+          <h1 className="text-xl font-bold">{zh("Create")} {agentName} in Telegram</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             {repairing
               ? "Reconnect verifies this same BotFather bot and automatically refreshes its Paperclip webhook and command menu. It does not recreate the bot or change its chat memberships. Leave the token blank to reuse the saved credential."
@@ -1063,7 +1064,7 @@ function ProviderConnectStep({
       <div className="space-y-5">
         <div>
           <h1 className="text-xl font-bold">
-            Connect {agentName} to Microsoft Teams
+            {zh("Connect")} {agentName} to Microsoft Teams
           </h1>
           <p className="mt-1 text-sm text-muted-foreground">
             {repairing
@@ -1150,16 +1151,16 @@ function ProviderConnectStep({
           <ol className="list-decimal space-y-3 pl-5 text-sm">
             <li>
               <strong>Microsoft Entra admin center · App registrations</strong>:
-              select <strong>New registration</strong>, choose{" "}
+              select <strong>New registration</strong>{zh(", choose")}{" "}
               <strong>
                 Accounts in this organizational directory only (Single tenant)
               </strong>
               , then select <strong>Register</strong>. Copy{" "}
-              <strong>Application (client) ID</strong> and{" "}
+              <strong>Application (client) ID</strong> {zh("and")}{" "}
               <strong>Directory (tenant) ID</strong>. Under{" "}
               <strong>Certificates &amp; secrets · Client secrets</strong>,
               select <strong>New client secret</strong> and copy its{" "}
-              <strong>Value</strong>, not its Secret ID.
+              <strong>{zh("Value")}</strong>, not its Secret ID.
             </li>
             <li>
               <strong>Azure · Create Azure Bot</strong>: set{" "}
@@ -1177,7 +1178,7 @@ function ProviderConnectStep({
               <strong>New app</strong>. Under{" "}
               <strong>Configure · App features · Bot</strong>, add an existing
               bot using the same Application ID; enable{" "}
-              <strong>Personal</strong>, <strong>Team</strong>, and{" "}
+              <strong>Personal</strong>, <strong>{zh("Team")}</strong>, and{" "}
               <strong>Group chat</strong> scopes plus file support. Under{" "}
               <strong>Configure · Permissions</strong>, add the two RSC{" "}
               <strong>Application</strong> permissions shown below. Complete the
@@ -1304,8 +1305,8 @@ function ProviderConnectStep({
               keep <strong>Enable SSL verification</strong> selected.
             </li>
             <li>
-              Under Repository permissions, set <strong>Issues</strong> and{" "}
-              <strong>Pull requests</strong> to{" "}
+              Under Repository permissions, set <strong>Issues</strong> {zh("and")}{" "}
+              <strong>{zh("Pull requests")}</strong> to{" "}
               <strong>Read &amp; write</strong>. Leave every other permission at
               its default; Metadata remains read-only.
             </li>
@@ -1314,7 +1315,7 @@ function ProviderConnectStep({
               <code>issue_comment</code>),{" "}
               <strong>Pull request review comment</strong> (
               <code>pull_request_review_comment</code>). GitHub sends{" "}
-              <code>installation</code> and{" "}
+              <code>installation</code> {zh("and")}{" "}
               <code>installation_repositories</code> to every GitHub App
               automatically; they are not selectable here.
             </li>
@@ -1529,7 +1530,7 @@ function ProviderConnectStep({
   const slackRequestUrlInstructions = <ol className="list-decimal space-y-2 pl-5 text-sm">
       <li><a className="underline underline-offset-4" href={endpoint.setup?.slackRegistration?.appId ? `https://api.slack.com/apps/${encodeURIComponent(endpoint.setup.slackRegistration.appId)}/event-subscriptions` : "https://api.slack.com/apps"} target="_blank" rel="noopener noreferrer">Open Slack app Settings <ExternalLink className="inline size-3" /></a> and choose <strong>{slackApp.appName}</strong>.</li>
       <li>Choose <strong>Event Subscriptions</strong>.</li>
-      <li>Beside the prefilled <strong>Request URL</strong>, click <strong>Retry</strong> if it isn&apos;t verified. Save changes if Slack asks.</li>
+      <li>Beside the prefilled <strong>Request URL</strong>, click <strong>{zh("Retry")}</strong> if it isn&apos;t verified. Save changes if Slack asks.</li>
     </ol>;
   if (slackStage === "finish")
     return (
@@ -1557,12 +1558,12 @@ function ProviderConnectStep({
           {endpointValue("Paperclip webhook URL", endpoint.setup?.webhookUrl)}
         </SlackSetupAdvanced>
         <div className="flex items-center justify-between gap-3">
-          <Button variant="ghost" className="text-muted-foreground" onClick={() => navigate("/apps")}>Save &amp; exit</Button>
+          <Button variant="ghost" className="text-muted-foreground" onClick={() => navigate("/apps")}>{zh("Save & exit")}</Button>
           {(!automaticSlack || endpoint.setup?.webhookVerifiedAt) && <Button disabled={pending || !endpoint.setup?.webhookVerifiedAt} onClick={() =>
             endpoint.setup?.step === "provider_setup" ? onAction("verify") : onSlackVerificationContinue()
           }>
             {pending && <Loader2 className="size-4 animate-spin" />}
-            Continue
+            {zh("Continue")}
           </Button>}
         </div>
       </div>
@@ -1640,7 +1641,7 @@ function ProviderConnectStep({
         </div>
         {!automaticSlack && <div className="flex flex-wrap items-center justify-between gap-3 pt-3">
           <Button variant="ghost" className="text-muted-foreground" onClick={() => void saveSlackAndExit()}>
-            Save &amp; exit
+            {zh("Save & exit")}
           </Button>
           <div className="ml-auto flex flex-wrap items-center justify-end gap-2">
             <Button variant="outline" disabled={openingSlackApp || !endpoint.setup?.webhookUrl || !slackValidation.success} onClick={onSlackAppCreated}>
@@ -1740,7 +1741,7 @@ function ProviderConnectStep({
         </section>
         <div className="flex flex-wrap items-center justify-between gap-3">
           <Button variant="ghost" className="text-muted-foreground" onClick={() => navigate("/apps")}>
-            Save &amp; exit
+            {zh("Save & exit")}
           </Button>
           <Button
             className="ml-auto"
@@ -1754,7 +1755,7 @@ function ProviderConnectStep({
               : onAction(repairing || slackCredentialsSaved ? "reconnect" : "configure", credentials)}
           >
             {pending && <Loader2 className="h-4 w-4 animate-spin" />}
-            {continueWithSavedSlackCredentials ? "Continue" : repairing || slackCredentialsSaved ? "Reconnect Slack app" : "Connect Slack app"}
+            {continueWithSavedSlackCredentials ? zh("Continue") : repairing || slackCredentialsSaved ? "Reconnect Slack app" : "Connect Slack app"}
           </Button>
         </div>
       </div>}
@@ -1902,7 +1903,7 @@ function TryStep({
     <div className="space-y-5">
       <div>
         <h1 className="text-xl font-bold">
-          Try {agentName} in {providerNames[provider]}
+          Try {agentName} {zh("in")} {providerNames[provider]}
         </h1>
         {provider !== "slack" && <p className="mt-1 text-sm text-muted-foreground">
           Complete this real conversation to finish setup.
@@ -1945,7 +1946,7 @@ function TryStep({
                 <code>{slackTestMessage}</code>
                 <Button size="sm" variant="ghost" onClick={() => {
                   void copyTextToClipboard(slackTestMessage).then(() => { setCommandCopied(true); setCommandCopyError(false); }, () => setCommandCopyError(true));
-                }}><Copy className="size-4" />{commandCopied ? "Copied" : "Copy message"}</Button>
+                }}><Copy className="size-4" />{commandCopied ? zh("Copied") : "Copy message"}</Button>
               </div>
               {slackAccount?.status !== "linked" && <p className="mt-2 text-muted-foreground">Select the bot from Slack’s @mention suggestions.</p>}
             </li>
@@ -1953,7 +1954,7 @@ function TryStep({
           </ol>
           {commandCopyError && <p role="alert" className="text-sm text-destructive">Couldn&apos;t copy. Select and copy the command above.</p>}
           <SetupWizardFooter onSaveExit={onSaveExit} disabled={pending}>
-            <Button disabled={pending} onClick={onTest}>{pending && <Loader2 className="size-4 animate-spin" />}Done</Button>
+            <Button disabled={pending} onClick={onTest}>{pending && <Loader2 className="size-4 animate-spin" />}{zh("Done")}</Button>
           </SetupWizardFooter>
         </>
       ) : <>
@@ -1964,7 +1965,7 @@ function TryStep({
         {providerUrl && (
           <Button asChild variant="outline">
             <a href={providerUrl} target="_blank" rel="noopener noreferrer">
-              Open {providerNames[provider]} <ExternalLink />
+              {zh("Open")} {providerNames[provider]} <ExternalLink />
             </a>
           </Button>
         )}

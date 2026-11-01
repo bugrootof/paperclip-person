@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useQuery } from "@tanstack/react-query";
 import { chatEndpointsApi } from "@/api/chatEndpoints";
 import { queryKeys } from "@/lib/queryKeys";
@@ -36,13 +37,13 @@ export function ChatDetailSidebar({
         >
           <NavItem
             to={`/apps/chat/${endpointId}/settings`}
-            label="Settings"
+            label={zh("Settings")}
             icon={Settings}
             end
           />
           <NavItem
             to={`/apps/chat/${endpointId}/access`}
-            label="Access"
+            label={zh("Access")}
             icon={Users}
             end
           />
@@ -61,7 +62,7 @@ export function ChatDetailSidebar({
           />
           <NavItem
             to={`/apps/chat/${endpointId}/activity`}
-            label="Activity"
+            label={zh("Activity")}
             icon={Activity}
             end
           />

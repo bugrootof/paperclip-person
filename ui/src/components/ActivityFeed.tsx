@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import { useMemo, useState, useRef, useCallback, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -113,10 +114,10 @@ type FilterValue = "all" | "in-progress" | "for-review" | "completed";
 type GroupMode = "flat" | "by-task";
 
 const FILTER_OPTIONS: Array<{ value: FilterValue; label: string }> = [
-  { value: "all", label: "All" },
-  { value: "in-progress", label: "In Progress" },
-  { value: "for-review", label: "In Review" },
-  { value: "completed", label: "Done" },
+  { value: "all", label: zh("All") },
+  { value: "in-progress", label: zh("In Progress") },
+  { value: "for-review", label: zh("In Review") },
+  { value: "completed", label: zh("Done") },
 ];
 
 const FILTER_ACTIONS: Record<FilterValue, Set<string> | null> = {
@@ -486,7 +487,7 @@ export function ActivityFeed({ className }: ActivityFeedProps) {
           <div className="flex items-center gap-2 px-4 py-1.5" key={`sep-${index}`}>
             <div className="h-px flex-1 bg-border" />
             <span className="text-(length:--text-nano) font-medium text-muted-foreground uppercase tracking-wider">
-              Earlier
+              {zh("Earlier")}
             </span>
             <div className="h-px flex-1 bg-border" />
           </div>

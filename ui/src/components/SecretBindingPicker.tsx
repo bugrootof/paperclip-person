@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { createContext, useContext, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AlertCircle, KeyRound, Loader2, Plus, X } from "lucide-react";
@@ -169,7 +170,7 @@ export function SecretBindingPicker({
               onClick={() => onChange(null)}
               disabled={disabled}
             >
-              <X className="h-3 w-3" /> Clear
+              <X className="h-3 w-3" /> {zh("Clear")}
             </button>
           ) : null}
         </div>
@@ -193,7 +194,7 @@ export function SecretBindingPicker({
             }}
             disabled={disabled || secretsQuery.isPending}
           >
-            <option value="">{secretsQuery.isPending ? "Loading…" : placeholder}</option>
+            <option value="">{secretsQuery.isPending ? zh("Loading…") : placeholder}</option>
             {selectedMissing && value ? (
               <option value={value.secretId}>
                 {missingHint
@@ -221,9 +222,9 @@ export function SecretBindingPicker({
               onChange({ ...value, version: next });
             }}
             disabled={disabled || !value || !selectedSecret}
-            aria-label="Version"
+            aria-label={zh("Version")}
           >
-            <option value={VERSION_LATEST}>latest</option>
+            <option value={VERSION_LATEST}>{zh("latest")}</option>
             {selectedSecret
               ? Array.from({ length: Math.max(0, selectedSecret.latestVersion) }, (_, index) => {
                   const version = selectedSecret.latestVersion - index;
@@ -243,7 +244,7 @@ export function SecretBindingPicker({
           size="sm"
           onClick={() => setCreateOpen(true)}
           disabled={disabled || !selectedCompanyId}
-          aria-label="Create secret"
+          aria-label={zh("Create secret")}
         >
           <Plus className="h-3.5 w-3.5" />
         </Button>
@@ -289,7 +290,7 @@ export function SecretBindingPicker({
           </DialogHeader>
           <div className="space-y-3">
             <div>
-              <label className="text-xs font-medium text-foreground/80" htmlFor="secret-name">Name</label>
+              <label className="text-xs font-medium text-foreground/80" htmlFor="secret-name">{zh("Name")}</label>
               <Input
                 id="secret-name"
                 value={createName}
@@ -299,7 +300,7 @@ export function SecretBindingPicker({
               />
             </div>
             <div>
-              <label className="text-xs font-medium text-foreground/80" htmlFor="secret-value">Value</label>
+              <label className="text-xs font-medium text-foreground/80" htmlFor="secret-value">{zh("Value")}</label>
               <Textarea
                 id="secret-value"
                 value={createValue}
@@ -313,7 +314,7 @@ export function SecretBindingPicker({
               </p>
             </div>
             <div>
-              <label className="text-xs font-medium text-foreground/80" htmlFor="secret-description">Description</label>
+              <label className="text-xs font-medium text-foreground/80" htmlFor="secret-description">{zh("Description")}</label>
               <Input
                 id="secret-description"
                 value={createDescription}
@@ -324,7 +325,7 @@ export function SecretBindingPicker({
             {createError ? <p className="text-xs text-destructive">{createError}</p> : null}
           </div>
           <DialogFooter>
-            <Button type="button" variant="outline" onClick={() => setCreateOpen(false)}>Cancel</Button>
+            <Button type="button" variant="outline" onClick={() => setCreateOpen(false)}>{zh("Cancel")}</Button>
             <Button
               type="button"
               onClick={() => createMutation.mutate()}

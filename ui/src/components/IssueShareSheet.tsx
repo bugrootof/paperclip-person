@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AgentAvatar } from "./AgentAvatar";
 import { Identity } from "./Identity";
 import { renderAccessIdentity, type AccessSelectOption } from "./AccessSelectIdentity";
@@ -265,7 +266,7 @@ export function IssueShareSheet({
       }));
     const groups: SearchableSelectGroup<string, AccessSelectOption>[] = [];
     if (users.length > 0) groups.push({ id: "people", label: "People", options: users });
-    if (agents.length > 0) groups.push({ id: "agents", label: "Agents", options: agents });
+    if (agents.length > 0) groups.push({ id: "agents", label: zh("Agents"), options: agents });
     return groups;
   }, [directoryQuery.data, agentsQuery.data, grantedSubjectKeys]);
 
@@ -361,7 +362,7 @@ export function IssueShareSheet({
                   />
                 ))}
                 {activeGrants.map((grant) => {
-                  const displayName = grant.subjectDisplayName ?? "Unknown";
+                  const displayName = grant.subjectDisplayName ?? zh("Unknown");
                   const implicitPrincipal = implicitPrincipals.find(principal =>
                     principal.id === `${grant.subjectType}:${grant.subjectId}`);
                   const revocable = canManage && !grant.inherited && grantIsRevocable(grant.source);
@@ -387,7 +388,7 @@ export function IssueShareSheet({
                             className="text-muted-foreground hover:text-destructive"
                             onClick={() => setRevokeTarget(grant)}
                           >
-                            {implicitPrincipal ? "Remove saved grant" : "Revoke"}
+                            {implicitPrincipal ? "Remove saved grant" : zh("Revoke")}
                           </Button>
                         ) : grant.source === "project" ? (
                           <span className="text-(length:--text-nano) text-muted-foreground">
@@ -456,10 +457,10 @@ export function IssueShareSheet({
                   setAddSelection("");
                 }}
               >
-                Back
+                {zh("Back")}
               </Button>
               <Button size="sm" onClick={submitAdd} disabled={!addSelection || addMutation.isPending}>
-                {addMutation.isPending ? "Adding…" : "Add"}
+                {addMutation.isPending ? "Adding…" : zh("Add")}
               </Button>
             </div>
           </div>
@@ -475,7 +476,7 @@ export function IssueShareSheet({
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Remove {revokeTarget?.subjectDisplayName ?? "this subject"}'s saved grant?
+              {zh("Remove")} {revokeTarget?.subjectDisplayName ?? "this subject"}'s saved grant?
             </AlertDialogTitle>
             <AlertDialogDescription>
               This removes this grant and the access it supplies to this task's descendants.
@@ -485,7 +486,7 @@ export function IssueShareSheet({
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{zh("Cancel")}</AlertDialogCancel>
             <AlertDialogAction
               className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
               onClick={(event) => {
@@ -494,7 +495,7 @@ export function IssueShareSheet({
               }}
               disabled={revokeMutation.isPending}
             >
-              {revokeMutation.isPending ? "Removing…" : "Remove grant"}
+              {revokeMutation.isPending ? zh("Removing…") : "Remove grant"}
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

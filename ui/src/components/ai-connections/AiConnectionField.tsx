@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useRef, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -196,7 +197,7 @@ export function AiConnectionField({
               variant="ghost"
               onClick={() => setPendingAdoption(undefined)}
             >
-              Cancel
+              {zh("Cancel")}
             </Button>
             <Button
               onClick={() => {

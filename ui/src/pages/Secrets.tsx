@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -731,7 +732,7 @@ export function Secrets() {
   const [newFolderError, setNewFolderError] = useState<string | null>(null);
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Secrets" }]);
+    setBreadcrumbs([{ label: zh("Secrets") }]);
   }, [setBreadcrumbs]);
 
   const secretsQuery = useQuery({
@@ -1535,12 +1536,12 @@ export function Secrets() {
               else openUserDefinition(row.definition);
             }}
           >
-            <KeyRound className="h-4 w-4" /> View details
+            <KeyRound className="h-4 w-4" /> {zh("View details")}
           </DropdownMenuItem>
           {row.kind === "company" ? (
             <>
               <DropdownMenuItem onSelect={() => setUsageDialogSecretId(row.secret.id)}>
-                <Link2 className="h-4 w-4" /> View references ({row.secret.referenceCount ?? 0})
+                <Link2 className="h-4 w-4" /> {zh("View references (")}{row.secret.referenceCount ?? 0})
               </DropdownMenuItem>
               <DropdownMenuItem onSelect={() => openRotateSecret(row.secret)}>
                 <RefreshCw className="h-4 w-4" />
@@ -1557,7 +1558,7 @@ export function Secrets() {
                 }
               >
                 {row.secret.status === "active" ? <Ban className="h-4 w-4" /> : <CheckCircle2 className="h-4 w-4" />}
-                {row.secret.status === "active" ? "Disable" : "Activate"}
+                {row.secret.status === "active" ? zh("Disable") : zh("Activate")}
               </DropdownMenuItem>
               <DropdownMenuItem
                 disabled={statusMutation.isPending}
@@ -1573,11 +1574,11 @@ export function Secrets() {
                 ) : (
                   <Archive className="h-4 w-4" />
                 )}
-                {row.secret.status === "archived" ? "Unarchive" : "Archive"}
+                {row.secret.status === "archived" ? zh("Unarchive") : zh("Archive")}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem variant="destructive" onSelect={() => setDeleteConfirm(row.secret)}>
-                <Trash2 className="h-4 w-4" /> Delete secret
+                <Trash2 className="h-4 w-4" /> {zh("Delete secret")}
               </DropdownMenuItem>
             </>
           ) : (
@@ -1595,11 +1596,11 @@ export function Secrets() {
               >
                 <KeyRound className="h-4 w-4" />
                 {myUserSecrets.find((entry) => entry.definition.id === row.definition.id)?.secret
-                  ? "Update my value"
-                  : "Set my value"}
+                  ? zh("Update my value")
+                  : zh("Set my value")}
               </DropdownMenuItem>
               <DropdownMenuItem onSelect={() => openEditDefinition(row.definition)}>
-                <Pencil className="h-4 w-4" /> Edit definition
+                <Pencil className="h-4 w-4" /> {zh("Edit definition")}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem
@@ -1616,7 +1617,7 @@ export function Secrets() {
                 ) : (
                   <CheckCircle2 className="h-4 w-4" />
                 )}
-                {row.definition.status === "active" ? "Disable" : "Activate"}
+                {row.definition.status === "active" ? zh("Disable") : zh("Activate")}
               </DropdownMenuItem>
               <DropdownMenuItem
                 disabled={definitionStatusMutation.isPending}
@@ -1632,11 +1633,11 @@ export function Secrets() {
                 ) : (
                   <Archive className="h-4 w-4" />
                 )}
-                {row.definition.status === "archived" ? "Unarchive" : "Archive"}
+                {row.definition.status === "archived" ? zh("Unarchive") : zh("Archive")}
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem variant="destructive" onSelect={() => setDefinitionDeleteConfirm(row.definition)}>
-                <Trash2 className="h-4 w-4" /> Delete definition
+                <Trash2 className="h-4 w-4" /> {zh("Delete definition")}
               </DropdownMenuItem>
             </>
           )}
@@ -1742,7 +1743,7 @@ export function Secrets() {
         : fullTrail;
 
     return (
-      <nav aria-label="Breadcrumb" className="min-w-0">
+      <nav aria-label={zh("Breadcrumb")} className="min-w-0">
         {/* Wide: full trail */}
         <ol className="hidden min-w-0 items-center gap-1 text-sm @min-[40rem]:flex">
           {collapsed.map((crumb, index) => {
@@ -1775,7 +1776,7 @@ export function Secrets() {
             <>
               <Link
                 to={folderLinkTo(parentFolderPath)}
-                aria-label="Up one folder"
+                aria-label={zh("Up one folder")}
                 className="shrink-0 text-muted-foreground hover:text-foreground"
               >
                 <ChevronLeft className="h-4 w-4" />
@@ -1789,7 +1790,7 @@ export function Secrets() {
             </>
           ) : (
             <span aria-current="page" className="truncate font-medium text-foreground">
-              All secrets
+              {zh("All secrets")}
             </span>
           )}
         </div>
@@ -1799,7 +1800,7 @@ export function Secrets() {
 
   if (!selectedCompanyId) {
     return (
-      <div className="p-6 text-sm text-muted-foreground">Select an organization to manage secrets.</div>
+      <div className="p-6 text-sm text-muted-foreground">{zh("Select an organization to manage secrets.")}</div>
     );
   }
 
@@ -1808,7 +1809,7 @@ export function Secrets() {
     <div className="flex max-w-6xl flex-col gap-4">
       <div className="flex items-center gap-2">
         <KeyRound className="h-5 w-5 text-muted-foreground" />
-        <h1 className="text-lg font-semibold">Secrets</h1>
+        <h1 className="text-lg font-semibold">{zh("Secrets")}</h1>
       </div>
 
       <Tabs
@@ -1818,9 +1819,9 @@ export function Secrets() {
       >
         <PageTabBar
           items={[
-            { value: "secrets", label: "Secrets" },
-            { value: "my-secrets", label: "My secrets" },
-            ...(hideVaultsTab ? [] : [{ value: "vaults", label: "Provider vaults" }]),
+            { value: "secrets", label: zh("Secrets") },
+            { value: "my-secrets", label: zh("My secrets") },
+            ...(hideVaultsTab ? [] : [{ value: "vaults", label: zh("Provider vaults") }]),
             ...(hideProposalsTab
               ? []
               : [
@@ -1828,7 +1829,7 @@ export function Secrets() {
                     value: "proposals",
                     label: (
                       <span className="inline-flex items-center gap-1.5">
-                        Proposals
+                        {zh("Proposals")}
                         {pendingProposalCount > 0 ? (
                           <Badge
                             variant="outline"
@@ -1855,9 +1856,9 @@ export function Secrets() {
               <Input
                 value={search}
                 onChange={(event) => setSearch(event.target.value)}
-                placeholder="Search by name, key, ref"
+                placeholder={zh("Search by name, key, ref")}
                 className="pl-7 text-xs sm:text-sm"
-                aria-label="Search secrets"
+                aria-label={zh("Search secrets")}
                 data-page-search-target="true"
               />
             </div>
@@ -1873,7 +1874,7 @@ export function Secrets() {
             />
             <div
               role="group"
-              aria-label="View mode"
+              aria-label={zh("View mode")}
               className={cn(
                 "inline-flex items-center rounded-md border border-border p-0.5",
                 searching && "opacity-50",
@@ -1893,7 +1894,7 @@ export function Secrets() {
                       : "text-muted-foreground hover:text-foreground",
                   )}
                 >
-                  {mode}
+                  {zh(mode === "folders" ? zh("Folders") : zh("Flat"))}
                 </button>
               ))}
             </div>
@@ -1913,15 +1914,15 @@ export function Secrets() {
                   setNewFolderError(null);
                 }}
               >
-                <Folder className="mr-1 h-3.5 w-3.5" /> New folder
+                <Folder className="mr-1 h-3.5 w-3.5" /> {zh("New folder")}
               </Button>
             ) : null}
             <Button onClick={openCreateSecret} size="sm">
-              <Plus className="h-3.5 w-3.5 mr-1" /> New secret
+              <Plus className="h-3.5 w-3.5 mr-1" /> {zh("New secret")}
             </Button>
           </div>
           {newFolderOpen && showFolderView ? (
-            <div className="flex flex-wrap items-start gap-2" role="group" aria-label="Create folder">
+            <div className="flex flex-wrap items-start gap-2" role="group" aria-label={zh("Create folder")}>
               <div className="min-w-48 flex-1 sm:max-w-80">
                 <Input
                   value={newFolderName}
@@ -1933,8 +1934,8 @@ export function Secrets() {
                     if (event.key === "Enter") stageNewFolder();
                     if (event.key === "Escape") closeNewFolder();
                   }}
-                  placeholder="Folder name"
-                  aria-label="Folder name"
+                  placeholder={zh("Folder name")}
+                  aria-label={zh("Folder name")}
                   aria-invalid={Boolean(newFolderError)}
                   autoFocus
                 />
@@ -1945,17 +1946,17 @@ export function Secrets() {
                 ) : null}
               </div>
               <Button type="button" size="sm" onClick={stageNewFolder}>
-                Create folder
+                {zh("Create folder")}
               </Button>
               <Button type="button" variant="ghost" size="sm" onClick={closeNewFolder}>
-                Cancel
+                {zh("Cancel")}
               </Button>
             </div>
           ) : null}
           <div>
             {secretsQuery.isError || userDefinitionsQuery.isError ? (
               <div className="text-sm text-destructive flex items-center gap-2 py-4">
-                <AlertCircle className="h-4 w-4" /> Failed to load secrets:{" "}
+                <AlertCircle className="h-4 w-4" /> {zh("Failed to load secrets:")}{" "}
                 {((secretsQuery.error ?? userDefinitionsQuery.error) as Error).message}
                 <Button
                   variant="ghost"
@@ -1965,7 +1966,7 @@ export function Secrets() {
                     void userDefinitionsQuery.refetch();
                   }}
                 >
-                  Retry
+                  {zh("Retry")}
                 </Button>
               </div>
             ) : unifiedRows.length === 0 &&
@@ -1974,8 +1975,8 @@ export function Secrets() {
               !(showFolderView && folderPath) ? (
               <EmptyState
                 icon={KeyRound}
-                message="No secrets yet. Create a shared organization secret or one that each user supplies."
-                action="New secret"
+                message={zh("No secrets yet. Create a shared organization secret or one that each user supplies.")}
+                action={zh("New secret")}
                 onAction={openCreateSecret}
               />
             ) : (
@@ -1989,10 +1990,9 @@ export function Secrets() {
                   </div>
                 ) : searching ? (
                   <div className="mb-3">
-                    <div className="text-sm font-medium text-foreground">Search results</div>
+                    <div className="text-sm font-medium text-foreground">{zh("Search results")}</div>
                     <div className="text-xs text-muted-foreground">
-                      {filteredRows.length} {filteredRows.length === 1 ? "match" : "matches"} across all
-                      folders{folderPath ? ` · searching everywhere, not just ${folderPath}` : ""}
+                      {filteredRows.length} {filteredRows.length === 1 ? "match" : "matches"} {zh("across all folders")}{folderPath ? ` · searching everywhere, not just ${folderPath}` : ""}
                     </div>
                   </div>
                 ) : null}
@@ -2007,21 +2007,21 @@ export function Secrets() {
                   ) : showFolderView && folderPath && activeSecretFilterCount === 0 ? (
                     <EmptyState
                       icon={FolderOpen}
-                      message="No secrets in this folder yet."
-                      action="New secret here"
+                      message={zh("No secrets in this folder yet.")}
+                      action={zh("New secret here")}
                       onAction={openCreateSecret}
                     />
                   ) : (
                     <EmptyState
                       icon={Search}
-                      message={searching ? "No secrets match your search." : "No secrets match your filters."}
+                      message={searching ? zh("No secrets match your search.") : zh("No secrets match your filters.")}
                     />
                   )
                 ) : (
                   <>
                 <div
                   role="table"
-                  aria-label="Secrets"
+                  aria-label={zh("Secrets")}
                   className="hidden min-w-0 @min-[40rem]:block"
                   data-testid="secrets-table-view"
                 >
@@ -2029,11 +2029,11 @@ export function Secrets() {
                     role="row"
                     className="grid grid-cols-(--gtc-54) items-center gap-3 bg-muted/40 px-3 py-2 text-xs uppercase tracking-wide text-muted-foreground"
                   >
-                    <div role="columnheader" className="font-medium">Secret</div>
-                    <div role="columnheader" className="font-medium">Status</div>
-                    <div role="columnheader" className="font-medium">Version / coverage</div>
-                    <div role="columnheader" className="font-medium">Updated</div>
-                    <div role="columnheader" className="sr-only">Actions</div>
+                    <div role="columnheader" className="font-medium">{zh("Secret")}</div>
+                    <div role="columnheader" className="font-medium">{zh("Status")}</div>
+                    <div role="columnheader" className="font-medium">{zh("Version / coverage")}</div>
+                    <div role="columnheader" className="font-medium">{zh("Updated")}</div>
+                    <div role="columnheader" className="sr-only">{zh("Actions")}</div>
                   </div>
                   <div role="rowgroup">
                     {showUpRow ? renderUpRow("table") : null}
@@ -2076,13 +2076,13 @@ export function Secrets() {
                                 <Tooltip>
                                   <TooltipTrigger asChild>
                                     <span
-                                      aria-label="Each user provides and owns their own value"
+                                      aria-label={zh("Each user provides and owns their own value")}
                                       className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-md border border-violet-500/30 bg-violet-500/5 text-violet-700 dark:text-violet-200"
                                     >
                                       <UserRound className="h-3 w-3" />
                                     </span>
                                   </TooltipTrigger>
-                                  <TooltipContent>Each user provides and owns their own value</TooltipContent>
+                                  <TooltipContent>{zh("Each user provides and owns their own value")}</TooltipContent>
                                 </Tooltip>
                               )}
                             </div>
@@ -2092,10 +2092,10 @@ export function Secrets() {
                             <div className="mt-1">
                               {row.kind === "company" ? (
                                 <MetaChip>
-                                  <ShieldCheck className="h-3 w-3" /> Organization
+                                  <ShieldCheck className="h-3 w-3" /> {zh("Organization")}
                                 </MetaChip>
                               ) : (
-                                <UserSecretChip label="Each user" />
+                                <UserSecretChip label={zh("Each user")} />
                               )}
                             </div>
                           </div>
@@ -2157,7 +2157,7 @@ export function Secrets() {
                           {row.kind === "company" ? (
                             <>
                               <MetaChip>
-                                <ShieldCheck className="h-3 w-3" /> Organization
+                                <ShieldCheck className="h-3 w-3" /> {zh("Organization")}
                               </MetaChip>
                               <SecretProviderIndicator
                                 secret={row.secret}
@@ -2168,7 +2168,7 @@ export function Secrets() {
                             </>
                           ) : (
                             <>
-                              <UserSecretChip label="Each user" />
+                              <UserSecretChip label={zh("Each user")} />
                               <StatusBadge status={status} />
                               <CoverageInline companyId={selectedCompanyId} definitionId={row.definition.id} compact />
                             </>
@@ -2182,10 +2182,10 @@ export function Secrets() {
                                 {row.secret.managedMode === "external_reference" ? "linked" : "managed"}
                               </>
                             ) : (
-                              "Member-owned values"
+                              zh("Member-owned values")
                             )}
                           </span>
-                          <span>Updated {formatRelative(row.kind === "company" ? row.secret.updatedAt : row.definition.updatedAt)}</span>
+                          <span>{zh("Updated")} {formatRelative(row.kind === "company" ? row.secret.updatedAt : row.definition.updatedAt)}</span>
                         </div>
                       </div>
                     );
@@ -2255,7 +2255,7 @@ export function Secrets() {
                   </span>
                 </SheetTitle>
                 <SheetDescription className="sr-only">
-                  {providerLabel(providers, selectedSecret.provider)} secret {selectedSecret.key}
+                  {providerLabel(providers, selectedSecret.provider)} {zh("secret")} {selectedSecret.key}
                 </SheetDescription>
                 <div className="flex min-w-0 items-center gap-2 rounded-md border border-border bg-muted/20 px-2 py-1.5">
                   <code className="min-w-0 flex-1 truncate font-mono text-xs text-foreground">
@@ -2268,12 +2268,12 @@ export function Secrets() {
                     className="h-7 shrink-0 px-2 text-xs"
                     onClick={() => copySecretKey(selectedSecret.key)}
                   >
-                    <Copy className="mr-1 h-3.5 w-3.5" /> Copy
+                    <Copy className="mr-1 h-3.5 w-3.5" /> {zh("Copy")}
                   </Button>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
                   <MetaChip>
-                    <ShieldCheck className="h-3 w-3" /> Organization
+                    <ShieldCheck className="h-3 w-3" /> {zh("Organization")}
                   </MetaChip>
                   <MetaChip>{modeLabel(selectedSecret.managedMode)}</MetaChip>
                   <MetaChip>{providerLabel(providers, selectedSecret.provider)}</MetaChip>
@@ -2289,12 +2289,12 @@ export function Secrets() {
                   {rotateActionLabel(selectedSecret)}
                 </Button>
                 <Button variant="outline" size="sm" onClick={copyDetailLink}>
-                  <Link2 className="h-3.5 w-3.5 mr-1" /> Copy link
+                  <Link2 className="h-3.5 w-3.5 mr-1" /> {zh("Copy link")}
                 </Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline" size="sm" aria-label={`More actions for ${selectedSecret.name}`}>
-                      <MoreHorizontal className="mr-1 h-3.5 w-3.5" /> More
+                      <MoreHorizontal className="mr-1 h-3.5 w-3.5" /> {zh("More")}
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-52">
@@ -2312,7 +2312,7 @@ export function Secrets() {
                       ) : (
                         <CheckCircle2 className="h-4 w-4" />
                       )}
-                      {selectedSecret.status === "active" ? "Disable" : "Activate"}
+                      {selectedSecret.status === "active" ? zh("Disable") : zh("Activate")}
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       disabled={statusMutation.isPending}
@@ -2328,11 +2328,11 @@ export function Secrets() {
                       ) : (
                         <Archive className="h-4 w-4" />
                       )}
-                      {selectedSecret.status === "archived" ? "Unarchive" : "Archive"}
+                      {selectedSecret.status === "archived" ? zh("Unarchive") : zh("Archive")}
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem variant="destructive" onSelect={() => setDeleteConfirm(selectedSecret)}>
-                      <Trash2 className="h-4 w-4" /> Delete secret
+                      <Trash2 className="h-4 w-4" /> {zh("Delete secret")}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -2341,9 +2341,9 @@ export function Secrets() {
                 <div className="border-b border-border px-4">
                   <PageTabBar
                     items={[
-                      { value: "details", label: "Details" },
+                      { value: "details", label: zh("Details") },
                       { value: "usage", label: usageQuery.data ? `Usage (${usageQuery.data.bindings.length})` : "Usage" },
-                      { value: "events", label: "Access events" },
+                      { value: "events", label: zh("Access events") },
                     ]}
                     align="start"
                     value={secretDetailTab}
@@ -2389,7 +2389,7 @@ export function Secrets() {
                   </span>
                 </SheetTitle>
                 <SheetDescription className="sr-only">
-                  Each user secret definition {selectedDefinition.key}
+                  {zh("Each user secret definition")} {selectedDefinition.key}
                 </SheetDescription>
                 <div className="flex min-w-0 items-center gap-2 rounded-md border border-border bg-muted/20 px-2 py-1.5">
                   <code className="min-w-0 flex-1 truncate font-mono text-xs text-foreground">
@@ -2402,11 +2402,11 @@ export function Secrets() {
                     className="h-7 shrink-0 px-2 text-xs"
                     onClick={() => copySecretKey(selectedDefinition.key)}
                   >
-                    <Copy className="mr-1 h-3.5 w-3.5" /> Copy
+                    <Copy className="mr-1 h-3.5 w-3.5" /> {zh("Copy")}
                   </Button>
                 </div>
                 <div className="flex flex-wrap gap-1.5">
-                  <UserSecretChip label="Each user" />
+                  <UserSecretChip label={zh("Each user")} />
                   <MetaChip>
                     <CoverageInline companyId={selectedCompanyId} definitionId={selectedDefinition.id} compact />
                   </MetaChip>
@@ -2423,17 +2423,17 @@ export function Secrets() {
                   disabled={selectedDefinition.status !== "active"}
                 >
                   <KeyRound className="h-3.5 w-3.5 mr-1" />
-                  {selectedDefinitionMyEntry?.secret ? "Update my value" : "Set my value"}
+                  {selectedDefinitionMyEntry?.secret ? zh("Update my value") : zh("Set my value")}
                 </Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline" size="sm" aria-label={`More actions for ${selectedDefinition.name}`}>
-                      <MoreHorizontal className="mr-1 h-3.5 w-3.5" /> More
+                      <MoreHorizontal className="mr-1 h-3.5 w-3.5" /> {zh("More")}
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end" className="w-52">
                     <DropdownMenuItem onSelect={() => openEditDefinition(selectedDefinition)}>
-                      <Pencil className="h-4 w-4" /> Edit definition
+                      <Pencil className="h-4 w-4" /> {zh("Edit definition")}
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
@@ -2450,7 +2450,7 @@ export function Secrets() {
                       ) : (
                         <CheckCircle2 className="h-4 w-4" />
                       )}
-                      {selectedDefinition.status === "active" ? "Disable" : "Activate"}
+                      {selectedDefinition.status === "active" ? zh("Disable") : zh("Activate")}
                     </DropdownMenuItem>
                     <DropdownMenuItem
                       disabled={definitionStatusMutation.isPending}
@@ -2466,11 +2466,11 @@ export function Secrets() {
                       ) : (
                         <Archive className="h-4 w-4" />
                       )}
-                      {selectedDefinition.status === "archived" ? "Unarchive" : "Archive"}
+                      {selectedDefinition.status === "archived" ? zh("Unarchive") : zh("Archive")}
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem variant="destructive" onSelect={() => setDefinitionDeleteConfirm(selectedDefinition)}>
-                      <Trash2 className="h-4 w-4" /> Delete definition
+                      <Trash2 className="h-4 w-4" /> {zh("Delete definition")}
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
@@ -2479,10 +2479,10 @@ export function Secrets() {
                 <div className="border-b border-border px-4">
                   <PageTabBar
                     items={[
-                      { value: "details", label: "Details" },
-                      { value: "coverage", label: "Coverage" },
+                      { value: "details", label: zh("Details") },
+                      { value: "coverage", label: zh("Coverage") },
                       { value: "usage", label: "Usage" },
-                      { value: "events", label: "Access events" },
+                      { value: "events", label: zh("Access events") },
                     ]}
                     align="start"
                     value={secretDetailTab}
@@ -2528,7 +2528,7 @@ export function Secrets() {
       >
         <DialogContent className="sm:max-w-lg">
           <DialogHeader>
-            <DialogTitle>Secret references</DialogTitle>
+            <DialogTitle>{zh("Secret references")}</DialogTitle>
             <DialogDescription>
               {usageDialogSecret
                 ? `${usageDialogSecret.name} is referenced by ${usageDialogSecret.referenceCount ?? 0} ${
@@ -2579,15 +2579,15 @@ export function Secrets() {
       >
         <DialogContent className="max-h-(--sz-calc-18) overflow-y-auto p-4 sm:max-w-lg sm:p-6">
           <DialogHeader>
-            <DialogTitle>{editingDefinition ? "Edit user-provided secret" : "Create secret"}</DialogTitle>
+            <DialogTitle>{editingDefinition ? zh("Edit user-provided secret") : zh("Create secret")}</DialogTitle>
             <DialogDescription>
-              Choose who provides the value. Shared fields keep their values when you switch modes.
+              {zh("Choose who provides the value. Shared fields keep their values when you switch modes.")}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             {!editingDefinition ? (
               <div className="space-y-1.5">
-                <p className="text-xs font-medium text-foreground">Who provides the value?</p>
+                <p className="text-xs font-medium text-foreground">{zh("Who provides the value?")}</p>
                 <Tabs
                   value={secretValueProvider}
                   onValueChange={(value) => {
@@ -2605,12 +2605,12 @@ export function Secrets() {
                   }}
                 >
                   <TabsList className="grid w-full grid-cols-2">
-                    <TabsTrigger value="company">Organization</TabsTrigger>
-                    <TabsTrigger value="user">Each user</TabsTrigger>
+                    <TabsTrigger value="company">{zh("Organization")}</TabsTrigger>
+                    <TabsTrigger value="user">{zh("Each user")}</TabsTrigger>
                   </TabsList>
                 </Tabs>
                 <p className="text-(length:--text-micro) text-muted-foreground">
-                  Organization stores one shared value. Each user lets every member supply their own value under My secrets.
+                  {zh("Organization stores one shared value. Each user lets every member supply their own value under My secrets.")}
                 </p>
               </div>
             ) : null}
@@ -2618,14 +2618,14 @@ export function Secrets() {
             {secretValueProvider === "company" && !editingDefinition ? (
               <Tabs value={createMode} onValueChange={(value) => setCreateMode(value as CreateMode)}>
                 <TabsList className="grid w-full grid-cols-2">
-                  <TabsTrigger value="managed">Managed value</TabsTrigger>
-                  <TabsTrigger value="external">External reference</TabsTrigger>
+                  <TabsTrigger value="managed">{zh("Managed value")}</TabsTrigger>
+                  <TabsTrigger value="external">{zh("External reference")}</TabsTrigger>
                 </TabsList>
               </Tabs>
             ) : null}
 
             <div>
-              <label className="text-xs font-medium" htmlFor="new-secret-name">Name</label>
+              <label className="text-xs font-medium" htmlFor="new-secret-name">{zh("Name")}</label>
               {createNamePrefix && !editingDefinition ? (
                 <div className="flex h-9 w-full min-w-0 items-center gap-1.5 rounded-md border border-input bg-transparent px-2 shadow-xs transition-[color,box-shadow] focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-3">
                   <span
@@ -2636,7 +2636,7 @@ export function Secrets() {
                     <button
                       type="button"
                       className="shrink-0 rounded-full text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                      aria-label="Remove folder prefix"
+                      aria-label={zh("Remove folder prefix")}
                       onClick={() => setCreateNamePrefix(null)}
                     >
                       <X className="h-3 w-3" />
@@ -2678,20 +2678,20 @@ export function Secrets() {
                           : normalizeSecretKeyForPreview(name),
                     }));
                   }}
-                  placeholder={secretValueProvider === "user" ? "Personal GitHub token" : "/dev/foo/bar"}
+                  placeholder={secretValueProvider === "user" ? zh("Personal GitHub token") : "/dev/foo/bar"}
                   autoFocus
                 />
               )}
               {createNamePrefix && !editingDefinition ? (
                 <p className="mt-1 text-xs text-muted-foreground">
-                  Creating in {folderPath} — remove the chip to type a different path.
+                  {zh("Creating in")} {folderPath} {zh("— remove the chip to type a different path.")}
                 </p>
               ) : null}
             </div>
 
             {secretValueProvider === "company" && createMode === "managed" ? (
               <div>
-                <label className="text-xs font-medium" htmlFor="new-secret-value">Value</label>
+                <label className="text-xs font-medium" htmlFor="new-secret-value">{zh("Value")}</label>
                 <Textarea
                   id="new-secret-value"
                   value={createForm.value}
@@ -2700,13 +2700,13 @@ export function Secrets() {
                   }
                   rows={3}
                   className="min-w-0 overflow-x-hidden break-all font-mono text-xs"
-                  placeholder="Stored once, never re-displayed"
+                  placeholder={zh("Stored once, never re-displayed")}
                 />
               </div>
             ) : null}
             {secretValueProvider === "company" && createMode === "external" ? (
               <div>
-                <label className="text-xs font-medium" htmlFor="new-secret-ref">External reference</label>
+                <label className="text-xs font-medium" htmlFor="new-secret-ref">{zh("External reference")}</label>
                 <Input
                   id="new-secret-ref"
                   value={createForm.externalRef}
@@ -2717,20 +2717,18 @@ export function Secrets() {
                   className="font-mono text-xs"
                 />
                 <p className="text-(length:--text-micro) text-muted-foreground mt-1">
-                  Existing provider secrets are resolve-only in Paperclip. Rotate the value in the provider,
-                  then update this reference only if the path, ARN, or version changes.
+                  {zh("Existing provider secrets are resolve-only in Paperclip. Rotate the value in the provider, then update this reference only if the path, ARN, or version changes.")}
                 </p>
               </div>
             ) : null}
             {secretValueProvider === "user" ? (
               <>
                 <div className="rounded-md border border-violet-500/30 bg-violet-500/5 p-2 text-(length:--text-micro) text-violet-800 dark:text-violet-200">
-                  Every member supplies their own value under My secrets. Agents resolve the responsible
-                  user&apos;s value at runtime.
+                  {zh("Every member supplies their own value under My secrets. Agents resolve the responsible user's value at runtime.")}
                 </div>
                 <div className="space-y-1">
                   <label className="text-xs font-medium text-foreground" htmlFor="new-secret-usage-guidance">
-                    Usage guidance <span className="text-muted-foreground/70">(optional)</span>
+                    {zh("Usage guidance")} <span className="text-muted-foreground/70">{zh("(optional)")}</span>
                   </label>
                   <Textarea
                     id="new-secret-usage-guidance"
@@ -2738,7 +2736,7 @@ export function Secrets() {
                     onChange={(event) =>
                       setCreateForm((current) => ({ ...current, usageGuidance: event.target.value }))
                     }
-                    placeholder="Tell members how to create their token, required scopes, etc."
+                    placeholder={zh("Tell members how to create their token, required scopes, etc.")}
                     className="min-h-(--sz-70px) text-sm"
                   />
                 </div>
@@ -2747,7 +2745,7 @@ export function Secrets() {
 
             <div>
               <div className="flex items-center justify-between">
-                <label className="text-xs font-medium" htmlFor="new-secret-key">Key</label>
+                <label className="text-xs font-medium" htmlFor="new-secret-key">{zh("Key")}</label>
                 {!createKeyEditable && !editingDefinition ? (
                   <Button
                     type="button"
@@ -2756,7 +2754,7 @@ export function Secrets() {
                     className="h-5 px-1.5 text-(length:--text-micro) text-muted-foreground"
                     onClick={() => setCreateKeyEditable(true)}
                   >
-                    <Pencil className="mr-1 h-3 w-3" /> Edit
+                    <Pencil className="mr-1 h-3 w-3" /> {zh("Edit")}
                   </Button>
                 ) : null}
               </div>
@@ -2779,18 +2777,18 @@ export function Secrets() {
               />
               <p className="mt-1 text-(length:--text-micro) text-muted-foreground">
                 {editingDefinition
-                  ? "Stable env binding key. Cannot be changed."
+                  ? zh("Stable env binding key. Cannot be changed.")
                   : !createKeyEditable
-                    ? "Generated from the name."
+                    ? zh("Generated from the name.")
                     : secretValueProvider === "user"
-                      ? "Env-style key used by user-secret bindings."
-                      : "Shared secret keys keep lowercase dash normalization."}
+                      ? zh("Env-style key used by user-secret bindings.")
+                      : zh("Shared secret keys keep lowercase dash normalization.")}
               </p>
             </div>
 
             <div>
               <label className="text-xs font-medium" htmlFor="new-secret-description">
-                Description <span className="text-muted-foreground/70">(optional)</span>
+                {zh("Description")} <span className="text-muted-foreground/70">{zh("(optional)")}</span>
               </label>
               <Input
                 id="new-secret-description"
@@ -2798,7 +2796,7 @@ export function Secrets() {
                 onChange={(event) =>
                   setCreateForm((current) => ({ ...current, description: event.target.value }))
                 }
-                placeholder="What is this secret used for? (no values)"
+                placeholder={zh("What is this secret used for? (no values)")}
               />
             </div>
 
@@ -2806,7 +2804,7 @@ export function Secrets() {
               <>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                 <div>
-                  <label className="text-xs font-medium" htmlFor="new-secret-provider">Provider</label>
+                  <label className="text-xs font-medium" htmlFor="new-secret-provider">{zh("Provider")}</label>
                   <select
                     id="new-secret-provider"
                     className="h-9 w-full rounded-md border border-border bg-background px-2 text-sm outline-none"
@@ -2855,7 +2853,7 @@ export function Secrets() {
                   ) : null}
                 </div>
                 <div>
-                  <label className="text-xs font-medium" htmlFor="new-secret-vault">Provider vault</label>
+                  <label className="text-xs font-medium" htmlFor="new-secret-vault">{zh("Provider vault")}</label>
                   <select
                     id="new-secret-vault"
                     className="h-9 w-full rounded-md border border-border bg-background px-2 text-sm outline-none"
@@ -2864,7 +2862,7 @@ export function Secrets() {
                       setCreateForm((current) => ({ ...current, providerConfigId: event.target.value }))
                     }
                   >
-                    <option value="">Deployment default</option>
+                    <option value="">{zh("Deployment default")}</option>
                     {createProviderConfigs.map((config) => {
                       const blockReason = getProviderConfigBlockReason(config);
                       return (
@@ -2883,11 +2881,10 @@ export function Secrets() {
                 </div>
                 {createMode === "managed" ? (
                   <div className="rounded-md border border-emerald-500/30 bg-emerald-500/5 p-2 text-(length:--text-micro) text-emerald-700 dark:text-emerald-300">
-                    Paperclip-managed secrets are created in the selected provider and future rotations
-                    write a new provider version through Paperclip.
+                    {zh("Paperclip-managed secrets are created in the selected provider and future rotations write a new provider version through Paperclip.")}
                     {awsManagedPathPreview ? (
                       <div className="mt-1">
-                        AWS managed path:{" "}
+                        {zh("AWS managed path:")}{" "}
                         <code className="break-all rounded bg-background/70 px-1 py-0.5">
                           {awsManagedPathPreview}
                         </code>
@@ -2907,7 +2904,7 @@ export function Secrets() {
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setCreateOpen(false)}>
-              Cancel
+              {zh("Cancel")}
             </Button>
             <Button
               onClick={() => {
@@ -2925,12 +2922,12 @@ export function Secrets() {
             >
               {createMutation.isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" /> : null}
               {editingDefinition
-                ? "Save changes"
+                ? zh("Save changes")
                 : secretValueProvider === "user"
-                  ? "Create user-provided secret"
+                  ? zh("Create user-provided secret")
                   : createMode === "managed"
-                    ? "Create secret"
-                    : "Link reference"}
+                    ? zh("Create secret")
+                    : zh("Link reference")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -2939,15 +2936,15 @@ export function Secrets() {
       <Dialog open={vaultDialogOpen} onOpenChange={setVaultDialogOpen}>
         <DialogContent className="max-h-(--sz-85vh) overflow-y-auto sm:max-w-2xl">
           <DialogHeader>
-            <DialogTitle>{editingVault ? "Edit provider vault" : "Create provider vault"}</DialogTitle>
+            <DialogTitle>{editingVault ? zh("Edit provider vault") : zh("Create provider vault")}</DialogTitle>
             <DialogDescription>
-              Save only non-sensitive routing metadata. Credentials stay in the runtime environment or provider identity.
+              {zh("Save only non-sensitive routing metadata. Credentials stay in the runtime environment or provider identity.")}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
             <div className="grid gap-3 sm:grid-cols-2">
               <div>
-                <label className="text-xs font-medium" htmlFor="vault-provider">Provider</label>
+                <label className="text-xs font-medium" htmlFor="vault-provider">{zh("Provider")}</label>
                 <select
                   id="vault-provider"
                   className="h-9 w-full rounded-md border border-border bg-background px-2 text-sm outline-none disabled:opacity-60"
@@ -2968,18 +2965,18 @@ export function Secrets() {
                 </select>
               </div>
               <div>
-                <label className="text-xs font-medium" htmlFor="vault-name">Display name</label>
+                <label className="text-xs font-medium" htmlFor="vault-name">{zh("Display name")}</label>
                 <Input
                   id="vault-name"
                   value={vaultForm.displayName}
                   onChange={(event) =>
                     setVaultForm((current) => ({ ...current, displayName: event.target.value }))
                   }
-                  placeholder="Production local vault"
+                  placeholder={zh("Production local vault")}
                 />
               </div>
               <div>
-                <label className="text-xs font-medium" htmlFor="vault-status">Status</label>
+                <label className="text-xs font-medium" htmlFor="vault-status">{zh("Status")}</label>
                 <select
                   id="vault-status"
                   className="h-9 w-full rounded-md border border-border bg-background px-2 text-sm outline-none"
@@ -2995,13 +2992,13 @@ export function Secrets() {
                   }}
                 >
                   <option value="ready" disabled={vaultForm.provider === "gcp_secret_manager" || vaultForm.provider === "vault"}>
-                    Ready
+                    {zh("Ready")}
                   </option>
                   <option value="warning" disabled={vaultForm.provider === "gcp_secret_manager" || vaultForm.provider === "vault"}>
-                    Warning
+                    {zh("Warning")}
                   </option>
-                  <option value="coming_soon">Coming soon</option>
-                  <option value="disabled">Disabled</option>
+                  <option value="coming_soon">{zh("Coming soon")}</option>
+                  <option value="disabled">{zh("Disabled")}</option>
                 </select>
               </div>
               <label className="flex items-center gap-2 pt-6 text-sm">
@@ -3014,7 +3011,7 @@ export function Secrets() {
                     setVaultForm((current) => ({ ...current, isDefault: event.target.checked }))
                   }
                 />
-                Default for {providerLabel(providers, vaultForm.provider)}
+                {zh("Default for")} {providerLabel(providers, vaultForm.provider)}
               </label>
             </div>
 
@@ -3037,15 +3034,14 @@ export function Secrets() {
 
             {vaultForm.provider === "gcp_secret_manager" || vaultForm.provider === "vault" ? (
               <div className="rounded-md border border-sky-500/30 bg-sky-500/5 p-3 text-xs text-sky-700 dark:text-sky-300">
-                This provider can save draft routing metadata, but runtime writes and resolution stay disabled until
-                the provider module is implemented and reviewed.
+                {zh("This provider can save draft routing metadata, but runtime writes and resolution stay disabled until the provider module is implemented and reviewed.")}
               </div>
             ) : null}
             {vaultError ? <p className="text-xs text-destructive">{vaultError}</p> : null}
           </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setVaultDialogOpen(false)}>
-              Cancel
+              {zh("Cancel")}
             </Button>
             <Button
               onClick={() => {
@@ -3059,7 +3055,7 @@ export function Secrets() {
               }
             >
               {saveVaultMutation.isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" /> : null}
-              {editingVault ? "Save vault" : "Create vault"}
+              {editingVault ? zh("Save vault") : zh("Create vault")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -3070,34 +3066,34 @@ export function Secrets() {
           <DialogHeader>
             <DialogTitle>
               {selectedSecret?.managedMode === "external_reference" && rotateMode === "reference"
-                ? "Update external reference"
-                : "Update secret value"}
+                ? zh("Update external reference")
+                : zh("Update secret value")}
             </DialogTitle>
             <DialogDescription>
               {selectedSecret?.managedMode !== "external_reference"
-                ? "Creates a new provider-backed version. Consumers pinned to latest pick up the new value on the next run."
+                ? zh("Creates a new provider-backed version. Consumers pinned to latest pick up the new value on the next run.")
                 : rotateMode === "reference"
-                  ? "Creates a new Paperclip metadata version that points at an existing provider secret. Paperclip does not write a new provider value."
-                  : "Writes a new version of the referenced provider secret. The new value becomes current for every consumer of that secret, in and outside Paperclip."}
+                  ? zh("Creates a new Paperclip metadata version that points at an existing provider secret. Paperclip does not write a new provider value.")
+                  : zh("Writes a new version of the referenced provider secret. The new value becomes current for every consumer of that secret, in and outside Paperclip.")}
             </DialogDescription>
           </DialogHeader>
           {selectedSecret && secretSupportsExternalValueWrite(selectedSecret) ? (
             <Tabs value={rotateMode} onValueChange={(value) => setRotateMode(value as RotateMode)}>
               <TabsList className="grid w-full grid-cols-2">
-                <TabsTrigger value="value">Write new value</TabsTrigger>
-                <TabsTrigger value="reference">Change reference</TabsTrigger>
+                <TabsTrigger value="value">{zh("Write new value")}</TabsTrigger>
+                <TabsTrigger value="reference">{zh("Change reference")}</TabsTrigger>
               </TabsList>
             </Tabs>
           ) : null}
           <div>
-            <label className="text-xs font-medium" htmlFor="rotate-secret-vault">Provider vault</label>
+            <label className="text-xs font-medium" htmlFor="rotate-secret-vault">{zh("Provider vault")}</label>
             <select
               id="rotate-secret-vault"
               className="h-9 w-full rounded-md border border-border bg-background px-2 text-sm outline-none"
               value={rotateProviderConfigId}
               onChange={(event) => setRotateProviderConfigId(event.target.value)}
             >
-              <option value="">Deployment default</option>
+              <option value="">{zh("Deployment default")}</option>
               {selectedRotateProviderConfigs.map((config) => {
                 const blockReason = getProviderConfigBlockReason(config);
                 return (
@@ -3113,38 +3109,38 @@ export function Secrets() {
               <ProviderVaultInlineWarning config={selectedRotateProviderConfig} />
             ) : (
               <p className="mt-1 text-(length:--text-micro) text-muted-foreground">
-                Rotating with the deployment default preserves current fallback behavior.
+                {zh("Rotating with the deployment default preserves current fallback behavior.")}
               </p>
             )}
           </div>
           {selectedSecret?.managedMode === "external_reference" && rotateMode === "reference" ? (
             <div>
-              <label className="text-xs font-medium" htmlFor="rotate-ref">External reference</label>
+              <label className="text-xs font-medium" htmlFor="rotate-ref">{zh("External reference")}</label>
               <Input
                 id="rotate-ref"
                 value={rotateExternalRef}
                 onChange={(event) => setRotateExternalRef(event.target.value)}
-                placeholder={selectedSecret.externalRef ?? "Updated reference"}
+                placeholder={selectedSecret.externalRef ?? zh("Updated reference")}
                 className="font-mono text-xs"
               />
               <p className="mt-1 text-(length:--text-micro) text-muted-foreground">
-                Rotate the actual value in the provider before changing this Paperclip reference.
+                {zh("Rotate the actual value in the provider before changing this Paperclip reference.")}
               </p>
             </div>
           ) : (
             <div>
-              <label className="text-xs font-medium" htmlFor="rotate-value">New value</label>
+              <label className="text-xs font-medium" htmlFor="rotate-value">{zh("New value")}</label>
               <Textarea
                 id="rotate-value"
                 value={rotateValue}
                 onChange={(event) => setRotateValue(event.target.value)}
                 rows={3}
                 className="font-mono text-xs"
-                placeholder="Paste the new value"
+                placeholder={zh("Paste the new value")}
               />
               {selectedSecret?.managedMode === "external_reference" ? (
                 <p className="mt-1 text-(length:--text-micro) text-muted-foreground">
-                  Written to <code className="font-mono">{selectedSecret.externalRef}</code> in the provider.
+                  {zh("Written to")} <code className="font-mono">{selectedSecret.externalRef}</code> in the provider.
                 </p>
               ) : null}
             </div>
@@ -3152,7 +3148,7 @@ export function Secrets() {
           {rotateError ? <p className="text-xs text-destructive">{rotateError}</p> : null}
           <DialogFooter>
             <Button variant="outline" onClick={() => setRotateOpen(false)}>
-              Cancel
+              {zh("Cancel")}
             </Button>
             <Button
               onClick={() => {
@@ -3169,8 +3165,8 @@ export function Secrets() {
             >
               {rotateMutation.isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" /> : null}
               {selectedSecret?.managedMode === "external_reference" && rotateMode === "reference"
-                ? "Update reference"
-                : "Update value"}
+                ? zh("Update reference")
+                : zh("Update value")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -3179,20 +3175,20 @@ export function Secrets() {
       <Dialog open={Boolean(deleteConfirm)} onOpenChange={(open) => !open && setDeleteConfirm(null)}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Delete secret</DialogTitle>
+            <DialogTitle>{zh("Delete secret")}</DialogTitle>
             <DialogDescription>
-              Permanently removes <strong>{deleteConfirm?.name}</strong>. Active bindings will fail until you remap them.
+              Permanently removes <strong>{deleteConfirm?.name}</strong>{zh(". Active bindings will fail until you remap them.")}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setDeleteConfirm(null)}>Cancel</Button>
+            <Button variant="outline" onClick={() => setDeleteConfirm(null)}>{zh("Cancel")}</Button>
             <Button
               variant="destructive"
               onClick={() => deleteConfirm && deleteMutation.mutate(deleteConfirm.id)}
               disabled={deleteMutation.isPending}
             >
               {deleteMutation.isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" /> : null}
-              Delete
+              {zh("Delete")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -3204,14 +3200,14 @@ export function Secrets() {
       >
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Delete user-provided secret</DialogTitle>
+            <DialogTitle>{zh("Delete user-provided secret")}</DialogTitle>
             <DialogDescription>
               Permanently removes <strong>{definitionDeleteConfirm?.name}</strong> for the whole organization.
               Existing member values become unreferenced and active bindings must be remapped.
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setDefinitionDeleteConfirm(null)}>Cancel</Button>
+            <Button variant="outline" onClick={() => setDefinitionDeleteConfirm(null)}>{zh("Cancel")}</Button>
             <Button
               variant="destructive"
               onClick={() =>
@@ -3220,7 +3216,7 @@ export function Secrets() {
               disabled={deleteDefinitionMutation.isPending}
             >
               {deleteDefinitionMutation.isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" /> : null}
-              Delete
+              {zh("Delete")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -3239,24 +3235,24 @@ export function Secrets() {
       <Dialog open={Boolean(removeVaultConfirm)} onOpenChange={(open) => !open && setRemoveVaultConfirm(null)}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Remove provider vault</DialogTitle>
+            <DialogTitle>{zh("Remove provider vault")}</DialogTitle>
             <DialogDescription>
-              Removes <strong>{removeVaultConfirm?.displayName}</strong> from Paperclip only.{" "}
+              Removes <strong>{removeVaultConfirm?.displayName}</strong> {zh("from Paperclip only.")}{" "}
               {removeVaultConfirm?.provider === "aws_secrets_manager"
-                ? "This does not delete the remote AWS Secrets Manager vault, secrets, or any AWS data."
-                : "This does not delete any remote provider data."}{" "}
-              Secrets using this vault will lose the vault association until you assign another one.
+                ? zh("This does not delete the remote AWS Secrets Manager vault, secrets, or any AWS data.")
+                : zh("This does not delete any remote provider data.")}{" "}
+              {zh("Secrets using this vault will lose the vault association until you assign another one.")}
             </DialogDescription>
           </DialogHeader>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setRemoveVaultConfirm(null)}>Cancel</Button>
+            <Button variant="outline" onClick={() => setRemoveVaultConfirm(null)}>{zh("Cancel")}</Button>
             <Button
               variant="destructive"
               onClick={() => removeVaultConfirm && removeVaultMutation.mutate(removeVaultConfirm.id)}
               disabled={removeVaultMutation.isPending}
             >
               {removeVaultMutation.isPending ? <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" /> : null}
-              Remove from Paperclip
+              {zh("Remove from Paperclip")}
             </Button>
           </DialogFooter>
         </DialogContent>
@@ -3271,15 +3267,13 @@ function SecretsHowToUse() {
     <div className="flex items-start gap-2 rounded-md border border-border bg-muted/20 px-3 py-2 text-xs text-muted-foreground">
       <Info className="mt-0.5 h-3.5 w-3.5 shrink-0" />
       <div className="space-y-1">
-        <p className="font-medium text-foreground">Use secrets by binding them to runtime environment variables.</p>
+        <p className="font-medium text-foreground">{zh("Use secrets by binding them to runtime environment variables.")}</p>
         <p>
-          Create or link a secret here, then open an agent&apos;s Environment variables or a project&apos;s Env field.
-          Add the env key the process expects, for example <code className="font-mono">GH_TOKEN</code>, choose{" "}
-          <span className="font-medium text-foreground">Secret</span>, and select the stored secret version.
+          {zh("Create or link a secret here, then open an agent's Environment variables or a project's Env field. Add the env key the process expects, for example")} <code className="font-mono">GH_TOKEN</code>{zh(", choose")}{" "}
+          <span className="font-medium text-foreground">{zh("Secret")}</span>{zh(", and select the stored secret version.")}
         </p>
         <p>
-          Paperclip resolves the value server-side when the run starts and injects it as that env var. Project env
-          applies to every task in the project and overrides agent env on matching keys.
+          {zh("Paperclip resolves the value server-side when the run starts and injects it as that env var. Project env applies to every task in the project and overrides agent env on matching keys.")}
         </p>
       </div>
     </div>
@@ -3312,10 +3306,10 @@ function SecretsFiltersPopover({
   };
 
   const statusOptions: Array<{ value: SecretStatus | "all"; label: string }> = [
-    { value: "active", label: "Active" },
-    { value: "all", label: "All statuses" },
-    { value: "disabled", label: "Disabled" },
-    { value: "archived", label: "Archived" },
+    { value: "active", label: zh("Active") },
+    { value: "all", label: zh("All statuses") },
+    { value: "disabled", label: zh("Disabled") },
+    { value: "archived", label: zh("Archived") },
   ];
 
   return (
@@ -3325,7 +3319,7 @@ function SecretsFiltersPopover({
           variant="outline"
           size="icon"
           className={cn("relative h-8 w-8 shrink-0", activeFilterCount > 0 && "text-blue-600 dark:text-blue-400")}
-          title={activeFilterCount > 0 ? `Filters: ${activeFilterCount}` : "Filter"}
+          title={activeFilterCount > 0 ? `Filters: ${activeFilterCount}` : zh("Filter")}
         >
           <Filter className="h-3.5 w-3.5" />
           {activeFilterCount > 0 ? (
@@ -3341,7 +3335,7 @@ function SecretsFiltersPopover({
       >
         <div className="space-y-3 p-3">
           <div className="flex items-center justify-between">
-            <span className="text-sm font-medium">Filters</span>
+            <span className="text-sm font-medium">{zh("Filters")}</span>
             {activeFilterCount > 0 ? (
               <button
                 type="button"
@@ -3349,14 +3343,14 @@ function SecretsFiltersPopover({
                 onClick={resetFilters}
               >
                 <X className="h-3 w-3" />
-                Clear
+                {zh("Clear")}
               </button>
             ) : null}
           </div>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
             <div className="space-y-1">
-              <span className="text-xs text-muted-foreground">Status</span>
+              <span className="text-xs text-muted-foreground">{zh("Status")}</span>
               <div className="space-y-0.5">
                 {statusOptions.map((option) => (
                   <label key={option.value} className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1 hover:bg-accent/50">
@@ -3371,12 +3365,12 @@ function SecretsFiltersPopover({
             </div>
 
             <div className="space-y-1">
-              <span className="text-xs text-muted-foreground">Provided by</span>
+              <span className="text-xs text-muted-foreground">{zh("Provided by")}</span>
               <div className="space-y-0.5">
                 {[
-                  { value: "all" as const, label: "All sources" },
-                  { value: "company" as const, label: "Organization" },
-                  { value: "user" as const, label: "Each user" },
+                  { value: "all" as const, label: zh("All sources") },
+                  { value: "company" as const, label: zh("Organization") },
+                  { value: "user" as const, label: zh("Each user") },
                 ].map((option) => (
                   <label key={option.value} className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1 hover:bg-accent/50">
                     <Checkbox
@@ -3390,14 +3384,14 @@ function SecretsFiltersPopover({
             </div>
 
             <div className="space-y-1">
-              <span className="text-xs text-muted-foreground">Provider</span>
+              <span className="text-xs text-muted-foreground">{zh("Provider")}</span>
               <div className="max-h-48 space-y-0.5 overflow-y-auto pr-1">
                 <label className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1 hover:bg-accent/50">
                   <Checkbox
                     checked={providerFilter === "all"}
                     onCheckedChange={() => onProviderChange("all")}
                   />
-                  <span className="text-sm">All providers</span>
+                  <span className="text-sm">{zh("All providers")}</span>
                 </label>
                 {providers.map((provider) => (
                   <label key={provider.id} className="flex cursor-pointer items-center gap-2 rounded-sm px-2 py-1 hover:bg-accent/50">
@@ -3453,7 +3447,7 @@ function ProviderVaultInlineWarning({ config }: { config: CompanySecretProviderC
   if (!message) {
     return (
       <p className="mt-1 text-(length:--text-micro) text-muted-foreground">
-        {config.isDefault ? "Default vault" : "Vault"} · {config.status.replace("_", " ")}
+        {config.isDefault ? zh("Default vault") : zh("Vault")} · {config.status.replace("_", " ")}
       </p>
     );
   }
@@ -3497,7 +3491,7 @@ function ImportFromVaultButton({
         size="sm"
         onClick={onManageVaults}
         className={cn("text-xs text-muted-foreground", className)}
-        title="Configure an AWS provider vault to enable remote import"
+        title={zh("Configure an AWS provider vault to enable remote import")}
       >
         <Cloud className="h-3.5 w-3.5 mr-1" /> AWS vault disabled — manage
       </Button>
@@ -3512,7 +3506,7 @@ function ImportFromVaultButton({
       className={className}
       data-testid="import-from-vault-button"
     >
-      <Cloud className="h-3.5 w-3.5 mr-1" /> Import from vault
+      <Cloud className="h-3.5 w-3.5 mr-1" /> {zh("Import from vault")}
     </Button>
   );
 }
@@ -3550,7 +3544,7 @@ export function ProviderVaultsTab({
     return (
       <div className="flex items-center gap-2 py-4 text-sm text-muted-foreground">
         <Loader2 className="h-4 w-4 animate-spin" />
-        Loading provider vaults
+        {zh("Loading provider vaults")}
       </div>
     );
   }
@@ -3558,9 +3552,9 @@ export function ProviderVaultsTab({
   if (error) {
     return (
       <div className="py-4 text-sm text-destructive flex items-center gap-2">
-        <AlertCircle className="h-4 w-4" /> Failed to load provider vaults: {(error as Error).message}
+        <AlertCircle className="h-4 w-4" /> {zh("Failed to load provider vaults:")} {(error as Error).message}
         <Button variant="ghost" size="sm" onClick={onRetry}>
-          Retry
+          {zh("Retry")}
         </Button>
       </div>
     );
@@ -3599,19 +3593,19 @@ export function ProviderVaultsTab({
               <Icon className="h-4 w-4 text-muted-foreground" />
               <h2 className="text-sm font-semibold">{provider?.label ?? id.replaceAll("_", " ")}</h2>
               {isComingSoonFamily ? (
-                <span className="ml-auto text-xs text-muted-foreground">Coming soon</span>
+                <span className="ml-auto text-xs text-muted-foreground">{zh("Coming soon")}</span>
               ) : (
                 <Button variant="outline" size="sm" className="ml-auto" onClick={() => onCreate(id)}>
                   <Plus className="h-3.5 w-3.5 mr-1" />
-                  Add vault
+                  {zh("Add vault")}
                 </Button>
               )}
             </div>
             {configs.length === 0 ? (
               <div className="rounded-md border border-dashed border-border bg-muted/20 p-4 text-sm text-muted-foreground">
                 {isComingSoonFamily
-                  ? "Not yet supported."
-                  : "No organization-specific vaults yet. Secrets can still use the deployment default provider settings."}
+                  ? zh("Not yet supported.")
+                  : zh("No organization-specific vaults yet. Secrets can still use the deployment default provider settings.")}
               </div>
             ) : (
               <div className="space-y-3">
@@ -3667,7 +3661,7 @@ function ProviderVaultCard({
             {config.isDefault ? (
               <span className="inline-flex items-center gap-1 text-xs text-amber-600 dark:text-amber-400">
                 <Star className="h-3 w-3 fill-current" />
-                Default
+                {zh("Default")}
               </span>
             ) : null}
           </div>
@@ -3677,10 +3671,10 @@ function ProviderVaultCard({
             </Badge>
             {config.healthStatus ? (
               <span className="text-xs text-muted-foreground">
-                Health {config.healthStatus.replace("_", " ")} · {formatRelative(config.healthCheckedAt)}
+                {zh("Health")} {config.healthStatus.replace("_", " ")} · {formatRelative(config.healthCheckedAt)}
               </span>
             ) : (
-              <span className="text-xs text-muted-foreground">Health not checked</span>
+              <span className="text-xs text-muted-foreground">{zh("Health not checked")}</span>
             )}
           </div>
         </div>
@@ -3703,7 +3697,7 @@ function ProviderVaultCard({
       <div className="mt-3 flex flex-wrap gap-2">
         <Button variant="outline" size="sm" onClick={onHealthCheck} disabled={pending}>
           {pending ? <Loader2 className="h-3.5 w-3.5 animate-spin mr-1" /> : <RefreshCw className="h-3.5 w-3.5 mr-1" />}
-          Check health
+          {zh("Check health")}
         </Button>
         {config.provider === "aws_secrets_manager" ? (
           <Button
@@ -3714,12 +3708,12 @@ function ProviderVaultCard({
             title={
               blockReason
                 ? blockReason
-                : "Refresh AWS metadata and import existing secrets"
+                : zh("Refresh AWS metadata and import existing secrets")
             }
             data-testid={`provider-vault-refresh-secrets-${config.id}`}
           >
             <Cloud className="h-3.5 w-3.5 mr-1" />
-            Refresh secrets
+            {zh("Refresh secrets")}
           </Button>
         ) : null}
         <Button
@@ -3729,7 +3723,7 @@ function ProviderVaultCard({
           disabled={pending || Boolean(blockReason) || config.isDefault}
         >
           <Star className="h-3.5 w-3.5 mr-1" />
-          Make default
+          {zh("Make default")}
         </Button>
         <Button
           variant="outline"
@@ -3739,7 +3733,7 @@ function ProviderVaultCard({
           disabled={pending || config.status === "disabled"}
         >
           <Ban className="h-3.5 w-3.5 mr-1" />
-          Disable
+          {zh("Disable")}
         </Button>
         <Button
           variant="outline"
@@ -3749,7 +3743,7 @@ function ProviderVaultCard({
           disabled={pending}
         >
           <Trash2 className="h-3.5 w-3.5 mr-1" />
-          Remove
+          {zh("Remove")}
         </Button>
       </div>
     </div>
@@ -3777,7 +3771,7 @@ function ProviderVaultFields({
           onChange={(event) => setField("backupReminderAcknowledged", event.target.checked)}
         />
         <span>
-          I understand backup and restore require both the database metadata and the local encrypted master key file.
+          {zh("I understand backup and restore require both the database metadata and the local encrypted master key file.")}
         </span>
       </label>
     );
@@ -3786,12 +3780,12 @@ function ProviderVaultFields({
   if (form.provider === "aws_secrets_manager") {
     return (
       <div className="grid gap-3 sm:grid-cols-2">
-        <TextField label="AWS region" value={form.region} onChange={(value) => setField("region", value)} placeholder="us-east-1" required />
-        <TextField label="Namespace" value={form.namespace} onChange={(value) => setField("namespace", value)} placeholder="production" />
-        <TextField label="Secret name prefix" value={form.secretNamePrefix} onChange={(value) => setField("secretNamePrefix", value)} placeholder="paperclip" />
-        <TextField label="KMS key id" value={form.kmsKeyId} onChange={(value) => setField("kmsKeyId", value)} placeholder="alias/paperclip-secrets" />
-        <TextField label="Owner tag" value={form.ownerTag} onChange={(value) => setField("ownerTag", value)} placeholder="platform" />
-        <TextField label="Environment tag" value={form.environmentTag} onChange={(value) => setField("environmentTag", value)} placeholder="prod" />
+        <TextField label={zh("AWS region")} value={form.region} onChange={(value) => setField("region", value)} placeholder="us-east-1" required />
+        <TextField label={zh("Namespace")} value={form.namespace} onChange={(value) => setField("namespace", value)} placeholder="production" />
+        <TextField label={zh("Secret name prefix")} value={form.secretNamePrefix} onChange={(value) => setField("secretNamePrefix", value)} placeholder="paperclip" />
+        <TextField label={zh("KMS key id")} value={form.kmsKeyId} onChange={(value) => setField("kmsKeyId", value)} placeholder="alias/paperclip-secrets" />
+        <TextField label={zh("Owner tag")} value={form.ownerTag} onChange={(value) => setField("ownerTag", value)} placeholder={zh("platform")} />
+        <TextField label={zh("Environment tag")} value={form.environmentTag} onChange={(value) => setField("environmentTag", value)} placeholder="prod" />
       </div>
     );
   }
@@ -3799,20 +3793,20 @@ function ProviderVaultFields({
   if (form.provider === "gcp_secret_manager") {
     return (
       <div className="grid gap-3 sm:grid-cols-2">
-        <TextField label="Project id" value={form.projectId} onChange={(value) => setField("projectId", value)} placeholder="paperclip-prod" />
-        <TextField label="Location" value={form.location} onChange={(value) => setField("location", value)} placeholder="global" />
-        <TextField label="Namespace" value={form.namespace} onChange={(value) => setField("namespace", value)} placeholder="production" />
-        <TextField label="Secret name prefix" value={form.secretNamePrefix} onChange={(value) => setField("secretNamePrefix", value)} placeholder="paperclip" />
+        <TextField label={zh("Project id")} value={form.projectId} onChange={(value) => setField("projectId", value)} placeholder="paperclip-prod" />
+        <TextField label={zh("Location")} value={form.location} onChange={(value) => setField("location", value)} placeholder={zh("global")} />
+        <TextField label={zh("Namespace")} value={form.namespace} onChange={(value) => setField("namespace", value)} placeholder="production" />
+        <TextField label={zh("Secret name prefix")} value={form.secretNamePrefix} onChange={(value) => setField("secretNamePrefix", value)} placeholder="paperclip" />
       </div>
     );
   }
 
   return (
     <div className="grid gap-3 sm:grid-cols-2">
-      <TextField label="Address" value={form.address} onChange={(value) => setField("address", value)} placeholder="https://vault.example.com" />
-      <TextField label="Namespace" value={form.namespace} onChange={(value) => setField("namespace", value)} placeholder="admin" />
-      <TextField label="Mount path" value={form.mountPath} onChange={(value) => setField("mountPath", value)} placeholder="secret" />
-      <TextField label="Secret path prefix" value={form.secretPathPrefix} onChange={(value) => setField("secretPathPrefix", value)} placeholder="paperclip/prod" />
+      <TextField label={zh("Address")} value={form.address} onChange={(value) => setField("address", value)} placeholder="https://vault.example.com" />
+      <TextField label={zh("Namespace")} value={form.namespace} onChange={(value) => setField("namespace", value)} placeholder={zh("admin")} />
+      <TextField label={zh("Mount path")} value={form.mountPath} onChange={(value) => setField("mountPath", value)} placeholder={zh("secret")} />
+      <TextField label={zh("Secret path prefix")} value={form.secretPathPrefix} onChange={(value) => setField("secretPathPrefix", value)} placeholder="paperclip/prod" />
     </div>
   );
 }
@@ -3839,9 +3833,9 @@ function AwsProviderVaultDiscoveryPanel({
     <div className="space-y-3 border-t border-border pt-3">
       <div className="flex flex-wrap items-center gap-2">
         <div className="min-w-0 flex-1">
-          <p className="text-sm font-medium">AWS discovery</p>
+          <p className="text-sm font-medium">{zh("AWS discovery")}</p>
           <p className="text-xs text-muted-foreground">
-            Uses the current draft routing fields to inspect AWS Secrets Manager metadata. Values are not read.
+            {zh("Uses the current draft routing fields to inspect AWS Secrets Manager metadata. Values are not read.")}
           </p>
         </div>
         <Button
@@ -3857,18 +3851,18 @@ function AwsProviderVaultDiscoveryPanel({
           ) : (
             <Search className="h-3.5 w-3.5 mr-1" />
           )}
-          Find existing AWS values
+          {zh("Find existing AWS values")}
         </Button>
       </div>
 
       {!canDiscover ? (
-        <p className="text-xs text-muted-foreground">Enter an AWS region before discovery.</p>
+        <p className="text-xs text-muted-foreground">{zh("Enter an AWS region before discovery.")}</p>
       ) : null}
 
       {loading ? (
         <div className="flex items-center gap-2 rounded-md border border-border bg-muted/20 p-3 text-xs text-muted-foreground">
           <Loader2 className="h-3.5 w-3.5 animate-spin" />
-          Searching AWS Secrets Manager metadata
+          {zh("Searching AWS Secrets Manager metadata")}
         </div>
       ) : null}
 
@@ -3889,7 +3883,7 @@ function AwsProviderVaultDiscoveryPanel({
 
       {preview && preview.candidates.length === 0 && !loading ? (
         <div className="rounded-md border border-dashed border-border bg-muted/20 p-3 text-xs text-muted-foreground">
-          No AWS vault metadata candidates found. Manual entry is still available.
+          {zh("No AWS vault metadata candidates found. Manual entry is still available.")}
         </div>
       ) : null}
 
@@ -3898,7 +3892,7 @@ function AwsProviderVaultDiscoveryPanel({
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <Database className="h-3.5 w-3.5" />
             <span>
-              {preview.candidates.length} candidate{preview.candidates.length === 1 ? "" : "s"} from{" "}
+              {preview.candidates.length} candidate{preview.candidates.length === 1 ? "" : "s"} {zh("from")}{" "}
               {preview.sampledSecretCount} sampled secret{preview.sampledSecretCount === 1 ? "" : "s"}
             </span>
           </div>
@@ -3925,7 +3919,7 @@ function CopyDetailsButton({ text }: { text: string }) {
   const { copied, failed, copy } = useCopyAction();
   return (
     <Button type="button" variant="ghost" size="sm" onClick={() => void copy(text)}>
-      {copied ? "Copied" : failed ? "Copy failed" : "Copy"}
+      {copied ? zh("Copied") : failed ? zh("Copy failed") : zh("Copy")}
     </Button>
   );
 }
@@ -3966,42 +3960,42 @@ function AwsProviderVaultDiscoveryError({
         <div className="min-w-0 flex-1 space-y-2">
           <div>
             <p className="font-medium">
-              {isAccessDenied ? "AWS discovery needs ListSecrets permission" : "AWS discovery failed"}
+              {isAccessDenied ? zh("AWS discovery needs ListSecrets permission") : zh("AWS discovery failed")}
             </p>
             <p className="mt-1 leading-relaxed text-destructive/85">
               {isAccessDenied
                 ? details?.actionableMessage ??
-                  "Discovery needs secretsmanager:ListSecrets in the selected region for the Paperclip server runtime/provider credential path."
+                  zh("Discovery needs secretsmanager:ListSecrets in the selected region for the Paperclip server runtime/provider credential path.")
                 : message}
             </p>
           </div>
           {isAccessDenied ? (
             <p className="leading-relaxed text-destructive/85">
               {details?.safeAlternative ??
-                "If you already know the exact AWS Secrets Manager ARN, paste/link that ARN instead of using discovery. Exact-resource DescribeSecret and runtime read permissions are still required."}
+                zh("If you already know the exact AWS Secrets Manager ARN, paste/link that ARN instead of using discovery. Exact-resource DescribeSecret and runtime read permissions are still required.")}
             </p>
           ) : null}
           <dl className="grid gap-1 text-destructive/80 sm:grid-cols-2">
             <div>
-              <dt className="font-medium">Region</dt>
+              <dt className="font-medium">{zh("Region")}</dt>
               <dd>{region}</dd>
             </div>
             <div>
-              <dt className="font-medium">Operation</dt>
+              <dt className="font-medium">{zh("Operation")}</dt>
               <dd>{details?.operation ?? "secret_provider_config.discovery.preview"}</dd>
             </div>
             <div>
-              <dt className="font-medium">Provider</dt>
+              <dt className="font-medium">{zh("Provider")}</dt>
               <dd>{details?.provider ?? "aws_secrets_manager"}</dd>
             </div>
             <div>
-              <dt className="font-medium">Vault context</dt>
+              <dt className="font-medium">{zh("Vault context")}</dt>
               <dd>{details?.providerVaultContext ?? "draft_config"}</dd>
             </div>
           </dl>
           <div className="rounded-md border border-destructive/20 bg-background/70 p-2 text-foreground">
             <div className="mb-1 flex items-center justify-between gap-2">
-              <span className="font-medium text-muted-foreground">Safe request/error details</span>
+              <span className="font-medium text-muted-foreground">{zh("Safe request/error details")}</span>
               <CopyDetailsButton text={detailsText} />
             </div>
             <pre className="max-h-36 overflow-auto whitespace-pre-wrap break-words font-mono text-(length:--text-micro) leading-relaxed">
@@ -4061,7 +4055,7 @@ function SecretCreateError({
         <div className="min-w-0 flex-1 space-y-2">
           <div>
             <p className="font-medium">
-              {isAccessDenied ? "AWS secret creation needs CreateSecret permission" : "AWS secret creation failed"}
+              {isAccessDenied ? zh("AWS secret creation needs CreateSecret permission") : zh("AWS secret creation failed")}
             </p>
             <p className="mt-1 leading-relaxed text-destructive/85">
               {details?.actionableMessage ?? message}
@@ -4073,28 +4067,28 @@ function SecretCreateError({
           <dl className="grid gap-1 text-destructive/80 sm:grid-cols-2">
             {details?.requiredCapability ? (
               <div>
-                <dt className="font-medium">Required IAM capability</dt>
+                <dt className="font-medium">{zh("Required IAM capability")}</dt>
                 <dd className="font-mono">{details.requiredCapability}</dd>
               </div>
             ) : null}
             {details?.region ? (
               <div>
-                <dt className="font-medium">Region</dt>
+                <dt className="font-medium">{zh("Region")}</dt>
                 <dd>{details.region}</dd>
               </div>
             ) : null}
             <div>
-              <dt className="font-medium">Provider vault</dt>
-              <dd className="break-all">{details?.providerConfigId ?? providerConfigId ?? "Deployment default"}</dd>
+              <dt className="font-medium">{zh("Provider vault")}</dt>
+              <dd className="break-all">{details?.providerConfigId ?? providerConfigId ?? zh("Deployment default")}</dd>
             </div>
             <div>
-              <dt className="font-medium">Operation</dt>
+              <dt className="font-medium">{zh("Operation")}</dt>
               <dd>{details?.operation ?? "secret.create"}</dd>
             </div>
           </dl>
           <div className="rounded-md border border-destructive/20 bg-background/70 p-2 text-foreground">
             <div className="mb-1 flex items-center justify-between gap-2">
-              <span className="font-medium text-muted-foreground">Safe request/error details</span>
+              <span className="font-medium text-muted-foreground">{zh("Safe request/error details")}</span>
               <CopyDetailsButton text={detailsText} />
             </div>
             <pre className="max-h-36 overflow-auto whitespace-pre-wrap break-words font-mono text-(length:--text-micro) leading-relaxed">
@@ -4131,7 +4125,7 @@ function AwsProviderVaultDiscoveryCandidateRow({
             </span>
           </div>
           <p className="mt-1 truncate text-xs text-muted-foreground">
-            {fieldSummary.length > 0 ? fieldSummary.join(" / ") : "No stable namespace or prefix detected"}
+            {fieldSummary.length > 0 ? fieldSummary.join(" / ") : zh("No stable namespace or prefix detected")}
           </p>
           {candidate.samples[0] ? (
             <p className="mt-1 truncate font-mono text-(length:--text-micro) text-muted-foreground">
@@ -4140,7 +4134,7 @@ function AwsProviderVaultDiscoveryCandidateRow({
           ) : null}
         </div>
         <Button type="button" variant="ghost" size="sm" onClick={onApply}>
-          Use values
+          {zh("Use values")}
         </Button>
       </div>
       {candidate.warnings.length > 0 ? (
@@ -4175,7 +4169,7 @@ function TextField({
     <div>
       <label className="text-xs font-medium" htmlFor={id}>
         {label}
-        {required ? null : <span className="text-muted-foreground/70"> (optional)</span>}
+        {required ? null : <span className="text-muted-foreground/70"> {zh("(optional)")}</span>}
       </label>
       <Input id={id} value={value} onChange={(event) => onChange(event.target.value)} placeholder={placeholder} />
     </div>
@@ -4197,8 +4191,8 @@ function CoverageInline({
     staleTime: 30_000,
   });
   const summary = coverageQuery.data;
-  if (coverageQuery.isPending) return <span className="text-muted-foreground">Loading…</span>;
-  if (coverageQuery.isError) return <span className="text-destructive">Coverage unavailable</span>;
+  if (coverageQuery.isPending) return <span className="text-muted-foreground">{zh("Loading…")}</span>;
+  if (coverageQuery.isError) return <span className="text-destructive">{zh("Coverage unavailable")}</span>;
   return (
     <span className="inline-flex min-w-0 items-center gap-1 text-muted-foreground">
       <Users className="h-3 w-3" />
@@ -4227,31 +4221,31 @@ function UserSecretDetailsTab({
 }) {
   return (
     <dl className="divide-y divide-border/60 text-xs">
-      <DetailRow label="Description">
+      <DetailRow label={zh("Description")}>
         <span>{definition.description ?? <span className="text-muted-foreground">—</span>}</span>
       </DetailRow>
-      <DetailRow label="Provided by">Each user</DetailRow>
-      <DetailRow label="Key">
+      <DetailRow label={zh("Provided by")}>{zh("Each user")}</DetailRow>
+      <DetailRow label={zh("Key")}>
         <code>{definition.key}</code>
       </DetailRow>
-      <DetailRow label="Status"><StatusBadge status={definition.status} /></DetailRow>
-      <DetailRow label="Coverage">
+      <DetailRow label={zh("Status")}><StatusBadge status={definition.status} /></DetailRow>
+      <DetailRow label={zh("Coverage")}>
         <button
           type="button"
           className="inline-flex min-w-0 items-center gap-1 text-left text-primary hover:underline"
           onClick={onViewCoverage}
         >
           <CoverageInline companyId={companyId} definitionId={definition.id} />
-          <span className="shrink-0 text-muted-foreground">· View in Coverage</span>
+          <span className="shrink-0 text-muted-foreground">{zh("· View in Coverage")}</span>
         </button>
       </DetailRow>
-      <DetailRow label="Created">{formatRelative(definition.createdAt)}</DetailRow>
-      <DetailRow label="Updated">{formatRelative(definition.updatedAt)}</DetailRow>
-      <DetailRow label="Usage guidance">
+      <DetailRow label={zh("Created")}>{formatRelative(definition.createdAt)}</DetailRow>
+      <DetailRow label={zh("Updated")}>{formatRelative(definition.updatedAt)}</DetailRow>
+      <DetailRow label={zh("Usage guidance")}>
         {definition.usageGuidance ?? <span className="text-muted-foreground">—</span>}
       </DetailRow>
       <div className="mt-3 rounded-md border border-violet-500/30 bg-violet-500/5 p-2 text-(length:--text-micro) text-violet-800 dark:text-violet-200">
-        No value is stored on this admin row. Each member manages their own value under My secrets.
+        {zh("No value is stored on this admin row. Each member manages their own value under My secrets.")}
       </div>
     </dl>
   );
@@ -4270,10 +4264,10 @@ function UserSecretCoverageTab({
     staleTime: 30_000,
   });
   if (coverageQuery.isPending) {
-    return <div className="py-6 text-center text-xs text-muted-foreground">Loading…</div>;
+    return <div className="py-6 text-center text-xs text-muted-foreground">{zh("Loading…")}</div>;
   }
   if (coverageQuery.isError) {
-    return <div className="py-6 text-center text-xs text-destructive">Coverage unavailable.</div>;
+    return <div className="py-6 text-center text-xs text-destructive">{zh("Coverage unavailable.")}</div>;
   }
   const summary: UserSecretCoverageSummary = coverageQuery.data;
   const total = summary.configuredCount + summary.missingCount + summary.inactiveCount;
@@ -4288,23 +4282,23 @@ function UserSecretCoverageTab({
           <div className="text-lg font-semibold text-emerald-700 dark:text-emerald-300">
             {summary.configuredCount}
           </div>
-          <div className="text-muted-foreground">Set</div>
+          <div className="text-muted-foreground">{zh("Set")}</div>
         </div>
         <div className="rounded-md border border-amber-500/30 bg-amber-500/5 p-3">
           <div className="text-lg font-semibold text-amber-700 dark:text-amber-300">
             {summary.missingCount}
           </div>
-          <div className="text-muted-foreground">Missing</div>
+          <div className="text-muted-foreground">{zh("Missing")}</div>
         </div>
         <div className="rounded-md border border-border bg-muted/30 p-3">
           <div className="text-lg font-semibold text-muted-foreground">
             {summary.inactiveCount}
           </div>
-          <div className="text-muted-foreground">Inactive</div>
+          <div className="text-muted-foreground">{zh("Inactive")}</div>
         </div>
       </div>
       <p className="text-xs text-muted-foreground">
-        Coverage is counts only across {total} member{total === 1 ? "" : "s"}. Secret values are never shown here.
+        Coverage is counts only across {total} {zh("member")}{total === 1 ? "" : "s"}{zh(". Secret values are never shown here.")}
       </p>
     </div>
   );
@@ -4315,12 +4309,12 @@ function UserSecretUsageTab({ definition }: { definition: UserSecretDefinition }
     <div className="space-y-3 text-xs text-muted-foreground">
       <div className="rounded-md border border-border bg-muted/20 p-3">
         Bind runtime environment variables to this user-provided secret by choosing{" "}
-        <span className="font-medium text-foreground">User secret</span> and selecting{" "}
+        <span className="font-medium text-foreground">{zh("User secret")}</span> and selecting{" "}
         <code className="font-mono">{definition.key}</code>.
       </div>
       {definition.usageGuidance ? (
         <div>
-          <p className="mb-1 text-(length:--text-micro) uppercase tracking-wide text-muted-foreground">Member guidance</p>
+          <p className="mb-1 text-(length:--text-micro) uppercase tracking-wide text-muted-foreground">{zh("Member guidance")}</p>
           <p className="text-foreground">{definition.usageGuidance}</p>
         </div>
       ) : null}
@@ -4331,7 +4325,7 @@ function UserSecretUsageTab({ definition }: { definition: UserSecretDefinition }
 function UserSecretAccessEventsTab() {
   return (
     <div className="py-6 text-center text-xs text-muted-foreground">
-      Access events are recorded on each member&apos;s stored value when runtime resolution occurs.
+      {zh("Access events are recorded on each member's stored value when runtime resolution occurs.")}
     </div>
   );
 }
@@ -4503,18 +4497,18 @@ function AgentAccessSection({
     <section className="rounded-md border border-border bg-muted/20 p-3">
       <div className="flex items-center gap-1.5">
         <Users className="h-3.5 w-3.5 text-muted-foreground" />
-        <h3 className="text-xs font-medium text-foreground">Agent access</h3>
+        <h3 className="text-xs font-medium text-foreground">{zh("Agent access")}</h3>
       </div>
       <p className="mt-0.5 text-(length:--text-micro) text-muted-foreground">
         {reference.kind === "company"
-          ? "Add here to inject this secret as an environment variable at run start. API-access grants (fetched on demand, no env var) are managed from each agent's Secret access settings and shown below."
-          : "These agents resolve the responsible user's value as an environment variable at run start."}
+          ? zh("Add here to inject this secret as an environment variable at run start. API-access grants (fetched on demand, no env var) are managed from each agent's Secret access settings and shown below.")
+          : zh("These agents resolve the responsible user's value as an environment variable at run start.")}
       </p>
       {agentsQuery.isPending ? (
-        <p className="mt-2 text-(length:--text-micro) text-muted-foreground">Loading agents…</p>
+        <p className="mt-2 text-(length:--text-micro) text-muted-foreground">{zh("Loading agents…")}</p>
       ) : agentsQuery.isError ? (
         <p className="mt-2 text-(length:--text-micro) text-muted-foreground">
-          Agent list unavailable. Manage access from each agent&apos;s configuration instead.
+          {zh("Agent list unavailable. Manage access from each agent's configuration instead.")}
         </p>
       ) : (
         <>
@@ -4532,7 +4526,7 @@ function AgentAccessSection({
                         variant="outline"
                         className="h-5 px-1.5 text-(length:--text-nano) font-normal border-sky-500/30 bg-sky-500/10 text-sky-700 dark:text-sky-300"
                       >
-                        Env · {envKeys.join(", ")}
+                        {zh("Env ·")} {envKeys.join(", ")}
                       </Badge>
                     ) : null}
                     {apiAliases.length > 0 ? (
@@ -4559,7 +4553,7 @@ function AgentAccessSection({
               ))}
             </ul>
           ) : (
-            <p className="mt-2 text-(length:--text-micro) text-muted-foreground">No agents have access yet.</p>
+            <p className="mt-2 text-(length:--text-micro) text-muted-foreground">{zh("No agents have access yet.")}</p>
           )}
           <div className="mt-2 flex items-end gap-2">
             <div className="min-w-0 flex-1">
@@ -4567,7 +4561,7 @@ function AgentAccessSection({
                 className="text-(length:--text-micro) font-medium text-muted-foreground"
                 htmlFor="agent-access-agent"
               >
-                Agent
+                {zh("Agent")}
               </label>
               <AgentSelect
                 id="agent-access-agent"
@@ -4575,7 +4569,7 @@ function AgentAccessSection({
                 value={selectedAgentId}
                 onChange={setSelectedAgentId}
                 triggerClassName="h-8 text-xs"
-                emptyMessage="No agents available."
+                emptyMessage={zh("No agents available.")}
               />
             </div>
             <div className="min-w-0 flex-1">
@@ -4583,7 +4577,7 @@ function AgentAccessSection({
                 className="text-(length:--text-micro) font-medium text-muted-foreground"
                 htmlFor="agent-access-env-key"
               >
-                Env var
+                {zh("Env var")}
               </label>
               <Input
                 id="agent-access-env-key"
@@ -4608,12 +4602,12 @@ function AgentAccessSection({
               ) : (
                 <Plus className="mr-1 h-3.5 w-3.5" />
               )}
-              Add
+              {zh("Add")}
             </Button>
           </div>
           {effectiveEnvKey && !envKeyValid ? (
             <p className="mt-1 text-(length:--text-micro) text-destructive">
-              Env keys use letters, digits, and underscores, and cannot start with a digit.
+              {zh("Env keys use letters, digits, and underscores, and cannot start with a digit.")}
             </p>
           ) : null}
           {accessError ? (
@@ -4642,35 +4636,35 @@ function SecretDetailsTab({
 
   return (
     <dl className="divide-y divide-border/60 text-xs">
-      <DetailRow label="Description">
+      <DetailRow label={zh("Description")}>
         <span>{secret.description ?? <span className="text-muted-foreground">—</span>}</span>
       </DetailRow>
-      <DetailRow label="Provided by">Organization</DetailRow>
-      <DetailRow label="Custody">{modeLabel(secret.managedMode)}</DetailRow>
-      <DetailRow label="Provider">{providerLabel(providers, secret.provider)}</DetailRow>
-      <DetailRow label="Provider vault">{providerVaultLabel(providerConfigs, secret.providerConfigId)}</DetailRow>
-      <DetailRow label="External ARN">
+      <DetailRow label={zh("Provided by")}>{zh("Organization")}</DetailRow>
+      <DetailRow label={zh("Custody")}>{modeLabel(secret.managedMode)}</DetailRow>
+      <DetailRow label={zh("Provider")}>{providerLabel(providers, secret.provider)}</DetailRow>
+      <DetailRow label={zh("Provider vault")}>{providerVaultLabel(providerConfigs, secret.providerConfigId)}</DetailRow>
+      <DetailRow label={zh("External ARN")}>
         {secret.externalRef ? (
           <span className="break-all font-mono">{secret.externalRef}</span>
         ) : (
           <span className="text-muted-foreground">—</span>
         )}
       </DetailRow>
-      <DetailRow label="Latest version">v{secret.latestVersion}</DetailRow>
-      <DetailRow label="References">
+      <DetailRow label={zh("Latest version")}>v{secret.latestVersion}</DetailRow>
+      <DetailRow label={zh("References")}>
         <button
           type="button"
           className="inline-flex items-center gap-1 text-left text-primary hover:underline"
           onClick={onViewUsage}
         >
           {bindingLabel}
-          <span className="text-muted-foreground">· View in Usage</span>
+          <span className="text-muted-foreground">{zh("· View in Usage")}</span>
         </button>
       </DetailRow>
-      <DetailRow label="Created">{formatRelative(secret.createdAt)}</DetailRow>
-      <DetailRow label="Updated">{formatRelative(secret.updatedAt)}</DetailRow>
-      <DetailRow label="Last rotated">{formatRelative(secret.lastRotatedAt)}</DetailRow>
-      <DetailRow label="Last resolved">{formatRelative(secret.lastResolvedAt)}</DetailRow>
+      <DetailRow label={zh("Created")}>{formatRelative(secret.createdAt)}</DetailRow>
+      <DetailRow label={zh("Updated")}>{formatRelative(secret.updatedAt)}</DetailRow>
+      <DetailRow label={zh("Last rotated")}>{formatRelative(secret.lastRotatedAt)}</DetailRow>
+      <DetailRow label={zh("Last resolved")}>{formatRelative(secret.lastResolvedAt)}</DetailRow>
       <div className="mt-3 rounded-md border border-amber-500/30 bg-amber-500/5 p-2 text-(length:--text-micro) text-amber-700 dark:text-amber-300">
         {modeDescription(
           secret.managedMode,
@@ -4679,7 +4673,7 @@ function SecretDetailsTab({
               providers.find((provider) => provider.id === secret.provider)?.supportsExternalValueWrites,
           ),
         )}{" "}
-        Paperclip never re-displays stored values.
+        {zh("Paperclip never re-displays stored values.")}
       </div>
     </dl>
   );
@@ -4696,12 +4690,12 @@ function DetailRow({ label, children }: { label: string; children: React.ReactNo
 
 export function SecretUsageTab({ loading, bindings }: { loading: boolean; bindings: CompanySecretUsageBinding[] }) {
   if (loading) {
-    return <div className="py-6 text-center text-xs text-muted-foreground">Loading…</div>;
+    return <div className="py-6 text-center text-xs text-muted-foreground">{zh("Loading…")}</div>;
   }
   if (bindings.length === 0) {
     return (
       <div className="py-6 text-center text-xs text-muted-foreground">
-        No active bindings. Add this secret in agent, project, environment, or plugin config to start using it.
+        {zh("No active bindings. Add this secret in agent, project, environment, or plugin config to start using it.")}
       </div>
     );
   }
@@ -4752,7 +4746,7 @@ export function SecretUsageTab({ loading, bindings }: { loading: boolean; bindin
             </div>
             <div className="text-(length:--text-micro) text-muted-foreground">
               {deliveryMode === "api" ? (
-                <>API alias <span className="font-mono">{aliasFromConfigPath(binding.configPath)}</span></>
+                <>{zh("API alias")} <span className="font-mono">{aliasFromConfigPath(binding.configPath)}</span></>
               ) : (
                 <span className="font-mono">{binding.configPath}</span>
               )}{" "}
@@ -4794,12 +4788,12 @@ export function SecretEventsTab({
   };
 
   if (loading) {
-    return <div className="py-6 text-center text-xs text-muted-foreground">Loading…</div>;
+    return <div className="py-6 text-center text-xs text-muted-foreground">{zh("Loading…")}</div>;
   }
   if (events.length === 0) {
     return (
       <div className="py-6 text-center text-xs text-muted-foreground">
-        No access events recorded yet. Each runtime resolution writes a redacted entry here.
+        {zh("No access events recorded yet. Each runtime resolution writes a redacted entry here.")}
       </div>
     );
   }
@@ -4816,7 +4810,7 @@ export function SecretEventsTab({
                   variant="outline"
                   className="border-violet-500/30 bg-violet-500/10 text-(length:--text-nano) text-violet-700 dark:text-violet-300"
                 >
-                  User secret
+                  {zh("User secret")}
                 </Badge>
               ) : null}
             </span>
@@ -4827,13 +4821,13 @@ export function SecretEventsTab({
           </div>
           {event.responsibleUserId ? (
             <div className="text-(length:--text-micro) text-muted-foreground">
-              Responsible user: <span className="text-foreground">{userLabel(event.responsibleUserId)}</span>
+              {zh("Responsible user:")} <span className="text-foreground">{userLabel(event.responsibleUserId)}</span>
             </div>
           ) : null}
           {event.credentialOwnerUserId &&
           event.credentialOwnerUserId !== event.responsibleUserId ? (
             <div className="text-(length:--text-micro) text-muted-foreground">
-              Credential owner: <span className="text-foreground">{userLabel(event.credentialOwnerUserId)}</span>
+              {zh("Credential owner:")} <span className="text-foreground">{userLabel(event.credentialOwnerUserId)}</span>
             </div>
           ) : null}
           {event.errorCode ? (

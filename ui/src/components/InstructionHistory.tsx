@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState } from "react";
 import { useInfiniteQuery, useMutation, useQuery } from "@tanstack/react-query";
 import type { AgentInstructionsFileDetail } from "@paperclipai/shared";
@@ -63,7 +64,7 @@ export function InstructionHistory({
         aria-expanded={open}
         onClick={() => setOpen(!open)}
       >
-        History
+        {zh("History")}
       </Button>
       {open && (
         <div className="space-y-3">

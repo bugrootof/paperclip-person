@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { MarkdownWordStreaming, rehypeStreamingWords } from "./MarkdownWordStreaming";
 import { isValidElement, memo, useContext, useCallback, useEffect, useId, useMemo, useRef, useState, type ReactNode } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -724,7 +725,7 @@ function CodeBlock({
         <button
           type="button"
           onClick={handleCopy}
-          aria-label="Copy code"
+          aria-label={zh("Copy code")}
           title={copyLabel}
           className="paperclip-markdown-codeblock-action paperclip-markdown-codeblock-copy"
           style={codeBlockActionStyle}

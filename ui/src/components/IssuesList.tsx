@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useIssueRowDetails } from "../hooks/useIssueRowDetails";
 import { IssueRowDetailsNotice } from "./IssueRowDetailsNotice";
 import { useShowAgentCreatedTasks } from "../hooks/useShowAgentCreatedTasks";
@@ -332,7 +333,7 @@ export function issueAgeBucket(date: Date | string, now: number = Date.now()): 0
 }
 
 export function issueAgeSeparatorLabel(bucket: 1 | 2): string {
-  return bucket === 1 ? "Older than a day" : "Older than a week";
+  return bucket === 1 ? zh("Older than a day") : zh("Older than a week");
 }
 
 export function issueAgeBucketsCrossed(
@@ -586,9 +587,9 @@ function IssueSearchInput({
             e.currentTarget.blur();
           }
         }}
-        placeholder="Search tasks..."
+        placeholder={zh("Search tasks...")}
         className="pl-7 text-xs sm:text-sm"
-        aria-label="Search tasks"
+        aria-label={zh("Search tasks")}
         data-page-search-target="true"
       />
     </div>
@@ -634,13 +635,13 @@ function SubIssueProgressSummaryStrip({
         <div className="min-w-0 flex-1 space-y-2">
           <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
             <span className="font-medium text-foreground">
-              {summary.doneCount}/{summary.totalCount} done
+              {summary.doneCount}/{summary.totalCount} {zh("done")}
             </span>
             <span className="text-muted-foreground">
               {summary.inProgressCount} in progress
             </span>
             <span className="text-muted-foreground">
-              {summary.blockedCount} blocked
+              {summary.blockedCount} {zh("blocked")}
             </span>
             {showCostSummary && (
               <>
@@ -662,7 +663,7 @@ function SubIssueProgressSummaryStrip({
           </div>
           <div
             role="progressbar"
-            aria-label="Sub-tasks completion progress"
+            aria-label={zh("Sub-tasks completion progress")}
             aria-valuemin={0}
             aria-valuenow={summary.doneCount}
             aria-valuemax={summary.totalCount}
@@ -684,7 +685,7 @@ function SubIssueProgressSummaryStrip({
           {target && targetIssue ? (
             <>
               <div className="text-xs font-medium text-muted-foreground">
-                {target.kind === "next" ? "Next up" : "Waiting on blockers"}
+                {target.kind === "next" ? zh("Next up") : zh("Waiting on blockers")}
               </div>
               <Link
                 to={createIssueDetailPath(targetPathId)}
@@ -699,11 +700,11 @@ function SubIssueProgressSummaryStrip({
               </Link>
             </>
           ) : summary.totalCount === 0 ? (
-            <div className="text-sm font-medium text-foreground">No active sub-tasks</div>
+            <div className="text-sm font-medium text-foreground">{zh("No active sub-tasks")}</div>
           ) : summary.doneCount === summary.totalCount ? (
-            <div className="text-sm font-medium text-foreground">All sub-tasks done</div>
+            <div className="text-sm font-medium text-foreground">{zh("All sub-tasks done")}</div>
           ) : (
-            <div className="text-sm font-medium text-foreground">No actionable sub-tasks</div>
+            <div className="text-sm font-medium text-foreground">{zh("No actionable sub-tasks")}</div>
           )}
         </div>
       </div>
@@ -1070,7 +1071,7 @@ function StreamlinedIssuesList({
     if (currentUserId) {
       options.set(`user:${currentUserId}`, {
         id: `user:${currentUserId}`,
-        label: currentUserId === "local-board" ? "Board" : "Me",
+        label: currentUserId === "local-board" ? zh("Board operator") : zh("Me"),
         kind: "user",
         searchText: currentUserId === "local-board" ? "board me human local-board" : `me board human ${currentUserId}`,
       });
@@ -1324,13 +1325,13 @@ function StreamlinedIssuesList({
       const groups = groupBy(filtered, (i) => i.status);
       return issueStatusOrder
         .filter((s) => groups[s]?.length)
-        .map((s) => ({ key: s, label: issueFilterLabel(s), items: groups[s]! }));
+        .map((s) => ({ key: s, label: zh(s, { defaultValue: issueFilterLabel(s) }), items: groups[s]! }));
     }
     if (viewState.groupBy === "priority") {
       const groups = groupBy(filtered, (i) => i.priority);
       return issuePriorityOrder
         .filter((p) => groups[p]?.length)
-        .map((p) => ({ key: p, label: issueFilterLabel(p), items: groups[p]! }));
+        .map((p) => ({ key: p, label: zh(issueFilterLabel(p)), items: groups[p]! }));
     }
     if (viewState.groupBy === "workspace") {
       const groups = groupBy(
@@ -1346,7 +1347,7 @@ function StreamlinedIssuesList({
         })
         .map((key) => ({
           key,
-          label: key === "__no_workspace" ? "No Workspace" : (workspaceNameMap.get(key) ?? key.slice(0, 8)),
+          label: key === "__no_workspace" ? zh("No Workspace") : (workspaceNameMap.get(key) ?? key.slice(0, 8)),
           items: groups[key]!,
         }));
     }
@@ -1362,7 +1363,7 @@ function StreamlinedIssuesList({
         })
         .map((key) => ({
           key,
-          label: key === "__no_project" ? "No Project" : (projectById.get(key)?.name ?? key.slice(0, 8)),
+          label: key === "__no_project" ? zh("No Project") : (projectById.get(key)?.name ?? key.slice(0, 8)),
           items: groups[key]!,
         }));
     }
@@ -1377,7 +1378,7 @@ function StreamlinedIssuesList({
         })
         .map((key) => ({
           key,
-          label: key === "__no_parent" ? "No Parent" : (issueTitleMap.get(key) ?? key.slice(0, 8)),
+          label: key === "__no_parent" ? zh("No Parent") : (issueTitleMap.get(key) ?? key.slice(0, 8)),
           items: groups[key]!,
         }));
     }
@@ -1390,7 +1391,7 @@ function StreamlinedIssuesList({
       key,
       label:
         key === "__unassigned"
-          ? "Unassigned"
+          ? zh("Unassigned")
           : key.startsWith("__user:")
             ? (formatAssigneeUserLabel(key.slice("__user:".length), currentUserId, companyUserLabelMap) ?? "User")
             : (agentName(key) ?? key.slice(0, 8)),
@@ -1749,8 +1750,8 @@ function StreamlinedIssuesList({
     viewState.groupBy,
   ]);
 
-  const createActionLabel = createIssueLabel ? `Create ${createIssueLabel}` : "Create Task";
-  const createButtonLabel = createIssueLabel ? `New ${createIssueLabel}` : "New Task";
+  const createActionLabel = createIssueLabel ? `Create ${createIssueLabel}` : zh("Create Task");
+  const createButtonLabel = createIssueLabel ? `New ${createIssueLabel}` : zh("New Task");
   const openCreateIssueDialog = useCallback((group?: { key: string; items: Issue[] }) => {
     openNewIssue(newIssueDefaults(group));
   }, [newIssueDefaults, openNewIssue]);
@@ -1805,7 +1806,7 @@ function StreamlinedIssuesList({
       {/* Toolbar */}
       <IssuesToolbar
         className="paperclip-task-list-toolbar"
-        ariaLabel={toolbarPresentation === "collection" ? "Task controls" : undefined}
+        ariaLabel={toolbarPresentation === "collection" ? zh("Task controls") : undefined}
         context={toolbarContext ? (
           <div className="flex min-w-0 items-center gap-2">
             {toolbarContext}
@@ -1832,12 +1833,12 @@ function StreamlinedIssuesList({
         controls={(
           <>
           {/* View mode toggle */}
-          <div className="flex items-center border border-border rounded-md overflow-hidden mr-1" role="group" aria-label="View mode">
+          <div className="flex items-center border border-border rounded-md overflow-hidden mr-1" role="group" aria-label={zh("View mode")}>
             <button
               className={`flex h-8 w-8 items-center justify-center transition-colors ${viewState.viewMode === "list" ? "bg-accent text-foreground" : "text-muted-foreground hover:text-foreground"}`}
               onClick={() => updateView({ viewMode: "list" })}
-              title="List view"
-              aria-label="List view"
+              title={zh("List view")}
+              aria-label={zh("List view")}
               aria-pressed={viewState.viewMode === "list"}
             >
               <List className="h-3.5 w-3.5" />
@@ -1845,8 +1846,8 @@ function StreamlinedIssuesList({
             <button
               className={`flex h-8 w-8 items-center justify-center transition-colors ${viewState.viewMode === "board" ? "bg-accent text-foreground" : "text-muted-foreground hover:text-foreground"}`}
               onClick={() => updateView({ viewMode: "board" })}
-              title="Board view"
-              aria-label="Board view"
+              title={zh("Board view")}
+              aria-label={zh("Board view")}
               aria-pressed={viewState.viewMode === "board"}
             >
               <SquareKanban className="h-3.5 w-3.5" />
@@ -1860,7 +1861,7 @@ function StreamlinedIssuesList({
               size="icon"
               className={cn("hidden h-8 w-8 shrink-0 sm:inline-flex", viewState.nestingEnabled && "bg-accent")}
               onClick={() => updateView({ nestingEnabled: !viewState.nestingEnabled })}
-              title={viewState.nestingEnabled ? "Disable parent-child nesting" : "Enable parent-child nesting"}
+              title={viewState.nestingEnabled ? zh("Disable parent-child nesting") : zh("Enable parent-child nesting")}
             >
               <ListTree className="h-3.5 w-3.5" />
             </Button>
@@ -1874,7 +1875,7 @@ function StreamlinedIssuesList({
                 size="icon"
                 className={cn("h-8 w-8 shrink-0", boardCompactCards && "bg-accent")}
                 onClick={() => updateView({ boardCardDensity: boardCompactCards ? "comfortable" : "compact" })}
-                title={boardCompactCards ? "Use comfortable cards" : "Use compact cards"}
+                title={boardCompactCards ? zh("Use comfortable cards") : zh("Use compact cards")}
               >
                 <ChevronsDownUp className="h-3.5 w-3.5" />
               </Button>
@@ -1884,7 +1885,7 @@ function StreamlinedIssuesList({
                 size="icon"
                 className={cn("h-8 w-8 shrink-0", boardCollapsedStatuses.length > 0 && "bg-accent")}
                 onClick={() => updateView({ boardColdLaneMode: boardCollapsedStatuses.length > 0 ? "expanded" : "collapsed" })}
-                title={boardCollapsedStatuses.length > 0 ? "Expand cold lanes" : "Collapse cold lanes"}
+                title={boardCollapsedStatuses.length > 0 ? zh("Expand cold lanes") : zh("Collapse cold lanes")}
               >
                 <PanelTopClose className="h-3.5 w-3.5" />
               </Button>
@@ -1898,7 +1899,7 @@ function StreamlinedIssuesList({
                       "h-8 shrink-0 gap-1.5 px-2",
                       viewState.boardColumnPageSize !== KANBAN_COLUMN_DEFAULT_PAGE_SIZE && "bg-accent",
                     )}
-                    title="Cards per column"
+                    title={zh("Cards per column")}
                   >
                     <ListCollapse className="h-3.5 w-3.5" />
                     <span className="min-w-4 text-xs tabular-nums">{viewState.boardColumnPageSize}</span>
@@ -1936,7 +1937,7 @@ function StreamlinedIssuesList({
                   boardColumnPageSize: KANBAN_COLUMN_DEFAULT_PAGE_SIZE,
                 })}
                 disabled={!boardDensityCustomized}
-                title="Reset board density"
+                title={zh("Reset board density")}
               >
                 <RotateCcw className="h-3.5 w-3.5" />
               </Button>
@@ -1950,7 +1951,7 @@ function StreamlinedIssuesList({
             showDateGroupSeparators={viewState.showDateGroupSeparators}
             onToggleDateGroupSeparators={(enabled) => updateView({ showDateGroupSeparators: enabled })}
             onResetColumns={() => setIssueColumns(DEFAULT_INBOX_ISSUE_COLUMNS)}
-            title="Choose which task columns stay visible"
+            title={zh("Choose which task columns stay visible")}
             iconOnly
             rowPresentation={rowPresentation}
           />
@@ -1975,7 +1976,7 @@ function StreamlinedIssuesList({
           {viewState.viewMode === "list" && (
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" size="icon" className="h-8 w-8 shrink-0" title="Sort">
+                <Button variant="outline" size="icon" className="h-8 w-8 shrink-0" title={zh("Sort")}>
                   <ArrowUpDown className="h-3.5 w-3.5" />
                 </Button>
               </PopoverTrigger>
@@ -2022,7 +2023,7 @@ function StreamlinedIssuesList({
           {viewState.viewMode === "list" && (
             <Popover>
               <PopoverTrigger asChild>
-                <Button variant="outline" size="icon" className="h-8 w-8 shrink-0" title="Group">
+                <Button variant="outline" size="icon" className="h-8 w-8 shrink-0" title={zh("Group")}>
                   <Layers className="h-3.5 w-3.5" />
                 </Button>
               </PopoverTrigger>
@@ -2064,8 +2065,8 @@ function StreamlinedIssuesList({
       {error && <p className="text-sm text-destructive">{error.message}</p>}
       {externalObjectFilterError && (
         <div role="alert" className="flex items-center gap-2 text-sm text-destructive">
-          <p>Unable to filter tasks by external status: {externalObjectFilterError.message}</p>
-          <Button variant="outline" size="sm" onClick={retryExternalObjectSummaries}>Retry external statuses</Button>
+          <p>{zh("Unable to filter tasks by external status:")} {externalObjectFilterError.message}</p>
+          <Button variant="outline" size="sm" onClick={retryExternalObjectSummaries}>{zh("Retry external statuses")}</Button>
         </div>
       )}
       {!searchWithinLoadedIssues && normalizedIssueSearch.length > 0 && searchedIssues.length === ISSUE_SEARCH_RESULT_LIMIT && (
@@ -2078,11 +2079,11 @@ function StreamlinedIssuesList({
           Some board columns are showing up to {ISSUE_BOARD_COLUMN_RESULT_LIMIT} tasks. Refine filters or search to reveal the rest.
         </p>
       )}
-      {hierarchy.error ? <p className="text-sm text-destructive">Failed to load task hierarchy: {hierarchy.error.message}</p> : null}
+      {hierarchy.error ? <p className="text-sm text-destructive">{zh("Failed to load task hierarchy:")} {hierarchy.error.message}</p> : null}
       {!collectionLoading && !externalObjectFilterError && visibleListRowCount === 0 && viewState.viewMode === "list" && (
         <EmptyState
           icon={CircleDot}
-          message="No tasks match the current filters or search."
+          message={zh("No tasks match the current filters or search.")}
           action={createActionLabel}
           onAction={() => openCreateIssueDialog()}
         />
@@ -2286,11 +2287,11 @@ function StreamlinedIssuesList({
                               issueBadge === "Paused" ? (
                                 <Badge variant="ghost"
                                   className={cn("ml-1.5 px-1.5 text-(length:--text-nano)", statusBadge.paused)}
-                                  aria-label="Paused"
-                                  title="Paused"
+                                  aria-label={zh("Paused")}
+                                  title={zh("Paused")}
                                 >
                                   <CircleSlash2 className="h-3 w-3" />
-                                  Paused
+                                  {zh("Paused")}
                                 </Badge>
                               ) : (
                                 <Badge variant="outline" className="ml-1.5 border-amber-500/40 bg-amber-500/10 px-1.5 text-(length:--text-nano) text-amber-700 dark:text-amber-300">
@@ -2301,11 +2302,11 @@ function StreamlinedIssuesList({
                             {isSuccessfulRunHandoffRequired(issue) ? (
                               <Badge variant="outline"
                                 className="ml-1.5 border-amber-400/45 bg-amber-50/60 px-1.5 text-(length:--text-nano) text-amber-700 dark:border-amber-300/35 dark:bg-amber-400/10 dark:text-amber-300"
-                                aria-label="Needs next step"
-                                title="This task needs a next step"
+                                aria-label={zh("Needs next step")}
+                                title={zh("This task needs a next step")}
                               >
                                 <CircleDot className="h-3 w-3" />
-                                Needs next step
+                                {zh("Needs next step")}
                               </Badge>
                             ) : null}
                           </>
@@ -2317,7 +2318,7 @@ function StreamlinedIssuesList({
                               type="button"
                               data-slot="icon-button"
                               className="inline-flex h-4 w-4 shrink-0 items-center justify-center"
-                              aria-label={isExpanded ? "Collapse sub-tasks" : "Expand sub-tasks"}
+                              aria-label={isExpanded ? zh("Collapse sub-tasks") : zh("Expand sub-tasks")}
                               onClick={toggleCollapse}
                             >
                               <ChevronRight className={cn("h-3.5 w-3.5 transition-transform", isExpanded && "rotate-90")} />
@@ -2445,7 +2446,7 @@ function StreamlinedIssuesList({
                                           <span className="inline-flex h-6 w-6 items-center justify-center rounded-full border border-dashed border-muted-foreground/35 bg-muted/30">
                                             <User className="h-3.5 w-3.5" />
                                           </span>
-                                          Assignee
+                                          {zh("Assignee")}
                                         </span>
                                       )}
                                     </button>
@@ -2458,7 +2459,7 @@ function StreamlinedIssuesList({
                                   >
                                     <input
                                       className="mb-1 w-full border-b border-border bg-transparent px-2 py-1.5 text-xs outline-none placeholder:text-muted-foreground/50"
-                                      placeholder="Search responsible..."
+                                      placeholder={zh("Search responsible...")}
                                       value={assigneeSearch}
                                       onChange={(e) => setAssigneeSearch(e.target.value)}
                                       autoFocus
@@ -2475,7 +2476,7 @@ function StreamlinedIssuesList({
                                           assignIssue(issue.id, null, null);
                                         }}
                                       >
-                                        No responsible
+                                        {zh("No responsible")}
                                       </button>
                                       {currentUserId && (
                                         <button
@@ -2490,7 +2491,7 @@ function StreamlinedIssuesList({
                                           }}
                                         >
                                           <User className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
-                                          <span>Me</span>
+                                          <span>{zh("Me")}</span>
                                         </button>
                                       )}
                                       {(agents ?? [])
@@ -2545,7 +2546,7 @@ function StreamlinedIssuesList({
                       nodes.push(
                         <IssueDateSeparator
                           key={`date-sep-${issue.id}-${currentDateGroup}`}
-                          label={separatorLabel}
+                          label={zh(separatorLabel)}
                         />,
                       );
                     }
@@ -2584,10 +2585,10 @@ function StreamlinedIssuesList({
             <div className="py-2" data-testid="issues-load-more-sentinel">
               <p className="text-xs text-muted-foreground">
                 {isLoadingMoreIssues || (hierarchyEnabled && hierarchy.isFetching)
-                  ? "Loading more tasks..."
+                  ? zh("Loading more tasks...")
                   : remainingIssueRowCount > 0
                     ? `Rendering ${Math.min(renderedIssueRowLimit, visibleListRowCount)} of ${visibleListRowCount} tasks`
-                    : "Scroll to load more tasks"}
+                    : zh("Scroll to load more tasks")}
               </p>
             </div>
           )}

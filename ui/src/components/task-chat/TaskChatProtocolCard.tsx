@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useContext, useEffect, useMemo, useState } from "react";
 import {
   AlertTriangle,
@@ -339,7 +340,7 @@ function ProviderActivityCard({
           )}
         >
           <summary className="flex cursor-pointer list-none items-center gap-1 text-xs font-medium text-muted-foreground">
-            <ChevronDown aria-hidden className="h-3.5 w-3.5" /> Details
+            <ChevronDown aria-hidden className="h-3.5 w-3.5" /> {zh("Details")}
           </summary>
           {item.details.length > 0 ? (
             <dl className="mt-2 flex min-w-0 flex-col gap-1.5 text-xs">
@@ -856,7 +857,7 @@ function RuntimeRequestCard({
                 disabled={!onDecision || submitting}
                 onClick={() => void submit({ action: "decline" })}
               >
-                Deny
+                {zh("Deny")}
               </Button>
             ) : null}
             {presentation === "timeline" ? (
@@ -867,7 +868,7 @@ function RuntimeRequestCard({
                 disabled={!onDecision || submitting}
                 onClick={() => void submit({ action: "cancel" })}
               >
-                Cancel
+                {zh("Cancel")}
               </Button>
             ) : null}
           </div>

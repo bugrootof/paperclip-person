@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import {
   useCallback,
   useEffect,
@@ -254,9 +255,9 @@ export function SkillFolderRail({
       >
       <div className="mb-2 flex items-center justify-between gap-2 pt-0.5">
         <div className="text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">
-          Folders
+          {zh("Folders")}
         </div>
-        <Button variant="ghost" size="icon-sm" title="New folder" onClick={() => onCreateFolder(null)}>
+        <Button variant="ghost" size="icon-sm" title={zh("New folder")} onClick={() => onCreateFolder(null)}>
           <Plus className="h-3.5 w-3.5" />
         </Button>
       </div>
@@ -302,7 +303,7 @@ export function SkillFolderRail({
           ) : onEnsureMyFolder ? (
             <VirtualRow
               active={false}
-              label="My Skills"
+              label={zh("My Skills")}
               count={0}
               icon={<User className="h-3.5 w-3.5" />}
               muted
@@ -311,7 +312,7 @@ export function SkillFolderRail({
           ) : null}
 
           {/* Company — plain top-level company folders */}
-          <RailHeading label="Organization" onCreate={() => onCreateFolder(null)} />
+          <RailHeading label={zh("Organization")} onCreate={() => onCreateFolder(null)} />
           {model.company.length > 0 ? (
             model.company.map((node) => (
               <TreeBranch
@@ -363,7 +364,7 @@ export function SkillFolderRail({
           ) : (
             <VirtualRow
               active={false}
-              label="Projects"
+              label={zh("Projects")}
               count={0}
               icon={<Boxes className="h-3.5 w-3.5" />}
               muted
@@ -397,11 +398,11 @@ export function SkillFolderRail({
           ) : null}
 
           <div className="px-2 pb-1 pt-3 text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">
-            System
+            {zh("System")}
           </div>
           <VirtualRow
             active={selection === "unfiled"}
-            label="Unfiled"
+            label={zh("Unfiled")}
             count={unfiledCount}
             icon={<FolderSwatch color={null} />}
             onSelect={() => onSelect("unfiled")}
@@ -414,7 +415,7 @@ export function SkillFolderRail({
         <div className="mt-4 border-t border-border pt-3">
           <div className="mb-1.5 flex items-center gap-1.5 px-2 text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">
             <Hash className="h-3 w-3" />
-            Tags
+            {zh("Tags")}
           </div>
           <div className="flex flex-wrap gap-1.5 px-1">
             {activeTag ? (
@@ -645,16 +646,16 @@ function TreeBranch({
               ) : null}
               {editable ? (
                 <>
-                  <DropdownMenuItem onSelect={() => onStartRename(folder)}>Rename</DropdownMenuItem>
+                  <DropdownMenuItem onSelect={() => onStartRename(folder)}>{zh("Rename")}</DropdownMenuItem>
                   <DropdownMenuItem onSelect={() => onEditFolder(folder)}>Edit color</DropdownMenuItem>
                   <DropdownMenuItem onSelect={() => onMoveFolder(folder, isInMySkills ? "company" : "my")}>
                     <MoveRight className="h-3.5 w-3.5" />
-                    Move to {isInMySkills ? "Organization" : "My Skills"}
+                    Move to {isInMySkills ? zh("Organization") : zh("My Skills")}
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem variant="destructive" onSelect={() => onDeleteFolder(folder)}>
                     <Trash2 className="h-3.5 w-3.5" />
-                    Delete
+                    {zh("Delete")}
                   </DropdownMenuItem>
                 </>
               ) : null}
@@ -727,7 +728,7 @@ export function FolderBreadcrumb({
       {selection === "unfiled" ? (
         <>
           <ChevronRight className="h-3.5 w-3.5 text-muted-foreground/60" />
-          <span className="rounded px-1.5 py-0.5 font-medium text-foreground">Unfiled</span>
+          <span className="rounded px-1.5 py-0.5 font-medium text-foreground">{zh("Unfiled")}</span>
         </>
       ) : null}
       {trail.map((folder, index) => {
@@ -779,7 +780,7 @@ export function FolderTiles({
   return (
     <div className="mb-4">
       <div className="mb-2 text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">
-        Folders
+        {zh("Folders")}
       </div>
       <div className="grid gap-2 [grid-template-columns:repeat(auto-fill,minmax(11rem,1fr))]">
         {children.map((node) => (
@@ -904,7 +905,7 @@ export function MoveToFolderDialog({
             <FolderSwatch color={folder.color} />
           )}
           <span className="min-w-0 flex-1 truncate">{reservedRootLabel(folder)}</span>
-          {isCurrent ? <span className="text-xs text-muted-foreground">current</span> : null}
+          {isCurrent ? <span className="text-xs text-muted-foreground">{zh("current")}</span> : null}
           {bundled ? <span className="text-xs text-muted-foreground">read-only</span> : null}
           {isChosen ? <Check className="h-3.5 w-3.5" /> : null}
           {nestable ? (
@@ -964,8 +965,8 @@ export function MoveToFolderDialog({
             onClick={() => setTarget(null)}
           >
             <FolderSwatch color={null} />
-            <span className="min-w-0 flex-1 truncate">Unfiled</span>
-            {currentFolderId == null ? <span className="text-xs text-muted-foreground">current</span> : null}
+            <span className="min-w-0 flex-1 truncate">{zh("Unfiled")}</span>
+            {currentFolderId == null ? <span className="text-xs text-muted-foreground">{zh("current")}</span> : null}
             {chosen === null ? <Check className="h-3.5 w-3.5" /> : null}
           </div>
           {model.roots.map((node) => renderNode(node, 0))}
@@ -1007,7 +1008,7 @@ export function MoveToFolderDialog({
 
         <DialogFooter>
           <Button variant="ghost" onClick={() => onOpenChange(false)} disabled={pending}>
-            Cancel
+            {zh("Cancel")}
           </Button>
           <Button
             disabled={pending || chosen === undefined || chosen === currentFolderId}
@@ -1047,7 +1048,7 @@ function InlineNewFolder({
       <Input
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        placeholder="Folder name"
+        placeholder={zh("Folder name")}
         autoFocus
         className="h-7 flex-1 text-sm"
         onKeyDown={(event) => {
@@ -1056,10 +1057,10 @@ function InlineNewFolder({
         }}
       />
       <Button size="sm" variant="ghost" onClick={onCancel} disabled={pending}>
-        Cancel
+        {zh("Cancel")}
       </Button>
       <Button size="sm" onClick={onSubmit} disabled={pending || !value.trim()}>
-        Add
+        {zh("Add")}
       </Button>
     </div>
   );

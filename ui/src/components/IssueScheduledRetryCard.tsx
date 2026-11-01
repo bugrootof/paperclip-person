@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { Clock, RotateCcw, AlertCircle, Loader2, CheckCircle2 } from "lucide-react";
 import { Link } from "@/lib/router";
 import { Button } from "@/components/ui/button";
@@ -35,7 +36,7 @@ export function IssueScheduledRetryCard({
 
   if (scheduledRetry.scheduledRetryReason === "workspace_busy") {
     return (
-      <InlineBanner tone="info" icon={Clock} title="Waiting for workspace" className="mb-3">
+      <InlineBanner tone="info" icon={Clock} title={zh("Waiting for workspace")} className="mb-3">
         Another task is using this workspace. Work starts automatically when it is available.
       </InlineBanner>
     );
@@ -89,7 +90,7 @@ export function IssueScheduledRetryCard({
               {badgeLabel}
             </Badge>
             {attempt !== null ? (
-              <span className="text-muted-foreground">Attempt {attempt}</span>
+              <span className="text-muted-foreground">{zh("Attempt")} {attempt}</span>
             ) : null}
             {reason ? (
               <span className="text-muted-foreground">{reason}</span>
@@ -102,7 +103,7 @@ export function IssueScheduledRetryCard({
               {absolute && scheduledRetry.retryOfRunId ? <span>{" · "}</span> : null}
               {scheduledRetry.retryOfRunId ? (
                 <span>
-                  Replaces run{" "}
+                  {zh("Replaces run")}{" "}
                   <Link
                     to={`/agents/${scheduledRetry.agentId}/runs/${scheduledRetry.retryOfRunId}`}
                     className="font-mono text-foreground hover:underline"
@@ -141,27 +142,27 @@ export function IssueScheduledRetryCard({
             {retryNow.isPending ? (
               <span className="inline-flex items-center gap-1.5">
                 <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden="true" />
-                Retrying…
+                {zh("Retrying…")}
               </span>
             ) : isSuccessTransient ? (
               <span className="inline-flex items-center gap-1.5">
                 <CheckCircle2 className="h-3.5 w-3.5" aria-hidden="true" />
-                {retryNow.data?.outcome === "already_promoted" ? "Already promoted" : "Promoted"}
+                {retryNow.data?.outcome === "already_promoted" ? zh("Already promoted") : zh("Promoted")}
               </span>
             ) : (
               <span className="inline-flex items-center gap-1.5">
                 <RotateCcw className="h-3.5 w-3.5" aria-hidden="true" />
-                Retry now
+                {zh("Retry now")}
               </span>
             )}
           </Button>
           <span className="text-right text-xs text-muted-foreground sm:max-w-(--sz-12rem)">
             {retryNow.isPending
-              ? "Promoting scheduled retry"
+              ? zh("Promoting scheduled retry")
               : isSuccessTransient
                 ? retryNow.data?.outcome === "already_promoted"
-                  ? "Already promoted — run starting"
-                  : "Promoted — run starting"
+                  ? zh("Already promoted — run starting")
+                  : zh("Promoted — run starting")
                 : retryNow.data?.outcome === "waiting" && retryNow.data.scheduledRetry?.runId === scheduledRetry.runId
                   ? retryNow.data.message
                   : helperIdle}
@@ -199,7 +200,7 @@ export function RetryErrorBand({ error, onRetry, className }: RetryErrorBandProp
         onClick={onRetry}
         className="shrink-0 font-medium text-rose-700 hover:underline dark:text-rose-300"
       >
-        Try again
+        {zh("Try again")}
       </button>
     </div>
   );

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AgentIdentity } from "@/components/AgentIdentity";
 import type { AvatarAgent } from "./AgentAvatar";
 import type { ReactNode } from "react";
@@ -237,7 +238,7 @@ export function InboxIssueMetaLeading({
               "text-blue-600 dark:text-blue-400",
             )}
           >
-            Live
+            {zh("Live")}
           </span>
         </Badge>
       )}
@@ -352,7 +353,7 @@ export function InboxIssueTrailingColumns({
 
           return (
             <span key={column} className="min-w-0 truncate text-xs text-muted-foreground">
-              Unassigned
+              {zh("Unassigned")}
             </span>
           );
         }
@@ -397,7 +398,7 @@ export function InboxIssueTrailingColumns({
 
           return (
             <span key={column} className="min-w-0 truncate text-xs text-muted-foreground">
-              Unknown
+              {zh("Unknown")}
             </span>
           );
         }
@@ -423,7 +424,7 @@ export function InboxIssueTrailingColumns({
 
           return (
             <span key={column} className="min-w-0 truncate text-xs text-muted-foreground">
-              No project
+              {zh("No project")}
             </span>
           );
         }

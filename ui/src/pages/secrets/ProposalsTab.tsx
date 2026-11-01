@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
@@ -74,7 +75,7 @@ function ProposalRow({
               {proposal.target ? (
                 <AgentRefChip agent={proposal.target} className="font-medium" />
               ) : (
-                <span className="text-muted-foreground">agent</span>
+                <span className="text-muted-foreground">{zh("agent")}</span>
               )}
               <DeliveryBadge configPath={proposal.configPath} />
               <code className="font-mono text-xs">{envKey || proposal.configPath}</code>
@@ -91,7 +92,7 @@ function ProposalRow({
         {/* Provenance meta */}
         <div className="flex flex-wrap items-center gap-x-2 gap-y-1 text-xs text-muted-foreground">
           <span className="inline-flex items-center gap-1">
-            by <AgentRefChip agent={proposal.proposedBy} className="font-medium text-foreground" />
+            {zh("by")} <AgentRefChip agent={proposal.proposedBy} className="font-medium text-foreground" />
           </span>
           {proposal.originIssue ? (
             <>

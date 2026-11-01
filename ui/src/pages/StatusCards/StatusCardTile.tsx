@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useMemo, type MouseEvent } from "react";
 import { Link } from "react-router-dom";
 import type { SummarySlotIssueRef } from "@paperclipai/shared";
@@ -135,7 +136,7 @@ export function StatusCardTile({
               <DropdownMenuItem onSelect={onOpenDebug}>Query debug</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onSelect={onArchive} variant="destructive">
-                Archive
+                {zh("Archive")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -178,7 +179,7 @@ export function StatusCardTile({
                 className="mt-2 inline-flex items-center gap-1.5 font-medium text-foreground underline-offset-2 hover:underline disabled:opacity-60"
               >
                 <Wand2 className={cn("h-3.5 w-3.5", recompilePending && "animate-pulse")} />
-                {recompilePending ? "Starting…" : "Run now"}
+                {recompilePending ? zh("Starting…") : "Run now"}
               </button>
             )}
           </div>
@@ -218,7 +219,7 @@ export function StatusCardTile({
             <span>
               {card.pendingChangeCount} {card.pendingChangeCount === 1 ? "change" : "changes"} since last update
             </span>
-            <span className="shrink-0 font-medium text-amber-700 dark:text-amber-400">Refresh</span>
+            <span className="shrink-0 font-medium text-amber-700 dark:text-amber-400">{zh("Refresh")}</span>
           </button>
         ) : null}
 
@@ -230,10 +231,10 @@ export function StatusCardTile({
             </span>
             <span className="flex shrink-0 items-center gap-3">
               <button type="button" onClick={stopClick(onRefresh)} disabled={refreshPending} className="font-medium text-destructive hover:underline disabled:opacity-60">
-                Retry
+                {zh("Retry")}
               </button>
               <button type="button" onClick={stopClick(onOpen)} className="text-muted-foreground hover:underline">
-                Details
+                {zh("Details")}
               </button>
             </span>
           </div>

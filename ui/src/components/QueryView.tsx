@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 /**
  * One way to render a read.
  *
@@ -149,7 +150,7 @@ export function QueryErrorState({ error, size = "panel", action, onRetry, retryi
       disabled={retrying}
     >
       <RefreshCcw aria-hidden="true" className={cn(retrying && "animate-spin")} />
-      {retrying ? "Retrying…" : "Retry"}
+      {retrying ? zh("Retrying…") : zh("Retry")}
     </Button>
   ) : null;
 

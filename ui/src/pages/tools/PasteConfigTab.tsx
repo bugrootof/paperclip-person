@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
@@ -295,7 +296,7 @@ export function PasteConfigTab({ companyId }: { companyId: string }) {
           onClick={() => importMutation.mutate(draftText)}
           disabled={!canSubmit || Boolean(localParseError)}
         >
-          {importMutation.isPending ? "Checking…" : "Check config"}
+          {importMutation.isPending ? zh("Checking…") : "Check config"}
         </Button>
         <span className="text-xs text-muted-foreground">
           We'll read it and show what we found before anything is saved.
@@ -498,7 +499,7 @@ function CatalogReview({
         </div>
         <Button size="sm" onClick={onFinish} disabled={finishing || enabledCount === 0 || Boolean(activatedName)}>
           {finishing ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : null}
-          Activate {enabledCount} of {total}
+          {zh("Activate")} {enabledCount} of {total}
         </Button>
       </div>
       <ActionGroup

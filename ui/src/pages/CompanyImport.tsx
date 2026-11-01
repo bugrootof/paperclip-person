@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useRef, useState, type ChangeEvent } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type {
@@ -667,9 +668,9 @@ function AdapterPickerList({
     <div className="mx-5 mt-3">
       <div className="rounded-md border border-border">
         <div className="flex items-center gap-2 border-b border-border px-4 py-2.5">
-          <h3 className="text-sm font-medium">Adapters</h3>
+          <h3 className="text-sm font-medium">{zh("Adapters")}</h3>
           <span className="text-xs text-muted-foreground">
-            {agents.length} agent{agents.length === 1 ? "" : "s"}
+            {agents.length} {zh("agent")}{agents.length === 1 ? "" : "s"}
           </span>
         </div>
         <div className="divide-y divide-border">
@@ -690,7 +691,7 @@ function AdapterPickerList({
                     "text-(length:--text-nano) uppercase tracking-wide",
                     "text-blue-500 border-blue-500/30",
                   )}>
-                    agent
+                    {zh("agent")}
                   </Badge>
                   <span className="shrink-0 font-mono text-xs text-muted-foreground">
                     {agent.name}
@@ -727,7 +728,7 @@ function AdapterPickerList({
                 {agent.fallbackAdapterType && (
                   <div className="mx-4 mb-2.5 rounded-md border border-amber-500/30 bg-amber-500/5 px-3 py-2">
                     <p className="text-xs text-amber-500">
-                      source adapter {agent.adapterChoice === "openai_dot" ? "OpenAI Dot" : agent.adapterChoice === "muse" ? "Muse — Personal agent" : agent.adapterType} is not installed here — this agent
+                      source adapter {agent.adapterChoice === "openai_dot" ? "OpenAI Dot" : agent.adapterChoice === "muse" ? zh("Muse — Personal agent") : agent.adapterType} is not installed here — this agent
                       will use {adapterLabels[selectedType] ?? getAdapterLabel(selectedType)}
                     </p>
                   </div>
@@ -1122,8 +1123,8 @@ export function CompanyImport() {
   useEffect(() => {
     setBreadcrumbs([
       { label: selectedCompany?.name ?? "Company", href: "/dashboard" },
-      { label: "Settings", href: "/company/settings" },
-      { label: "Import" },
+      { label: zh("Settings"), href: "/company/settings" },
+      { label: zh("Import") },
     ]);
   }, [selectedCompany?.name, setBreadcrumbs]);
 
@@ -1866,10 +1867,10 @@ export function CompanyImport() {
         <div>
           <h2 className="text-base font-semibold">Import complete</h2>
           <p className="text-xs text-muted-foreground mt-1">
-            {result.company.name}: {result.agents.length} agent{result.agents.length === 1 ? "" : "s"},{" "}
-            {skillResults.length} skill{skillResults.length === 1 ? "" : "s"},{" "}
-            {result.projects.length} project{result.projects.length === 1 ? "" : "s"}, and{" "}
-            {result.routines.length} routine{result.routines.length === 1 ? "" : "s"} processed.
+            {result.company.name}: {result.agents.length} {zh("agent")}{result.agents.length === 1 ? "" : "s"},{" "}
+            {skillResults.length} {zh("skill")}{skillResults.length === 1 ? "" : "s"},{" "}
+            {result.projects.length} {zh("project")}{result.projects.length === 1 ? "" : "s"}, and{" "}
+            {result.routines.length} {zh("routine")}{result.routines.length === 1 ? "" : "s"} processed.
           </p>
         </div>
 
@@ -1933,7 +1934,7 @@ export function CompanyImport() {
                     ) : failure ? (
                       <span className="shrink-0 text-xs text-destructive">failed: {failure}</span>
                     ) : (
-                      <span className="shrink-0 text-xs text-muted-foreground">paused</span>
+                      <span className="shrink-0 text-xs text-muted-foreground">{zh("paused")}</span>
                     )}
                   </label>
                 );
@@ -2213,7 +2214,7 @@ export function CompanyImport() {
               )}
               {importPreview.errors.length > 0 && (
                 <span className="text-destructive">
-                  {importPreview.errors.length} error{importPreview.errors.length === 1 ? "" : "s"}
+                  {importPreview.errors.length} {zh("error")}{importPreview.errors.length === 1 ? "" : "s"}
                 </span>
               )}
             </div>

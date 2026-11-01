@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import type { ReactNode } from "react";
 import { Check, Layers } from "lucide-react";
 import type { ArtifactGroupBy, ArtifactKindFilter } from "@/api/artifacts";
@@ -8,18 +9,18 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { cn } from "@/lib/utils";
 
 export const ARTIFACT_KIND_FILTERS: { value: ArtifactKindFilter; label: string }[] = [
-  { value: "all", label: "All" },
+  { value: "all", label: zh("All") },
   { value: "image", label: "Images" },
   { value: "video", label: "Videos" },
-  { value: "document", label: "Documents" },
+  { value: "document", label: zh("Documents") },
   { value: "text", label: "Text" },
-  { value: "file", label: "Files" },
+  { value: "file", label: zh("Files") },
 ];
 
 export const ARTIFACT_GROUP_OPTIONS: { value: ArtifactGroupBy; label: string }[] = [
-  { value: "none", label: "None" },
-  { value: "task", label: "Task" },
-  { value: "parent_task", label: "Parent task" },
+  { value: "none", label: zh("None") },
+  { value: "task", label: zh("Task") },
+  { value: "parent_task", label: zh("Parent task") },
 ];
 
 export function artifactGroupByLabel(value: ArtifactGroupBy): string {

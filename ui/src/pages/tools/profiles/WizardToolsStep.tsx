@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useMemo, useState } from "react";
 import { ChevronDown, ChevronRight, Plug, Plus, Search, X } from "lucide-react";
 import { Link } from "@/lib/router";
@@ -203,7 +204,7 @@ function AppRow({
           )}
           <span className="flex flex-col">
             <span className="text-sm font-medium text-foreground">
-              All {group.name} tools ({group.tools.length})
+              {zh("All")} {group.name} tools ({group.tools.length})
             </span>
             <span className="text-xs text-muted-foreground">
               {state === "indeterminate"
@@ -385,7 +386,7 @@ function AdvancedRules({
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="include">Allow</SelectItem>
+              <SelectItem value="include">{zh("Allow")}</SelectItem>
               <SelectItem value="exclude">Block</SelectItem>
             </SelectContent>
           </Select>

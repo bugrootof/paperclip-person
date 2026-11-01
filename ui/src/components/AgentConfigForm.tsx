@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { ACCOUNT_BOUND_MODEL_DISCOVERY_QUERY_OPTIONS, isAccountBoundAcpxAgent } from "@/lib/native-model-catalog";
 import { useConnectionModels } from "./ai-connections/useConnectionModels";
 import { agentHarnessType, agentRunner, paperclipRunnerProfileForHarness, normalizeClaudeRunnerOptions, type AgentRunnerChoice } from "@paperclipai/shared";
@@ -279,35 +280,35 @@ function formatArgList(value: unknown): string {
 }
 
 const openCodeThinkingEffortOptions = [
-  { id: "", label: "Auto" },
-  { id: "minimal", label: "Minimal" },
-  { id: "low", label: "Low" },
-  { id: "medium", label: "Medium" },
-  { id: "high", label: "High" },
-  { id: "xhigh", label: "X-High" },
-  { id: "max", label: "Max" },
+  { id: "", label: zh("Auto") },
+  { id: "minimal", label: zh("Minimal") },
+  { id: "low", label: zh("Low") },
+  { id: "medium", label: zh("Medium") },
+  { id: "high", label: zh("High") },
+  { id: "xhigh", label: zh("X-High") },
+  { id: "max", label: zh("Max") },
 ] as const;
 
 const cursorModeOptions = [
-  { id: "", label: "Auto" },
-  { id: "plan", label: "Plan" },
-  { id: "ask", label: "Ask" },
+  { id: "", label: zh("Auto") },
+  { id: "plan", label: zh("Plan") },
+  { id: "ask", label: zh("Ask") },
 ] as const;
 
 const claudeThinkingEffortOptions = [
-  { id: "", label: "Auto" },
-  { id: "low", label: "Low" },
-  { id: "medium", label: "Medium" },
-  { id: "high", label: "High" },
+  { id: "", label: zh("Auto") },
+  { id: "low", label: zh("Low") },
+  { id: "medium", label: zh("Medium") },
+  { id: "high", label: zh("High") },
 ] as const;
 
 // Kimi exposes low/high/max (no "medium") via each model's support_efforts;
 // the kimi_local adapter maps a legacy "medium" onto "high" at runtime.
 const kimiThinkingEffortOptions = [
-  { id: "", label: "Auto" },
-  { id: "low", label: "Low" },
-  { id: "high", label: "High" },
-  { id: "max", label: "Max" },
+  { id: "", label: zh("Auto") },
+  { id: "low", label: zh("Low") },
+  { id: "high", label: zh("High") },
+  { id: "max", label: zh("Max") },
 ] as const;
 
 const MAX_TURN_CONTINUATION_DEFAULT_MAX_ATTEMPTS = 2;
@@ -1431,7 +1432,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
           : adapterType === "pi_local" ? "thinking" : "effort";
   const thinkingEffortOptions =
     isCodexHarness
-      ? codexReasoningEffortOptions(currentModelId, "Auto").map((option) => ({
+      ? codexReasoningEffortOptions(currentModelId, zh("Auto")).map((option) => ({
           id: option.value,
           label: option.label,
         }))
@@ -1442,9 +1443,9 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
           : adapterType === "kimi_local"
             ? kimiThinkingEffortOptions
             : adapterType === "pi_local"
-              ? [{ id: "", label: "Auto" }, ...["off", "minimal", "low", "medium", "high", "xhigh"].map(id => ({ id, label: id }))]
+              ? [{ id: "", label: zh("Auto") }, ...["off", "minimal", "low", "medium", "high", "xhigh"].map(id => ({ id, label: id }))]
               : harnessType === "claude_local" || harnessType === "grok_local"
-                ? [{ id: "", label: "Auto" }, ...setupEfforts(harnessType, currentModelId).map((id) => ({
+                ? [{ id: "", label: zh("Auto") }, ...setupEfforts(harnessType, currentModelId).map((id) => ({
                     id,
                     label: id === "xhigh" ? "X-High" : id[0].toUpperCase() + id.slice(1),
                   }))]
@@ -1543,9 +1544,9 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
         {isDirty && !props.hideInlineSave && (
           <div className="sticky top-0 z-10 flex items-center justify-end border-b border-primary/20 bg-background/90 px-4 py-2 backdrop-blur-sm">
             <div className="flex items-center gap-3">
-              <span className="text-xs text-muted-foreground">Unsaved changes</span>
+              <span className="text-xs text-muted-foreground">{zh("Unsaved changes")}</span>
               <Button size="sm" onClick={handleSave} disabled={props.isSaving}>
-                {props.isSaving ? "Saving..." : "Save"}
+                {props.isSaving ? zh("Saving...") : zh("Save")}
               </Button>
             </div>
           </div>
@@ -1554,8 +1555,8 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
         {props.environmentVariablesPlacement === "secrets" && (
           <div data-config-section="environment-variables" className={cn(!cards && "border-b border-border")}>
             {cards
-              ? <h3 className="mb-3 text-sm font-medium">Environment variables</h3>
-              : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">Environment variables</div>
+              ? <h3 className="mb-3 text-sm font-medium">{zh("Environment variables")}</h3>
+              : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">{zh("Environment variables")}</div>
             }
             <div className={cn(cards ? "rounded-lg border border-border p-4" : "px-4 pb-3")}>
               {environmentVariablesEditor}
@@ -1565,8 +1566,8 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
 
         <div data-config-section="secrets" className={cn(!cards && "border-b border-border")}>
           {cards
-            ? <h3 className="mb-3 text-sm font-medium">Secret access</h3>
-            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">Secret access</div>
+            ? <h3 className="mb-3 text-sm font-medium">{zh("Secret access")}</h3>
+            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">{zh("Secret access")}</div>
           }
           <div className={cn(cards ? "space-y-3 rounded-lg border border-border p-4" : "space-y-3 px-4 pb-3")}>
             <p className="text-xs text-muted-foreground">{help.secretAccess}</p>
@@ -1592,28 +1593,27 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
         <div className="space-y-3 rounded-lg border border-border bg-muted/30 p-4">
           <div className="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
             <div className="min-w-0 flex-1 space-y-1">
-              <p className="text-sm font-medium">Upgrade to Paperclip Runner</p>
+              <p className="text-sm font-medium">{zh("Upgrade to Paperclip Runner")}</p>
               <p className="text-sm text-muted-foreground">
-                Keep your harness, model, account, and compatible settings.
-                New sessions start fresh; past runs stay available.
+                {zh("Keep your harness, model, account, and compatible settings. New sessions start fresh; past runs stay available.")}
               </p>
               {canQualifyRunnerUpgrade && runnerAvailability?.defaultRunner !== "paperclip" ? (
-                <p className="text-xs text-muted-foreground">The upgrade will verify your computer first. This can take a few minutes.</p>
+                <p className="text-xs text-muted-foreground">{zh("The upgrade will verify your computer first. This can take a few minutes.")}</p>
               ) : null}
               {upgradeWarnings.map(warning => <p key={warning.field} className="text-xs text-muted-foreground">{warning.message}</p>)}
               {upgradeEnvironmentChanged ? (
-                <p className="text-xs text-muted-foreground">Save your computer change before upgrading the runner.</p>
-              ) : isDirty ? <p className="text-xs text-muted-foreground">Your unsaved changes will be included.</p> : null}
+                <p className="text-xs text-muted-foreground">{zh("Save your computer change before upgrading the runner.")}</p>
+              ) : isDirty ? <p className="text-xs text-muted-foreground">{zh("Your unsaved changes will be included.")}</p> : null}
             </div>
             <Button size="sm" className="self-end sm:self-auto" onClick={upgradeRunner} disabled={runnerUpgradePending || upgradeEnvironmentChanged || (!isCreate && props.isSaving)}>
               {runnerUpgradePending ? <Loader2 className="size-4 animate-spin" /> : null}
-              {runnerUpgradePending ? "Upgrading…" : "Upgrade runner"}
+              {runnerUpgradePending ? zh("Upgrading…") : zh("Upgrade runner")}
             </Button>
           </div>
           {runnerUpgradeError ? <p role="alert" className="text-sm text-destructive">{runnerUpgradeError}</p> : null}
         </div>
       ) : null}
-      {runnerUpgraded ? <p role="status" className="text-sm text-muted-foreground">Upgraded to Paperclip Runner.</p> : null}
+      {runnerUpgraded ? <p role="status" className="text-sm text-muted-foreground">{zh("Upgraded to Paperclip Runner.")}</p> : null}
       {adapterType === "paperclip_runner" && upgradeWarnings.length > 0 ? (
         <div role="status" className="space-y-1 rounded-lg border border-border bg-muted/30 p-4">
           {upgradeWarnings.map(warning => <p key={warning.field} className="text-sm text-muted-foreground">{warning.message}</p>)}
@@ -1624,13 +1624,13 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
       {isDirty && !props.hideInlineSave && (
         <div className="sticky top-0 z-10 flex items-center justify-end px-4 py-2 bg-background/90 backdrop-blur-sm border-b border-primary/20">
           <div className="flex items-center gap-3">
-            <span className="text-xs text-muted-foreground">Unsaved changes</span>
+            <span className="text-xs text-muted-foreground">{zh("Unsaved changes")}</span>
             <Button
               size="sm"
               onClick={handleSave}
               disabled={!isCreate && props.isSaving}
             >
-              {!isCreate && props.isSaving ? "Saving..." : "Save"}
+              {!isCreate && props.isSaving ? zh("Saving...") : zh("Save")}
             </Button>
           </div>
         </div>
@@ -1640,40 +1640,40 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
       {!isCreate && (
         <div data-config-section="identity" className={cn(!cards && "border-b border-border")}>
           {cards
-            ? <h3 className="text-sm font-medium mb-3">{props.sectionTitles?.["identity"] ?? "Identity"}</h3>
-            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">Identity</div>
+            ? <h3 className="text-sm font-medium mb-3">{props.sectionTitles?.["identity"] ?? zh("Identity")}</h3>
+            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">{zh("Identity")}</div>
           }
           <div className={cn(cards ? "border border-border rounded-lg p-4 space-y-3" : "px-4 pb-3 space-y-3")}>
-            <Field label="Name" hint={help.name}>
+            <Field label={zh("Name")} hint={help.name}>
               <DraftInput
                 value={eff("identity", "name", props.agent.name)}
                 onCommit={(v) => mark("identity", "name", v)}
                 immediate
                 className={inputClass}
-                placeholder="Agent name"
+                placeholder={zh("Agent name")}
               />
             </Field>
-            <Field label="Title" hint={help.title}>
+            <Field label={zh("Title")} hint={help.title}>
               <DraftInput
                 value={eff("identity", "title", props.agent.title ?? "")}
                 onCommit={(v) => mark("identity", "title", v || null)}
                 immediate
                 className={inputClass}
-                placeholder="e.g. VP of Engineering"
+                placeholder={zh("e.g. VP of Engineering")}
               />
             </Field>
-            <Field label="Reports to" hint={help.reportsTo}>
+            <Field label={zh("Reports to")} hint={help.reportsTo}>
               <ReportsToPicker
                 agents={companyAgents}
                 value={eff("identity", "reportsTo", props.agent.reportsTo ?? null)}
                 onChange={(id) => mark("identity", "reportsTo", id)}
                 excludeAgentIds={[props.agent.id]}
-                chooseLabel="Choose manager…"
+                chooseLabel={zh("Choose manager…")}
               />
             </Field>
             {isLocal && !props.hidePromptTemplate && (
               <>
-                <Field label="Prompt Template" hint={help.promptTemplate}>
+                <Field label={zh("Prompt Template")} hint={help.promptTemplate}>
                   <MarkdownEditor
                     value={eff(
                       "adapterConfig",
@@ -1691,7 +1691,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                   />
                 </Field>
                 <div className="rounded-md border border-amber-500/25 bg-amber-500/10 px-3 py-2 text-xs text-amber-900 dark:text-amber-100">
-                  Prompt template is replayed on every heartbeat. Keep it compact and dynamic to avoid recurring token cost and cache churn.
+                  {zh("Prompt template is replayed on every heartbeat. Keep it compact and dynamic to avoid recurring token cost and cache churn.")}
                 </div>
               </>
             )}
@@ -1706,23 +1706,21 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
         // Render the environment read-only instead of the selectable picker.
         <div data-config-section="environment" className={cn(!cards && (isCreate ? "border-t border-border" : "border-b border-border"))}>
           {cards
-            ? <h3 className="text-sm font-medium mb-3">Environment</h3>
-            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">Environment</div>
+            ? <h3 className="text-sm font-medium mb-3">{zh("Environment")}</h3>
+            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">{zh("Environment")}</div>
           }
           <div className={cn(cards ? "border border-border rounded-lg p-4 space-y-3" : "px-4 pb-3 space-y-3")}>
             <Field
-              label="Default environment"
-              hint="This instance runs all agents in the Kubernetes sandbox. Local execution is disabled."
+              label={zh("Default environment")}
+              hint={zh("This instance runs all agents in the Kubernetes sandbox. Local execution is disabled.")}
             >
               {kubernetesEnvironment ? (
                 <div className={cn(inputClass, "flex items-center text-muted-foreground")}>
-                  {kubernetesEnvironment.name} · Kubernetes sandbox
+                  {kubernetesEnvironment.name} {zh("· Kubernetes sandbox")}
                 </div>
               ) : (
                 <div className="rounded-md border border-amber-500/25 bg-amber-500/10 px-3 py-2 text-xs text-amber-800 dark:text-amber-200">
-                  This instance requires the Kubernetes sandbox, but no managed Kubernetes
-                  environment is available for this organization yet. Configure one before creating
-                  agents; execution will not fall back to local.
+                  {zh("This instance requires the Kubernetes sandbox, but no managed Kubernetes environment is available for this organization yet. Configure one before creating agents; execution will not fall back to local.")}
                 </div>
               )}
             </Field>
@@ -1731,14 +1729,14 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
       ) : showEnvironmentOverrideControl ? (
         <div data-config-section="environment" className={cn(!cards && (isCreate ? "border-t border-border" : "border-b border-border"))}>
           {cards
-            ? <h3 className="text-sm font-medium mb-3">Environment</h3>
-            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">Environment</div>
+            ? <h3 className="text-sm font-medium mb-3">{zh("Environment")}</h3>
+            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">{zh("Environment")}</div>
           }
           <div className={cn(cards ? "border border-border rounded-lg p-4 space-y-3" : "px-4 pb-3 space-y-3")}>
-            <Field label="Environment override">
+            <Field label={zh("Environment override")}>
               <div className="space-y-2">
                 <SelectPopover
-                  aria-label="Environment override"
+                  aria-label={zh("Environment override")}
                   value={currentDefaultEnvironmentId}
                   onValueChange={(nextValue) => {
                     if (isCreate) {
@@ -1765,8 +1763,8 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
       <div data-config-section="adapter" className={cn(!cards && (isCreate ? "border-t border-border" : "border-b border-border"))}>
         <div className={cn(cards ? "flex items-center justify-between mb-3" : "px-4 py-2 flex items-center justify-between gap-2")}>
           {cards
-            ? <h3 className="text-sm font-medium">{props.sectionTitles?.["adapter"] ?? "Adapter"}</h3>
-            : <span className="text-xs font-medium text-muted-foreground">Adapter</span>
+            ? <h3 className="text-sm font-medium">{props.sectionTitles?.["adapter"] ?? zh("Adapter")}</h3>
+            : <span className="text-xs font-medium text-muted-foreground">{zh("Adapter")}</span>
           }
           {showInlineAdapterTestEnvironmentButton && (
             <Button
@@ -1783,7 +1781,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
         </div>
         <div className={cn(cards ? "border border-border rounded-lg p-4 space-y-3" : "px-4 pb-3 space-y-3")}>
           {showAdapterTypeField && isGrokBotRunner && (
-            <Field label="Harness" hint={help.adapterType}>
+            <Field label={zh("Harness")} hint={help.adapterType}>
               <div className="inline-flex items-center gap-1.5">
                 <AdapterMark type="grok_bot" className="size-4" />
                 <span>Grok Bot</span>
@@ -1792,7 +1790,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
             </Field>
           )}
           {showAdapterTypeField && !isGrokBotRunner && (
-            <Field label="Harness" hint={help.adapterType}>
+            <Field label={zh("Harness")} hint={help.adapterType}>
               <AdapterTypeDropdown
                 value={isDotRunner ? "openai_dot" : isMuseRunner ? "muse" : isRunnerHarness ? harnessType : adapterType}
                 disabledTypes={adapterPickerDisabledTypes}
@@ -1880,7 +1878,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
               {testActionError
                 ?? (testEnvironment.error instanceof Error
                   ? testEnvironment.error.message
-                  : "Environment test failed")}
+                  : zh("Environment test failed"))}
             </div>
           )}
 
@@ -1904,7 +1902,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
 
           {/* Working directory */}
           {showLegacyWorkingDirectoryField && (
-            <Field label="Working directory (deprecated)" hint={help.cwd}>
+            <Field label={zh("Working directory (deprecated)")} hint={help.cwd}>
               <div className="flex items-center gap-2 rounded-md border border-border px-2.5 py-1.5">
                 <FolderOpen className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
                 <DraftInput
@@ -1980,7 +1978,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                   {refreshModelsError
                     ?? (modelError instanceof Error
                       ? modelError.message
-                      : "Failed to load adapter models.")}
+                      : zh("Failed to load adapter models."))}
                 </p>
               )}
               {adapterType === "opencode_local"
@@ -2014,7 +2012,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                     codexSearchEnabled &&
                     currentThinkingEffort === "minimal" && (
                       <p className="text-xs text-amber-400">
-                        Codex may reject `minimal` thinking when search is enabled.
+                        {zh("Codex may reject `minimal` thinking when search is enabled.")}
                       </p>
                     )}
                 </>
@@ -2028,13 +2026,13 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
       {(
         <div data-config-section="configuration" className={cn(!cards && "border-b border-border")}>
           {cards
-            ? <h3 className="text-sm font-medium mb-3">Configuration</h3>
-            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">Configuration</div>
+            ? <h3 className="text-sm font-medium mb-3">{zh("Configuration")}</h3>
+            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">{zh("Configuration")}</div>
           }
           <div className={cn(cards ? "border border-border rounded-lg p-4 space-y-3" : "px-4 pb-3 space-y-3")}>
               {!isCreate && typeof config.bootstrapPromptTemplate === "string" && config.bootstrapPromptTemplate && (
                 <>
-                  <Field label="Bootstrap prompt (legacy)" hint={help.bootstrapPrompt}>
+                  <Field label={zh("Bootstrap prompt (legacy)")} hint={help.bootstrapPrompt}>
                     <MarkdownEditor
                       value={eff(
                         "adapterConfig",
@@ -2044,7 +2042,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                       onChange={(v) =>
                         mark("adapterConfig", "bootstrapPromptTemplate", v || undefined)
                       }
-                      placeholder="Optional initial setup prompt for the first run"
+                      placeholder={zh("Optional initial setup prompt for the first run")}
                       contentClassName="min-h-(--sz-44px) text-sm font-mono"
                       imageUploadHandler={async (file) => {
                         const namespace = `agents/${props.agent.id}/bootstrap-prompt`;
@@ -2054,14 +2052,14 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                     />
                   </Field>
                   <div className="rounded-md border border-amber-500/25 bg-amber-500/10 px-3 py-2 text-xs text-amber-800 dark:text-amber-200">
-                    Bootstrap prompt is legacy and will be removed in a future release. Consider moving this content into the agent&apos;s prompt template or instructions file instead.
+                    {zh("Bootstrap prompt is legacy and will be removed in a future release. Consider moving this content into the agent's prompt template or instructions file instead.")}
                   </div>
                 </>
               )}
               {renderAdapterFields("configuration")}
               {(isLocal || adapterType === "process" || configSchema?.fields.some((field) => schemaFieldSection(field.key) === "advanced")) && (
               <CollapsibleSection
-                title="Advanced"
+                title={zh("Advanced")}
                 open={configurationAdvancedOpen}
                 onToggle={() => setConfigurationAdvancedOpen(!configurationAdvancedOpen)}
               >
@@ -2083,7 +2081,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                 flashes on a managed instance.
               */}
               {!hideHostPaths && (
-                <Field label="Command" hint={help.localCommand}>
+                <Field label={zh("Command")} hint={help.localCommand}>
                   <DraftInput
                     value={
                       isCreate
@@ -2118,7 +2116,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                 </Field>
               )}
 
-              <Field label="Extra args (comma-separated)" hint={help.extraArgs}>
+              <Field label={zh("Extra args (comma-separated)")} hint={help.extraArgs}>
                 <DraftInput
                   value={
                     isCreate
@@ -2148,8 +2146,8 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
       {props.environmentVariablesPlacement !== "secrets" && (isLocal || configSchema?.fields.some((field) => schemaFieldSection(field.key) === "environment")) && (
         <div data-config-section="environment-variables" className={cn(!cards && "border-b border-border")}>
           {cards
-            ? <h3 className="text-sm font-medium mb-3">Environment variables</h3>
-            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">Environment variables</div>
+            ? <h3 className="text-sm font-medium mb-3">{zh("Environment variables")}</h3>
+            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground">{zh("Environment variables")}</div>
           }
           <div className={cn(cards ? "border border-border rounded-lg p-4 space-y-3" : "px-4 pb-3 space-y-3")}>
             {isLocal ? environmentVariablesEditor : renderAdapterFields("environment")}
@@ -2161,12 +2159,12 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
       {isCreate && showCreateRunPolicySection ? (
         <div data-config-section="run-policy" className={cn(!cards && "border-b border-border")}>
           {cards
-            ? <h3 className="text-sm font-medium flex items-center gap-2 mb-3"><Heart className="h-3 w-3" /> Run Policy</h3>
-            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground flex items-center gap-2"><Heart className="h-3 w-3" /> Run Policy</div>
+            ? <h3 className="text-sm font-medium flex items-center gap-2 mb-3"><Heart className="h-3 w-3" /> {zh("Run Policy")}</h3>
+            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground flex items-center gap-2"><Heart className="h-3 w-3" /> {zh("Run Policy")}</div>
           }
           <div className={cn(cards ? "border border-border rounded-lg p-4 space-y-3" : "px-4 pb-3 space-y-3")}>
             <ToggleWithNumber
-              label="Heartbeat on interval"
+              label={zh("Heartbeat on interval")}
               hint={help.heartbeatInterval}
               checked={val!.heartbeatEnabled}
               onCheckedChange={(v) => set!({ heartbeatEnabled: v })}
@@ -2177,7 +2175,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
               numberHint={help.intervalSec}
               showNumber={val!.heartbeatEnabled}
             />
-            <CollapsibleSection title="Advanced Run Policy" open={runPolicyAdvancedOpen} onToggle={() => setRunPolicyAdvancedOpen(!runPolicyAdvancedOpen)}>
+            <CollapsibleSection title={zh("Advanced Run Policy")} open={runPolicyAdvancedOpen} onToggle={() => setRunPolicyAdvancedOpen(!runPolicyAdvancedOpen)}>
               <div className="space-y-3">{renderAdapterFields("runPolicy")}</div>
             </CollapsibleSection>
           </div>
@@ -2185,13 +2183,13 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
       ) : !isCreate ? (
         <div data-config-section="run-policy" className={cn(!cards && "border-b border-border")}>
           {cards
-            ? <h3 className="text-sm font-medium flex items-center gap-2 mb-3"><Heart className="h-3 w-3" /> Run Policy</h3>
-            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground flex items-center gap-2"><Heart className="h-3 w-3" /> Run Policy</div>
+            ? <h3 className="text-sm font-medium flex items-center gap-2 mb-3"><Heart className="h-3 w-3" /> {zh("Run Policy")}</h3>
+            : <div className="px-4 py-2 text-xs font-medium text-muted-foreground flex items-center gap-2"><Heart className="h-3 w-3" /> {zh("Run Policy")}</div>
           }
           <div className={cn(cards ? "border border-border rounded-lg overflow-hidden" : "")}>
             <div className={cn(cards ? "p-4 space-y-3" : "px-4 pb-3 space-y-3")}>
               <ToggleWithNumber
-                label="Heartbeat on interval"
+                label={zh("Heartbeat on interval")}
                 hint={help.heartbeatInterval}
                 checked={eff("heartbeat", "enabled", heartbeat.enabled === true)}
                 onCheckedChange={(v) => mark("heartbeat", "enabled", v)}
@@ -2204,7 +2202,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
               />
             </div>
             <CollapsibleSection
-              title="Advanced Run Policy"
+              title={zh("Advanced Run Policy")}
               bordered={cards}
               open={runPolicyAdvancedOpen}
               onToggle={() => setRunPolicyAdvancedOpen(!runPolicyAdvancedOpen)}
@@ -2216,7 +2214,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
               {!isCreate && (
                 <>
                   {!configSchema?.fields.some((field) => field.key === "timeoutSec") && (
-                  <Field label="Timeout (sec)" hint={help.timeoutSec}>
+                  <Field label={zh("Timeout (sec)")} hint={help.timeoutSec}>
                     <DraftNumberInput
                       value={eff(
                         "adapterConfig",
@@ -2230,7 +2228,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                   </Field>
                   )}
                   {!configSchema?.fields.some((field) => field.key === "graceSec") && (
-                  <Field label="Interrupt grace period (sec)" hint={help.graceSec}>
+                  <Field label={zh("Interrupt grace period (sec)")} hint={help.graceSec}>
                     <DraftNumberInput
                       value={eff(
                         "adapterConfig",
@@ -2247,7 +2245,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
               )}
               </>)}
               <ToggleField
-                label="Wake on demand"
+                label={zh("Wake on demand")}
                 hint={help.wakeOnDemand}
                 checked={eff(
                   "heartbeat",
@@ -2256,7 +2254,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                 )}
                 onChange={(v) => mark("heartbeat", "wakeOnDemand", v)}
               />
-              <Field label="Cooldown (sec)" hint={help.cooldownSec}>
+              <Field label={zh("Cooldown (sec)")} hint={help.cooldownSec}>
                 <DraftNumberInput
                   value={eff(
                     "heartbeat",
@@ -2268,7 +2266,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                   className={inputClass}
                 />
               </Field>
-              <Field label="Max concurrent runs" hint={help.maxConcurrentRuns}>
+              <Field label={zh("Max concurrent runs")} hint={help.maxConcurrentRuns}>
                 <DraftNumberInput
                   value={eff(
                     "heartbeat",
@@ -2282,14 +2280,14 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
               </Field>
               <div className="rounded-md border border-border/70 px-3 py-2">
                 <ToggleField
-                  label="Continue after max-turn stop"
+                  label={zh("Continue after max-turn stop")}
                   hint={help.maxTurnContinuationEnabled}
                   checked={maxTurnContinuationEnabled}
                   onChange={(v) => updateMaxTurnContinuation({ enabled: v })}
                 />
                 {maxTurnContinuationEnabled ? (
                   <div className="mt-3 grid gap-3 sm:grid-cols-2">
-                    <Field label="Continuation attempts" hint={help.maxTurnContinuationMaxAttempts}>
+                    <Field label={zh("Continuation attempts")} hint={help.maxTurnContinuationMaxAttempts}>
                       <DraftNumberInput
                         value={maxTurnContinuationMaxAttempts}
                         onCommit={(v) =>
@@ -2300,7 +2298,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
                         className={inputClass}
                       />
                     </Field>
-                    <Field label="Continuation delay (sec)" hint={help.maxTurnContinuationDelaySec}>
+                    <Field label={zh("Continuation delay (sec)")} hint={help.maxTurnContinuationDelaySec}>
                       <DraftNumberInput
                         value={maxTurnContinuationDelaySec}
                         onCommit={(v) =>
@@ -2325,11 +2323,11 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
         <div className={cn(!cards && "border-b border-border")}>
           {cards ? (
             <h3 className="mb-3 flex items-center gap-2 text-sm font-medium">
-              <Bug className="h-3 w-3" /> Debugging
+              <Bug className="h-3 w-3" /> {zh("Debugging")}
             </h3>
           ) : (
             <div className="flex items-center gap-2 px-4 py-2 text-xs font-medium text-muted-foreground">
-              <Bug className="h-3 w-3" /> Debugging
+              <Bug className="h-3 w-3" /> {zh("Debugging")}
             </div>
           )}
           <div
@@ -2341,8 +2339,8 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
             )}
           >
             <ToggleField
-              label="Capture raw provider traces"
-              hint="Stores exact provider traffic for every future run until disabled. Traces may contain sensitive prompts and tool arguments, are administrator-only, and expire after 24 hours."
+              label={zh("Capture raw provider traces")}
+              hint={zh("Stores exact provider traffic for every future run until disabled. Traces may contain sensitive prompts and tool arguments, are administrator-only, and expire after 24 hours.")}
               checked={eff<unknown>("debug", "providerTrace", debug.providerTrace) === "raw"}
               onChange={(enabled) =>
                 mark("debug", "providerTrace", enabled ? "raw" : undefined)
@@ -2352,7 +2350,7 @@ export function AgentConfigForm(props: AgentConfigFormProps) {
               <div className="mt-3 flex items-start gap-2 rounded-md border border-border bg-background/60 px-3 py-2 text-xs text-foreground">
                 <Bug className="mt-0.5 h-3.5 w-3.5 shrink-0" />
                 <span>
-                  Raw tracing is on for future runs. Paperclip keeps at most 64 MiB per run and automatically deletes it after 24 hours.
+                  {zh("Raw tracing is on for future runs. Paperclip keeps at most 64 MiB per run and automatically deletes it after 24 hours.")}
                 </span>
               </div>
             ) : null}
@@ -2437,7 +2435,7 @@ function AdapterLoginTerminalState({
     return (
       <div className="flex items-center gap-2 text-(length:--text-micro) text-foreground">
         <Check className="size-3 shrink-0" />
-        <span>Authenticated. The environment has credentials now.</span>
+        <span>{zh("Authenticated. The environment has credentials now.")}</span>
       </div>
     );
   }
@@ -2869,17 +2867,17 @@ function DisplayedCodeLoginPanel({
             {activeSessionQuery.error instanceof AdapterLoginConflictError && (
               <Button type="button" variant="outline" disabled={cancelConflictingLogin.isPending}
                 onClick={() => cancelConflictingLogin.mutate()}>
-                Cancel previous sign-in and retry
+                {zh("Cancel previous sign-in and retry")}
               </Button>
             )}
           </div>
         ) : failed ? (
           <p role="alert" className="pl-2 text-xs text-destructive">
             {status === "timed_out"
-              ? "The login timed out. Start it again."
+              ? zh("The login timed out. Start it again.")
               : status === "cancelled"
-                ? "The login was cancelled."
-                : "The login did not finish. Start it again."}
+                ? zh("The login was cancelled.")
+                : zh("The login did not finish. Start it again.")}
           </p>
         ) : (
           <OnboardingLoginCodeRow code={prompt?.code ?? ""} autoCopy />
@@ -2907,7 +2905,7 @@ function DisplayedCodeLoginPanel({
               disabled={cancelLogin.isPending}
               onClick={() => cancelLogin.mutate()}
             >
-              Cancel
+              {zh("Cancel")}
             </Button>
           )}
           <Button
@@ -2918,7 +2916,7 @@ function DisplayedCodeLoginPanel({
             disabled={startDisabled}
             onClick={() => startLogin.mutate()}
           >
-            Sign in
+            {zh("Sign in")}
           </Button>
         </div>
       </div>
@@ -2935,14 +2933,14 @@ function DisplayedCodeLoginPanel({
         {isActive && !prompt && (
           <div className="flex items-center gap-2 text-(length:--text-micro) text-muted-foreground">
             <Loader2 className="size-3 animate-spin shrink-0" />
-            <span>Preparing...</span>
+            <span>{zh("Preparing...")}</span>
           </div>
         )}
 
         {isActive && prompt && (
           <div className="space-y-2">
             <div className="text-(length:--text-micro) text-muted-foreground">
-              Copy the code, then open the authentication page.
+              {zh("Copy the code, then open the authentication page.")}
             </div>
           {/* Code first, then the URL, and the sentence and the numbering both
               say so.
@@ -2962,28 +2960,28 @@ function DisplayedCodeLoginPanel({
           <div className="flex items-center justify-between gap-2">
             <div className="min-w-0">
               <div className="text-(length:--text-micro) uppercase tracking-wide text-muted-foreground">
-                1. Code
+                {zh("1. Code")}
               </div>
               <span className="font-mono text-xs text-foreground break-all">{prompt.code}</span>
             </div>
-            <AdapterLoginCopyButton value={prompt.code} label="Copy code" />
+            <AdapterLoginCopyButton value={prompt.code} label={zh("Copy code")} />
           </div>
           <div className="flex items-center justify-between gap-2">
             <div className="min-w-0">
               <div className="text-(length:--text-micro) uppercase tracking-wide text-muted-foreground">
-                2. Authentication URL
+                {zh("2. Authentication URL")}
               </div>
               <span className="font-mono text-xs text-foreground break-all">{prompt.url}</span>
             </div>
             <div className="flex items-center">
-              <AdapterLoginCopyButton value={prompt.url} label="Copy URL" />
+              <AdapterLoginCopyButton value={prompt.url} label={zh("Copy URL")} />
               <Button
                 asChild
                 type="button"
                 variant="ghost"
                 size="icon-xs"
-                aria-label="Open the authentication page"
-                title="Open the authentication page"
+                aria-label={zh("Open the authentication page")}
+                title={zh("Open the authentication page")}
                 className="text-muted-foreground hover:text-foreground"
               >
                 <a href={prompt.url} target="_blank" rel="noreferrer noopener">
@@ -3005,20 +3003,20 @@ function DisplayedCodeLoginPanel({
         {status === "authenticated" && accountBindState === "saving" && (
           <div className="flex items-center gap-2 text-(length:--text-micro) text-muted-foreground">
             <Loader2 className="size-3 animate-spin shrink-0" />
-            <span>Binding this agent to the signed-in account...</span>
+            <span>{zh("Binding this agent to the signed-in account...")}</span>
           </div>
         )}
         {status === "authenticated" && accountBindState === "bound" && (
           <div className="flex items-center gap-2 text-(length:--text-micro) text-foreground">
             <Check className="size-3 shrink-0" />
-            <span>Agent bound to the signed-in account.</span>
+            <span>{zh("Agent bound to the signed-in account.")}</span>
           </div>
         )}
         {status === "authenticated" && accountBindState === "failed" && (
           <div className="flex items-center gap-2 text-(length:--text-micro)">
             <TriangleAlert className="size-3 shrink-0 text-destructive" />
             <span className="text-destructive">
-              Could not bind this agent to the signed-in account.
+              {zh("Could not bind this agent to the signed-in account.")}
             </span>
             <Button
               type="button"
@@ -3029,7 +3027,7 @@ function DisplayedCodeLoginPanel({
                 if (accountBinding) void runAccountBinding(accountBinding);
               }}
             >
-              Retry
+              {zh("Retry")}
             </Button>
           </div>
         )}
@@ -3610,8 +3608,7 @@ function SubmittedBrowserCodeLoginPanel({
         {transportInsecure && (
           <p className="flex items-start gap-2 pl-2 text-xs text-amber-700 dark:text-amber-200">
             <TriangleAlert className="mt-0.5 size-3 shrink-0" />
-            This connection is not encrypted. The login code travels in clear text on this
-            network. Continue only on a network you trust.
+            {zh("This connection is not encrypted. The login code travels in clear text on this network. Continue only on a network you trust.")}
           </p>
         )}
         {startError ? (
@@ -3660,7 +3657,7 @@ function SubmittedBrowserCodeLoginPanel({
               disabled={cancelLogin.isPending}
               onClick={() => cancelLogin.mutate()}
             >
-              Cancel
+              {zh("Cancel")}
             </Button>
           )}
           {/* Apply the existing stored login with no new login round trip. The
@@ -3677,7 +3674,7 @@ function SubmittedBrowserCodeLoginPanel({
                 setAppliedStored(true);
               }}
             >
-              Use saved login
+              {zh("Use saved login")}
             </Button>
           )}
           <Button
@@ -3688,7 +3685,7 @@ function SubmittedBrowserCodeLoginPanel({
             disabled={startDisabled}
             onClick={() => startLogin.mutate()}
           >
-            {storedToken && !isActive && !isStored ? "Sign in to replace" : "Sign in"}
+            {storedToken && !isActive && !isStored ? zh("Sign in to replace") : zh("Sign in")}
           </Button>
         </div>
       </div>
@@ -3698,15 +3695,14 @@ function SubmittedBrowserCodeLoginPanel({
           token; a replacement login rotates it under the captured version. */}
       {storedToken && !isActive && !isStored && !appliedStored && (
         <div className="text-(length:--text-micro) text-muted-foreground">
-          You have a saved Claude login. Use it to bind this agent, or log in again to replace the
-          stored token.
+          {zh("You have a saved Claude login. Use it to bind this agent, or log in again to replace the stored token.")}
         </div>
       )}
 
       {appliedStored && (
         <div className="flex items-center gap-2 text-(length:--text-micro) text-foreground">
           <Check className="size-3 shrink-0" />
-          <span>The saved Claude login is bound to this agent now.</span>
+          <span>{zh("The saved Claude login is bound to this agent now.")}</span>
         </div>
       )}
 
@@ -3722,7 +3718,7 @@ function SubmittedBrowserCodeLoginPanel({
         {isActive && !authorizationUrl && !isCompleting && (
           <div className="flex items-center gap-2 text-(length:--text-micro) text-muted-foreground">
             <Loader2 className="size-3 animate-spin shrink-0" />
-            <span>Preparing...</span>
+            <span>{zh("Preparing...")}</span>
           </div>
         )}
 
@@ -3734,30 +3730,29 @@ function SubmittedBrowserCodeLoginPanel({
               >
                 <TriangleAlert className="size-3 shrink-0 mt-0.5" />
                 <span>
-                  This connection is not encrypted. The login code travels in clear text on this
-                  network. Continue only on a network you trust.
+                  {zh("This connection is not encrypted. The login code travels in clear text on this network. Continue only on a network you trust.")}
                 </span>
               </div>
             )}
             <div className="text-(length:--text-micro) text-muted-foreground">
-              Open the authorization page, then enter the browser code it shows.
+              {zh("Open the authorization page, then enter the browser code it shows.")}
             </div>
             <div className="flex items-center justify-between gap-2">
               <div className="min-w-0">
                 <div className="text-(length:--text-micro) uppercase tracking-wide text-muted-foreground">
-                  1. Authorization URL
+                  {zh("1. Authorization URL")}
                 </div>
                 <span className="font-mono text-xs text-foreground break-all">{authorizationUrl}</span>
               </div>
               <div className="flex items-center">
-                <AdapterLoginCopyButton value={authorizationUrl} label="Copy URL" />
+                <AdapterLoginCopyButton value={authorizationUrl} label={zh("Copy URL")} />
                 <Button
                   asChild
                   type="button"
                   variant="ghost"
                   size="icon-xs"
-                  aria-label="Open the authorization page"
-                  title="Open the authorization page"
+                  aria-label={zh("Open the authorization page")}
+                  title={zh("Open the authorization page")}
                   className="text-muted-foreground hover:text-foreground"
                 >
                   <a href={authorizationUrl} target="_blank" rel="noreferrer noopener">
@@ -3768,11 +3763,11 @@ function SubmittedBrowserCodeLoginPanel({
             </div>
             <div className="space-y-1">
               <div className="text-(length:--text-micro) uppercase tracking-wide text-muted-foreground">
-                2. Browser code
+                {zh("2. Browser code")}
               </div>
               <div className="flex items-center gap-2">
                 <input
-                  aria-label="Browser code"
+                  aria-label={zh("Browser code")}
                   type="text"
                   autoComplete="off"
                   spellCheck={false}
@@ -3794,7 +3789,7 @@ function SubmittedBrowserCodeLoginPanel({
                   disabled={!canSubmit}
                   onClick={handleSubmit}
                 >
-                  Submit
+                  {zh("Submit")}
                 </Button>
               </div>
             </div>
@@ -3804,14 +3799,14 @@ function SubmittedBrowserCodeLoginPanel({
         {isCompleting && (
           <div className="flex items-center gap-2 text-(length:--text-micro) text-muted-foreground">
             <Loader2 className="size-3 animate-spin shrink-0" />
-            <span>Completing the login…</span>
+            <span>{zh("Completing the login…")}</span>
           </div>
         )}
 
         {isStored && (
           <div className="flex items-center gap-2 text-(length:--text-micro) text-foreground">
             <Check className="size-3 shrink-0" />
-            <span>Authenticated. The environment has credentials now.</span>
+            <span>{zh("Authenticated. The environment has credentials now.")}</span>
           </div>
         )}
 
@@ -3860,7 +3855,7 @@ export function AdapterEnvironmentResult({ result }: { result: AdapterEnvironmen
             <span className="mx-1 opacity-60">·</span>
             <span>{check.message}</span>
             {check.detail && <span className="block opacity-75 break-all">({check.detail})</span>}
-            {check.hint && <span className="block opacity-90 break-words">Hint: {check.hint}</span>}
+            {check.hint && <span className="block opacity-90 break-words">{zh("Hint:")} {check.hint}</span>}
           </div>
         ))}
       </div>
@@ -3889,11 +3884,11 @@ export function AdapterTypeDropdown({
   const adapterList = useMemo(() =>
     [...listAdapterOptions(type => adapterLabels[type] ?? getAdapterLabel(type)),
       ...(openAiDotEnabled ? [{ value: "openai_dot", label: "OpenAI Dot", experimental: true, comingSoon: false }] : []),
-      ...(museEnabled ? [{ value: "muse", label: "Muse — Personal agent", experimental: true, comingSoon: false }] : []),
+      ...(museEnabled ? [{ value: "muse", label: zh("Muse — Personal agent"), experimental: true, comingSoon: false }] : []),
     ].filter(item => !item.comingSoon && (item.value !== "paperclip_runner" || nativeRunnerEnabled) && !disabledTypes.has(item.value))
       .sort((a, b) => Number(a.value === "paperclip_runner") - Number(b.value === "paperclip_runner")),
     [disabledTypes, openAiDotEnabled, nativeRunnerEnabled, museEnabled]);
-  return <SelectPopover aria-label="Harness" value={value} onValueChange={onChange}
+  return <SelectPopover aria-label={zh("Harness")} value={value} onValueChange={onChange}
     displayValue={<span className="inline-flex min-w-0 items-center gap-1.5">
       <span aria-hidden="true" className="inline-flex shrink-0"><AdapterMark type={value} className="size-4" /></span>
       <span className="truncate">{adapterLabels[value] ?? getAdapterLabel(value)}</span>
@@ -3908,7 +3903,7 @@ export function AdapterTypeDropdown({
 function ExperimentalBadge() {
   return (
     <span className="shrink-0 rounded border border-amber-500/30 bg-amber-500/10 px-1.5 py-0.5 text-(length:--text-nano) font-medium leading-none text-amber-700 dark:text-amber-200">
-      Experimental
+      {zh("Experimental")}
     </span>
   );
 }
@@ -4031,9 +4026,9 @@ export function ModelDropdown({
     const customOption = "__paperclip_custom_model__";
     const extraModels = [...new Set([value, ...promotedModelIds])].filter(id => id && (!models.some(model => model.id === id) || promotedModelIds.has(id)));
     return (
-      <Field label="Model" hint={help.model}>
+      <Field label={zh("Model")} hint={help.model}>
         <NativeSelect
-          aria-label="Model"
+          aria-label={zh("Model")}
           aria-busy={loadingModels || refreshingModels}
           value={enteringCustomModel ? customOption : value}
           required={required && !enteringCustomModel}
@@ -4044,7 +4039,7 @@ export function ModelDropdown({
           }}
         >
           <option value="" disabled={!allowDefault}>
-            {allowDefault ? (defaultLabel ?? "Default") : loadingModels ? "Loading models…" : required ? "Select model (required)" : "Select model"}
+            {allowDefault ? (defaultLabel ?? zh("Default")) : loadingModels ? zh("Loading models…") : required ? zh("Select model (required)") : zh("Select model")}
           </option>
           {extraModels.map(id => <option key={id} value={id}>{models.find(model => model.id === id)?.label ?? id}</option>)}
           {groupedModels.map(({ provider, entries }) => groupByProvider ? (
@@ -4052,27 +4047,27 @@ export function ModelDropdown({
               {entries.map(model => <option key={model.id} value={model.id}>{model.label}</option>)}
             </optgroup>
           ) : entries.map(model => <option key={model.id} value={model.id}>{model.label}</option>))}
-          {creatable && <option value={customOption}>Enter custom model…</option>}
+          {creatable && <option value={customOption}>{zh("Enter custom model…")}</option>}
         </NativeSelect>
         {enteringCustomModel && (
           <label className="mt-3 block space-y-1 text-xs text-muted-foreground">
-            Model ID
-            <Input aria-label="Model ID" value={value} onChange={event => onChange(event.target.value)}
-              placeholder="Enter model ID or alias" autoFocus required={required} />
+            {zh("Model ID")}
+            <Input aria-label={zh("Model ID")} value={value} onChange={event => onChange(event.target.value)}
+              placeholder={zh("Enter model ID or alias")} autoFocus required={required} />
           </label>
         )}
-        {loadingModels && <p role="status" className="mt-2 text-xs text-muted-foreground">Loading models…</p>}
+        {loadingModels && <p role="status" className="mt-2 text-xs text-muted-foreground">{zh("Loading models…")}</p>}
         {onRefreshModels && <Button type="button" variant="ghost" size="sm" disabled={refreshingModels}
-          onClick={() => void onRefreshModels()}>{refreshingModels ? "Refreshing…" : "Refresh models"}</Button>}
+          onClick={() => void onRefreshModels()}>{refreshingModels ? zh("Refreshing…") : zh("Refresh models")}</Button>}
       </Field>
     );
   }
 
   return (
-    <Field label="Model" hint={help.model}>
-      <SelectPopover aria-label="Model" value={value}
+    <Field label={zh("Model")} hint={help.model}>
+      <SelectPopover aria-label={zh("Model")} value={value}
         displayValue={<span className={cn("truncate", !value && "text-muted-foreground")}>
-          {selected?.label ?? (value || (allowDefault ? (defaultLabel ?? "Default") : required ? "Select model (required)" : "Select model"))}
+          {selected?.label ?? (value || (allowDefault ? (defaultLabel ?? zh("Default")) : required ? "Select model (required)" : "Select model"))}
         </span>}
         open={open}
         onOpenChange={(nextOpen) => {
@@ -4080,11 +4075,11 @@ export function ModelDropdown({
           if (!nextOpen) setModelSearch("");
         }}
       >
-        <div role="listbox" aria-label="Model">
+        <div role="listbox" aria-label={zh("Model")}>
           <div className="relative mb-1">
             <input
               className="w-full px-2 py-1.5 pr-6 text-xs bg-transparent outline-none border-b border-border placeholder:text-muted-foreground/50"
-              placeholder={creatable ? "Search models... (type to create)" : "Search models..."}
+              placeholder={creatable ? zh("Search models... (type to create)") : zh("Search models...")}
               value={modelSearch}
               onChange={(e) => setModelSearch(e.target.value)}
               autoFocus
@@ -4115,7 +4110,7 @@ export function ModelDropdown({
                 <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
                 <path d="M3 3v5h5" />
               </svg>
-              {detectingModel ? "Detecting..." : detectedModel ? (detectModelLabel?.replace(/^Detect\b/, "Re-detect") ?? "Re-detect from config") : (detectModelLabel ?? "Detect from config")}
+              {detectingModel ? zh("Detecting...") : detectedModel ? (detectModelLabel?.replace(/^Detect\b/, "Re-detect") ?? zh("Re-detect from config")) : (detectModelLabel ?? zh("Detect from config"))}
             </button>
           )}
           {onRefreshModels && !modelSearch.trim() && (
@@ -4133,7 +4128,7 @@ export function ModelDropdown({
                 <path d="M21 12a9 9 0 0 1-15.28 6.36L3 16" />
                 <path d="M8 16H3v5" />
               </svg>
-              {refreshingModels ? "Refreshing..." : "Refresh models"}
+              {refreshingModels ? zh("Refreshing...") : zh("Refresh models")}
             </button>
           )}
           {value && (!models.some((m) => m.id === value) || promotedModelIds.has(value)) && (
@@ -4151,7 +4146,7 @@ export function ModelDropdown({
                 {models.find((m) => m.id === value)?.label ?? value}
               </span>
               <Badge variant="outline" className="ml-auto text-(length:--text-nano) px-1.5 bg-green-500/15 text-green-400 border-green-500/20">
-                current
+                {zh("current")}
               </Badge>
             </button>
           )}
@@ -4171,7 +4166,7 @@ export function ModelDropdown({
                 {models.find((m) => m.id === detectedModel)?.label ?? detectedModel}
               </span>
               <Badge variant="outline" className="ml-auto text-(length:--text-nano) px-1.5 bg-blue-500/15 text-blue-400 border-blue-500/20">
-                detected
+                {zh("detected")}
               </Badge>
             </button>
           )}
@@ -4215,7 +4210,7 @@ export function ModelDropdown({
                   onOpenChange(false);
                 }}
               >
-                Default
+                {zh("Default")}
               </button>
             )}
             {canCreateManualModel && (
@@ -4229,7 +4224,7 @@ export function ModelDropdown({
                   setModelSearch("");
                 }}
               >
-                <span>Use manual model</span>
+                <span>{zh("Use manual model")}</span>
                 <span className="text-xs font-mono text-muted-foreground">{manualModel}</span>
               </button>
             )}
@@ -4264,9 +4259,9 @@ export function ModelDropdown({
             {filteredModels.length === 0 && !canCreateManualModel && promotedModelIds.size === 0 && (
               <div className="px-2 py-2 space-y-2">
                 <p className="text-xs text-muted-foreground">
-                  {loadingModels ? "Loading models…" : onDetectModel
-                    ? (emptyDetectHint ?? "No model detected yet. Enter a provider/model manually.")
-                    : "No models found."}
+                  {loadingModels ? zh("Loading models…") : onDetectModel
+                    ? (emptyDetectHint ?? zh("No model detected yet. Enter a provider/model manually."))
+                    : zh("No models found.")}
                 </p>
               </div>
             )}
@@ -4290,8 +4285,8 @@ function ThinkingEffortDropdown({
   open: boolean;
   onOpenChange: (open: boolean) => void;
 }) {
-  return <Field label="Thinking effort" hint={help.thinkingEffort}>
-    <SelectPopover aria-label="Thinking effort" value={value} onValueChange={onChange}
+  return <Field label={zh("Thinking effort")} hint={help.thinkingEffort}>
+    <SelectPopover aria-label={zh("Thinking effort")} value={value} onValueChange={onChange}
       open={open} onOpenChange={onOpenChange}
       options={options.map(option => ({ value: option.id, label: option.label,
         suffix: option.id ? <span className="text-xs text-muted-foreground font-mono">{option.id}</span> : undefined,

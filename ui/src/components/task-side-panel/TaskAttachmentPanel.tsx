@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Download } from "lucide-react";
@@ -109,7 +110,7 @@ export function TaskAttachmentPanel({ issueId, attachmentId }: { issueId: string
     return (
       <div className="space-y-3 p-4" role="alert">
         <p className="text-sm">{contentView.kind === "error" ? "Could not preview this file. Retry or download it." : "This file is too large or is not supported for text preview. Download it instead."}</p>
-        {eligible ? <Button onClick={() => void content.refetch()}>Retry</Button> : null}
+        {eligible ? <Button onClick={() => void content.refetch()}>{zh("Retry")}</Button> : null}
         <Button asChild variant="outline"><a href={downloadUrl} download>Download file</a></Button>
       </div>
     );

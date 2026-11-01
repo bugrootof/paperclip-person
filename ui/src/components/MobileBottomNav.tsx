@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useCoordinatorWorkspaceEnabled } from "@/hooks/useCoordinatorWorkspaceEnabled";
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
@@ -64,38 +65,38 @@ export function MobileBottomNav({ visible }: MobileBottomNavProps) {
   // tracks the live count, so the bar stays evenly divided in every mix.
   const items = useMemo<MobileNavItem[]>(
     () => coordinatorWorkspaceEnabled ? [
-      { type: "link", to: "/chats", label: "Chat", icon: MessageCircle },
-      { type: "link", to: "/issues", label: "Tasks", icon: CircleCheck },
-      { type: "link", to: "/decisions", label: "Needs You", icon: Bell, badge: attention?.totalCount ?? 0 },
-      { type: "action", label: "New task", icon: SquarePen, onClick: () => openNewIssue() },
+      { type: "link", to: "/chats", label: zh("Chat"), icon: MessageCircle },
+      { type: "link", to: "/issues", label: zh("Tasks"), icon: CircleCheck },
+      { type: "link", to: "/decisions", label: zh("Needs You"), icon: Bell, badge: attention?.totalCount ?? 0 },
+      { type: "action", label: zh("New task"), icon: SquarePen, onClick: () => openNewIssue() },
     ] : !agentChatEnabled && !combinedInboxTasksEnabled ? [
-      { type: "link", to: "/dashboard", label: "Home", icon: House },
-      { type: "link", to: "/issues", label: "Tasks", icon: CircleCheck },
-      { type: "action", label: "New Task", icon: SquarePen, onClick: () => openNewIssue() },
-      { type: "link", to: "/agents/all", label: "Agents", icon: Users },
+      { type: "link", to: "/dashboard", label: zh("Home"), icon: House },
+      { type: "link", to: "/issues", label: zh("Tasks"), icon: CircleCheck },
+      { type: "action", label: zh("New Task"), icon: SquarePen, onClick: () => openNewIssue() },
+      { type: "link", to: "/agents/all", label: zh("Agents"), icon: Users },
       {
         type: "link",
         to: "/inbox",
-        label: "Inbox",
+        label: zh("Inbox"),
         icon: Inbox,
         badge: inboxBadge.inbox,
       },
     ] : [
-      { type: "link", to: "/dashboard", label: "Home", icon: House },
+      { type: "link", to: "/dashboard", label: zh("Home"), icon: House },
       ...(agentChatEnabled
-        ? [{ type: "link", to: "/chats", label: "Chat", icon: MessageCircle } as MobileNavItem]
+        ? [{ type: "link", to: "/chats", label: zh("Chat"), icon: MessageCircle } as MobileNavItem]
         : []),
-      { type: "action", label: "New Task", icon: SquarePen, onClick: () => openNewIssue() },
+      { type: "action", label: zh("New Task"), icon: SquarePen, onClick: () => openNewIssue() },
       {
         type: "link",
         to: "/issues",
-        label: "Tasks",
+        label: zh("Tasks"),
         icon: CircleCheck,
         badge: combinedInboxTasksEnabled ? inboxBadge.inbox : undefined,
       },
-      { type: "link", to: "/agents/all", label: "Agents", icon: Users },
+      { type: "link", to: "/agents/all", label: zh("Agents"), icon: Users },
       ...(!combinedInboxTasksEnabled
-        ? [{ type: "link", to: "/inbox", label: "Inbox", icon: Inbox, badge: inboxBadge.inbox } as MobileNavItem]
+        ? [{ type: "link", to: "/inbox", label: zh("Inbox"), icon: Inbox, badge: inboxBadge.inbox } as MobileNavItem]
         : []),
     ],
     [openNewIssue, inboxBadge.inbox, agentChatEnabled, combinedInboxTasksEnabled, coordinatorWorkspaceEnabled, attention?.totalCount],
@@ -108,7 +109,7 @@ export function MobileBottomNav({ visible }: MobileBottomNavProps) {
       )}
       data-visible={visible}
       inert={!visible}
-      aria-label="Mobile navigation"
+      aria-label={zh("Mobile navigation")}
     >
       <div
         className="grid h-16 px-1"

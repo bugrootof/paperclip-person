@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
@@ -198,7 +199,7 @@ export function SmokeLabTab({ companyId }: { companyId: string }) {
         <div className="flex flex-wrap items-center gap-2">
           <FlaskConical className="h-5 w-5 text-muted-foreground" />
           <h1 className="text-xl font-bold text-foreground">Smoke Lab</h1>
-          <Badge variant="outline">Experimental</Badge>
+          <Badge variant="outline">{zh("Experimental")}</Badge>
           <a
             href="https://github.com/paperclipai/paperclip/blob/master/doc/connections/SMOKE-LAB-TUTORIAL.md"
             target="_blank"
@@ -246,7 +247,7 @@ export function SmokeLabTab({ companyId }: { companyId: string }) {
               onClick={() => stopMutation.mutate()}
               disabled={anyMutating}
             >
-              Stop
+              {zh("Stop")}
             </Button>
             <Button
               size="sm"
@@ -262,7 +263,7 @@ export function SmokeLabTab({ companyId }: { companyId: string }) {
               onClick={() => resetMutation.mutate()}
               disabled={anyMutating}
             >
-              <RotateCcw className="h-4 w-4" /> Reset
+              <RotateCcw className="h-4 w-4" /> {zh("Reset")}
             </Button>
           </div>
         </div>
@@ -383,7 +384,7 @@ export function SmokeLabTab({ companyId }: { companyId: string }) {
       <section className="flex flex-col gap-3">
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
-            <h2 className="text-sm font-semibold text-foreground">Runs</h2>
+            <h2 className="text-sm font-semibold text-foreground">{zh("Runs")}</h2>
             <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
               <span className={cn("h-2 w-2 rounded-full", HEALTH_STYLES[health])} />
               {health === "unknown" ? "no runs yet" : health}
@@ -438,7 +439,7 @@ export function SmokeLabTab({ companyId }: { companyId: string }) {
               <div className="flex flex-col">
                 <div className="flex items-center justify-between gap-2 border-b border-border px-4 py-2.5">
                   <span className="text-xs text-muted-foreground">
-                    Started {formatTime(activeRun.startedAt)} · finished {formatTime(activeRun.finishedAt)}
+                    {zh("Started")} {formatTime(activeRun.startedAt)} · finished {formatTime(activeRun.finishedAt)}
                   </span>
                   <StatusBadge status={activeRun.status} />
                 </div>

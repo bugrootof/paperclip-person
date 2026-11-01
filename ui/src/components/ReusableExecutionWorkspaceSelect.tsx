@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useMemo } from "react";
 import { SearchableSelect } from "@/components/SearchableSelect";
 import {
@@ -44,8 +45,8 @@ export function ReusableExecutionWorkspaceSelect<TWorkspace extends ReusableExec
       groups={groups}
       onValueChange={onValueChange}
       placeholder={placeholder}
-      searchPlaceholder="Search workspaces..."
-      emptyMessage={error ? "Workspaces failed to load." : "No matching workspaces."}
+      searchPlaceholder={zh("Search workspaces...")}
+      emptyMessage={error ? "Workspaces failed to load." : zh("No matching workspaces.")}
       loadingMessage="Loading workspaces..."
       loading={loading}
       disabled={disabled}

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 /**
  * Work Timeline page (PAP-12424 / Phase C of PAP-12405).
  *
@@ -276,8 +277,8 @@ function TimelineSummaryStats({
   summary: ReturnType<typeof timelineSummary>;
 }) {
   const stats: { label: string; value: string; icon: LucideIcon }[] = [
-    { label: "Runs", value: formatInteger(summary.runs), icon: GanttChartSquare },
-    { label: "Agents", value: formatInteger(summary.agents), icon: Bot },
+    { label: zh("Runs"), value: formatInteger(summary.runs), icon: GanttChartSquare },
+    { label: zh("Agents"), value: formatInteger(summary.agents), icon: Bot },
     { label: "Run time", value: formatDuration(0, summary.activeMs), icon: Clock3 },
     {
       label: "Tokens used",
@@ -406,7 +407,7 @@ export function Timeline({ embedded = false }: { embedded?: boolean } = {}) {
           setDateRange(presetRange(preset));
         }}
         options={[
-          { value: "today", label: "Today" },
+          { value: "today", label: zh("Today") },
           { value: "7d", label: "7 days" },
           { value: "30d", label: "30 days" },
         ]}

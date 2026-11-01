@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { cloneElement, isValidElement, useState } from "react";
 import { CalendarRange } from "lucide-react";
 import {
@@ -81,7 +82,7 @@ export function DecisionDateChips({ value, custom, onChange }: DecisionDateChips
                 setOpen(false);
               }}
             >
-              Clear
+              {zh("Clear")}
             </Button>
           </div>
         </PopoverContent>

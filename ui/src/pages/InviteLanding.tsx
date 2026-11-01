@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AGENT_ADAPTER_TYPES } from "@paperclipai/shared";
@@ -586,7 +587,7 @@ export function InviteLandingPage() {
 
             <div className="grid gap-3 sm:grid-cols-2">
               <div className="border border-zinc-800 p-3">
-                <div className="text-xs uppercase tracking-(--tracking-caps) text-zinc-500">Organization</div>
+                <div className="text-xs uppercase tracking-(--tracking-caps) text-zinc-500">{zh("Organization")}</div>
                 <div className="mt-1 text-sm text-zinc-100">{companyDisplayName}</div>
               </div>
               <div className="border border-zinc-800 p-3">
@@ -629,7 +630,7 @@ export function InviteLandingPage() {
                   </p>
                 </div>
                 <label className="block text-sm">
-                  <span className="mb-1 block text-zinc-400">Agent name</span>
+                  <span className="mb-1 block text-zinc-400">{zh("Agent name")}</span>
                   <input
                     className={fieldClassName}
                     value={agentName}
@@ -651,7 +652,7 @@ export function InviteLandingPage() {
                   </select>
                 </label>
                 <label className="block text-sm">
-                  <span className="mb-1 block text-zinc-400">Capabilities</span>
+                  <span className="mb-1 block text-zinc-400">{zh("Capabilities")}</span>
                   <textarea
                     className={fieldClassName}
                     rows={4}
@@ -729,7 +730,7 @@ export function InviteLandingPage() {
                 >
                   {authMode === "sign_up" ? (
                     <label className="block text-sm" htmlFor="invite-name">
-                      <span className="mb-1 block text-zinc-400">Name</span>
+                      <span className="mb-1 block text-zinc-400">{zh("Name")}</span>
                       <input
                         id="invite-name"
                         name="name"
@@ -749,7 +750,7 @@ export function InviteLandingPage() {
                     </label>
                   ) : null}
                   <label className="block text-sm" htmlFor="invite-email">
-                    <span className="mb-1 block text-zinc-400">Email</span>
+                    <span className="mb-1 block text-zinc-400">{zh("Email")}</span>
                     <input
                       id="invite-email"
                       name="email"

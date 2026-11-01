@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import { useMemo, useState } from "react";
 import {
@@ -144,10 +145,10 @@ export function OverviewSection({
             value={editDraft.assigneeAgentId}
             options={assigneeOptions}
             recentOptionIds={recentAssigneeIds}
-            placeholder="Responsible"
-            noneLabel="No responsible"
-            searchPlaceholder="Search responsible..."
-            emptyMessage="No responsible found."
+            placeholder={zh("Responsible")}
+            noneLabel={zh("No responsible")}
+            searchPlaceholder={zh("Search responsible...")}
+            emptyMessage={zh("No responsible found.")}
             onChange={(assigneeAgentId) =>
               setEditDraft((current) => ({ ...current, assigneeAgentId }))
             }
@@ -169,7 +170,7 @@ export function OverviewSection({
                   <span className="truncate">{option.label}</span>
                 )
               ) : (
-                <span className="text-muted-foreground">Responsible</span>
+                <span className="text-muted-foreground">{zh("Responsible")}</span>
               )
             }
             renderOption={(option) => {
@@ -185,16 +186,16 @@ export function OverviewSection({
               );
             }}
           />
-          <span>in</span>
+          <span>{zh("in")}</span>
           <InlineEntitySelector
             ref={projectSelectorRef}
             value={editDraft.projectId}
             options={projectOptions}
             recentOptionIds={recentProjectIds}
-            placeholder="Project"
-            noneLabel="No project"
-            searchPlaceholder="Search projects..."
-            emptyMessage="No projects found."
+            placeholder={zh("Project")}
+            noneLabel={zh("No project")}
+            searchPlaceholder={zh("Search projects...")}
+            emptyMessage={zh("No projects found.")}
             onChange={(projectId) => setEditDraft((current) => ({ ...current, projectId }))}
             onConfirm={() => descriptionEditorRef.current?.focus()}
             renderTriggerValue={(option) =>
@@ -207,7 +208,7 @@ export function OverviewSection({
                   <span className="truncate">{option.label}</span>
                 </>
               ) : (
-                <span className="text-muted-foreground">Project</span>
+                <span className="text-muted-foreground">{zh("Project")}</span>
               )
             }
             renderOption={(option) => {
@@ -264,7 +265,7 @@ export function OverviewSection({
               ref={descriptionEditorRef}
               value={editDraft.description}
               onChange={(description) => setEditDraft((current) => ({ ...current, description }))}
-              placeholder="Add instructions..."
+              placeholder={zh("Add instructions...")}
               bordered={false}
               contentClassName="min-h-(--sz-120px) text-sm leading-7"
               mentions={mentionOptions}
@@ -280,7 +281,7 @@ export function OverviewSection({
             ref={descriptionEditorRef}
             value={editDraft.description}
             onChange={(description) => setEditDraft((current) => ({ ...current, description }))}
-            placeholder="Add instructions..."
+            placeholder={zh("Add instructions...")}
             bordered={false}
             contentClassName="min-h-(--sz-120px) text-sm leading-7"
             mentions={mentionOptions}
@@ -316,7 +317,7 @@ export function OverviewSection({
         />
         <SummaryCard
           icon={Play}
-          label="Last run"
+          label={zh("Last run")}
           value={lastRun ? lastRun.status.replaceAll("_", " ") : "No runs"}
           hint={lastRun ? timeAgo(lastRun.triggeredAt) : "Trigger a run"}
           to={() => navigateToSection("runs")}
@@ -485,7 +486,7 @@ export function DeliverySection() {
     <div className="space-y-6">
       <div className="space-y-3">
         <p className="text-xs font-medium uppercase tracking-(--tracking-caps) text-muted-foreground">
-          Concurrency
+          {zh("Concurrency")}
         </p>
         <RadioCardGroup
           ariaLabel="Concurrency policy"
@@ -498,7 +499,7 @@ export function DeliverySection() {
       </div>
       <div className="space-y-3">
         <p className="text-xs font-medium uppercase tracking-(--tracking-caps) text-muted-foreground">
-          Catch-up
+          {zh("Catch-up")}
         </p>
         <RadioCardGroup
           ariaLabel="Catch-up policy"

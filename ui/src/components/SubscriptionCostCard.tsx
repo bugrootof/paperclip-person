@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { SUBSCRIPTION_CURRENCIES, centsToUsd, usdToCents, type SubscriptionAccountReport, type SubscriptionCostReport, type SubscriptionUsage } from "@paperclipai/shared";
@@ -42,16 +43,16 @@ function SubscriptionEditor({ account, accounts, companyId, onDone }: {
   const selectClass = "h-9 rounded-md border border-input bg-background px-3 text-sm";
   return <div className="space-y-5">
     <form className="space-y-4" onSubmit={event => { event.preventDefault(); save.mutate(); }}>
-      <div className="space-y-2"><Label htmlFor="subscription-plan">Plan</Label><Input id="subscription-plan" value={plan} onChange={event => setPlan(event.target.value)} required maxLength={100} /></div>
+      <div className="space-y-2"><Label htmlFor="subscription-plan">{zh("Plan")}</Label><Input id="subscription-plan" value={plan} onChange={event => setPlan(event.target.value)} required maxLength={100} /></div>
       <div className="grid gap-4 sm:grid-cols-2">
-        <div className="space-y-2"><Label htmlFor="subscription-price">Price per billing period</Label><Input id="subscription-price" type="number" min="0" step="any" value={amount} placeholder="Unknown" onChange={event => setAmount(event.target.value)} /></div>
+        <div className="space-y-2"><Label htmlFor="subscription-price">Price per billing period</Label><Input id="subscription-price" type="number" min="0" step="any" value={amount} placeholder={zh("Unknown")} onChange={event => setAmount(event.target.value)} /></div>
         <div className="space-y-2"><Label htmlFor="subscription-currency">Currency</Label><select id="subscription-currency" className={selectClass} value={currency} onChange={event => setCurrency(event.target.value)}>{SUBSCRIPTION_CURRENCIES.map(code => <option key={code}>{code}</option>)}</select></div>
-        <div className="space-y-2"><Label htmlFor="subscription-cadence">Billed</Label><select id="subscription-cadence" className={selectClass} value={cadence} onChange={event => setCadence(event.target.value as typeof cadence)}><option value="month">Monthly</option><option value="year">Annually</option></select></div>
-        <div className="space-y-2"><Label htmlFor="subscription-status">Tracking</Label><select id="subscription-status" className={selectClass} value={status} onChange={event => setStatus(event.target.value as typeof status)}><option value="active">Active</option><option value="ended">Subscription ended</option><option value="excluded">Exclude from this organization</option></select></div>
+        <div className="space-y-2"><Label htmlFor="subscription-cadence">Billed</Label><select id="subscription-cadence" className={selectClass} value={cadence} onChange={event => setCadence(event.target.value as typeof cadence)}><option value="month">{zh("Monthly")}</option><option value="year">Annually</option></select></div>
+        <div className="space-y-2"><Label htmlFor="subscription-status">Tracking</Label><select id="subscription-status" className={selectClass} value={status} onChange={event => setStatus(event.target.value as typeof status)}><option value="active">{zh("Active")}</option><option value="ended">Subscription ended</option><option value="excluded">Exclude from this organization</option></select></div>
       </div>
       <p className="text-xs text-muted-foreground">Enter the full amount for one account or seat. Annual prices are divided by 12. Changes apply from now. Ending tracking here does not cancel your provider subscription.</p>
       {save.error && <p role="alert" className="text-sm text-destructive">Could not save this price. Check the amount, or reopen the account if another person updated it.</p>}
-      <div className="flex items-center justify-between"><Button type="button" variant="ghost" disabled={busy} onClick={onDone}>Cancel</Button><Button type="submit" disabled={busy}>{save.isPending ? "Saving…" : "Save price"}</Button></div>
+      <div className="flex items-center justify-between"><Button type="button" variant="ghost" disabled={busy} onClick={onDone}>{zh("Cancel")}</Button><Button type="submit" disabled={busy}>{save.isPending ? zh("Saving…") : "Save price"}</Button></div>
     </form>
     {targets.length > 0 && <div className="space-y-2 border-t border-border pt-4">
       <Label htmlFor="subscription-link">Same subscription as another account?</Label>
@@ -79,16 +80,16 @@ export function SubscriptionCostCard({ companyId, report, error, onChanged }: {
       </div>
       <div className="mt-1 space-y-1 text-xs text-muted-foreground">
         {report ? <>
-          {estimatedCount > 0 && <div><Badge variant="outline" className="font-normal text-muted-foreground">{estimatedCount < report.activeCount - report.unknownPriceCount ? "Partially estimated" : "Estimated"}</Badge></div>}
+          {estimatedCount > 0 && <div><Badge variant="outline" className="font-normal text-muted-foreground">{estimatedCount < report.activeCount - report.unknownPriceCount ? "Partially estimated" : zh("Estimated")}</Badge></div>}
           {report.unknownPriceCount > 0 && !!known && <div>Known monthly subtotal</div>}
-          <div>{report.accounts.length === 0 ? "No visible subscriptions" : <>{report.activeCount} active {report.activeCount === 1 ? "subscription" : "subscriptions"}{report.unknownPriceCount > 0 && ` · ${report.unknownPriceCount} ${report.unknownPriceCount === 1 ? "price" : "prices"} unknown`}</>}</div>
+          <div>{report.accounts.length === 0 ? "No visible subscriptions" : <>{report.activeCount} {zh("active")} {report.activeCount === 1 ? "subscription" : "subscriptions"}{report.unknownPriceCount > 0 && ` · ${report.unknownPriceCount} ${report.unknownPriceCount === 1 ? "price" : "prices"} unknown`}</>}</div>
           {report.accounts.length > 0 && <div>Monthly fees for accounts visible to you</div>}
           {report.unidentifiedAccountCount > 0 && <div>{report.unidentifiedAccountCount} unconfirmed {report.unidentifiedAccountCount === 1 ? "account identity" : "account identities"}</div>}
           <SubscriptionTokenUsage usage={report.subscription} />
         </> : error ? <div>Subscription data is unavailable.</div> : <div>Loading subscriptions…</div>}
         {report && error ? <div>Showing last loaded subscription data.</div> : null}
       </div>
-      <Button variant="link" size="sm" className="h-auto p-0" onClick={() => setOpen(true)} disabled={!report}>View details</Button>
+      <Button variant="link" size="sm" className="h-auto p-0" onClick={() => setOpen(true)} disabled={!report}>{zh("View details")}</Button>
     </Card>
     <Dialog open={open} onOpenChange={value => { setOpen(value); if (!value) setEditing(null); }}>
       <DialogContent className="max-h-(--sz-80vh) overflow-y-auto sm:max-w-3xl">
@@ -102,7 +103,7 @@ export function SubscriptionCostCard({ companyId, report, error, onChanged }: {
             </div>
             <SubscriptionTokenUsage usage={account.usage} />
             {Number(account.usage.costCents) > 0 && <div className="text-xs text-muted-foreground">{formatCents(Number(account.usage.costCents))} recorded usage charges in selected period, separate from the subscription fee.</div>}
-            {account.agents.length > 0 && <div className="text-xs text-muted-foreground">Used by {account.agents.map(agent => agent.name).join(", ")}</div>}
+            {account.agents.length > 0 && <div className="text-xs text-muted-foreground">{zh("Used by")} {account.agents.map(agent => agent.name).join(", ")}</div>}
             {!account.identityVerified && <p className="text-xs text-muted-foreground">Account identity is unconfirmed. Link duplicates if these connections use the same subscription.</p>}
             {account.observedAt && <div className="text-xs text-muted-foreground">Plan checked {formatDateTime(account.observedAt)}{account.refreshStatus === "unavailable" ? " · latest check unavailable" : ""}</div>}
             {account.refreshStatus === "unavailable" && !account.observedAt && <p className="text-xs text-muted-foreground">The provider did not make plan details available. You can enter the price yourself.</p>}

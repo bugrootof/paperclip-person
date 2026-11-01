@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import {
   forwardRef,
   useImperativeHandle,
@@ -288,7 +289,7 @@ export const ChatComposer = forwardRef<ChatComposerHandle, ChatComposerProps>(fu
             const sizeLabel = formatAttachmentSize(attachment.size);
             const statusLabel =
               attachment.status === "uploading"
-                ? "Uploading…"
+                ? zh("Uploading…")
                 : attachment.status === "error"
                   ? attachment.error ?? "Upload failed"
                   : attachment.inline

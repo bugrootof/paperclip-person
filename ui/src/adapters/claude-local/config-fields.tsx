@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { configFieldsForSection } from "../config-sections";
 import type { AdapterConfigFieldsProps } from "../types";
 import {
@@ -32,7 +33,7 @@ export function ClaudeLocalConfigFields({
   return configFieldsForSection(section, (
     <>
       {!hideInstructionsFile && (
-        <Field label="Agent instructions file" hint={instructionsFileHint}>
+        <Field label={zh("Agent instructions file")} hint={instructionsFileHint}>
           <div className="flex items-center gap-2">
             <DraftInput
               value={
@@ -96,7 +97,7 @@ export function ClaudeLocalAdvancedFields({
         environment owns both, so the managed-sandbox-only policy hides them,
         the same way `runnerManaged` hides them for the Paperclip Runner.
       */}
-      {!managedSandboxOnly && <Field label="Execution engine" hint="Default uses ACP. If ACP is unavailable, the run fails with a setup error. Choose CLI explicitly to use it.">
+      {!managedSandboxOnly && <Field label={zh("Execution engine")} hint={zh("Default uses ACP. If ACP is unavailable, the run fails with a setup error. Choose CLI explicitly to use it.")}>
         <select
           className={inputClass}
           value={engine}
@@ -107,7 +108,7 @@ export function ClaudeLocalAdvancedFields({
               : mark("adapterConfig", "engine", value === "auto" ? undefined : value);
           }}
         >
-          <option value="auto">Default (ACP)</option>
+          <option value="auto">{zh("Default (ACP)")}</option>
           <option value="cli">Claude CLI</option>
           <option value="acp">ACP</option>
         </select>
@@ -116,7 +117,7 @@ export function ClaudeLocalAdvancedFields({
         <>
           {!managedSandboxOnly && (
             <Field configSection="advanced"
-              label="ACP server command"
+              label={zh("ACP server command")}
               hint="Optional override for the Claude ACP server command. Defaults to the package-local claude-agent-acp binary."
             >
               <DraftInput
@@ -136,7 +137,7 @@ export function ClaudeLocalAdvancedFields({
               />
             </Field>
           )}
-          <Field configSection="runPolicy" label="ACP session mode" hint="Persistent keeps ACP session state between runs. One-shot starts fresh each run.">
+          <Field configSection="runPolicy" label={zh("ACP session mode")} hint={zh("Persistent keeps ACP session state between runs. One-shot starts fresh each run.")}>
             <select
               className={inputClass}
               value={
@@ -151,13 +152,13 @@ export function ClaudeLocalAdvancedFields({
                   : mark("adapterConfig", "mode", value);
               }}
             >
-              <option value="persistent">Persistent</option>
-              <option value="oneshot">One-shot</option>
+              <option value="persistent">{zh("Persistent")}</option>
+              <option value="oneshot">{zh("One-shot")}</option>
             </select>
           </Field>
           <Field
-            label="ACP non-interactive permissions"
-            hint="Fallback if the ACP agent asks for input outside an interactive session."
+            label={zh("ACP non-interactive permissions")}
+            hint={zh("Fallback if the ACP agent asks for input outside an interactive session.")}
           >
             <select
               className={inputClass}
@@ -173,14 +174,14 @@ export function ClaudeLocalAdvancedFields({
                   : mark("adapterConfig", "nonInteractivePermissions", value);
               }}
             >
-              <option value="deny">Deny</option>
-              <option value="fail">Fail</option>
+              <option value="deny">{zh("Deny")}</option>
+              <option value="fail">{zh("Fail")}</option>
             </select>
           </Field>
           {!managedSandboxOnly && (
             <Field
-              label="ACP state directory"
-              hint="Optional ACP session state directory. Defaults to Paperclip-managed organization/agent scoped storage."
+              label={zh("ACP state directory")}
+              hint={zh("Optional ACP session state directory. Defaults to Paperclip-managed organization/agent scoped storage.")}
             >
               <div className="flex items-center gap-2">
                 <DraftInput
@@ -203,8 +204,8 @@ export function ClaudeLocalAdvancedFields({
             </Field>
           )}
           <Field configSection="runPolicy"
-            label="ACP warm process idle ms"
-            hint="Defaults to 0, which closes the ACP process after each run while retaining persistent session state."
+            label={zh("ACP warm process idle ms")}
+            hint={zh("Defaults to 0, which closes the ACP process after each run while retaining persistent session state.")}
           >
             {isCreate ? (
               <input

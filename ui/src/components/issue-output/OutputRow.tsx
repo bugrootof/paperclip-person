@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { Download, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn, relativeTime } from "@/lib/utils";
@@ -46,7 +47,7 @@ export function OutputRow({ item, creatorName }: OutputRowProps) {
               <ExternalLink className="h-4 w-4" />
             </a>
           </Button>
-          <Button asChild variant="ghost" size="icon-sm" title="Download">
+          <Button asChild variant="ghost" size="icon-sm" title={zh("Download")}>
             <a href={meta.downloadPath} aria-label={`Download ${filename}`}>
               <Download className="h-4 w-4" />
             </a>

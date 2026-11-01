@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useQuery } from "@tanstack/react-query";
 import { Navigate, Outlet } from "@/lib/router";
 import { instanceSettingsApi } from "@/api/instanceSettings";
@@ -33,7 +34,7 @@ export function IsolatedWorkspacesRouteGate() {
         <QueryErrorState
           size="page"
           error={view.error}
-          action="load workspaces"
+          action={zh("load workspaces")}
           onRetry={view.retry}
           retrying={view.isFetching}
         />

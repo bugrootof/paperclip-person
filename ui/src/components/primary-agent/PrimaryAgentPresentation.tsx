@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { createContext, useContext } from "react";
 import { ArrowRight, Crown, Loader2 } from "lucide-react";
 import type { Agent } from "@paperclipai/shared";
@@ -56,7 +57,7 @@ export function SetPrimaryAgentButton({ agent }: {
     onClick={primary.primaryAgentId ? undefined : () => primary.onChange(agent.id)}
     className="h-auto justify-start p-0 text-xs text-muted-foreground hover:text-foreground">
     {pending || loading ? <Loader2 aria-hidden="true" className="size-3 motion-safe:animate-spin" /> : null}
-    {loading ? "Loading primary…" : pending ? "Setting primary…" : "Set as my primary"}
+    {loading ? zh("Loading primary…") : pending ? zh("Setting primary…") : zh("Set as my primary")}
   </Button>;
   if (!previous) return button;
   return <AlertDialog key={previous.id}>
@@ -86,8 +87,8 @@ export function SetPrimaryAgentButton({ agent }: {
         </AlertDialogDescription>
       </AlertDialogHeader>
       <AlertDialogFooter className="flex-row justify-between sm:justify-between">
-        <AlertDialogCancel>Cancel</AlertDialogCancel>
-        <AlertDialogAction disabled={disabled} onClick={() => primary.onChange(agent.id)}>Set as my primary</AlertDialogAction>
+        <AlertDialogCancel>{zh("Cancel")}</AlertDialogCancel>
+        <AlertDialogAction disabled={disabled} onClick={() => primary.onChange(agent.id)}>{zh("Set as my primary")}</AlertDialogAction>
       </AlertDialogFooter>
     </AlertDialogContent>
   </AlertDialog>;

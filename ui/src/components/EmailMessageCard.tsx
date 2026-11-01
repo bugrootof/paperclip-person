@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { createContext, useContext, type ReactNode } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Mail, Paperclip } from "lucide-react";
@@ -75,7 +76,7 @@ export function EmailMessageCard({
           {message.from}
           {message.direction === "inbound" && (
             <span className="ml-2 rounded-md bg-muted px-2 py-1 text-xs text-muted-foreground">
-              External
+              {zh("External")}
             </span>
           )}
         </p>

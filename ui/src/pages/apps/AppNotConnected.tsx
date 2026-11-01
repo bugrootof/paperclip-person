@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { ToolConnection } from "@paperclipai/shared";
@@ -79,7 +80,7 @@ export function AppNotConnected() {
   useEffect(() => {
     if (!activeTab) return;
     setBreadcrumbs([
-      { label: "Connectors", href: "/apps" },
+      { label: zh("Connectors"), href: "/apps" },
       { label: appName, href: appApplicationTabHref(applicationId, "permissions") },
       { label: appTabLabel(activeTab) },
     ]);
@@ -245,7 +246,7 @@ function ConnectionCallout({
     <section className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-border px-4 py-3">
       <div>
         <h2 className="text-sm font-semibold text-foreground">
-          {previousConnection ? "Needs attention" : "Not connected"}
+          {previousConnection ? zh("Needs attention") : "Not connected"}
         </h2>
         <p className="mt-0.5 text-sm text-muted-foreground">
           {previousConnection
@@ -259,7 +260,7 @@ function ConnectionCallout({
         ) : null}
       </div>
       {!previousConnection || canReconnect ? (
-        <Button onClick={onConnect}>{previousConnection ? "Reconnect" : "Connect"}</Button>
+        <Button onClick={onConnect}>{previousConnection ? zh("Reconnect") : zh("Connect")}</Button>
       ) : null}
     </section>
   );

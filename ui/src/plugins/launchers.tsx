@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import {
   Component,
   createContext,
@@ -602,7 +603,7 @@ function LauncherModalShell({
             className="ml-auto"
             onClick={() => void closeLauncher(instance.key, { reason: "programmatic" })}
           >
-            Close
+            {zh("Close")}
           </Button>
         </div>
         <div

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AgentAvatar } from "@/components/AgentAvatar";
 import { useEffect, useMemo, useState } from "react";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
@@ -32,25 +33,25 @@ const ALL = "__all";
 /** Action-domain prefixes offered in the filter (server does a prefix match). */
 const ACTION_DOMAINS: { value: string; label: string }[] = [
   { value: ALL, label: "All actions" },
-  { value: "issue.", label: "Tasks" },
-  { value: "agent.", label: "Agents" },
-  { value: "heartbeat.", label: "Runs" },
-  { value: "approval.", label: "Approvals" },
-  { value: "project.", label: "Projects" },
-  { value: "goal.", label: "Goals" },
-  { value: "tool_gateway.", label: "Tools" },
-  { value: "cost.", label: "Costs" },
-  { value: "company.", label: "Company" },
+  { value: "issue.", label: zh("Tasks") },
+  { value: "agent.", label: zh("Agents") },
+  { value: "heartbeat.", label: zh("Runs") },
+  { value: "approval.", label: zh("Approvals") },
+  { value: "project.", label: zh("Projects") },
+  { value: "goal.", label: zh("Goals") },
+  { value: "tool_gateway.", label: zh("Tools") },
+  { value: "cost.", label: zh("Costs") },
+  { value: "company.", label: zh("Company") },
 ];
 
 /** Entity types offered in the filter (server does an exact match). */
 const ENTITY_TYPES: { value: string; label: string }[] = [
   { value: ALL, label: "All entities" },
-  { value: "issue", label: "Task" },
-  { value: "agent", label: "Agent" },
-  { value: "project", label: "Project" },
-  { value: "goal", label: "Goal" },
-  { value: "company", label: "Company" },
+  { value: "issue", label: zh("Task") },
+  { value: "agent", label: zh("Agent") },
+  { value: "project", label: zh("Project") },
+  { value: "goal", label: zh("Goal") },
+  { value: "company", label: zh("Company") },
 ];
 
 /**
@@ -465,7 +466,7 @@ export function AuditFeed({
       {!hideHeader ? (
         <div className="flex flex-wrap items-start justify-between gap-3">
           <div>
-            <h1 className="text-lg font-semibold text-foreground">Activity</h1>
+            <h1 className="text-lg font-semibold text-foreground">{zh("Activity")}</h1>
             <p className="mt-1 max-w-2xl text-sm text-muted-foreground">
               {resolvedMode === "agents"
                 ? "Every recorded agent action, newest first — with the responsible person and run behind each one."
@@ -489,7 +490,7 @@ export function AuditFeed({
           {!lockedAgentId ? (
             <Select value={agent} onValueChange={setAgent}>
               <SelectTrigger className="w-40">
-                <SelectValue placeholder="Agent" />
+                <SelectValue placeholder={zh("Agent")} />
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value={ALL}>All agents</SelectItem>
@@ -517,7 +518,7 @@ export function AuditFeed({
           </Select>
           <Select value={actionDomain} onValueChange={setActionDomain}>
             <SelectTrigger className="w-36">
-              <SelectValue placeholder="Action" />
+              <SelectValue placeholder={zh("Action")} />
             </SelectTrigger>
             <SelectContent>
               {ACTION_DOMAINS.map((d) => (
@@ -557,7 +558,7 @@ export function AuditFeed({
           />
           {hasActiveFilters ? (
             <Button variant="ghost" size="sm" onClick={clearFilters}>
-              Clear filters
+              {zh("Clear filters")}
             </Button>
           ) : null}
           <Button
@@ -581,7 +582,7 @@ export function AuditFeed({
         </Card>
       ) : feed.isLoading ? (
         <Card>
-          <CardContent className="py-14 text-center text-sm text-muted-foreground">Loading…</CardContent>
+          <CardContent className="py-14 text-center text-sm text-muted-foreground">{zh("Loading…")}</CardContent>
         </Card>
       ) : feed.error ? (
         <Card>
@@ -590,7 +591,7 @@ export function AuditFeed({
               {feed.error instanceof Error ? feed.error.message : "Failed to load the audit log."}
             </p>
             <Button variant="outline" size="sm" onClick={() => feed.refetch()}>
-              Try again
+              {zh("Try again")}
             </Button>
           </CardContent>
         </Card>
@@ -612,7 +613,7 @@ export function AuditFeed({
             </div>
             {hasActiveFilters ? (
               <Button variant="outline" size="sm" onClick={clearFilters}>
-                Clear filters
+                {zh("Clear filters")}
               </Button>
             ) : null}
           </CardContent>
@@ -642,7 +643,7 @@ export function AuditFeed({
             onClick={() => feed.fetchNextPage()}
             disabled={feed.isFetchingNextPage}
           >
-            {feed.isFetchingNextPage ? "Loading…" : "Load more"}
+            {feed.isFetchingNextPage ? zh("Loading…") : "Load more"}
           </Button>
         </div>
       ) : null}

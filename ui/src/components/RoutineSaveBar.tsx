@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useState } from "react";
 import { AlertTriangle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -145,7 +146,7 @@ export function RoutineSaveBar({
                 disabled={isSaving || disabled}
                 onClick={() => setConfirmDiscardOpen(true)}
               >
-                Discard
+                {zh("Discard")}
               </Button>
               <Button
                 size="sm"
@@ -153,7 +154,7 @@ export function RoutineSaveBar({
                 onClick={onSave}
               >
                 {isSaving ? <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> : null}
-                Save changes
+                {zh("Save changes")}
                 <kbd className="ml-2 hidden rounded bg-foreground/10 px-1 text-(length:--text-nano) font-medium sm:inline">
                   ⌘S
                 </kbd>

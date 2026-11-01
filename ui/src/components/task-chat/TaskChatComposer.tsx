@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useCurrentAccountGuard } from "@/hooks/useAccountBoundMutation";
 import { AgentAvatar } from "../AgentAvatar";
 import {
@@ -313,17 +314,17 @@ function AssigneeIdentityAvatar({
 /** v7 per-mode placeholder copy; `{agent}` is the pending assignee's name. */
 function modePlaceholder(mode: IssueWorkMode, agentName: string, mobile: boolean): string {
   if (mobile) {
-    if (mode === "planning") return `Plan with ${agentName}…`;
-    if (mode === "ask") return `Ask ${agentName}…`;
-    return `Message ${agentName}…`;
+    if (mode === "planning") return zh("Plan with {{agent}}…", { agent: agentName });
+    if (mode === "ask") return zh("Ask {{agent}}…", { agent: agentName });
+    return zh("Message {{agent}}…", { agent: agentName });
   }
   switch (mode) {
     case "planning":
-      return `Plan with ${agentName} — shapes the plan doc, no code changes…`;
+      return zh("Plan with {{agent}} — shapes the plan doc, no code changes…", { agent: agentName });
     case "ask":
-      return `Ask ${agentName} a question — read-only, nothing runs…`;
+      return zh("Ask {{agent}} a question — read-only, nothing runs…", { agent: agentName });
     default:
-      return `Message ${agentName} — describe what you want done…`;
+      return zh("Message {{agent}} — describe what you want done…", { agent: agentName });
   }
 }
 
@@ -669,11 +670,11 @@ export function TaskChatComposer({
   const assigneeValue = creation || conversationMode ? currentAssigneeValue : pendingAssignee ?? suggestedAssigneeValue ?? currentAssigneeValue;
   const showConversationModel = coordinator && conversationMode && supportsComposerModel(modelAgents?.get(assigneeValue.slice(6)));
   const assigneeLabel =
-    reassignOptions?.find((o) => o.id === assigneeValue)?.label ?? "Unassigned";
+    reassignOptions?.find((o) => o.id === assigneeValue)?.label ?? zh("Unassigned");
   const assigneeName =
     assigneeLabel === "Unassigned" ? "the agent" : assigneeLabel;
   const effectivePlaceholder = queuedEdit
-    ? "Edit queued message…"
+    ? zh("Edit queued message…")
     : (placeholder ?? modePlaceholder(pendingMode, assigneeName, mobile));
   const goalUnavailable = runnerGoalCapability?.availability !== "available";
   const goalCommandOption: ActionCommandOption = {
@@ -1263,7 +1264,7 @@ export function TaskChatComposer({
       {takeoverBusy ? (
         <Loader2 className="h-4 w-4 animate-spin" aria-hidden />
       ) : null}
-      Skip
+      {zh("Skip")}
     </Button>
   ) : null;
 
@@ -1306,7 +1307,7 @@ export function TaskChatComposer({
             <div className="ml-auto flex shrink-0 items-center gap-1">
               {takeover.pendingCount > 1 ? (
                 <Button type="button" size="sm" variant="ghost" className="h-7 px-2" onClick={takeover.onShowNext}>
-                  {takeover.pendingCount} pending
+                  {takeover.pendingCount} {zh("pending")}
                 </Button>
               ) : null}
               <div ref={setTakeoverControlsSlot} className="flex shrink-0 items-center" data-testid="task-chat-composer-takeover-controls-slot" />
@@ -1341,7 +1342,7 @@ export function TaskChatComposer({
           className="flex h-11 min-w-0 items-center gap-2 px-2.5"
           data-testid="task-chat-composer-context"
           role="group"
-          aria-label="Task project and worktrees"
+          aria-label={zh("Task project and worktrees")}
         >
           {creation.contextBar}
         </TaskChatComposerBar>
@@ -1395,7 +1396,7 @@ export function TaskChatComposer({
             {pendingTakeover?.label ?? takeover?.label ?? "Pending input"}
           </span>
           <span className="shrink-0 font-medium">
-            {pendingTakeover?.count ?? takeover?.pendingCount ?? 1} pending
+            {pendingTakeover?.count ?? takeover?.pendingCount ?? 1} {zh("pending")}
           </span>
         </button>
       ) : null}
@@ -1481,7 +1482,7 @@ export function TaskChatComposer({
                       </AttachmentTitle>
                       <AttachmentDescription className="max-w-48">
                         {attachment.status === "uploading"
-                          ? "Uploading…"
+                          ? zh("Uploading…")
                           : attachment.status === "error"
                             ? (attachment.error ?? "Upload failed")
                             : [kind.label, sizeLabel]
@@ -1544,8 +1545,8 @@ export function TaskChatComposer({
             {queuedEdit ? (
               <span className="px-1 text-xs font-medium text-muted-foreground">
                 {queuedEdit.stale
-                  ? "Queued message changed"
-                  : "Editing queued message"}
+                  ? zh("Queued message changed")
+                  : zh("Editing queued message")}
               </span>
             ) : (
               <ComposerModeChip mode={pendingMode} onRemove={onWorkModeChange ? () => changeMode("standard") : undefined}
@@ -1583,11 +1584,11 @@ export function TaskChatComposer({
               <InlineEntitySelector
                 value={assigneeValue}
                 options={reassignOptions ?? []}
-                placeholder="Assignee"
+                placeholder={zh("Assignee")}
                 mobileTitle="Select assignee"
-                noneLabel="No assignee"
-                searchPlaceholder="Search assignees…"
-                emptyMessage="No matches."
+                noneLabel={zh("No assignee")}
+                searchPlaceholder={zh("Search assignees…")}
+                emptyMessage={zh("No matches.")}
                 onChange={updatePendingAssignee}
                 disabled={disabled}
                 triggerTestId="task-chat-composer-assignee"
@@ -1634,7 +1635,7 @@ export function TaskChatComposer({
                 disabled={submitting}
                 className="h-8 shrink-0 rounded-md px-2.5 text-xs font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground disabled:opacity-50"
               >
-                Cancel
+                {zh("Cancel")}
               </button>
             ) : null}
             <button
@@ -1655,27 +1656,27 @@ export function TaskChatComposer({
               title={
                 showStop
                   ? stopControl.stopping
-                    ? "Stopping…"
-                    : "Stop response"
+                    ? zh("Stopping…")
+                    : zh("Stop response")
                   : queuedEdit
                     ? queuedEdit.stale
-                      ? "Queue as new message"
-                      : "Save queued message"
+                      ? zh("Queue as new message")
+                      : zh("Save queued message")
                     : uploadPending
-                      ? "Waiting for upload to finish"
+                      ? zh("Waiting for upload to finish")
                       : uploadFailed
-                        ? "Remove the failed attachment to send"
-                        : creation ? `${creation.submitLabel} (⌘+Enter)` : "Send (⌘+Enter)"
+                        ? zh("Remove the failed attachment to send")
+                        : creation ? `${creation.submitLabel} (⌘+Enter)` : zh("Send (⌘+Enter)")
               }
               aria-label={
                 showStop
                   ? stopControl.stopping
-                    ? "Stopping…"
-                    : "Stop"
+                    ? zh("Stopping…")
+                    : zh("Stop")
                   : queuedEdit
                     ? queuedEdit.stale
-                      ? "Queue as new message"
-                      : "Save queued message"
+                      ? zh("Queue as new message")
+                      : zh("Save queued message")
                     : creation?.submitLabel ?? "Send"
               }
               aria-busy={submitting}

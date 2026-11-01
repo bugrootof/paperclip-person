@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { StrictMode, useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { MotionConfig, motion } from "motion/react";
@@ -281,14 +282,14 @@ function ConnectFlowPreview({
       : phase === "ready" && apiMode
         ? // A key is typed here rather than fetched elsewhere, so the button is
           // the submit and stays dead until there is something to submit.
-          { label: "Connect", icon: "arrow" as const, disabled: !apiKey.trim() }
+          { label: zh("Connect"), icon: "arrow" as const, disabled: !apiKey.trim() }
         : phase === "ready"
         ? { label: signInLabel, icon: "none" as const, disabled: false }
         : phase === "waiting"
-          ? { label: "Waiting for code", icon: "spinner" as const, disabled: true }
+          ? { label: zh("Waiting for code"), icon: "spinner" as const, disabled: true }
           : phase === "connecting"
-            ? { label: "Connecting", icon: "spinner" as const, disabled: true }
-            : { label: "Next", icon: "arrow" as const, disabled: true };
+            ? { label: zh("Connecting"), icon: "spinner" as const, disabled: true }
+            : { label: zh("Next"), icon: "arrow" as const, disabled: true };
 
   return (
     <MotionConfig reducedMotion="user">
@@ -308,7 +309,7 @@ function ConnectFlowPreview({
         <div className="pt-6">
           <OnboardingHeading
             center
-            title={done ? "Connected" : "Connect a model"}
+            title={done ? "Connected" : zh("Connect a model")}
             lede={
               done
                 ? "The step advances straight to Review — there is no success screen."
@@ -321,7 +322,7 @@ function ConnectFlowPreview({
           <>
             <div className="space-y-2 pt-12">
               <ModelSourceTiles
-                label="Model source"
+                label={zh("Model source")}
                 sources={MODEL_SOURCES}
                 mode={mode}
                 selectedId={selectedId}
@@ -420,8 +421,8 @@ function ConnectFlowPreview({
                     {/* The one place the three paths differ. */}
                     {apiMode ? (
                       <OnboardingCardField
-                        label="API key"
-                        placeholder="Enter API key here"
+                        label={zh("API key")}
+                        placeholder={zh("Enter API key here")}
                         masked
                         value={apiKey}
                         onChange={setApiKey}

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useMemo } from "react";
 import type { CostByBiller, CostByProviderModel } from "@paperclipai/shared";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
@@ -63,7 +64,7 @@ export function BillerSpendCard({
               {providerDisplayName(row.biller)}
             </CardTitle>
             <CardDescription className="text-xs mt-0.5">
-              <span className="font-mono">{formatTokens(row.inputTokens + row.cachedInputTokens)}</span> in
+              <span className="font-mono">{formatTokens(row.inputTokens + row.cachedInputTokens)}</span> {zh("in")}
               {" · "}
               <span className="font-mono">{formatTokens(row.outputTokens)}</span> out
               {" · "}

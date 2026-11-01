@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useId, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import type { ConfigureRailwaySsh, ConnectionGrantsResponse, RailwaySshSetup, ToolConnection } from "@paperclipai/shared";
@@ -48,7 +49,7 @@ export function RailwayAccessPanel({ connection, grants }: { connection: ToolCon
       {!setup && <Button variant="outline" disabled={mutation.isPending} onClick={() => mutation.mutate({ action: "prepare", grantId })}>Generate SSH key pair</Button>}
       {setup && <>
         <div className="space-y-2">
-          <Label htmlFor={`${id}-public`}>Public key</Label>
+          <Label htmlFor={`${id}-public`}>{zh("Public key")}</Label>
           <Textarea id={`${id}-public`} readOnly value={setup.publicKey} className="font-mono text-xs" />
           <p className="text-sm text-muted-foreground">Register this public key in the Railway account used by this authorization. The private key stays in Paperclip’s vault. <a className="underline" href="https://docs.railway.com/cli/ssh#manage-ssh-keys" target="_blank" rel="noreferrer">Railway key setup</a></p>
         </div>

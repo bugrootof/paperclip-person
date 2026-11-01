@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { FileText, FolderOpen } from "lucide-react";
@@ -64,7 +65,7 @@ export function CaseDetail() {
   const agents = useMemo(() => new Map((agentsQuery.data ?? []).map(agent => [agent.id, agent])), [agentsQuery.data]);
 
   useEffect(() => {
-    setBreadcrumbs([{ label: "Cases", href: listPath }, { label: caseData?.identifier ?? caseIdentifier ?? "Case" }]);
+    setBreadcrumbs([{ label: zh("Cases"), href: listPath }, { label: caseData?.identifier ?? caseIdentifier ?? "Case" }]);
   }, [setBreadcrumbs, listPath, caseData?.identifier, caseIdentifier]);
 
   if (!caseIdentifier) return <Navigate to={listPath} replace />;
@@ -107,12 +108,12 @@ export function CaseDetail() {
     <div className="min-w-0 space-y-8">
       <CaseWorkSummary caseData={caseData} agents={agents} />
       {fields.length > 0 && <section className="space-y-3" aria-label="Case details">
-        <h2 className="text-sm font-semibold">Details</h2>
+        <h2 className="text-sm font-semibold">{zh("Details")}</h2>
         <CaseFieldsTable fields={Object.fromEntries(fields)} />
       </section>}
 
       {(caseData.documents.length > 0 || taskDocuments.length > 0) && <section className="space-y-3" aria-label="Case documents">
-        <h2 className="text-sm font-semibold">Documents</h2>
+        <h2 className="text-sm font-semibold">{zh("Documents")}</h2>
         <div className="divide-y divide-border">
           {taskDocuments.map(document => <CaseDocumentPreview key={document.id} caseIdentifier={caseData.identifier} document={document} />)}
           {caseData.documents.map(document => <CaseDocumentPreview key={`case:${caseData.id}:${document.key}`} caseIdentifier={caseData.identifier} document={document} />)}
@@ -121,7 +122,7 @@ export function CaseDetail() {
       </section>}
 
       {caseData.attachments.length > 0 && <section className="space-y-3" aria-label="Case attachments">
-        <h2 className="text-sm font-semibold">Attachments</h2>
+        <h2 className="text-sm font-semibold">{zh("Attachments")}</h2>
         {images.length > 0 && <CaseAttachmentsGallery attachments={images} />}
         {files.length > 0 && <ul className="space-y-2">{files.map(attachment => <li key={attachment.id}><a href={caseAttachmentUrl(attachment)} target="_blank" rel="noreferrer" className="inline-flex max-w-full items-center gap-2 text-sm text-primary hover:underline"><FileText aria-hidden className="size-4 shrink-0" /><span className="truncate">{attachment.asset.originalFilename ?? "Download attachment"}</span></a></li>)}</ul>}
       </section>}
@@ -129,22 +130,22 @@ export function CaseDetail() {
       {caseData.workIssueId && <CaseHandoffHistory caseId={caseData.id} task={caseData.workIssue} agents={agents} />}
 
       {relatedTasks.length > 0 && <details className="space-y-3">
-        <summary className="w-fit cursor-pointer text-sm font-semibold">Related tasks <span className="text-muted-foreground">{relatedTasks.length}</span></summary>
+        <summary className="w-fit cursor-pointer text-sm font-semibold">{zh("Related tasks")} <span className="text-muted-foreground">{relatedTasks.length}</span></summary>
         <ul className="space-y-2">{relatedTasks.map(link => <li key={link.id} className="flex flex-wrap items-center gap-2"><IssueReferencePill issue={link.issue} /><span className="text-sm text-muted-foreground">{link.issue.title}</span><span className="text-xs text-muted-foreground">{link.role}</span></li>)}</ul>
       </details>}
 
       {(caseData.parent || children.length > 0 || childrenQuery.isError) && <details className="space-y-3">
         <summary className="w-fit cursor-pointer text-sm font-semibold">Related cases</summary>
-        {caseData.parent && <div className="space-y-1"><h3 className="text-xs text-muted-foreground">Parent</h3><CaseRelation item={caseData.parent} search={search} /></div>}
+        {caseData.parent && <div className="space-y-1"><h3 className="text-xs text-muted-foreground">{zh("Parent")}</h3><CaseRelation item={caseData.parent} search={search} /></div>}
         {children.length > 0 && <div className="space-y-1"><h3 className="text-xs text-muted-foreground">Children {children.length}</h3>{children.map(child => <CaseRelation key={child.id} item={child} search={search} />)}</div>}
         {queryViewKind(childrenQuery) === "error" && <p role="alert" className="text-sm text-destructive">Child cases couldn’t be loaded.</p>}
       </details>}
 
       {!fields.length && !caseData.documents.length && !taskDocuments.length && !caseData.attachments.length && <p className="text-sm text-muted-foreground">No findings recorded yet.</p>}
       <dl className="flex flex-wrap gap-x-6 gap-y-3 text-xs text-muted-foreground">
-        {projectQuery.data && <div className="space-y-1"><dt>Project</dt><dd><Link to={`/projects/${projectQuery.data.id}`} className="text-foreground hover:underline">{projectQuery.data.name}</Link></dd></div>}
-        <div className="space-y-1"><dt>Created</dt><dd><time dateTime={caseData.createdAt} className="font-mono">{formatDateTime(caseData.createdAt, { includeYear: false })}</time></dd></div>
-        <div className="space-y-1"><dt>Updated</dt><dd><time dateTime={caseData.updatedAt} className="font-mono">{formatDateTime(caseData.updatedAt, { includeYear: false })}</time></dd></div>
+        {projectQuery.data && <div className="space-y-1"><dt>{zh("Project")}</dt><dd><Link to={`/projects/${projectQuery.data.id}`} className="text-foreground hover:underline">{projectQuery.data.name}</Link></dd></div>}
+        <div className="space-y-1"><dt>{zh("Created")}</dt><dd><time dateTime={caseData.createdAt} className="font-mono">{formatDateTime(caseData.createdAt, { includeYear: false })}</time></dd></div>
+        <div className="space-y-1"><dt>{zh("Updated")}</dt><dd><time dateTime={caseData.updatedAt} className="font-mono">{formatDateTime(caseData.updatedAt, { includeYear: false })}</time></dd></div>
       </dl>
       <Link to={caseAuditHref(caseData.id)} className="inline-block text-sm text-muted-foreground hover:text-foreground hover:underline">View in Audit</Link>
     </div>

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { TranscriptEntry } from "../../adapters";
 import type { ToolRunDecision } from "@paperclipai/shared";
@@ -917,7 +918,7 @@ function TranscriptMessageBlock({
       {!isAssistant && (
         <div className="mb-1.5 flex items-center gap-2 text-(length:--text-micro) font-semibold uppercase tracking-(--tracking-caps) text-muted-foreground">
           <User className={compact ? "h-3.5 w-3.5" : "h-4 w-4"} />
-          <span>User</span>
+          <span>{zh("User")}</span>
         </div>
       )}
       <MarkdownBody
@@ -1107,7 +1108,7 @@ function TranscriptToolCard({
             <div className={cn("grid gap-3", compact ? "grid-cols-1" : "lg:grid-cols-2")}>
               <div>
                 <div className="mb-1 text-(length:--text-nano) font-semibold uppercase tracking-(--tracking-caps) text-muted-foreground">
-                  Input
+                  {zh("Input")}
                 </div>
                 <pre className="overflow-x-auto whitespace-pre-wrap break-words font-mono text-(length:--text-micro) text-foreground/80">
                   {formatToolPayload(block.input) || "<empty>"}
@@ -1396,13 +1397,13 @@ function TranscriptToolGroup({
                   : item.status === "error" ? "text-red-700 dark:text-red-300"
                   : "text-emerald-700 dark:text-emerald-300"
                 )}>
-                  {item.status === "running" ? "Running" : item.status === "error" ? "Errored" : "Completed"}
+                  {item.status === "running" ? "Running" : item.status === "error" ? "Errored" : zh("Completed")}
                 </span>
                 <ToolDecisionBadge decision={findToolDecision(toolDecisionMaps, item)} />
               </div>
               <div className={cn("grid gap-2 pl-7", compact ? "grid-cols-1" : "lg:grid-cols-2")}>
                 <div>
-                  <div className="mb-0.5 text-(length:--text-nano) font-semibold uppercase tracking-(--tracking-caps) text-muted-foreground">Input</div>
+                  <div className="mb-0.5 text-(length:--text-nano) font-semibold uppercase tracking-(--tracking-caps) text-muted-foreground">{zh("Input")}</div>
                   <pre className="overflow-x-auto whitespace-pre-wrap break-words font-mono text-(length:--text-micro) text-foreground/80">
                     {formatToolPayload(item.input) || "<empty>"}
                   </pre>

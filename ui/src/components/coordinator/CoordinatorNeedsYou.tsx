@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
@@ -60,18 +61,18 @@ function HistoryPanel({ companyId, agents, onClose, mobile = false }: { companyI
     <ToolbarSearch query={search} onQueryChange={setSearch} label="Search decision history" placeholder="Search decisions or task IDs…" />
     <div className="grid grid-cols-2 gap-2">
       <NativeSelect aria-label="Filter decision outcomes" value={outcome} onChange={(event) => setOutcome(event.target.value)}>
-        <option value="">All outcomes</option><option value="accepted">Approved</option><option value="answered">Answered</option><option value="rejected">Changes requested</option><option value="decided">Decided</option><option value="cancelled">Cancelled</option><option value="expired">Expired</option>
+        <option value="">All outcomes</option><option value="accepted">Approved</option><option value="answered">Answered</option><option value="rejected">{zh("Changes requested")}</option><option value="decided">Decided</option><option value="cancelled">Cancelled</option><option value="expired">Expired</option>
       </NativeSelect>
       <NativeSelect aria-label="Sort decision history" value={sort} onChange={(event) => setSort(event.target.value as typeof sort)}><option value="newest">Newest first</option><option value="oldest">Oldest first</option></NativeSelect>
       <NativeSelect aria-label="Filter decision history by agent" value={agentId} onChange={(event) => setAgentId(event.target.value)} className="col-span-2"><option value="">All agents</option>{agents.map((agent) => <option key={agent.id} value={agent.id}>{agent.name}</option>)}</NativeSelect>
       <NativeSelect aria-label="Filter decision history by project" value={projectId} onChange={(event) => setProjectId(event.target.value)} className="col-span-2"><option value="">All projects</option>{(projects.data ?? []).map((project) => <option key={project.id} value={project.id}>{project.name}</option>)}</NativeSelect>
-      <NativeSelect aria-label="Group decision history" value={groupBy} onChange={(event) => setGroupBy(event.target.value as Group)} className="col-span-2"><option value="none">No grouping</option><option value="task">By task</option><option value="agent">By agent</option><option value="project">By project</option></NativeSelect>
+      <NativeSelect aria-label="Group decision history" value={groupBy} onChange={(event) => setGroupBy(event.target.value as Group)} className="col-span-2"><option value="none">No grouping</option><option value="task">By task</option><option value="agent">{zh("By agent")}</option><option value="project">{zh("By project")}</option></NativeSelect>
     </div>
     {history.isPending ? <p role="status" className="text-sm text-muted-foreground">Loading decisions…</p> : null}
-    {history.isError ? <div role="alert" className="space-y-2 text-sm"><p>Decision history could not be loaded.</p><Button variant="outline" onClick={() => void history.refetch()}>Retry</Button></div> : null}
+    {history.isError ? <div role="alert" className="space-y-2 text-sm"><p>Decision history could not be loaded.</p><Button variant="outline" onClick={() => void history.refetch()}>{zh("Retry")}</Button></div> : null}
     {!history.isPending && !history.isError && !items.length ? <p className="text-sm text-muted-foreground">No decisions match these filters.</p> : null}
     <div className="space-y-4">{[...groups].map(([label, entries]) => <section key={label} className="space-y-3">{label ? <h3 className="text-sm font-medium text-muted-foreground">{label}</h3> : null}{entries.map((item) => <div key={item.id} className="space-y-1"><Receipt item={item} onOpen={navigate} /><p className="px-1 text-xs text-muted-foreground"><time dateTime={item.resolvedAt}>{new Date(item.resolvedAt).toLocaleString()}</time></p></div>)}</section>)}</div>
-    {history.hasNextPage ? <Button variant="outline" disabled={history.isFetchingNextPage} onClick={() => void history.fetchNextPage()}>{history.isFetchingNextPage ? "Loading…" : "Load more decisions"}</Button> : null}
+    {history.hasNextPage ? <Button variant="outline" disabled={history.isFetchingNextPage} onClick={() => void history.fetchNextPage()}>{history.isFetchingNextPage ? zh("Loading…") : "Load more decisions"}</Button> : null}
   </div>;
 }
 
@@ -165,7 +166,7 @@ export function CoordinatorNeedsYou() {
   const filtersActive = Boolean(query.trim() || agentFilter || projectFilter);
   const closeHistory = useCallback(() => { setHistoryOpen(false); closePanel(); }, [closePanel]);
   const showHistory = () => { setHistoryOpen(true); if (!isMobile) setPanelVisible(true); };
-  useEffect(() => { setBreadcrumbs([{ label: "Needs You" }]); }, [setBreadcrumbs]);
+  useEffect(() => { setBreadcrumbs([{ label: zh("Needs You") }]); }, [setBreadcrumbs]);
   useEffect(() => {
     setSettling([]); setHistoryOpen(false); setNow(Date.now()); closePanel();
     return closePanel;
@@ -192,23 +193,23 @@ export function CoordinatorNeedsYou() {
   };
   const duration = typeof document === "undefined" ? 0 : parseCssTimeMs(getComputedStyle(document.documentElement).getPropertyValue("--motion-duration-base")) / 1_000;
   if (!selectedCompanyId) return <p className="text-sm text-muted-foreground">Choose a company to see its decisions.</p>;
-  return <LayoutGroup id="coordinator-decisions"><section className="coordinator-needs-you mx-auto w-full max-w-4xl space-y-6" aria-label="Needs You">
+  return <LayoutGroup id="coordinator-decisions"><section className="coordinator-needs-you mx-auto w-full max-w-4xl space-y-6" aria-label={zh("Needs You")}>
     {isMobile ? <Sheet open={historyOpen} onOpenChange={open => { if (!open) closeHistory(); }}>
       <SheetContent side="bottom" aria-describedby={undefined} className="mobile-task-side-panel inset-0 h-dvh max-h-dvh w-full max-w-none gap-0 border-0 p-0 pt-(--sz-safe-top) pb-(--sz-safe-bottom)">
         <SheetHeader><SheetTitle>Decision history</SheetTitle></SheetHeader>
         <div className="min-h-0 flex-1 overflow-y-auto p-4"><HistoryPanel companyId={selectedCompanyId} agents={agentQuery.data ?? []} onClose={closeHistory} mobile /></div>
       </SheetContent>
     </Sheet> : null}
-    <header className="flex items-center justify-between gap-3"><h1 className="text-2xl font-medium">Needs You</h1><Button variant="ghost" onClick={showHistory}><History className="size-4" />Decision history</Button></header>
+    <header className="flex items-center justify-between gap-3"><h1 className="text-2xl font-medium">{zh("Needs You")}</h1><Button variant="ghost" onClick={showHistory}><History className="size-4" />Decision history</Button></header>
     <div role="toolbar" aria-label="Decisions controls" className="flex flex-wrap items-center gap-2">
       <ToolbarSearch query={query} onQueryChange={setQuery} label="Search decisions" placeholder="Search decisions or task IDs…" />
       <NativeSelect aria-label="Filter decisions by agent" value={agentFilter} onChange={(event) => setAgentFilter(event.target.value)} className="w-auto"><option value="">All agents</option>{(agentQuery.data ?? []).map((agent) => <option key={agent.id} value={agent.id}>{agent.name}</option>)}</NativeSelect>
       <NativeSelect aria-label="Filter decisions by project" value={projectFilter} onChange={(event) => setProjectFilter(event.target.value)} className="w-auto"><option value="">All projects</option>{projects.map(([id, name]) => <option key={id} value={id}>{name}</option>)}</NativeSelect>
-      <NativeSelect aria-label="Group decisions" value={groupBy} onChange={(event) => setGroupBy(event.target.value as Group)} className="w-auto"><option value="none">No grouping</option><option value="task">By task</option><option value="agent">By agent</option><option value="project">By project</option></NativeSelect>
+      <NativeSelect aria-label="Group decisions" value={groupBy} onChange={(event) => setGroupBy(event.target.value as Group)} className="w-auto"><option value="none">No grouping</option><option value="task">By task</option><option value="agent">{zh("By agent")}</option><option value="project">{zh("By project")}</option></NativeSelect>
       <NativeSelect aria-label="Sort decisions" value={sort} onChange={(event) => setSort(event.target.value as typeof sort)} className="w-auto"><option value="newest">Newest first</option><option value="oldest">Oldest first</option></NativeSelect>
     </div>
     {feed.isPending ? <p role="status" className="flex items-center gap-2 text-sm text-muted-foreground"><Loader2 className="size-4 animate-spin" />Loading decisions…</p> : null}
-    {feed.isError ? <div role="alert" className="space-y-2"><p className="text-sm">Decisions could not be loaded.</p><Button variant="outline" onClick={() => void feed.refetch()}>Retry</Button></div> : null}
+    {feed.isError ? <div role="alert" className="space-y-2"><p className="text-sm">Decisions could not be loaded.</p><Button variant="outline" onClick={() => void feed.refetch()}>{zh("Retry")}</Button></div> : null}
     {!feed.isPending && !feed.isError && filtered.length === 0 ? <div className="space-y-3 py-8 text-center"><p className="text-sm text-muted-foreground">{filtersActive && !visibleRecentItems.length ? "No decisions match these filters." : pendingItems.length ? "No open decisions match these filters." : "You're caught up."}</p><Button variant="ghost" onClick={showHistory}>Open decision history<ArrowUpRight className="size-4" /></Button></div> : null}
     {groups.map(([label, items]) => <div key={label} className="space-y-4">{label ? <h2 className="text-sm font-medium text-muted-foreground">{label}</h2> : null}{items.map((item) => {
       const issueId = item.relatedIssue?.id ?? String(item.subject.metadata?.issueId ?? "");
@@ -238,6 +239,6 @@ export function CoordinatorNeedsYou() {
     })}</div>)}
     {filtered.length > renderLimit ? <Button variant="outline" onClick={() => setRenderLimit((value) => value + 40)}>Show more decisions</Button> : null}
     {visibleRecentItems.length ? <section className="space-y-3" aria-label="Recent Decisions"><h2 className="text-sm font-medium text-muted-foreground">Recent Decisions</h2>{recentGroups.map(([label, items]) => <div key={label} className="space-y-3">{label ? <h3 className="text-sm font-medium text-muted-foreground">{label}</h3> : null}{items.map((item) => <motion.div layout={!reducedMotion} layoutId={reducedMotion ? undefined : item.id} transition={{ duration }} key={item.id}><Receipt item={item} onOpen={navigate} /></motion.div>)}</div>)}</section> : null}
-    {recent.isError ? <p role="alert" className="text-sm text-muted-foreground">Recent decisions could not be loaded. <button className="underline" onClick={() => void recent.refetch()}>Retry</button></p> : null}
+    {recent.isError ? <p role="alert" className="text-sm text-muted-foreground">Recent decisions could not be loaded. <button className="underline" onClick={() => void recent.refetch()}>{zh("Retry")}</button></p> : null}
   </section></LayoutGroup>;
 }

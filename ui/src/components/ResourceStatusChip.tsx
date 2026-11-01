@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { brandChipBadge, type BrandChipColor } from "@/lib/status-colors";
@@ -33,14 +34,14 @@ interface VariantSpec {
 }
 
 const VARIANTS: Record<ResourceStatusVariant, VariantSpec> = {
-  ready: { color: "green", glyph: "●", label: "Ready", title: "Materialized and matches the shipped default" },
+  ready: { color: "green", glyph: "●", label: zh("Ready"), title: "Materialized and matches the shipped default" },
   needs_setup: { color: "amber", glyph: "⚠", label: "Needs setup", title: "Present but not usable yet" },
-  missing: { color: "amber", glyph: "⚠", label: "Missing", title: "Expected resource absent; reconcile will recreate it" },
+  missing: { color: "amber", glyph: "⚠", label: zh("Missing"), title: "Expected resource absent; reconcile will recreate it" },
   error: { color: "red", glyph: "✕", label: "Error", title: "Failed to load or reconcile" },
   update_available: {
     color: "blue",
     glyph: "↑",
-    label: "Update available",
+    label: zh("Update available"),
     title: "Unedited — a newer shipped default can be applied",
   },
   drifted: {
@@ -55,7 +56,7 @@ const VARIANTS: Record<ResourceStatusVariant, VariantSpec> = {
     label: "Schedule off",
     title: "No background work runs until you enable it — costs zero tokens",
   },
-  schedule_on: { color: "green", glyph: "●", label: "Weekly", title: "Runs on the weekly schedule" },
+  schedule_on: { color: "green", glyph: "●", label: zh("Weekly"), title: "Runs on the weekly schedule" },
   pending_approval: {
     color: "amber",
     glyph: "⚠",

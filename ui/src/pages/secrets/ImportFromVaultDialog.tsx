@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
@@ -151,7 +152,7 @@ function RowResultBadge({ status }: { status: RemoteSecretImportRowResult["statu
           variant="outline"
           className="gap-1 px-1.5 py-0 font-normal text-emerald-600 border-emerald-500/40 dark:text-emerald-400"
         >
-          <CheckCircle2 className="h-3 w-3" /> Created
+          <CheckCircle2 className="h-3 w-3" /> {zh("Created")}
         </Badge>
       );
     case "skipped":
@@ -170,7 +171,7 @@ function RowResultBadge({ status }: { status: RemoteSecretImportRowResult["statu
           variant="outline"
           className="gap-1 px-1.5 py-0 font-normal text-destructive border-destructive/40"
         >
-          <XCircle className="h-3 w-3" /> Failed
+          <XCircle className="h-3 w-3" /> {zh("Failed")}
         </Badge>
       );
   }
@@ -730,7 +731,7 @@ export function ImportFromVaultDialog({
           <div className="flex items-center gap-2">
             {step !== "result" && (
               <Button variant="ghost" size="sm" onClick={() => handleClose()}>
-                Cancel
+                {zh("Cancel")}
               </Button>
             )}
             {step === "review" && (
@@ -740,7 +741,7 @@ export function ImportFromVaultDialog({
                 onClick={() => setStep("select")}
                 disabled={importMutation.isPending}
               >
-                Back
+                {zh("Back")}
               </Button>
             )}
             {step === "select" && (
@@ -773,7 +774,7 @@ export function ImportFromVaultDialog({
             )}
             {step === "result" && (
               <Button size="sm" onClick={() => handleClose(true)}>
-                Done
+                {zh("Done")}
               </Button>
             )}
           </div>
@@ -785,8 +786,8 @@ export function ImportFromVaultDialog({
 
 function Stepper({ step }: { step: Step }) {
   const steps: { id: Step; label: string }[] = [
-    { id: "select", label: "Select" },
-    { id: "review", label: "Review" },
+    { id: "select", label: zh("Select") },
+    { id: "review", label: zh("Review") },
     { id: "result", label: "Result" },
   ];
   const activeIndex = steps.findIndex((s) => s.id === step);
@@ -897,7 +898,7 @@ function SelectStep(props: SelectStepProps) {
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       <div className="flex flex-wrap items-center gap-2 border-b border-border/60 px-5 py-3">
-        <label className="text-xs uppercase tracking-wide text-muted-foreground">Vault</label>
+        <label className="text-xs uppercase tracking-wide text-muted-foreground">{zh("Vault")}</label>
         {awsVaults.length === 1 && eligible.length === 1 ? (
           <span className="text-xs font-medium" data-testid="vault-static-label">
             {eligible[0].displayName}
@@ -1103,7 +1104,7 @@ function SelectStep(props: SelectStepProps) {
             >
               {pageLoading ? (
                 <>
-                  <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> Loading…
+                  <Loader2 className="mr-1.5 h-3.5 w-3.5 animate-spin" /> {zh("Loading…")}
                 </>
               ) : (
                 `Load ${PAGE_SIZE} more`
@@ -1142,7 +1143,7 @@ function PreviewErrorBanner({ error, onRetry }: { error: unknown; onRetry: () =>
         </div>
         <div className="mt-2 flex items-center gap-2">
           <Button variant="outline" size="sm" onClick={onRetry}>
-            <RefreshCw className="mr-1.5 h-3.5 w-3.5" /> Retry
+            <RefreshCw className="mr-1.5 h-3.5 w-3.5" /> {zh("Retry")}
           </Button>
           {isPermission && (
             <a
@@ -1258,7 +1259,7 @@ function ReviewStep({ drafts, reviewErrors, updateDraft, removeDraft, importing 
                       />
                     </label>
                     <label className="flex flex-col gap-1 text-xs">
-                      <span className="text-muted-foreground">Key</span>
+                      <span className="text-muted-foreground">{zh("Key")}</span>
                       <Input
                         value={draft.key}
                         onChange={(e) =>
@@ -1358,18 +1359,18 @@ function ResultStep({ result, draftList }: ResultStepProps) {
         <div className="mt-1 flex flex-wrap items-center gap-3 text-xs text-muted-foreground">
           <span className="text-emerald-600 dark:text-emerald-400">✓ {result.importedCount} created</span>
           <span>⊘ {result.skippedCount} skipped</span>
-          <span className="text-destructive">⨯ {result.errorCount} failed</span>
+          <span className="text-destructive">⨯ {result.errorCount} {zh("failed")}</span>
         </div>
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto">
         {grouped.created.length > 0 && (
-          <ResultGroup label="Created" rows={grouped.created} draftLookup={draftLookup} />
+          <ResultGroup label={zh("Created")} rows={grouped.created} draftLookup={draftLookup} />
         )}
         {grouped.skipped.length > 0 && (
           <ResultGroup label="Skipped" rows={grouped.skipped} draftLookup={draftLookup} />
         )}
         {grouped.failed.length > 0 && (
-          <ResultGroup label="Failed" rows={grouped.failed} draftLookup={draftLookup} />
+          <ResultGroup label={zh("Failed")} rows={grouped.failed} draftLookup={draftLookup} />
         )}
       </div>
     </div>
@@ -1466,7 +1467,7 @@ function FooterStatus({
         {readyReviewCount} ready
         {blockedReviewCount > 0 && (
           <span className="ml-2 text-amber-600 dark:text-amber-400">
-            · {blockedReviewCount} blocked
+            · {blockedReviewCount} {zh("blocked")}
           </span>
         )}
       </div>
@@ -1477,7 +1478,7 @@ function FooterStatus({
       <div className="flex items-center gap-3 text-xs text-muted-foreground">
         <span>{result.importedCount} created</span>
         <span>{result.skippedCount} skipped</span>
-        <span>{result.errorCount} failed</span>
+        <span>{result.errorCount} {zh("failed")}</span>
       </div>
     );
   }

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import type { IssueDocument } from "@paperclipai/shared";
@@ -112,7 +113,7 @@ export function TaskDocumentPanel({
           </DocumentMarkdownBody>
         </IssueDocumentAnnotations>
       ) : (
-        <p className="text-sm text-muted-foreground">Document is empty.</p>
+        <p className="text-sm text-muted-foreground">{zh("Document is empty.")}</p>
       )}
     </article>
   );

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { CsvPreview } from "./CsvPreview";
 import { isCsvFile } from "@/lib/csv-preview";
 import {
@@ -833,7 +834,7 @@ export function FileViewerSheet({
                   size="icon-sm"
                   onClick={handleCopyLink}
                   aria-label={copiedField === "link" ? "Copied file view link" : "Copy link to this file view"}
-                  title={copiedField === "link" ? "Copied link" : "Copy link"}
+                  title={copiedField === "link" ? "Copied link" : zh("Copy link")}
                   className="h-7 w-7"
                 >
                   {copyingField === "link" ? (
@@ -852,7 +853,7 @@ export function FileViewerSheet({
                 onClick={() => handleOpenChange(false)}
                 className="h-7 w-7"
                 aria-label="Close file viewer"
-                title="Close"
+                title={zh("Close")}
               >
                 <X className="h-4 w-4" />
               </Button>
@@ -995,7 +996,7 @@ export function FileViewerBody({
                 </Button>
               ) : null}
               <Button type="button" variant="ghost" size="sm" onClick={onRetry}>
-                <RefreshCcw aria-hidden="true" className="mr-1 h-3 w-3" /> Retry
+                <RefreshCcw aria-hidden="true" className="mr-1 h-3 w-3" /> {zh("Retry")}
               </Button>
             </>
           }
@@ -1019,7 +1020,7 @@ export function FileViewerBody({
         body={denial.body}
         actions={
           <Button type="button" variant="ghost" size="sm" onClick={onRetry}>
-            <RefreshCcw aria-hidden="true" className="mr-1 h-3 w-3" /> Retry
+            <RefreshCcw aria-hidden="true" className="mr-1 h-3 w-3" /> {zh("Retry")}
           </Button>
         }
       />
@@ -1059,7 +1060,7 @@ export function FileViewerBody({
         body={denial.body}
         actions={
           <Button type="button" variant="ghost" size="sm" onClick={onRetry}>
-            <RefreshCcw aria-hidden="true" className="mr-1 h-3 w-3" /> Retry
+            <RefreshCcw aria-hidden="true" className="mr-1 h-3 w-3" /> {zh("Retry")}
           </Button>
         }
       />

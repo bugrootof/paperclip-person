@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useShowAgentCreatedTasks } from "../hooks/useShowAgentCreatedTasks";
 import { useCallback, useEffect, useMemo, useState, useRef } from "react";
 import { Link, useParams, useNavigate, useLocation, Navigate } from "@/lib/router";
@@ -112,16 +113,16 @@ function ProjectTilePicker({
         <button
           type="button"
           className="shrink-0 rounded-lg cursor-pointer hover:ring-2 hover:ring-foreground/20 transition-(--tp-box-shadow)"
-          aria-label="Change project icon and color"
+          aria-label={zh("Change project icon and color")}
         >
           <ProjectTile color={color} icon={icon} size="md" />
         </button>
       </PopoverTrigger>
       <PopoverContent className="w-72 p-3" align="start">
         {/* Icon search + grid */}
-        <p className="text-xs font-medium text-muted-foreground mb-2">Icon</p>
+        <p className="text-xs font-medium text-muted-foreground mb-2">{zh("Icon")}</p>
         <Input
-          placeholder="Search icons..."
+          placeholder={zh("Search icons...")}
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="mb-2 h-8 text-sm"
@@ -143,13 +144,13 @@ function ProjectTilePicker({
             </button>
           ))}
           {filteredIcons.length === 0 && (
-            <p className="col-span-7 text-xs text-muted-foreground text-center py-2">No icons match</p>
+            <p className="col-span-7 text-xs text-muted-foreground text-center py-2">{zh("No icons match")}</p>
           )}
         </div>
 
         {/* Color swatches */}
         <div className="mt-3 border-t border-border pt-3">
-          <p className="text-xs font-medium text-muted-foreground mb-2">Color</p>
+          <p className="text-xs font-medium text-muted-foreground mb-2">{zh("Color")}</p>
           <div className="grid grid-cols-5 gap-1.5">
             {/* Neutral / reset-to-gray option */}
             <button
@@ -160,8 +161,8 @@ function ProjectTilePicker({
                   ? "ring-2 ring-foreground ring-offset-1 ring-offset-background rounded-md"
                   : ""
               }`}
-              aria-label="Reset to neutral gray"
-              title="Neutral (default)"
+              aria-label={zh("Reset to neutral gray")}
+              title={zh("Neutral (default)")}
             >
               <ProjectTile color={null} size="sm" />
             </button>
@@ -510,7 +511,7 @@ export function ProjectDetail() {
 
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Projects", href: "/projects" },
+      { label: zh("Projects"), href: "/projects" },
       { label: project?.name ?? routeProjectRef ?? "Project" },
     ]);
   }, [setBreadcrumbs, project, routeProjectRef]);
@@ -700,7 +701,7 @@ export function ProjectDetail() {
 
   if (isLoading || projectView.kind === "reconnecting") return <PageSkeleton variant="detail" />;
   if (projectView.kind === "error") {
-    return <QueryErrorState size="page" error={error} action="load this project" onRetry={projectView.retry} retrying={projectView.isFetching} />;
+    return <QueryErrorState size="page" error={error} action={zh("load this project")} onRetry={projectView.retry} retrying={projectView.isFetching} />;
   }
   if (!project) return null;
   const showLeftProjectNotice =
@@ -740,7 +741,7 @@ export function ProjectDetail() {
       {showLeftProjectNotice ? (
         <div className="flex items-center gap-3 border border-yellow-300/35 bg-yellow-300/10 px-3 py-2 text-sm text-yellow-900 dark:text-yellow-100">
           <p className="min-w-0 flex-1">
-            You left this project. It no longer appears in your sidebar.
+            {zh("You left this project. It no longer appears in your sidebar.")}
           </p>
           <MembershipAction
             compact
@@ -764,7 +765,7 @@ export function ProjectDetail() {
           <button
             type="button"
             className="h-6 w-6 shrink-0 text-yellow-900/70 hover:text-yellow-900 dark:text-yellow-100/70 dark:hover:text-yellow-100"
-            aria-label="Dismiss project membership notice"
+            aria-label={zh("Dismiss project membership notice")}
             onClick={() => setDismissedLeftProjectIds((current) => new Set(current).add(project.id))}
           >
             ×
@@ -790,13 +791,13 @@ export function ProjectDetail() {
           {project.pauseReason === "budget" ? (
             <div className="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1 text-(length:--text-micro) font-medium uppercase tracking-(--tracking-caps) text-red-800 dark:text-red-200">
               <span className="h-2 w-2 rounded-full bg-red-400" />
-              Paused by budget hard stop
+              {zh("Paused by budget hard stop")}
             </div>
           ) : null}
           {project.managedByPlugin ? (
             <div className="inline-flex items-center gap-2 rounded-full border border-border bg-muted px-3 py-1 text-(length:--text-micro) font-medium text-muted-foreground">
               <span className="h-2 w-2 rounded-full" style={{ backgroundColor: project.color ?? "var(--project-seed)" }} />
-              Managed by {project.managedByPlugin.pluginDisplayName}
+              {zh("Managed by")} {project.managedByPlugin.pluginDisplayName}
             </div>
           ) : null}
         </div>
@@ -820,8 +821,8 @@ export function ProjectDetail() {
         companyId={resolvedCompanyId}
         scopeKind="project"
         scopeId={project.id}
-        title="Project summary"
-        description="Summarizer keeps the latest project status, next step, and operator-needed items here."
+        title={zh("Project summary")}
+        description={zh("Summarizer keeps the latest project status, next step, and operator-needed items here.")}
       />
 
       <PluginSlotOutlet
@@ -858,12 +859,12 @@ export function ProjectDetail() {
       <Tabs value={activeTab ?? "list"} onValueChange={(value) => handleTabChange(value as ProjectTab)}>
         <PageTabBar
           items={[
-            { value: "list", label: "Tasks" },
+            { value: "list", label: zh("Tasks") },
 
             ...(project.managedByPlugin ? [{ value: "plugin-operations", label: "Plugin operations" }] : []),
-            ...(showWorkspacesTab ? [{ value: "workspaces", label: "Workspaces" }] : []),
-            { value: "configuration", label: "Configuration" },
-            { value: "budget", label: "Budget" },
+            ...(showWorkspacesTab ? [{ value: "workspaces", label: zh("Workspaces") }] : []),
+            { value: "configuration", label: zh("Configuration") },
+            { value: "budget", label: zh("Budget") },
             ...pluginTabItems.map((item) => ({
               value: item.value,
               label: item.label,
@@ -894,7 +895,7 @@ export function ProjectDetail() {
           workspaceTabFailure ? (
             <QueryErrorState
               error={workspaceTabFailure.error}
-              action="load workspaces"
+              action={zh("load workspaces")}
               onRetry={workspaceTabFailure.retry}
               retrying={workspaceTabFailure.isFetching}
             />
@@ -907,7 +908,7 @@ export function ProjectDetail() {
             />
           )
         ) : (
-          <p className="text-sm text-muted-foreground">Loading workspaces...</p>
+          <p className="text-sm text-muted-foreground">{zh("Loading workspaces...")}</p>
         )
       ) : null}
 

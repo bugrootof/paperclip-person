@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useMemo } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useParams, useSearchParams } from "@/lib/router";
@@ -106,7 +107,7 @@ export function CliAuthPage() {
             The Paperclip CLI can now finish authentication on the requesting machine.
           </p>
           <p className="mt-4 text-sm text-muted-foreground">
-            Command: <span className="font-mono text-foreground">{challenge.command}</span>
+            {zh("Command:")} <span className="font-mono text-foreground">{challenge.command}</span>
           </p>
         </Card>
       </div>
@@ -154,7 +155,7 @@ export function CliAuthPage() {
 
         <div className="mt-5 space-y-3 text-sm">
           <div>
-            <div className="text-muted-foreground">Command</div>
+            <div className="text-muted-foreground">{zh("Command")}</div>
             <div className="font-mono text-foreground">{challenge.command}</div>
           </div>
           <div>
@@ -164,7 +165,7 @@ export function CliAuthPage() {
           <div>
             <div className="text-muted-foreground">Requested access</div>
             <div className="text-foreground">
-              {challenge.requestedAccess === "instance_admin_required" ? "Instance admin" : "Board"}
+              {challenge.requestedAccess === "instance_admin_required" ? "Instance admin" : zh("Board")}
             </div>
           </div>
           {challenge.requestedCompanyName && (
@@ -204,7 +205,7 @@ export function CliAuthPage() {
             onClick={() => cancelMutation.mutate()}
             disabled={approveMutation.isPending || cancelMutation.isPending}
           >
-            {cancelMutation.isPending ? "Cancelling..." : "Cancel"}
+            {cancelMutation.isPending ? "Cancelling..." : zh("Cancel")}
           </Button>
         </div>
       </Card>

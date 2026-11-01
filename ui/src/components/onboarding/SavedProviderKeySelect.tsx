@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { aiConnectionsApi } from "@/api/ai-connections";
 import type { AiProvider } from "@paperclipai/shared";
 import { useQuery } from "@tanstack/react-query";
@@ -91,7 +92,7 @@ export function SavedProviderKeySelect({
     <div className="space-y-2">
       {options.length > 0 && (
         <label className="block space-y-2 text-sm">
-          <span>{kind === "api" ? "API key" : "Subscription"}</span>
+          <span>{kind === "api" ? zh("API key") : "Subscription"}</span>
           <select
             aria-label={kind === "api" ? "Saved API key" : "Saved subscription"}
             className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm"

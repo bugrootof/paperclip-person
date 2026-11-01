@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { AgentAvatar, type AvatarAgent } from "./AgentAvatar";
 import type { ReactNode } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
@@ -141,7 +142,7 @@ export function DocumentFrameHeader({
                               <span className="font-medium">rev {revision.revisionNumber}</span>
                               {isCurrentRevision ? (
                                 <Badge variant="outline" className="border-border px-1.5 text-(length:--text-nano) uppercase tracking-(--tracking-eyebrow) text-muted-foreground">
-                                  Current
+                                  {zh("Current")}
                                 </Badge>
                               ) : null}
                             </div>
@@ -167,7 +168,7 @@ export function DocumentFrameHeader({
               href={updatedHref ?? `#document-${encodeURIComponent(documentKey)}`}
               className="truncate text-(length:--text-micro) text-muted-foreground transition-colors hover:text-foreground hover:underline"
             >
-              updated {relativeTime(updatedAt)}
+              {zh("updated")} {relativeTime(updatedAt)}
             </a>
           ) : null}
           {annotationSlot}

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useEffect, useState, type ReactNode } from "react";
 import type { IssueExternalObjectGroup } from "../../hooks/useIssueExternalObjects";
 import {
@@ -186,7 +187,7 @@ export function ExternalObjectRows({
                 className="text-primary underline-offset-2 hover:underline"
                 onClick={onRetryExternalObjects}
               >
-                Retry
+                {zh("Retry")}
               </button>
             </>
           ) : null}
@@ -226,7 +227,7 @@ export function ExternalObjectRows({
           );
         })}
       {expanded || hiddenExternalObjectCount > 0 ? (
-        <PropertyRow label="References">
+        <PropertyRow label={zh("References")}>
           <ExpandRelationListButton
             hiddenCount={hiddenExternalObjectCount}
             expanded={expanded}

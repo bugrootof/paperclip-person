@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { Button } from "@/components/ui/button";
 import {
   RoutineListRow,
@@ -132,7 +133,7 @@ export function ManagedRoutinesList({
               secondaryDetails={
                 <span className="flex flex-wrap items-center gap-x-3 gap-y-1">
                   {routine.resourceKey ? <span>{routine.resourceKey}</span> : null}
-                  {routine.cronExpression ? <span>Schedule {routine.cronExpression}</span> : null}
+                  {routine.cronExpression ? <span>{zh("Schedule")} {routine.cronExpression}</span> : null}
                 </span>
               }
               onRunNow={() => onRunNow?.(routine)}
@@ -169,7 +170,7 @@ export function ManagedRoutinesList({
                       disabled={resettingRoutineKey === routine.key}
                       onClick={() => onReset(routine)}
                     >
-                      {resettingRoutineKey === routine.key ? "Resetting..." : "Reset"}
+                      {resettingRoutineKey === routine.key ? "Resetting..." : zh("Reset")}
                     </Button>
                   ) : null}
                 </span>

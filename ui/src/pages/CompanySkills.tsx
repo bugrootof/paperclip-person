@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { SkillsNavigationTabs } from "@/components/skill-studio/SkillsNavigationTabs";
 import { SkillsToolbar, type DiscoverySort } from "@/components/skill-studio/SkillsToolbar";
 import { SkillBinaryFile } from "../components/SkillBinaryFile";
@@ -395,7 +396,7 @@ function SourceFilterMenu({
           variant="ghost"
           size="icon-sm"
           className={cn("relative shrink-0", activeFilterCount > 0 && "text-blue-600 dark:text-blue-400")}
-          title={activeFilterCount > 0 ? `Filters: ${activeFilterCount}` : "Filter"}
+          title={activeFilterCount > 0 ? `Filters: ${activeFilterCount}` : zh("Filter")}
         >
           <Filter className="h-3.5 w-3.5" />
           {activeFilterCount > 0 ? (
@@ -406,7 +407,7 @@ function SourceFilterMenu({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
-        <DropdownMenuLabel>Source</DropdownMenuLabel>
+        <DropdownMenuLabel>{zh("Source")}</DropdownMenuLabel>
         <DropdownMenuRadioGroup value={value} onValueChange={(next) => onChange(next as SourceFilter)}>
           {filters.map((filter) => (
             <DropdownMenuRadioItem key={filter} value={filter}>
@@ -441,7 +442,7 @@ function CatalogFilterMenu({
           variant="ghost"
           size="icon-sm"
           className={cn("relative shrink-0", activeFilterCount > 0 && "text-blue-600 dark:text-blue-400")}
-          title={activeFilterCount > 0 ? `Filters: ${activeFilterCount}` : "Filter"}
+          title={activeFilterCount > 0 ? `Filters: ${activeFilterCount}` : zh("Filter")}
         >
           <Filter className="h-3.5 w-3.5" />
           {activeFilterCount > 0 ? (
@@ -452,16 +453,16 @@ function CatalogFilterMenu({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="max-h-(--sz-calc-32) w-56 overflow-y-auto">
-        <DropdownMenuLabel>Type</DropdownMenuLabel>
+        <DropdownMenuLabel>{zh("Type")}</DropdownMenuLabel>
         <DropdownMenuRadioGroup value={kindFilter} onValueChange={(next) => onKindChange(next as "all" | "bundled" | "optional")}>
-          <DropdownMenuRadioItem value="all">All</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="bundled">Bundled</DropdownMenuRadioItem>
-          <DropdownMenuRadioItem value="optional">Optional</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="all">{zh("All")}</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="bundled">{zh("Bundled")}</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="optional">{zh("Optional")}</DropdownMenuRadioItem>
         </DropdownMenuRadioGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuLabel>Category</DropdownMenuLabel>
+        <DropdownMenuLabel>{zh("Category")}</DropdownMenuLabel>
         <DropdownMenuRadioGroup value={categoryFilter || "__all__"} onValueChange={(next) => onCategoryChange(next === "__all__" ? "" : next)}>
-          <DropdownMenuRadioItem value="__all__">All categories</DropdownMenuRadioItem>
+          <DropdownMenuRadioItem value="__all__">{zh("All categories")}</DropdownMenuRadioItem>
           {categories.map((category) => (
             <DropdownMenuRadioItem key={category} value={category}>
               {category}
@@ -477,19 +478,19 @@ function TrustChip({ level }: { level: CompanySkillTrustLevel }) {
   const map = {
     markdown_only: {
       icon: ShieldCheck,
-      label: "Markdown only",
+      label: zh("Markdown only"),
       tooltip: "Text only — no scripts, no binaries, no assets.",
       className: "border-border bg-muted/40 text-muted-foreground",
     },
     assets: {
       icon: Folder,
-      label: "Includes assets",
+      label: zh("Includes assets"),
       tooltip: "Ships images, fonts, or other non-script files.",
       className: "border-cyan-500/30 bg-cyan-500/10 text-cyan-800 dark:text-cyan-200",
     },
     scripts_executables: {
       icon: AlertTriangle,
-      label: "Includes scripts",
+      label: zh("Includes scripts"),
       tooltip: "Ships executable scripts. Review before installing.",
       className: "border-amber-500/40 bg-amber-500/10 text-amber-800 dark:text-amber-200",
     },
@@ -514,13 +515,13 @@ function CompatChip({ compatibility }: { compatibility: CompanySkillCompatibilit
   const map = {
     unknown: {
       icon: HelpCircle,
-      label: "Unknown format",
+      label: zh("Unknown format"),
       tooltip: "Paperclip could not validate this skill as Agent Skills markdown. Install at your own risk.",
       className: "border-yellow-500/40 bg-yellow-500/10 text-yellow-800 dark:text-yellow-200",
     },
     invalid: {
       icon: XOctagon,
-      label: "Invalid",
+      label: zh("Invalid"),
       tooltip: "This skill cannot be installed — content is not valid Agent Skills markdown.",
       className: "border-destructive/40 bg-destructive/10 text-destructive",
     },
@@ -550,7 +551,7 @@ function ProvenanceBadge({ packageName, packageVersion }: { packageName: string 
           <span>{packageName}{packageVersion ? ` v${packageVersion}` : ""}</span>
         </span>
       </TooltipTrigger>
-      <TooltipContent>Installed from the app-shipped skills catalog. Provenance is signed by package version and content hash.</TooltipContent>
+      <TooltipContent>{zh("Installed from the app-shipped skills catalog. Provenance is signed by package version and content hash.")}</TooltipContent>
     </Tooltip>
   );
 }
@@ -583,7 +584,7 @@ export function skillDetailBreadcrumbs(
     ? folderBreadcrumbTrail(treeFromResult(folderResult), detail.folderId)
     : [];
   return [
-    { label: "Skills", href: "/skills" },
+    { label: zh("Skills"), href: "/skills" },
     ...trail.map((folder, index) => ({
       label: index === 0 ? reservedRootLabel(folder) : folder.name,
       href: `/skills?folder=${encodeURIComponent(folder.id)}`,
@@ -870,12 +871,12 @@ function SkillCard({
         <div className="min-w-0 flex-1">
           <div className="truncate font-mono text-sm font-medium text-foreground">{card.name}</div>
           <div className="truncate text-xs text-muted-foreground">
-            by {card.author}{card.version ? ` · ${card.version}` : ""}
+            {zh("by")} {card.author}{card.version ? ` · ${card.version}` : ""}
           </div>
           {badgeFolder !== undefined ? (
             <div className="mt-1 flex min-w-0 items-center gap-1.5 text-xs text-muted-foreground">
               <FolderSwatch color={badgeFolder?.color} className="h-2 w-2" />
-              <span className="truncate">{badgeFolder ? badgeFolder.name : "Unfiled"}</span>
+              <span className="truncate">{badgeFolder ? badgeFolder.name : zh("Unfiled")}</span>
             </div>
           ) : null}
         </div>
@@ -897,7 +898,7 @@ function SkillCard({
                 <>
                   <DropdownMenuItem onSelect={() => onOpenMove(card)}>
                     <FolderInput className="h-3.5 w-3.5" />
-                    Move to folder…
+                    {zh("Move to folder…")}
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
                 </>
@@ -916,7 +917,7 @@ function SkillCard({
       {card.forkedFrom ? (
         <div className="mt-2 inline-flex items-center gap-1 text-(length:--text-micro) text-muted-foreground">
           <GitFork className="h-3 w-3" aria-hidden="true" />
-          Forked
+          {zh("Forked")}
         </div>
       ) : null}
 
@@ -937,8 +938,8 @@ function SkillCard({
             {card.installed
               ? card.agentCount > 0
                 ? `Enabled for ${card.agentCount} ${card.agentCount === 1 ? "agent" : "agents"}`
-                : "Not enabled for any agents"
-              : "Available to install"}
+                : zh("Not enabled for any agents")
+              : zh("Available to install")}
           </span>
           {card.starCount > 0 ? (
             <>
@@ -956,7 +957,7 @@ function SkillCard({
         <div className="mt-2 flex flex-wrap items-center gap-1">
           {card.installed ? (
             <Badge variant="secondary" className="text-(length:--text-nano)">
-              Installed
+              {zh("Installed")}
             </Badge>
           ) : null}
           <Badge variant="outline" className="max-w-full text-(length:--text-nano) text-muted-foreground">
@@ -969,11 +970,11 @@ function SkillCard({
           {card.required ? (
             <Badge variant="outline" className="ml-auto border-border bg-muted/60 text-(length:--text-nano) text-muted-foreground">
               <Lock className="h-3 w-3" aria-hidden="true" />
-              Bundled
+              {zh("Bundled")}
             </Badge>
           ) : card.sourceKind === "optional" ? (
             <Badge variant="outline" className="ml-auto text-(length:--text-nano) text-muted-foreground">
-              Optional
+              {zh("Optional")}
             </Badge>
           ) : null}
         </div>
@@ -1005,7 +1006,7 @@ function CategoryNav({
           active == null ? "bg-accent/60 font-medium text-foreground" : "text-muted-foreground",
         )}
       >
-        <span>All</span>
+        <span>{zh("All")}</span>
         <span className="text-xs text-muted-foreground">{total}</span>
       </button>
       {categories.map((category) => (
@@ -1210,13 +1211,13 @@ export function DiscoveryGrid({
       {showBrowseRails ? (
         <aside className={cn("hidden w-60 shrink-0 flex-col overflow-hidden border-r border-border md:flex", showFolderRail && "md:hidden")}>
           <div className="border-b border-border px-4 py-4">
-            <h2 className="text-sm font-semibold text-foreground">Browse by category</h2>
+            <h2 className="text-sm font-semibold text-foreground">{zh("Browse by category")}</h2>
             <p className="text-xs text-muted-foreground">
-              Filter {installedView ? "installed" : "discoverable"} skills.
+              {zh("Filter")} {installedView ? "installed" : "discoverable"} {zh("skills.")}
             </p>
           </div>
           <div className="px-4 pb-1 pt-3 text-(length:--text-micro) font-medium uppercase tracking-wide text-muted-foreground">
-            Categories
+            {zh("Categories")}
           </div>
           <div className="min-h-0 flex-1 overflow-y-auto pb-4">
             <CategoryNav
@@ -1253,7 +1254,7 @@ export function DiscoveryGrid({
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button variant="outline" size="sm" className="w-full justify-between">
-                  <span className="capitalize">{activeCategory ?? "All categories"}</span>
+                  <span className="capitalize">{activeCategory ?? zh("All categories")}</span>
                   <ChevronDown className="h-3.5 w-3.5" />
                 </Button>
               </DropdownMenuTrigger>
@@ -1262,7 +1263,7 @@ export function DiscoveryGrid({
                   value={activeCategory ?? "__all__"}
                   onValueChange={(value) => onCategoryChange(value === "__all__" ? null : value)}
                 >
-                  <DropdownMenuRadioItem value="__all__">All ({categoryTotal})</DropdownMenuRadioItem>
+                  <DropdownMenuRadioItem value="__all__">{zh("All (")}{categoryTotal})</DropdownMenuRadioItem>
                   {categories.map((category) => (
                     <DropdownMenuRadioItem key={category.slug} value={category.slug} className="capitalize">
                       {category.slug} ({category.count})
@@ -1290,7 +1291,7 @@ export function DiscoveryGrid({
                   title={`Refresh skills from ${activeProjectFolder.name}`}
                 >
                   <RefreshCw className={cn("h-3.5 w-3.5", scanPending && "animate-spin")} />
-                  Refresh
+                  {zh("Refresh")}
                 </Button>
               ) : null}
             </div>
@@ -1325,23 +1326,23 @@ export function DiscoveryGrid({
                 message={
                   totalCount === 0
                     ? installedView
-                      ? authoredView ? "No skills yet. Create a skill to start working in Studio." : "No installed skills yet. Discover a skill or create one."
-                      : "No skills are available to discover yet."
+                      ? authoredView ? zh("No skills yet. Create a skill to start working in Studio.") : zh("No installed skills yet. Discover a skill or create one.")
+                      : zh("No skills are available to discover yet.")
                     : search || activeCategory || sourceFilterActive
-                      ? "No skills match your filters."
-                      : "No skills in this view yet."
+                      ? zh("No skills match your filters.")
+                      : zh("No skills in this view yet.")
                 }
               />
               {totalCount === 0 ? (
                 <div className="mt-3 flex flex-col items-center gap-2">
                   {installedView ? (
                     <Button size="sm" onClick={onBrowseDiscover}>
-                      <Compass className="mr-1.5 h-3.5 w-3.5" /> Discover skills
+                      <Compass className="mr-1.5 h-3.5 w-3.5" /> {zh("Discover skills")}
                     </Button>
                   ) : null}
-                  <Button size="sm" variant="outline" asChild><Link to="/skills/sources/new">Import from GitHub</Link></Button>
+                  <Button size="sm" variant="outline" asChild><Link to="/skills/sources/new">{zh("Import from GitHub")}</Link></Button>
                   <Button size="sm" variant="ghost" onClick={onCreate}>
-                    Create a skill
+                    {zh("Create a skill")}
                   </Button>
                 </div>
               ) : (search || activeCategory || sourceFilterActive) ? (
@@ -1355,7 +1356,7 @@ export function DiscoveryGrid({
                       setSourceBadgeFilter("all");
                     }}
                   >
-                    Clear filters
+                    {zh("Clear filters")}
                   </Button>
                 </div>
               ) : null}
@@ -1363,7 +1364,7 @@ export function DiscoveryGrid({
           ) : (
             <>
               <p className="mb-3 text-xs text-muted-foreground">
-                {sourceFilteredCards.length} {sourceFilteredCards.length === 1 ? "skill" : "skills"}
+                {sourceFilteredCards.length} {zh(sourceFilteredCards.length === 1 ? "skill" : "skills")}
                 {activeCategory ? <span className="capitalize"> · {activeCategory}</span> : null}
               </p>
               <div className="grid gap-3 [grid-template-columns:repeat(auto-fill,minmax(19rem,1fr))]">
@@ -1447,7 +1448,7 @@ function NewSkillWizard({
       {draft.forkedFromName ? (
         <div className="flex items-center gap-2 rounded-md border border-border bg-muted/30 px-3 py-2 text-xs text-muted-foreground">
           <GitFork className="h-3.5 w-3.5" />
-          Forking {draft.forkedFromName}
+          {zh("Forking")} {draft.forkedFromName}
         </div>
       ) : null}
 
@@ -1465,7 +1466,7 @@ function NewSkillWizard({
                   : draft.markdown,
               });
             }}
-            placeholder="Skill name"
+            placeholder={zh("Skill name")}
             className="h-9"
           />
           <Input
@@ -1490,7 +1491,7 @@ function NewSkillWizard({
                   : draft.markdown,
               });
             }}
-            placeholder="One-line promise for the skill"
+            placeholder={zh("One-line promise for the skill")}
             className="min-h-20"
           />
         </div>
@@ -1508,12 +1509,12 @@ function NewSkillWizard({
               }}
             />
             <div className="min-w-0">
-              <div className="truncate text-sm font-medium">{draft.name || "New Skill"}</div>
-              <div className="truncate text-xs text-muted-foreground">{draft.tagline || "No tagline yet."}</div>
+              <div className="truncate text-sm font-medium">{draft.name || zh("New Skill")}</div>
+              <div className="truncate text-xs text-muted-foreground">{draft.tagline || zh("No tagline yet.")}</div>
             </div>
           </div>
           <div>
-            <label className="mb-2 block text-xs font-medium uppercase tracking-wide text-muted-foreground">Color</label>
+            <label className="mb-2 block text-xs font-medium uppercase tracking-wide text-muted-foreground">{zh("Color")}</label>
             <div className="flex flex-wrap gap-2">
               {SKILL_CREATE_ACCENTS.map((color) => (
                 <button
@@ -1536,7 +1537,7 @@ function NewSkillWizard({
             </div>
           </div>
           <div>
-            <label className="mb-2 block text-xs font-medium uppercase tracking-wide text-muted-foreground">Categories</label>
+            <label className="mb-2 block text-xs font-medium uppercase tracking-wide text-muted-foreground">{zh("Categories")}</label>
             <Input
               value={categoryDraft}
               onChange={(event) => patchDraft({ categories: splitCategoryDraft(event.target.value) })}
@@ -1556,17 +1557,17 @@ function NewSkillWizard({
       ) : (
         <div className="space-y-4 text-sm">
           <div className="grid grid-cols-(--gtc-26) gap-y-2">
-            <span className="text-muted-foreground">Name</span>
-            <span>{draft.name || "Untitled"}</span>
-            <span className="text-muted-foreground">Slug</span>
+            <span className="text-muted-foreground">{zh("Name")}</span>
+            <span>{draft.name || zh("Untitled")}</span>
+            <span className="text-muted-foreground">{zh("Slug")}</span>
             <span className="font-mono">{effectiveSlug || "skill"}</span>
-            <span className="text-muted-foreground">Scope</span>
-            <span>{draft.sharingScope === "private" ? "Private" : "Organization"}</span>
-            <span className="text-muted-foreground">Categories</span>
+            <span className="text-muted-foreground">{zh("Scope")}</span>
+            <span>{draft.sharingScope === "private" ? zh("Private") : zh("Organization")}</span>
+            <span className="text-muted-foreground">{zh("Categories")}</span>
             <span>{draft.categories.length ? draft.categories.join(", ") : "none"}</span>
           </div>
           <div className="space-y-2">
-            <label className="block text-xs font-medium uppercase tracking-wide text-muted-foreground">Sharing</label>
+            <label className="block text-xs font-medium uppercase tracking-wide text-muted-foreground">{zh("Sharing")}</label>
             <div className="grid gap-2 sm:grid-cols-3">
               {(["company", "private"] as const).map((scope) => (
                 <button
@@ -1578,9 +1579,9 @@ function NewSkillWizard({
                     draft.sharingScope === scope ? "border-foreground bg-accent/50" : "border-border",
                   )}
                 >
-                  <span className="block font-medium">{scope === "company" ? "Organization" : "Private"}</span>
+                  <span className="block font-medium">{scope === "company" ? zh("Organization") : zh("Private")}</span>
                   <span className="mt-1 block text-xs text-muted-foreground">
-                    {scope === "company" ? "Visible inside this organization." : "Only visible in your library."}
+                    {scope === "company" ? zh("Visible inside this organization.") : zh("Only visible in your library.")}
                   </span>
                 </button>
               ))}
@@ -1589,8 +1590,8 @@ function NewSkillWizard({
                 disabled
                 className="rounded-md border border-dashed border-border px-3 py-2 text-left text-sm text-muted-foreground"
               >
-                <span className="block font-medium">Public link</span>
-                <span className="mt-1 block text-xs">Coming later.</span>
+                <span className="block font-medium">{zh("Public link")}</span>
+                <span className="mt-1 block text-xs">{zh("Coming later.")}</span>
               </button>
             </div>
           </div>
@@ -1605,19 +1606,19 @@ function NewSkillWizard({
 
       <div className="flex items-center justify-between gap-2 border-t border-border pt-3">
         <Button variant="ghost" size="sm" onClick={onCancel} disabled={isPending}>
-          Cancel
+          {zh("Cancel")}
         </Button>
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" onClick={() => setStep((value) => Math.max(0, value - 1))} disabled={isPending || step === 0}>
-            Back
+            {zh("Back")}
           </Button>
           {step < steps.length - 1 ? (
             <Button size="sm" onClick={() => setStep((value) => Math.min(steps.length - 1, value + 1))} disabled={!nameValid}>
-              Next
+              {zh("Next")}
             </Button>
           ) : (
             <Button size="sm" onClick={submit} disabled={isPending || !nameValid}>
-              {isPending ? "Creating..." : draft.forkedFromSkillId ? "Create fork" : "Create skill"}
+              {isPending ? zh("Creating...") : draft.forkedFromSkillId ? zh("Create fork") : zh("Create skill")}
             </Button>
           )}
         </div>
@@ -1667,7 +1668,7 @@ function CatalogList({
   if (filtered.length === 0) {
     return (
       <div className="px-4 py-6 text-sm text-muted-foreground">
-        No catalog skills match this filter.
+        {zh("No catalog skills match this filter.")}
       </div>
     );
   }
@@ -1752,7 +1753,7 @@ function CatalogList({
       {optional.length > 0 && kindFilter !== "bundled" ? (
         <div>
           <div className="border-b border-border bg-background px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            Optional · {optional.length}
+            {zh("Optional ·")} {optional.length}
           </div>
           {optional.map(renderRow)}
         </div>
@@ -1760,7 +1761,7 @@ function CatalogList({
       {installed.length > 0 ? (
         <div>
           <div className="border-b border-border bg-background px-3 py-1.5 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-            Installed · {installed.length}
+            {zh("Installed ·")} {installed.length}
           </div>
           {installed.map(renderRow)}
         </div>
@@ -1795,7 +1796,7 @@ function CatalogDetailPane({
   loadingPrimaryAction: boolean;
 }) {
   if (!skill) {
-    return <EmptyState icon={Boxes} message="Select a catalog skill to inspect." />;
+    return <EmptyState icon={Boxes} message={zh("Select a catalog skill to inspect.")} />;
   }
 
   const installedHash = installedSkill?.originHash ?? null;
@@ -1810,32 +1811,32 @@ function CatalogDetailPane({
           <span>
             <Button disabled>
               <Download className="mr-1.5 h-3.5 w-3.5" />
-              Install skill
+              {zh("Install skill")}
             </Button>
           </span>
         </TooltipTrigger>
-        <TooltipContent>This skill cannot be installed — its content is not valid Agent Skills markdown.</TooltipContent>
+        <TooltipContent>{zh("This skill cannot be installed — its content is not valid Agent Skills markdown.")}</TooltipContent>
       </Tooltip>
     );
   } else if (!isInstalled) {
     cta = (
       <Button onClick={onInstall} disabled={loadingPrimaryAction}>
         {skill.trustLevel === "scripts_executables" ? <AlertTriangle className="mr-1.5 h-3.5 w-3.5" /> : <Download className="mr-1.5 h-3.5 w-3.5" />}
-        {loadingPrimaryAction ? "Preparing..." : "Install skill in this organization"}
+        {loadingPrimaryAction ? zh("Preparing...") : zh("Install skill in this organization")}
       </Button>
     );
   } else if (hashOutOfSync) {
     cta = (
       <Button onClick={onUpdate} disabled={loadingPrimaryAction} className="border-amber-500/40 bg-amber-500/20 text-amber-900 dark:text-amber-100 hover:bg-amber-500/30">
         <ArrowUpCircle className="mr-1.5 h-3.5 w-3.5" />
-        Update from catalog
+        {zh("Update from catalog")}
       </Button>
     );
   } else {
     cta = (
       <Button variant="ghost" onClick={() => installedSkillId && onOpenInstalled(installedSkillId)}>
         <Check className="mr-1.5 h-3.5 w-3.5" />
-        Installed · Open in library
+        {zh("Installed · Open in library")}
       </Button>
     );
   }
@@ -1871,40 +1872,40 @@ function CatalogDetailPane({
               <TooltipTrigger asChild>
                 <Badge variant="outline" className="border-amber-500/40 bg-amber-500/10 text-(length:--text-micro) text-amber-800 dark:text-amber-200">
                   <ArrowUpCircle className="h-3 w-3" aria-hidden="true" />
-                  Update available
+                  {zh("Update available")}
                 </Badge>
               </TooltipTrigger>
-              <TooltipContent>Catalog content hash has changed since this skill was installed.</TooltipContent>
+              <TooltipContent>{zh("Catalog content hash has changed since this skill was installed.")}</TooltipContent>
             </Tooltip>
           ) : null}
           {skill.requires.length > 0 ? (
             <Badge variant="outline" className="border-border bg-muted/40 text-(length:--text-micro) text-muted-foreground">
-              Requires: {skill.requires.join(", ")}
+              {zh("Requires:")} {skill.requires.join(", ")}
             </Badge>
           ) : null}
           {skill.recommendedForRoles.length > 0 ? (
             <Badge variant="outline" className="border-border bg-muted/40 text-(length:--text-micro) text-muted-foreground">
-              Roles: {skill.recommendedForRoles.join(" · ")}
+              {zh("Roles:")} {skill.recommendedForRoles.join(" · ")}
             </Badge>
           ) : null}
           {skill.tags.length > 0 ? (
             <Badge variant="outline" className="border-border bg-muted/40 text-(length:--text-micro) text-muted-foreground">
-              Tags: {skill.tags.join(" · ")}
+              {zh("Tags:")} {skill.tags.join(" · ")}
             </Badge>
           ) : null}
         </div>
 
         <div className="mt-3 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
-          <span className="uppercase tracking-(--tracking-caps)">Key</span>
+          <span className="uppercase tracking-(--tracking-caps)">{zh("Key")}</span>
           <span className="font-mono">{skill.key}</span>
           <span className="uppercase tracking-(--tracking-caps)">·</span>
-          <span className="uppercase tracking-(--tracking-caps)">Hash</span>
+          <span className="uppercase tracking-(--tracking-caps)">{zh("Hash")}</span>
           <span className="font-mono">{skill.contentHash.slice(0, 24)}…</span>
           <CopyText
             text={skill.contentHash}
             copiedLabel="Copied hash"
             ariaLabel="Copy content hash"
-            title="Copy content hash"
+            title={zh("Copy content hash")}
             className="inline-flex h-6 w-6 items-center justify-center rounded-sm border border-border text-muted-foreground hover:bg-accent hover:text-foreground"
           >
             <Copy className="h-3 w-3" />
@@ -1920,9 +1921,9 @@ function CatalogDetailPane({
         {fileQuery.isLoading ? (
           <PageSkeleton variant="detail" />
         ) : fileQuery.error ? (
-          <div className="text-sm text-destructive">{fileQuery.error instanceof Error ? fileQuery.error.message : "Failed to load file"}</div>
+          <div className="text-sm text-destructive">{fileQuery.error instanceof Error ? fileQuery.error.message : zh("Failed to load file")}</div>
         ) : !fileQuery.data ? (
-          <div className="text-sm text-muted-foreground">Select a file to inspect.</div>
+          <div className="text-sm text-muted-foreground">{zh("Select a file to inspect.")}</div>
         ) : fileQuery.data.markdown ? (
           <MarkdownBody softBreaks={false} linkIssueReferences={false}>{body}</MarkdownBody>
         ) : (
@@ -2021,7 +2022,7 @@ export function InstallPreviewDialog({
       <DialogContent className="sm:max-w-2xl" showCloseButton={!isPending}>
         <DialogHeader>
           <DialogTitle>
-            {defaultAction === "update" ? "Update" : defaultAction === "replace" ? "Replace" : "Install"} · {skill.name}
+            {defaultAction === "update" ? zh("Update") : defaultAction === "replace" ? zh("Replace") : zh("Install")} · {skill.name}
           </DialogTitle>
           <DialogDescription>
             <span className="capitalize">{skill.kind}</span> · {skill.category}
@@ -2032,33 +2033,33 @@ export function InstallPreviewDialog({
         <div className="space-y-4 text-sm">
           <div className="rounded-md border border-border p-3">
             <div className="grid grid-cols-(--gtc-26) gap-y-2 text-xs">
-              <div className="text-muted-foreground">Trust</div>
+              <div className="text-muted-foreground">{zh("Trust")}</div>
               <div className="flex items-center gap-2">
                 <TrustChip level={skill.trustLevel} />
                 {skill.trustLevel === "markdown_only" ? (
-                  <span className="text-muted-foreground">Safe</span>
+                  <span className="text-muted-foreground">{zh("Safe")}</span>
                 ) : skill.trustLevel === "scripts_executables" ? (
-                  <span className="text-amber-800 dark:text-amber-200">Review required</span>
+                  <span className="text-amber-800 dark:text-amber-200">{zh("Review required")}</span>
                 ) : (
-                  <span className="text-muted-foreground">Non-script assets</span>
+                  <span className="text-muted-foreground">{zh("Non-script assets")}</span>
                 )}
               </div>
-              <div className="text-muted-foreground">Compatibility</div>
+              <div className="text-muted-foreground">{zh("Compatibility")}</div>
               <div className="flex items-center gap-2">
                 {skill.compatibility === "compatible" ? (
                   <span className="inline-flex items-center gap-1 text-muted-foreground">
                     <Check className="h-3 w-3" aria-hidden="true" />
-                    Compatible
+                    {zh("Compatible")}
                   </span>
                 ) : (
                   <CompatChip compatibility={skill.compatibility} />
                 )}
               </div>
-              <div className="text-muted-foreground">Requires</div>
+              <div className="text-muted-foreground">{zh("Requires")}</div>
               <div className="text-foreground">{skill.requires.length === 0 ? "none" : skill.requires.join(", ")}</div>
-              <div className="text-muted-foreground">Roles</div>
+              <div className="text-muted-foreground">{zh("Roles")}</div>
               <div className="text-foreground">{skill.recommendedForRoles.length === 0 ? "any" : skill.recommendedForRoles.join(" · ")}</div>
-              <div className="text-muted-foreground">Provenance</div>
+              <div className="text-muted-foreground">{zh("Provenance")}</div>
               <div className="min-w-0">
                 <div className="truncate">{packageName ?? "—"}{packageVersion ? ` v${packageVersion}` : ""}</div>
                 <div className="truncate font-mono text-(length:--text-micro) text-muted-foreground">{skill.contentHash}</div>
@@ -2068,7 +2069,7 @@ export function InstallPreviewDialog({
 
           <div className="rounded-md border border-border">
             <div className="border-b border-border px-3 py-2 text-xs uppercase tracking-wide text-muted-foreground">
-              Files ({skill.files.length})
+              {zh("Files (")}{skill.files.length})
             </div>
             <div className="max-h-48 overflow-y-auto">
               {skill.files.map((file) => (
@@ -2090,9 +2091,9 @@ export function InstallPreviewDialog({
 
           {defaultAction === "install" ? (
             <div className="rounded-md border border-border p-3">
-              <div className="mb-1 text-xs uppercase tracking-wide text-muted-foreground">Enable for agents</div>
+              <div className="mb-1 text-xs uppercase tracking-wide text-muted-foreground">{zh("Enable for agents")}</div>
               <p className="mb-2 text-xs text-muted-foreground">
-                Installing adds the skill to the organization library. Agents can only use it once it is enabled for them.
+                {zh("Installing adds the skill to the organization library. Agents can only use it once it is enabled for them.")}
               </p>
               <AgentMultiSelect
                 agents={agents}
@@ -2102,7 +2103,7 @@ export function InstallPreviewDialog({
                   setSelectedAgentIds(next);
                 }}
                 showSelectionPreview={false}
-                emptyMessage="No agents in this organization support skills yet."
+                emptyMessage={zh("No agents in this organization support skills yet.")}
                 isAgentDisabled={(agent) => {
                   const option = agent as AttachAgentOption;
                   return option.required || !option.supportsSkills;
@@ -2121,17 +2122,17 @@ export function InstallPreviewDialog({
             className="inline-flex items-center gap-1 text-xs text-muted-foreground hover:text-foreground"
           >
             {advancedOpen ? <ChevronDown className="h-3 w-3" /> : <ChevronRight className="h-3 w-3" />}
-            Advanced
+            {zh("Advanced")}
           </button>
           {advancedOpen ? (
             <div className="space-y-3 rounded-md border border-border p-3 text-xs">
               <div>
-                <label className="mb-1 block uppercase tracking-wide text-muted-foreground">Slug override</label>
+                <label className="mb-1 block uppercase tracking-wide text-muted-foreground">{zh("Slug override")}</label>
                 <Input value={slug} onChange={(event) => setSlug(event.target.value)} placeholder={defaultSlug ?? skill.slug} className="h-8" />
               </div>
               <label className="flex items-center gap-2">
                 <Checkbox checked={force} onCheckedChange={(value) => setForce(Boolean(value))} />
-                <span>Force replace existing same-key skill</span>
+                <span>{zh("Force replace existing same-key skill")}</span>
               </label>
             </div>
           ) : null}
@@ -2145,7 +2146,7 @@ export function InstallPreviewDialog({
 
         <DialogFooter>
           <Button variant="ghost" onClick={() => onOpenChange(false)} disabled={isPending}>
-            Cancel
+            {zh("Cancel")}
           </Button>
           <Button
             variant={confirmVariant}
@@ -2217,13 +2218,13 @@ function AttachAgentsPopover({
       }}
       headerContent={sortedVersions.length > 0 ? (
         <div className="mt-2 flex items-center gap-2 text-xs">
-          <span className="shrink-0 text-muted-foreground">Version</span>
+          <span className="shrink-0 text-muted-foreground">{zh("Version")}</span>
           <select
             value={draftVersionId ?? "__latest__"}
             onChange={(event) => setDraftVersionId(event.target.value === "__latest__" ? null : event.target.value)}
             className="h-8 min-w-0 flex-1 rounded-md border border-border bg-background px-2 text-xs text-foreground"
           >
-            <option value="__latest__">Latest</option>
+            <option value="__latest__">{zh("Latest")}</option>
             {sortedVersions.map((version) => (
               <option key={version.id} value={version.id}>
                 v{version.revisionNumber}{version.label ? ` · ${version.label}` : ""}
@@ -2232,7 +2233,7 @@ function AttachAgentsPopover({
           </select>
         </div>
       ) : null}
-      emptyMessage={eligible.length === 0 ? "No agents in this organization support skills yet." : "No agents yet."}
+      emptyMessage={eligible.length === 0 ? zh("No agents in this organization support skills yet.") : zh("No agents yet.")}
       isAgentDisabled={(agent) => {
         const option = agent as AttachAgentOption;
         return option.required || !option.supportsSkills;
@@ -2244,7 +2245,7 @@ function AttachAgentsPopover({
       renderNameSuffix={(agent) => (agent as AttachAgentOption).paused ? (
         <Badge variant="outline" className="[&>svg]:size-2.5 border-amber-500/30 bg-amber-500/10 px-1.5 text-(length:--text-nano) uppercase tracking-wide text-amber-500">
           <Pause className="h-2.5 w-2.5" aria-hidden="true" />
-          Paused
+          {zh("Paused")}
         </Badge>
       ) : null}
     />
@@ -2381,16 +2382,16 @@ function SkillList({
     if (sourceFilter !== "all" && skills.length > 0) {
       return (
         <div className="px-4 py-6 text-sm text-muted-foreground">
-          No {SOURCE_FILTER_LABELS[sourceFilter].toLowerCase()} skills installed.{" "}
+          {zh("No")} {SOURCE_FILTER_LABELS[sourceFilter].toLowerCase()} {zh("skills installed.")}{" "}
           <button type="button" className="text-foreground underline" onClick={onClearFilters}>
-            Clear filter
+            {zh("Clear filter")}
           </button>
         </div>
       );
     }
     return (
       <div className="px-4 py-6 text-sm text-muted-foreground">
-        No skills match this filter.
+        {zh("No skills match this filter.")}
       </div>
     );
   }
@@ -2470,10 +2471,10 @@ function SkillList({
 type SkillDetailTab = "overview" | "files" | "versions" | "agents";
 
 const SKILL_DETAIL_TABS: Array<{ value: SkillDetailTab; label: string; icon: typeof FileText }> = [
-  { value: "overview", label: "Overview", icon: FileText },
-  { value: "files", label: "Files", icon: FolderOpen },
-  { value: "versions", label: "Versions", icon: History },
-  { value: "agents", label: "Agents", icon: Users },
+  { value: "overview", label: zh("Overview"), icon: FileText },
+  { value: "files", label: zh("Files"), icon: FolderOpen },
+  { value: "versions", label: zh("Versions"), icon: History },
+  { value: "agents", label: zh("Agents"), icon: Users },
 ];
 
 function currentVersionSelection(detail: CompanySkillDetail | null | undefined) {
@@ -2572,26 +2573,26 @@ function SkillVersionDiffDialog({
       <DialogContent className="flex max-h-(--sz-85vh) w-full !max-w-(--pct-90) flex-col overflow-hidden">
         <div className="flex flex-wrap items-center justify-between gap-4">
           <DialogHeader className="shrink-0">
-            <DialogTitle>Diff · skill files</DialogTitle>
+            <DialogTitle>{zh("Diff · skill files")}</DialogTitle>
             {(leftQuery.error || rightQuery.error) && <p role="alert" className="text-sm text-destructive">{(leftQuery.error ?? rightQuery.error)?.message}</p>}
-            {(leftQuery.isLoading || rightQuery.isLoading) && <p className="text-sm text-muted-foreground">Loading selected versions…</p>}
+            {(leftQuery.isLoading || rightQuery.isLoading) && <p className="text-sm text-muted-foreground">{zh("Loading selected versions…")}</p>}
           </DialogHeader>
           <div className="flex flex-wrap items-center gap-3 text-xs">
             <label className="flex items-center gap-2">
-              <Badge variant="outline" className="border-red-500/30 bg-red-500/10 uppercase tracking-wider text-red-400">Old</Badge>
+              <Badge variant="outline" className="border-red-500/30 bg-red-500/10 uppercase tracking-wider text-red-400">{zh("Old")}</Badge>
               <select
                 value={leftVersionId ?? ""}
                 onChange={(event) => onLeftVersionChange(event.target.value || null)}
                 className="h-8 w-44 rounded-md border border-border bg-background px-2 text-xs"
               >
-                <option value="">Initial</option>
+                <option value="">{zh("Initial")}</option>
                 {sorted.map((version) => (
                   <option key={version.id} value={version.id}>{versionLabel(version)}</option>
                 ))}
               </select>
             </label>
             <label className="flex items-center gap-2">
-              <Badge variant="outline" className="border-green-500/30 bg-green-500/10 uppercase tracking-wider text-green-400">New</Badge>
+              <Badge variant="outline" className="border-green-500/30 bg-green-500/10 uppercase tracking-wider text-green-400">{zh("New")}</Badge>
               <select
                 value={right?.id ?? ""}
                 onChange={(event) => onRightVersionChange(event.target.value || null)}
@@ -2623,14 +2624,14 @@ function SkillVersionDiffDialog({
           </aside>
           <div className="min-w-0 flex-1 overflow-auto rounded-md border border-border text-xs">
             {!right ? (
-              <div className="p-6 text-center text-sm text-muted-foreground">Select a version to compare.</div>
+              <div className="p-6 text-center text-sm text-muted-foreground">{zh("Select a version to compare.")}</div>
             ) : left?.id === right.id ? (
-              <div className="p-6 text-center text-sm text-muted-foreground">Both sides are the same version.</div>
+              <div className="p-6 text-center text-sm text-muted-foreground">{zh("Both sides are the same version.")}</div>
             ) : (
               <div className="font-mono text-xs leading-6">
                 <div className="grid grid-cols-(--gtc-1) border-b border-border/60 bg-muted/30 px-3 py-2 text-(length:--text-micro) uppercase tracking-wide text-muted-foreground">
-                  <span>Old</span>
-                  <span>New</span>
+                  <span>{zh("Old")}</span>
+                  <span>{zh("New")}</span>
                   <span />
                   <span>{effectivePath}</span>
                 </div>
@@ -2670,7 +2671,7 @@ function SkillLocationCard({
   const canonical = folderPath && folderPath.length > 0 ? folderPath : "Unfiled";
   return (
     <section>
-      <div className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">Location</div>
+      <div className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">{zh("Location")}</div>
       <div className="flex items-center gap-2 rounded-md border border-border bg-muted/30 px-2.5 py-1.5">
         <FolderOpen className="h-3.5 w-3.5 shrink-0 text-muted-foreground" />
         <span className="min-w-0 flex-1 truncate font-mono text-xs text-foreground" title={canonical}>{canonical}</span>
@@ -2684,12 +2685,12 @@ function SkillLocationCard({
           }}
         >
           <Copy className="mr-1.5 h-3.5 w-3.5" />
-          {copied ? "Copied" : failed ? "Copy failed" : "Copy path"}
+          {copied ? zh("Copied") : failed ? zh("Copy failed") : zh("Copy path")}
         </Button>
         {onMove ? (
           <Button size="sm" variant="outline" onClick={onMove}>
             <FolderInput className="mr-1.5 h-3.5 w-3.5" />
-            Move
+            {zh("Move")}
           </Button>
         ) : null}
       </div>
@@ -2724,7 +2725,7 @@ function SkillTagsEditor({
     <section>
       <div className="mb-2 flex items-center gap-1.5 text-xs font-medium uppercase tracking-wide text-muted-foreground">
         <Hash className="h-3 w-3" />
-        Tags
+        {zh("Tags")}
       </div>
       <div className="flex flex-wrap gap-1.5">
         {categories.map((tag) => (
@@ -2745,7 +2746,7 @@ function SkillTagsEditor({
           </span>
         ))}
         {categories.length === 0 ? (
-          <span className="text-xs text-muted-foreground">No tags yet.</span>
+          <span className="text-xs text-muted-foreground">{zh("No tags yet.")}</span>
         ) : null}
       </div>
       <Input
@@ -2758,7 +2759,7 @@ function SkillTagsEditor({
           }
         }}
         onBlur={() => draft.trim() && addTag(draft)}
-        placeholder="Add a tag…"
+        placeholder={zh("Add a tag…")}
         disabled={pending}
         className="mt-2 h-8 text-sm"
       />
@@ -2905,7 +2906,7 @@ export function SkillDetailPage({
   );
 
   if (!detail) {
-    return loading ? <PageSkeleton variant="detail" /> : <EmptyState icon={Boxes} message="Skill not found." />;
+    return loading ? <PageSkeleton variant="detail" /> : <EmptyState icon={Boxes} message={zh("Skill not found.")} />;
   }
 
   const skill = detail;
@@ -2956,7 +2957,7 @@ export function SkillDetailPage({
     return (
       <div className="grid min-h-(--sz-560px) gap-0 lg:grid-cols-(--gtc-28)">
         <aside className="border-b border-border pb-3 lg:border-b-0 lg:border-r lg:pb-0 lg:pr-3">
-          <div className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">Files</div>
+          <div className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">{zh("Files")}</div>
           <SkillTree
             nodes={buildTree(skill.fileInventory)}
             skillId={skill.id}
@@ -2977,28 +2978,28 @@ export function SkillDetailPage({
                     className={cn("px-3 py-1.5 text-sm", viewMode === "preview" ? "text-foreground" : "text-muted-foreground")}
                     onClick={() => setViewMode("preview")}
                   >
-                    <span className="flex items-center gap-1.5"><Eye className="h-3.5 w-3.5" /> View</span>
+                    <span className="flex items-center gap-1.5"><Eye className="h-3.5 w-3.5" /> {zh("View")}</span>
                   </button>
                   <button
                     className={cn("border-l border-border px-3 py-1.5 text-sm", viewMode === "code" ? "text-foreground" : "text-muted-foreground")}
                     onClick={() => setViewMode("code")}
                   >
-                    <span className="flex items-center gap-1.5"><Code2 className="h-3.5 w-3.5" /> Code</span>
+                    <span className="flex items-center gap-1.5"><Code2 className="h-3.5 w-3.5" /> {zh("Code")}</span>
                   </button>
                 </div>
               ) : null}
               {skill.editable && file?.editable ? (
                 editMode ? (
                   <>
-                    <Button variant="ghost" size="sm" onClick={() => setEditMode(false)} disabled={savePending}>Cancel</Button>
+                    <Button variant="ghost" size="sm" onClick={() => setEditMode(false)} disabled={savePending}>{zh("Cancel")}</Button>
                     <Button size="sm" onClick={onSave} disabled={savePending}>
                       <Save className="mr-1.5 h-3.5 w-3.5" />
-                      {savePending ? "Saving..." : "Save"}
+                      {savePending ? zh("Saving...") : zh("Save")}
                     </Button>
                   </>
                 ) : (
                   <Button variant="ghost" size="sm" onClick={() => setEditMode(true)}>
-                    <Pencil className="mr-1.5 h-3.5 w-3.5" /> Edit
+                    <Pencil className="mr-1.5 h-3.5 w-3.5" /> {zh("Edit")}
                   </Button>
                 )
               ) : !skill.editable ? (
@@ -3007,10 +3008,10 @@ export function SkillDetailPage({
                   variant="outline"
                   size="sm"
                   onClick={onFork}
-                  title={skill.editableReason ?? "Fork this skill to edit it."}
+                  title={skill.editableReason ?? zh("Fork this skill to edit it.")}
                 >
                   <GitFork className="mr-1.5 h-3.5 w-3.5" />
-                  {skill.sourceType === "github" ? "Make a copy" : "Fork"}
+                  {skill.sourceType === "github" ? zh("Make a copy") : zh("Fork")}
                 </Button>
               ) : null}
             </div>
@@ -3018,7 +3019,7 @@ export function SkillDetailPage({
           {fileLoading ? (
             <PageSkeleton variant="detail" />
           ) : !file ? (
-            <div className="text-sm text-muted-foreground">Select a file to inspect.</div>
+            <div className="text-sm text-muted-foreground">{zh("Select a file to inspect.")}</div>
           ) : file.encoding === "base64" ? <SkillBinaryFile file={file} /> : editMode && file.editable ? (
             file.markdown ? (
               <MarkdownEditor value={draft} onChange={setDraft} bordered={false} className="min-h-(--sz-520px)" />
@@ -3051,39 +3052,39 @@ export function SkillDetailPage({
     return (
       <div className="space-y-6">
         <section>
-          <h2 className="mb-2 text-sm font-medium">About</h2>
+          <h2 className="mb-2 text-sm font-medium">{zh("About")}</h2>
           {fileLoading ? (
             <PageSkeleton variant="detail" />
           ) : file?.markdown ? (
-            <MarkdownBody softBreaks={false} linkIssueReferences={false}>{body || skill.description || "No overview yet."}</MarkdownBody>
+            <MarkdownBody softBreaks={false} linkIssueReferences={false}>{body || skill.description || zh("No overview yet.")}</MarkdownBody>
           ) : (
-            <p className="text-sm text-muted-foreground">{skill.description ?? "No overview yet."}</p>
+            <p className="text-sm text-muted-foreground">{skill.description ?? zh("No overview yet.")}</p>
           )}
         </section>
         <section className="grid min-w-0 gap-3 text-sm sm:grid-cols-2">
           <div className="min-w-0 border-b border-border py-2">
-            <div className="text-xs text-muted-foreground">Key</div>
+            <div className="text-xs text-muted-foreground">{zh("Key")}</div>
             <div className="mt-1 truncate font-mono">{skill.key}</div>
           </div>
           <div className="min-w-0 border-b border-border py-2">
-            <div className="text-xs text-muted-foreground">Source</div>
+            <div className="text-xs text-muted-foreground">{zh("Source")}</div>
             <div className="mt-1 min-w-0 [overflow-wrap:anywhere]">{sourceLocatorText ?? source.label}</div>
           </div>
           <div className="min-w-0 border-b border-border py-2">
-            <div className="text-xs text-muted-foreground">Version</div>
+            <div className="text-xs text-muted-foreground">{zh("Version")}</div>
             <div className="mt-1">{versionLabel(skill.currentVersion ?? null)}</div>
           </div>
           <div className="min-w-0 border-b border-border py-2">
-            <div className="text-xs text-muted-foreground">Mode</div>
+            <div className="text-xs text-muted-foreground">{zh("Mode")}</div>
             <div className="mt-1 flex flex-wrap items-center gap-2">
               {skill.editable ? (
-                "Editable"
+                zh("Editable")
               ) : (
                 <>
-                  <span>Read only</span>
+                  <span>{zh("Read only")}</span>
                   <Button type="button" variant="outline" size="xs" onClick={onFork}>
                     <GitFork className="mr-1 h-3 w-3" />
-                    {skill.sourceType === "github" ? "Make a copy" : "Fork"}
+                    {skill.sourceType === "github" ? zh("Make a copy") : zh("Fork")}
                   </Button>
                 </>
               )}
@@ -3099,7 +3100,7 @@ export function SkillDetailPage({
       <div className="space-y-3">
         <div className="flex items-center justify-between gap-3">
           <div className="text-sm text-muted-foreground">
-            {versionsLoading ? "Loading versions..." : `${versions.length} ${versions.length === 1 ? "version" : "versions"}`}
+            {versionsLoading ? zh("Loading versions...") : `${versions.length} ${versions.length === 1 ? "version" : "versions"}`}
           </div>
           <Button
             type="button"
@@ -3108,21 +3109,21 @@ export function SkillDetailPage({
             onClick={() => openVersionDiff()}
             disabled={sortedVersions.length < 2}
           >
-            <History className="mr-1.5 h-3.5 w-3.5" /> Compare
+            <History className="mr-1.5 h-3.5 w-3.5" /> {zh("Compare")}
           </Button>
         </div>
         <div className="border-y border-border">
           {versionsLoading ? (
             <PageSkeleton variant="list" />
           ) : sortedVersions.length === 0 ? (
-            <div className="py-6 text-sm text-muted-foreground">No saved versions yet.</div>
+            <div className="py-6 text-sm text-muted-foreground">{zh("No saved versions yet.")}</div>
           ) : (
             sortedVersions.map((version) => (
               <div key={version.id} className="grid gap-2 border-b border-border px-0 py-3 text-sm last:border-b-0 sm:grid-cols-(--gtc-13)">
                 <div className="min-w-0">
                   <div className="font-medium">{versionLabel(version)}</div>
                   <div className="mt-1 text-xs text-muted-foreground">
-                    {relativeTime(version.createdAt)} · {version.fileInventory.length} files
+                    {relativeTime(version.createdAt)} · {version.fileInventory.length} {zh("files")}
                   </div>
                 </div>
                 <Button
@@ -3131,7 +3132,7 @@ export function SkillDetailPage({
                   size="sm"
                   onClick={() => openVersionDiff(version.id)}
                 >
-                  View diff
+                  {zh("View diff")}
                 </Button>
               </div>
             ))
@@ -3158,7 +3159,7 @@ export function SkillDetailPage({
       <div className="space-y-3">
         <div className="flex items-center justify-between gap-3">
           <p className="text-sm text-muted-foreground">
-            {attached.length} {attached.length === 1 ? "agent" : "agents"} attached
+            {attached.length} {attached.length === 1 ? "agent" : "agents"} {zh("attached")}
             {selectedVersion ? ` · ${versionLabel(selectedVersion)}` : " · Latest"}
           </p>
           <AttachAgentsPopover
@@ -3172,7 +3173,7 @@ export function SkillDetailPage({
         </div>
         {attached.length === 0 ? (
           <div className="rounded-md border border-dashed border-border py-8 text-center text-sm text-muted-foreground">
-            No agents are using this skill yet. Use “Add to agent” to attach it.
+            {zh("No agents are using this skill yet. Use “Add to agent” to attach it.")}
           </div>
         ) : (
           <div className="border-y border-border">
@@ -3187,7 +3188,7 @@ export function SkillDetailPage({
                       {meta?.paused ? (
                         <Badge variant="outline" className="[&>svg]:size-2.5 border-amber-500/30 bg-amber-500/10 px-1.5 text-(length:--text-nano) uppercase tracking-wide text-amber-500">
                           <Pause className="h-2.5 w-2.5" aria-hidden="true" />
-                          Paused
+                          {zh("Paused")}
                         </Badge>
                       ) : null}
                     </div>
@@ -3197,7 +3198,7 @@ export function SkillDetailPage({
                     to={`/agents/${agent.urlKey}/skills`}
                     className="shrink-0 text-xs text-muted-foreground no-underline hover:text-foreground"
                   >
-                    View
+                    {zh("View")}
                   </Link>
                 </div>
               );
@@ -3246,13 +3247,13 @@ export function SkillDetailPage({
                         <SourceIcon className="h-4 w-4" />
                       </span>
                     </TooltipTrigger>
-                    <TooltipContent>Installed from {source.label}</TooltipContent>
+                    <TooltipContent>{zh("Installed from")} {source.label}</TooltipContent>
                   </Tooltip>
                 </div>
                 {/* GitHub-style "by" attribution sits directly under the title. */}
                 {detail.authorName ? (
                   <p className="mt-0.5 text-sm text-muted-foreground">
-                    by <span className="text-foreground">{detail.authorName}</span>
+                    {zh("by")} <span className="text-foreground">{detail.authorName}</span>
                   </p>
                 ) : null}
                 {subtitleText ? (
@@ -3272,7 +3273,7 @@ export function SkillDetailPage({
                         onClick={() => setDescExpanded((value) => !value)}
                         className="mt-0.5 text-xs font-medium text-muted-foreground transition-colors hover:text-foreground"
                       >
-                        {descExpanded ? "Show less" : "View all"}
+                        {descExpanded ? zh("Show less") : zh("View all")}
                       </button>
                     ) : null}
                   </div>
@@ -3292,7 +3293,7 @@ export function SkillDetailPage({
             <Button variant="outline" size="sm" asChild>
               <Link to={resolvedStudioHref}>
                 <FlaskConical className="mr-1.5 h-3.5 w-3.5" />
-                Open in Studio
+                {zh("Open in Studio")}
               </Link>
             </Button>
             <div className="flex items-center overflow-hidden rounded-md border border-border">
@@ -3304,27 +3305,27 @@ export function SkillDetailPage({
                     <span className="hidden sm:inline">{detail.attachedAgentCount === 1 ? "install" : "installs"}</span>
                   </span>
                 </TooltipTrigger>
-                <TooltipContent>Agents in this organization that currently have this skill installed.</TooltipContent>
+                <TooltipContent>{zh("Agents in this organization that currently have this skill installed.")}</TooltipContent>
               </Tooltip>
               <button
                 type="button"
                 onClick={onToggleStar}
                 disabled={starPending}
                 className="inline-flex items-center gap-1.5 border-l border-border px-2.5 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-accent/40 hover:text-foreground disabled:opacity-50"
-                title={detail.starredByCurrentActor ? "Unstar this skill" : "Star this skill"}
+                title={detail.starredByCurrentActor ? zh("Unstar this skill") : zh("Star this skill")}
               >
                 <Star className={cn("h-3.5 w-3.5", detail.starredByCurrentActor && "fill-current text-yellow-400")} />
-                <span className="hidden sm:inline">{detail.starredByCurrentActor ? "Starred" : "Star"}</span>
+                <span className="hidden sm:inline">{detail.starredByCurrentActor ? zh("Starred") : zh("Star")}</span>
                 <span className="font-medium text-foreground">{detail.starCount}</span>
               </button>
               <button
                 type="button"
                 onClick={onFork}
                 className="inline-flex items-center gap-1.5 border-l border-border px-2.5 py-1.5 text-xs text-muted-foreground transition-colors hover:bg-accent/40 hover:text-foreground"
-                title="Fork this skill"
+                title={zh("Fork this skill")}
               >
                 <GitFork className="h-3.5 w-3.5" />
-                <span className="hidden sm:inline">{skill.sourceType === "github" ? "Make a copy" : "Fork"}</span>
+                <span className="hidden sm:inline">{skill.sourceType === "github" ? zh("Make a copy") : zh("Fork")}</span>
                 <span className="font-medium text-foreground">{detail.forkCount}</span>
               </button>
             </div>
@@ -3364,7 +3365,7 @@ export function SkillDetailPage({
             onSave={(categories) => onUpdateSettings({ categories, sharingScope: detail.sharingScope === "public_link" ? "company" : detail.sharingScope })}
           />
           <section>
-            <div className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">Agents</div>
+            <div className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">{zh("Agents")}</div>
             <div className="space-y-3">
               {/* Big primary action opens the agent multi-selector (PAP-10907). */}
               <AttachAgentsPopover
@@ -3377,7 +3378,7 @@ export function SkillDetailPage({
                 fullWidth
               />
               {detail.usedByAgents.length === 0 ? (
-                <p className="text-xs text-muted-foreground">No agents attached yet.</p>
+                <p className="text-xs text-muted-foreground">{zh("No agents attached yet.")}</p>
               ) : (
                 <div className="space-y-0.5">
                   {/* Preview up to three attached agents, then summarise the rest. */}
@@ -3392,14 +3393,14 @@ export function SkillDetailPage({
                         <AgentAvatar agent={meta} size={16} className="h-4 w-4 shrink-0 text-muted-foreground"/>
                         <span className="min-w-0 flex-1 truncate text-foreground">{agent.name}</span>
                         {meta?.paused ? (
-                          <Pause className="h-3 w-3 shrink-0 text-amber-500" aria-label="Paused" />
+                          <Pause className="h-3 w-3 shrink-0 text-amber-500" aria-label={zh("Paused")} />
                         ) : null}
                       </Link>
                     );
                   })}
                   {detail.usedByAgents.length > 3 ? (
                     <p className="px-1.5 pt-0.5 text-xs text-muted-foreground">
-                      and {detail.usedByAgents.length - 3} more
+                      {zh("and")} {detail.usedByAgents.length - 3} {zh("more")}
                     </p>
                   ) : null}
                 </div>
@@ -3411,7 +3412,7 @@ export function SkillDetailPage({
               available. Bundled/catalog skills surface their source label too
               (PAP-10907). */}
           <section>
-            <div className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">Source</div>
+            <div className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">{zh("Source")}</div>
             {githubSource ? (
               <div className="flex items-start gap-2 text-sm">
                 <GithubIcon className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />
@@ -3467,28 +3468,28 @@ export function SkillDetailPage({
               (PAP-10907 F). Only GitHub-sourced skills can pull updates. */}
           {detail.sourceType === "github" ? (
             <section>
-              <div className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">Updates</div>
+              <div className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">{zh("Updates")}</div>
               <div className="space-y-2">
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
                   <Tooltip>
                     <TooltipTrigger asChild>
-                      <Pin className="h-3.5 w-3.5 shrink-0" aria-label="Pinned source revision" />
+                      <Pin className="h-3.5 w-3.5 shrink-0" aria-label={zh("Pinned source revision")} />
                     </TooltipTrigger>
-                    <TooltipContent>Pinned source revision</TooltipContent>
+                    <TooltipContent>{zh("Pinned source revision")}</TooltipContent>
                   </Tooltip>
                   <span className="truncate font-mono text-foreground">{currentPin ?? "untracked"}</span>
                 </div>
                 <Button variant="outline" size="sm" className="w-full" onClick={onCheckUpdates} disabled={checkUpdatesPending || updateStatusLoading}>
                   <RefreshCw className={cn("mr-1.5 h-3.5 w-3.5", (checkUpdatesPending || updateStatusLoading) && "animate-spin")} />
-                  Check for updates
+                  {zh("Check for updates")}
                 </Button>
                 {updateStatus?.supported && updateStatus.hasUpdate ? (
                   <Button size="sm" className="w-full" onClick={onInstallUpdate} disabled={installUpdatePending}>
                     <ArrowUpCircle className={cn("mr-1.5 h-3.5 w-3.5", installUpdatePending && "animate-spin")} />
-                    Install update{latestPin ? ` ${latestPin}` : ""}
+                    {zh("Install update")}{latestPin ? ` ${latestPin}` : ""}
                   </Button>
                 ) : updateStatus?.supported && !updateStatus.hasUpdate && !updateStatusLoading ? (
-                  <p className="text-xs text-muted-foreground">Up to date.</p>
+                  <p className="text-xs text-muted-foreground">{zh("Up to date.")}</p>
                 ) : null}
               </div>
             </section>
@@ -3507,7 +3508,7 @@ export function SkillDetailPage({
               className="flex w-full items-center gap-2 rounded-md px-3 py-2 text-left text-sm text-muted-foreground transition-colors hover:bg-accent/30 hover:text-foreground"
             >
               <Settings className="h-4 w-4 shrink-0" />
-              <span className="flex-1">Settings</span>
+              <span className="flex-1">{zh("Settings")}</span>
             </button>
           </section>
         </aside>
@@ -3517,7 +3518,7 @@ export function SkillDetailPage({
           unsaved state is obvious (PAP-10907 J). */}
       {isDirty ? (
         <div className="fixed bottom-6 left-1/2 z-40 flex -translate-x-1/2 items-center gap-3 rounded-full border border-border bg-background/95 px-4 py-2 shadow-lg backdrop-blur">
-          <span className="text-sm text-muted-foreground">Unsaved changes</span>
+          <span className="text-sm text-muted-foreground">{zh("Unsaved changes")}</span>
           <Button
             variant="ghost"
             size="sm"
@@ -3527,11 +3528,11 @@ export function SkillDetailPage({
             }}
             disabled={savePending}
           >
-            Discard
+            {zh("Discard")}
           </Button>
           <Button size="sm" onClick={onSave} disabled={savePending}>
             <Save className="mr-1.5 h-3.5 w-3.5" />
-            {savePending ? "Saving…" : "Save changes"}
+            {savePending ? zh("Saving…") : zh("Save changes")}
           </Button>
         </div>
       ) : null}
@@ -3539,12 +3540,12 @@ export function SkillDetailPage({
       <Dialog open={settingsOpen} onOpenChange={setSettingsOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Skill settings</DialogTitle>
+            <DialogTitle>{zh("Skill settings")}</DialogTitle>
             <DialogDescription>Manage how {detail.name} is grouped and shared.</DialogDescription>
           </DialogHeader>
           <div className="space-y-5">
             <div className="space-y-1.5">
-              <label className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Categories</label>
+              <label className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{zh("Categories")}</label>
               <Input
                 value={settingsCategoryDraft}
                 onChange={(event) => setSettingsCategoryDraft(event.target.value)}
@@ -3552,20 +3553,20 @@ export function SkillDetailPage({
                 className="h-9"
                 disabled={updateSettingsPending}
               />
-              <p className="text-xs text-muted-foreground">Separate categories with commas. Leave empty to clear categories.</p>
+              <p className="text-xs text-muted-foreground">{zh("Separate categories with commas. Leave empty to clear categories.")}</p>
             </div>
             <div className="space-y-1.5">
-              <label className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Sharing</label>
+              <label className="text-xs font-medium uppercase tracking-wide text-muted-foreground">{zh("Sharing")}</label>
               <select
                 value={settingsSharingScope}
                 onChange={(event) => setSettingsSharingScope(event.target.value as Exclude<CompanySkillSharingScope, "public_link">)}
                 disabled={updateSettingsPending}
                 className="h-9 w-full rounded-md border border-border bg-background px-2 text-sm text-foreground"
               >
-                <option value="company">Organization — visible inside this organization</option>
-                <option value="private">Private — only visible in your library</option>
+                <option value="company">{zh("Organization — visible inside this organization")}</option>
+                <option value="private">{zh("Private — only visible in your library")}</option>
               </select>
-              <p className="text-xs text-muted-foreground">Public link sharing is coming later.</p>
+              <p className="text-xs text-muted-foreground">{zh("Public link sharing is coming later.")}</p>
             </div>
             <div className="flex justify-end gap-2 border-t border-border pt-4">
               <Button
@@ -3578,7 +3579,7 @@ export function SkillDetailPage({
                 }}
                 disabled={!settingsDirty || updateSettingsPending}
               >
-                Reset
+                {zh("Reset")}
               </Button>
               <Button
                 type="button"
@@ -3587,24 +3588,24 @@ export function SkillDetailPage({
                 disabled={!settingsDirty || updateSettingsPending}
               >
                 <Save className="mr-1.5 h-3.5 w-3.5" />
-                {updateSettingsPending ? "Saving…" : "Save settings"}
+                {updateSettingsPending ? zh("Saving…") : zh("Save settings")}
               </Button>
             </div>
             {detail.editable ? (
               <div className="rounded-md border border-destructive/40 p-3">
-                <div className="text-xs font-semibold uppercase tracking-wide text-destructive">Danger zone</div>
+                <div className="text-xs font-semibold uppercase tracking-wide text-destructive">{zh("Danger zone")}</div>
                 <div className="mt-2 flex items-center justify-between gap-3">
-                  <p className="min-w-0 text-xs text-muted-foreground">Remove this skill from the organization library.</p>
+                  <p className="min-w-0 text-xs text-muted-foreground">{zh("Remove this skill from the organization library.")}</p>
                   <Button
                     variant="destructive"
                     size="sm"
                     className="shrink-0"
                     onClick={onDelete}
                     disabled={deletePending}
-                    title={detail.usedByAgents.length > 0 ? "Detach this skill from all agents before removing it." : undefined}
+                    title={detail.usedByAgents.length > 0 ? zh("Detach this skill from all agents before removing it.") : undefined}
                   >
                     <Trash2 className="mr-1.5 h-3.5 w-3.5" />
-                    {deletePending ? "Removing…" : "Remove"}
+                    {deletePending ? zh("Removing…") : zh("Remove")}
                   </Button>
                 </div>
               </div>
@@ -3674,7 +3675,7 @@ function SkillPane({
     return (
       <EmptyState
         icon={Boxes}
-        message="Select a skill to inspect its files."
+        message={zh("Select a skill to inspect its files.")}
       />
     );
   }
@@ -3708,7 +3709,7 @@ function SkillPane({
             <Button variant="outline" size="sm" asChild>
               <Link to={skillStudioRoute(detail.id)}>
                 <FlaskConical className="mr-1.5 h-3.5 w-3.5" />
-                Open in Studio
+                {zh("Open in Studio")}
               </Link>
             </Button>
             <Button
@@ -3719,7 +3720,7 @@ function SkillPane({
               title={removeDisabledReason ?? undefined}
             >
               <Trash2 className="mr-1.5 h-3.5 w-3.5" />
-              {deletePending ? "Removing..." : "Remove"}
+              {deletePending ? zh("Removing...") : zh("Remove")}
             </Button>
             {detail.editable ? (
               <button
@@ -3727,7 +3728,7 @@ function SkillPane({
                 onClick={() => setEditMode(!editMode)}
               >
                 <Pencil className="h-3.5 w-3.5" />
-                {editMode ? "Stop editing" : "Edit"}
+                {editMode ? zh("Stop editing") : zh("Edit")}
               </button>
             ) : (
               <div className="text-sm text-muted-foreground">{detail.editableReason}</div>
@@ -3738,7 +3739,7 @@ function SkillPane({
         <div className="mt-4 space-y-3 border-t border-border pt-4 text-sm">
           <div className="flex flex-wrap items-center gap-x-6 gap-y-2">
             <div className="flex min-w-0 items-center gap-2">
-              <span className="text-(length:--text-micro) uppercase tracking-(--tracking-caps) text-muted-foreground">Source</span>
+              <span className="text-(length:--text-micro) uppercase tracking-(--tracking-caps) text-muted-foreground">{zh("Source")}</span>
               <span className="flex min-w-0 items-center gap-2">
                 <SourceIcon className="h-3.5 w-3.5 text-muted-foreground" />
                 {detail.sourcePath && displaySourcePath ? (
@@ -3753,7 +3754,7 @@ function SkillPane({
                       text={detail.sourcePath}
                       copiedLabel="Copied path"
                       ariaLabel="Copy source path"
-                      title="Copy source path"
+                      title={zh("Copy source path")}
                       className="inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-sm border border-border text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
                     >
                       <Copy className="h-3.5 w-3.5" />
@@ -3766,7 +3767,7 @@ function SkillPane({
             </div>
             {detail.sourceType === "github" && (
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-(length:--text-micro) uppercase tracking-(--tracking-caps) text-muted-foreground">Pin</span>
+                <span className="text-(length:--text-micro) uppercase tracking-(--tracking-caps) text-muted-foreground">{zh("Pin")}</span>
                 <span className="font-mono text-xs">{currentPin ?? "untracked"}</span>
                 {updateStatus?.trackingRef && (
                   <span className="text-xs text-muted-foreground">tracking {updateStatus.trackingRef}</span>
@@ -3778,7 +3779,7 @@ function SkillPane({
                   disabled={checkUpdatesPending || updateStatusLoading}
                 >
                   <RefreshCw className={cn("mr-1.5 h-3.5 w-3.5", (checkUpdatesPending || updateStatusLoading) && "animate-spin")} />
-                  Check for updates
+                  {zh("Check for updates")}
                 </Button>
                 {updateStatus?.supported && updateStatus.hasUpdate && (
                   <Button
@@ -3787,11 +3788,11 @@ function SkillPane({
                     disabled={installUpdatePending}
                   >
                     <RefreshCw className={cn("mr-1.5 h-3.5 w-3.5", installUpdatePending && "animate-spin")} />
-                    Install update{latestPin ? ` ${latestPin}` : ""}
+                    {zh("Install update")}{latestPin ? ` ${latestPin}` : ""}
                   </Button>
                 )}
                 {updateStatus?.supported && !updateStatus.hasUpdate && !updateStatusLoading && (
-                  <span className="text-xs text-muted-foreground">Up to date</span>
+                  <span className="text-xs text-muted-foreground">{zh("Up to date")}</span>
                 )}
                 {!updateStatus?.supported && updateStatus?.reason && (
                   <span className="text-xs text-muted-foreground">{updateStatus.reason}</span>
@@ -3799,16 +3800,16 @@ function SkillPane({
               </div>
             )}
             <div className="flex items-center gap-2">
-              <span className="text-(length:--text-micro) uppercase tracking-(--tracking-caps) text-muted-foreground">Key</span>
+              <span className="text-(length:--text-micro) uppercase tracking-(--tracking-caps) text-muted-foreground">{zh("Key")}</span>
               <span className="font-mono text-xs">{detail.key}</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-(length:--text-micro) uppercase tracking-(--tracking-caps) text-muted-foreground">Mode</span>
-              <span>{detail.editable ? "Editable" : "Read only"}</span>
+              <span className="text-(length:--text-micro) uppercase tracking-(--tracking-caps) text-muted-foreground">{zh("Mode")}</span>
+              <span>{detail.editable ? zh("Editable") : zh("Read only")}</span>
             </div>
           </div>
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-(length:--text-micro) uppercase tracking-(--tracking-caps) text-muted-foreground">Trust</span>
+            <span className="text-(length:--text-micro) uppercase tracking-(--tracking-caps) text-muted-foreground">{zh("Trust")}</span>
             <TrustChip level={detail.trustLevel} />
             <CompatChip compatibility={detail.compatibility} />
             {readonlyMetadataValue(detail.metadata, "userModifiedAt") ? (
@@ -3816,10 +3817,10 @@ function SkillPane({
                 <TooltipTrigger asChild>
                   <Badge variant="outline" className="border-violet-500/40 bg-violet-500/10 text-(length:--text-micro) text-violet-200">
                     <Pencil className="h-3 w-3" aria-hidden="true" />
-                    Locally modified
+                    {zh("Locally modified")}
                   </Badge>
                 </TooltipTrigger>
-                <TooltipContent>You have edited this skill after installing. Updates from the catalog will overwrite your changes.</TooltipContent>
+                <TooltipContent>{zh("You have edited this skill after installing. Updates from the catalog will overwrite your changes.")}</TooltipContent>
               </Tooltip>
             ) : null}
             {(() => {
@@ -3830,7 +3831,7 @@ function SkillPane({
           </div>
           <div className="flex flex-wrap items-start gap-x-3 gap-y-2">
             <div className="flex items-center gap-2">
-              <span className="text-(length:--text-micro) uppercase tracking-(--tracking-caps) text-muted-foreground">Used by</span>
+              <span className="text-(length:--text-micro) uppercase tracking-(--tracking-caps) text-muted-foreground">{zh("Used by")}</span>
               <AttachAgentsPopover
                 agents={attachAgents}
                 attachedAgentIds={usedBy.map((agent) => agent.id)}
@@ -3841,7 +3842,7 @@ function SkillPane({
               />
             </div>
             {usedBy.length === 0 ? (
-              <span className="text-muted-foreground">No agents attached</span>
+              <span className="text-muted-foreground">{zh("No agents attached")}</span>
             ) : (
               <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3">
                 {usedBy.map((agent) => (
@@ -3873,7 +3874,7 @@ function SkillPane({
                 >
                   <span className="flex items-center gap-1.5">
                     <Eye className="h-3.5 w-3.5" />
-                    View
+                    {zh("View")}
                   </span>
                 </button>
                 <button
@@ -3882,7 +3883,7 @@ function SkillPane({
                 >
                   <span className="flex items-center gap-1.5">
                     <Code2 className="h-3.5 w-3.5" />
-                    Code
+                    {zh("Code")}
                   </span>
                 </button>
               </div>
@@ -3890,11 +3891,11 @@ function SkillPane({
             {editMode && file?.editable && (
               <>
                 <Button variant="ghost" size="sm" onClick={() => setEditMode(false)} disabled={savePending}>
-                  Cancel
+                  {zh("Cancel")}
                 </Button>
                 <Button size="sm" onClick={onSave} disabled={savePending}>
                   <Save className="mr-1.5 h-3.5 w-3.5" />
-                  {savePending ? "Saving..." : "Save"}
+                  {savePending ? zh("Saving...") : zh("Save")}
                 </Button>
               </>
             )}
@@ -3906,7 +3907,7 @@ function SkillPane({
         {fileLoading ? (
           <PageSkeleton variant="detail" />
         ) : !file ? (
-          <div className="text-sm text-muted-foreground">Select a file to inspect.</div>
+          <div className="text-sm text-muted-foreground">{zh("Select a file to inspect.")}</div>
         ) : editMode && file.editable ? (
           file.markdown ? (
             <MarkdownEditor
@@ -4286,13 +4287,13 @@ export function CompanySkills({ collectionView }: { collectionView?: "authored" 
   const activeDetail = detailQuery.data ?? displayedDetail;
   useEffect(() => {
     setBreadcrumbs([
-      { label: "Skills", href: "/skills" },
-      ...(collectionView === "authored" ? [{ label: "My Skills" }] : isStudioNew
+      { label: zh("Skills"), href: "/skills" },
+      ...(collectionView === "authored" ? [{ label: zh("My Skills") }] : isStudioNew
         ? [{ label: studioForkFromId ? "Fork skill" : "New skill" }]
         : activeDetail
           ? skillDetailBreadcrumbs(activeDetail, skillFoldersQuery.data).slice(1)
           : routeSkillToken
-            ? [{ label: "Detail" }]
+            ? [{ label: zh("Detail") }]
             : []),
     ]);
   }, [activeDetail, collectionView, isStudioNew, routeSkillToken, setBreadcrumbs, skillFoldersQuery.data, studioForkFromId]);
@@ -5088,7 +5089,7 @@ export function CompanySkills({ collectionView }: { collectionView?: "authored" 
   );
 
   if (!selectedCompanyId) {
-    return <EmptyState icon={Boxes} message="Select an organization to manage skills." />;
+    return <EmptyState icon={Boxes} message={zh("Select an organization to manage skills.")} />;
   }
 
   function handleAddSkillSource() {
@@ -5140,44 +5141,44 @@ export function CompanySkills({ collectionView }: { collectionView?: "authored" 
       <Dialog open={deleteOpen} onOpenChange={closeDeleteDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Remove skill</DialogTitle>
+            <DialogTitle>{zh("Remove skill")}</DialogTitle>
             <DialogDescription>
-              Remove this skill from the organization library. If any agents still use it, removal will be blocked until it is detached.
+              {zh("Remove this skill from the organization library. If any agents still use it, removal will be blocked until it is detached.")}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-3 text-sm">
             <p>
               {deleteTargetDetail
                 ? `You are about to remove ${deleteTargetDetail.name}.`
-                : "You are about to remove this skill."}
+                : zh("You are about to remove this skill.")}
             </p>
             {deleteTargetDetail?.usedByAgents?.length ? (
               <div className="rounded-md border border-border px-3 py-3 text-muted-foreground">
-                Currently used by {deleteTargetDetail.usedByAgents.map((agent) => agent.name).join(", ")}.
+                {zh("Currently used by")} {deleteTargetDetail.usedByAgents.map((agent) => agent.name).join(", ")}.
               </div>
             ) : null}
             {(deleteTargetDetail?.usedByAgents.length ?? 0) > 0 ? (
               <p className="text-muted-foreground">
-                Detach this skill from all agents to enable removal.
+                {zh("Detach this skill from all agents to enable removal.")}
               </p>
             ) : null}
           </div>
           <DialogFooter>
             {(deleteTargetDetail?.usedByAgents.length ?? 0) > 0 ? (
               <Button variant="ghost" onClick={() => closeDeleteDialog(false)}>
-                Close
+                {zh("Close")}
               </Button>
             ) : (
               <>
                 <Button variant="ghost" onClick={() => closeDeleteDialog(false)} disabled={deleteSkill.isPending}>
-                  Cancel
+                  {zh("Cancel")}
                 </Button>
                 <Button
                   variant="destructive"
                   onClick={() => deleteSkill.mutate()}
                   disabled={deleteSkill.isPending || !deleteTargetSkillId}
                 >
-                  {deleteSkill.isPending ? "Removing..." : "Remove skill"}
+                  {deleteSkill.isPending ? zh("Removing...") : zh("Remove skill")}
                 </Button>
               </>
             )}
@@ -5188,9 +5189,9 @@ export function CompanySkills({ collectionView }: { collectionView?: "authored" 
       <Dialog open={emptySourceHelpOpen} onOpenChange={setEmptySourceHelpOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Add a skill source</DialogTitle>
+            <DialogTitle>{zh("Add a skill source")}</DialogTitle>
             <DialogDescription>
-              Paste a local path, GitHub URL, or `skills.sh` command into the field first.
+              {zh("Paste a local path, GitHub URL, or `skills.sh` command into the field first.")}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-3 text-sm">
@@ -5201,9 +5202,9 @@ export function CompanySkills({ collectionView }: { collectionView?: "authored" 
               className="flex items-start justify-between rounded-md border border-border px-3 py-3 text-foreground no-underline transition-colors hover:bg-accent/40"
             >
               <span>
-                <span className="block font-medium">Browse skills.sh</span>
+                <span className="block font-medium">{zh("Browse skills.sh")}</span>
                 <span className="mt-1 block text-muted-foreground">
-                  Find install commands and paste one here.
+                  {zh("Find install commands and paste one here.")}
                 </span>
               </span>
               <ExternalLink className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
@@ -5215,9 +5216,9 @@ export function CompanySkills({ collectionView }: { collectionView?: "authored" 
               className="flex items-start justify-between rounded-md border border-border px-3 py-3 text-foreground no-underline transition-colors hover:bg-accent/40"
             >
               <span>
-                <span className="block font-medium">Search GitHub</span>
+                <span className="block font-medium">{zh("Search GitHub")}</span>
                 <span className="mt-1 block text-muted-foreground">
-                  Look for repositories with `SKILL.md`, then paste the repo URL here.
+                  {zh("Look for repositories with `SKILL.md`, then paste the repo URL here.")}
                 </span>
               </span>
               <ExternalLink className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
@@ -5254,9 +5255,9 @@ export function CompanySkills({ collectionView }: { collectionView?: "authored" 
       <Dialog open={importDialogOpen} onOpenChange={setImportDialogOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle>Import a skill</DialogTitle>
+            <DialogTitle>{zh("Import a skill")}</DialogTitle>
             <DialogDescription>
-              Paste a local path, GitHub URL, or `skills.sh` command to import a skill into this organization.
+              {zh("Paste a local path, GitHub URL, or `skills.sh` command to import a skill into this organization.")}
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-3">
@@ -5264,11 +5265,11 @@ export function CompanySkills({ collectionView }: { collectionView?: "authored" 
               <Input
                 value={source}
                 onChange={(event) => setSource(event.target.value)}
-                placeholder="Paste path, GitHub URL, or skills.sh command"
+                placeholder={zh("Paste path, GitHub URL, or skills.sh command")}
                 className="h-9 rounded-none border-0 px-0 shadow-none focus-visible:ring-0"
               />
               <Button size="sm" onClick={handleAddSkillSource} disabled={importSkill.isPending}>
-                {importSkill.isPending ? <RefreshCw className="h-4 w-4 animate-spin" /> : "Import"}
+                {importSkill.isPending ? <RefreshCw className="h-4 w-4 animate-spin" /> : zh("Import")}
               </Button>
             </div>
             <a
@@ -5278,8 +5279,8 @@ export function CompanySkills({ collectionView }: { collectionView?: "authored" 
               className="flex items-start justify-between rounded-md border border-border px-3 py-3 text-sm text-foreground no-underline transition-colors hover:bg-accent/40"
             >
               <span>
-                <span className="block font-medium">Browse skills.sh</span>
-                <span className="mt-1 block text-muted-foreground">Find install commands and paste one here.</span>
+                <span className="block font-medium">{zh("Browse skills.sh")}</span>
+                <span className="mt-1 block text-muted-foreground">{zh("Find install commands and paste one here.")}</span>
               </span>
               <ExternalLink className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
             </a>
@@ -5290,8 +5291,8 @@ export function CompanySkills({ collectionView }: { collectionView?: "authored" 
               className="flex items-start justify-between rounded-md border border-border px-3 py-3 text-sm text-foreground no-underline transition-colors hover:bg-accent/40"
             >
               <span>
-                <span className="block font-medium">Search GitHub</span>
-                <span className="mt-1 block text-muted-foreground">Look for repositories with `SKILL.md`, then paste the repo URL.</span>
+                <span className="block font-medium">{zh("Search GitHub")}</span>
+                <span className="mt-1 block text-muted-foreground">{zh("Look for repositories with `SKILL.md`, then paste the repo URL.")}</span>
               </span>
               <ExternalLink className="mt-0.5 h-4 w-4 shrink-0 text-muted-foreground" />
             </a>
@@ -5352,7 +5353,7 @@ export function CompanySkills({ collectionView }: { collectionView?: "authored" 
           if (!open) setMoveDialog(null);
         }}
         result={railSkillFolderResult}
-        title={moveDialog?.title ?? "Move to folder"}
+        title={moveDialog?.title ?? zh("Move to folder")}
         subtitle={moveDialog?.subtitle ?? null}
         currentFolderId={moveDialog?.currentFolderId ?? null}
         onMove={(folderId) => void performDialogMove(folderId)}
@@ -5367,7 +5368,7 @@ export function CompanySkills({ collectionView }: { collectionView?: "authored" 
               className="mb-3 inline-flex items-center gap-1.5 text-sm text-muted-foreground no-underline transition-colors hover:text-foreground"
             >
               <ChevronLeft className="h-4 w-4" />
-              Back
+              {zh("Back")}
             </Link>
             <h1 className="text-2xl font-semibold">{studioTitle}</h1>
             <p className="mt-1 max-w-2xl text-sm text-muted-foreground">{studioDescription}</p>
@@ -5377,7 +5378,7 @@ export function CompanySkills({ collectionView }: { collectionView?: "authored" 
               {studioForkFromId && studioForkDetailQuery.isLoading ? (
                 <PageSkeleton variant="detail" />
               ) : studioForkFromId && !studioForkDetailQuery.data ? (
-                <EmptyState icon={Boxes} message="Fork source skill not found." />
+                <EmptyState icon={Boxes} message={zh("Fork source skill not found.")} />
               ) : (
                 <NewSkillWizard
                   initialDraft={studioDraft}
@@ -5395,11 +5396,11 @@ export function CompanySkills({ collectionView }: { collectionView?: "authored" 
         {!streamlinedUiEnabled ? (
           <div className="px-4 pt-4">
             <Tabs value={legacyDiscoveryTab} onValueChange={(value) => setLegacyDiscoveryTab(value as "all" | "installed" | "catalog" | "bundled")}>
-              <TabsList variant="line" aria-label="Skills view">
-                <TabsTrigger value="all">All</TabsTrigger>
-                <TabsTrigger value="installed">Installed</TabsTrigger>
-                <TabsTrigger value="catalog">Catalog</TabsTrigger>
-                <TabsTrigger value="bundled">Bundled</TabsTrigger>
+              <TabsList variant="line" aria-label={zh("Skills view")}>
+                <TabsTrigger value="all">{zh("All")}</TabsTrigger>
+                <TabsTrigger value="installed">{zh("Installed")}</TabsTrigger>
+                <TabsTrigger value="catalog">{zh("Catalog")}</TabsTrigger>
+                <TabsTrigger value="bundled">{zh("Bundled")}</TabsTrigger>
               </TabsList>
             </Tabs>
           </div>
@@ -5564,17 +5565,17 @@ export function CompanySkills({ collectionView }: { collectionView?: "authored" 
               className="inline-flex items-center gap-1.5 text-sm text-muted-foreground no-underline transition-colors hover:text-foreground"
             >
               <ChevronLeft className="h-4 w-4" />
-              Back to store
+              {zh("Back to store")}
             </Link>
           </div>
           {catalogListQuery.isLoading || catalogDetailQuery.isLoading ? (
             <PageSkeleton variant="detail" />
           ) : !selectedCatalogSkill ? (
-            <EmptyState icon={Boxes} message="Catalog skill not found." />
+            <EmptyState icon={Boxes} message={zh("Catalog skill not found.")} />
           ) : (
             <div className="grid gap-0 xl:grid-cols-(--gtc-30)">
               <aside className="border-b border-border px-3 py-4 xl:border-b-0 xl:border-r">
-                <div className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">Files</div>
+                <div className="mb-2 text-xs font-medium uppercase tracking-wide text-muted-foreground">{zh("Files")}</div>
                 <SkillTree
                   nodes={buildTree(selectedCatalogSkill.files.map((file) => ({ path: file.path, kind: file.kind })))}
                   skillId={selectedCatalogSkill.id}
@@ -5615,7 +5616,7 @@ export function CompanySkills({ collectionView }: { collectionView?: "authored" 
           {skillsQuery.isLoading ? (
             <PageSkeleton variant="detail" />
           ) : (
-            <EmptyState icon={Boxes} message="Skill not found." />
+            <EmptyState icon={Boxes} message={zh("Skill not found.")} />
           )}
         </div>
       )}

@@ -1,3 +1,4 @@
+import { boardT as zh } from "@/i18n";
 import { useCallback, useRef, useState, type ReactNode } from "react";
 import { useNavigate } from "@/lib/router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -86,7 +87,7 @@ export function PauseResumeButton({
     return (
       <Button variant="outline" size={size} onClick={onResume} disabled={disabled}>
         <Play className="h-3.5 w-3.5 sm:mr-1" />
-        <span className="hidden sm:inline">Resume</span>
+        <span className="hidden sm:inline">{zh("Resume")}</span>
       </Button>
     );
   }
@@ -383,7 +384,7 @@ export function AgentActionButtons({
         title={workActionsDisabled ? workActionsDisabledReason : undefined}
       >
         <Plus className="h-3.5 w-3.5 sm:mr-1" />
-        <span className="hidden sm:inline">{assignLabel}</span>
+        <span className="hidden sm:inline">{zh(assignLabel)}</span>
       </Button>
       {needsSetup ? (
         <Button variant="outline" size={size} disabled={disabled} onClick={() => {
@@ -394,7 +395,7 @@ export function AgentActionButtons({
             ...(agent.adapterType === "paperclip_runner" ? { runner: "paperclip" } : ["codex_local", "claude_local", "opencode_local", "pi_local"].includes(agent.adapterType) ? { runner: "legacy" } : {}),
             ...pendingAgentSetupChoice(agent),
           })}`);
-        }}>Finish setup</Button>
+        }}>{zh("Finish setup")}</Button>
       ) : showRun && <RunButton
         onClick={() => {
           if (navigateToRunOnInvoke && !confirmNavigationStart(agentActionStartedDirtyRef)) return;
@@ -429,7 +430,7 @@ export function AgentActionButtons({
               </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>Cancel</AlertDialogCancel>
+              <AlertDialogCancel>{zh("Cancel")}</AlertDialogCancel>
               <AlertDialogAction onClick={() => agentAction.mutate("pause")}>
                 Pause anyway
               </AlertDialogAction>
